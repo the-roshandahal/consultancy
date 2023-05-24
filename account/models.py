@@ -1,7 +1,4 @@
 from django.db import models
-
-# Create your models here.
-from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
@@ -17,7 +14,7 @@ class Role(models.Model):
 
 class Permission(models.Model):
     role = models.OneToOneField(Role, on_delete=models.CASCADE)
-    create_ = models.BooleanField(default=0)
+    create_finance = models.BooleanField(default=0)
     read_finance = models.BooleanField(default=0)
     update_finance = models.BooleanField(default=0)
     delete_finance = models.BooleanField(default=0)
