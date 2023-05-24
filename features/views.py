@@ -1,48 +1,95 @@
+from django.contrib import messages
+from django.shortcuts import render, redirect
 from django.shortcuts import render
-
-# Create your views here.
-from django.shortcuts import render,redirect
 from .models import *
-from django.views.generic import View 
-from django.urls import reverse
+from account.models import *
+from account.context_processors import *
 
+# def homepage(request):
+#     if request.user.is_authenticated:
+#         return redirect('home') 
+#     else:
+#         return render (request,'homepage.html')
 
-# Create your views here.
-
+# def home(request):
+#     if request.user.is_authenticated:
+#         return render (request,'index.html') 
+#     else:
+#         return redirect('login')
+    
 def home(request):
-    return render(request,'index.html')
+    return render (request,'index.html') 
 
 
-# def add_course(request):
-# 	if request.method == "POST":
-# 		first_name = request.POST['first_name']
-# 		last_name = request.POST['last_name']
-# 		address=request.POST['address']
-# 		email=request.POST['email']
-# 		data=Course.objects.create(
-# 			first_name=first_name,
-# 			last_name=last_name,
-# 			address=address,
-# 			email=email,
-# 			)
-# 		data.save()
-		
-		
-
-# 	else:
-# 		return render (request,'student/add_student.html')
 
 
-# def delete_course(request, course_id):
+def company_setup(request):
+    if 'manage_company' in custom_data_views(request):
+        company_setup= Company.objects.all().order_by('-created').first()
+        context = {
+            'company_setup':company_setup,
+        }
+        return render (request,'features/company_setup.html',context)
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
     
-#     course = get_object(Course, id=course_id)
+
+
+
+
+def add_company_setup(request):
+    if 'manage_company' in custom_data_views(request):
+        if Company.objects.all().exists():
+            messages.info(request, "You have already added a setup.")
+            return redirect('company_setup')
+        else:
+            if request.method=='POST':
+                company_name = request.POST['company_name']
+                company_address = request.POST['company_address']
+                company_email = request.POST['company_email']
+                company_contact_number = request.POST['company_contact_number']
+                company_logo = request.FILES['company_logo']
+                payment_terms = request.POST['payment_terms']
+                payment_details = request.POST['payment_details']
+
+                Company.objects.create(company_name = company_name,company_address = company_address,
+                                    company_email = company_email,company_contact_number = company_contact_number,company_logo = company_logo,
+                                    payment_terms = payment_terms,payment_details = payment_details)
+                return redirect('company_setup')
+            else:
+                return render(request,'features/add_company_setup.html')
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
     
-#     if request.method == 'POST':
-     
-#         course.delete()
-        
-   
-#         return redirect('success')
-    
+
+
+def edit_company_setup(request,id):
+    if 'manage_company' in custom_data_views(request):
+        if request.method=='POST':
+            setup = Company.objects.get(id=id)
+            setup.company_name = request.POST['company_name']
+            setup.company_address = request.POST['company_address']
+            setup.company_email = request.POST['company_email']
+            setup.company_contact_number = request.POST['company_contact_number']
+            setup.payment_terms = request.POST['payment_terms']
+            setup.payment_details = request.POST['payment_details']
+
+            if request.FILES and request.FILES['company_logo']:
+                setup.company_logo = request.FILES['company_logo']
+            setup.save()
+            return redirect('company_setup')
+        else:
+            setup = Company.objects.get(id=id)
+            print(setup.company_name)
+            context = {
+            'setup':setup
+            }
+            return render(request,'features/edit_company_setup.html',context)
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
   
-#     return render(request, 'student/delete_course.html', {'course': course})
+
+
