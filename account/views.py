@@ -46,7 +46,7 @@ def role(request):
         context = {
             'roles':roles,
         }
-        return render (request,'account/role.html',context)
+        return render (request,'account/roles.html',context)
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')

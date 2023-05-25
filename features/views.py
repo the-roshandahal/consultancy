@@ -11,14 +11,13 @@ from account.context_processors import *
 #     else:
 #         return render (request,'homepage.html')
 
-# def home(request):
-#     if request.user.is_authenticated:
-#         return render (request,'index.html') 
-#     else:
-#         return redirect('login')
-    
 def home(request):
-    return render (request,'index.html') 
+    if request.user.is_authenticated:
+        return render (request,'index.html') 
+    else:
+        return redirect('login')
+    
+
 
 
 
