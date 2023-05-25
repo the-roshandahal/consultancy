@@ -21,5 +21,6 @@ urlpatterns = [
     path('', include('features.urls')),
     path('', include('hrm.urls')),
     path('', include('account.urls')),
+    path('', include('course.urls')),
 
 ]

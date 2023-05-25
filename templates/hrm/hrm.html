@@ -1,0 +1,114 @@
+{% load static %}{% include 'header.html' %}
+<!-- Main Content -->
+<div class="hk-pg-wrapper">
+	<div class="container-xxl">
+		<!-- Page Header -->
+																		
+		<div class="hk-pg-header">
+			<div class="d-flex">
+				<div class="d-flex flex-wrap justify-content-between flex-1">
+					<div class="mb-md-0 mb-2 me-8">
+						<div class="d-flex align-items-center">
+							<h1 class="pg-title">HRM Dashboard</h1>
+						</div>
+						<p id="greeting"></p>
+
+						<script>
+							const now = new Date();
+							const hour = now.getHours();
+					
+							let greeting;
+					
+							if (hour < 12) {
+								greeting = "Good Morning";
+							} else if (hour < 18) {
+								greeting = "Good Afternoon";
+							} else {
+								greeting = "Good Evening";
+							}
+					
+							document.getElementById("greeting").innerHTML = greeting + " {{request.user.first_name}}!";
+						</script>
+						
+					</div>
+					
+				</div>
+			</div>
+		</div>								
+		<!-- /Page Header -->													
+		<!-- /Add other contents below -->
+		<div class="container mt-2">
+			<div class="simplebar-content" style="padding: 20px;">
+				<div class="container  mt-3">
+					<div class="row justify-content-between">
+
+						<div class="col-xxl-3 col-xl-4 col-md-4">
+							<a href="{% url 'employees' %}">
+								<div class="card card-border card-int mb-4 text-center">
+									<div class="card-body">
+										<div class="avatar avatar-sm avatar-logo mb-3">
+											<span class="initial-wrap">
+												<i class="bi bi-people"></i>
+											</span>
+										</div>
+										<h6>Total Employees</h6>
+										<div class="app-cat">{{stats.employee}}</div>
+									</div>
+								</div>
+							</a>
+						</div>
+
+						<div class="col-xxl-3 col-xl-4 col-md-4">
+							<a href="{% url 'attendance' %}">
+								<div class="card card-border card-int mb-4 text-center">
+									<div class="card-body">
+										<div class="avatar avatar-sm avatar-logo mb-3">
+											<span class="initial-wrap">
+												<i class="bi bi-person-check"></i>
+											</span>
+										</div>
+										<h6>Present Today</h6>
+										<div class="app-cat">{{stats.present_today}}</div>
+									</div>
+								</div>
+							</a>
+						</div>
+
+						<div class="col-xxl-3 col-xl-4 col-md-4">
+							<a href="{% url 'attendance' %}">
+								<div class="card card-border card-int mb-4 text-center">
+									<div class="card-body">
+										<div class="avatar avatar-sm avatar-logo mb-3">
+											<span class="initial-wrap">
+												<i class="bi bi-person-x"></i>
+											</span>
+										</div>
+										<h6>Absent Today</h6>
+										<div class="app-cat">{{stats.absent_today}}</div>
+									</div>
+								</div>
+							</a>
+						</div>
+
+						<div class="col-xxl-3 col-xl-4 col-md-4">
+							<a href="{% url 'hrm_setup' %}">
+								<div class="card card-border card-int mb-4 text-center">
+									<div class="card-body">
+										<div class="avatar avatar-sm avatar-logo mb-3">
+											<span class="initial-wrap">
+												<i class="bi bi-building"></i>
+											</span>
+										</div>
+										<h6>Departments</h6>
+										<div class="app-cat">{{stats.department}}</div>
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>	
+{% include 'footer.html' %}

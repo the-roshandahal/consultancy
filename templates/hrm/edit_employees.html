@@ -1,0 +1,180 @@
+{% load static %}{% include 'header.html' %}
+<!-- Main Content -->
+<div class="hk-pg-wrapper">
+	<div class="container-xxl">
+		<!-- Page Header -->
+		<div class="hk-pg-header pg-header-wth-tab pt-7">
+			<div class="d-flex">
+				<div class="d-flex flex-wrap justify-content-between flex-1">
+					<div class="mb-lg-0 mb-2 me-8">
+						<div class="d-flex align-items-center">
+							<h1 class="pg-title">Edit Employee</h1>
+						</div>
+						<p id="greeting"></p>
+
+						<script>
+							const now = new Date();
+							const hour = now.getHours();
+					
+							let greeting;
+					
+							if (hour < 12) {
+								greeting = "Good Morning";
+							} else if (hour < 18) {
+								greeting = "Good Afternoon";
+							} else {
+								greeting = "Good Evening";
+							}
+					
+							document.getElementById("greeting").innerHTML = greeting + " {{request.user.first_name}}!";
+						</script>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /Page Header -->
+		<!-- /Add other contents below -->
+																
+		
+														
+        <div class="container mt-5">										
+            <div class="modal-content">
+                <form action="{% url 'edit_employee' id=user_data.id %}" method="POST">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="">First Name</label>
+                                <input type="text" class="form-control"  placeholder="alex" value="{{user_data.user.first_name}}" name='first_name' required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="">Last Name</label>
+                                <input type="text" class="form-control"  placeholder="alex" value="{{user_data.user.last_name}}" name='last_name' required>
+                            </div>
+                        </div>
+    
+                        <div class="separator separator-light"></div>
+    
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Email</h6>
+                                <div class="form-group">
+                                    <input type="email" class="form-control" value="{{user_data.email}}" name="email" required>
+                                </div>
+                            </div>
+    
+                            <div class="col-md-6">
+                                <h6>Contact</h6>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" value="{{user_data.contact}}" name="contact" required>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="separator separator-light"></div>
+    
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Address</h6>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" value="{{user_data.address}}" name="address" required>
+                                </div>
+                            </div>
+    
+                            <div class="col-md-6">
+                                <h6>Select Role</h6>
+                                <div class="form-group">
+                                    <select class="form-select"  name="role" required>
+                                        <option value="">Select Role</option>
+                                        {% for roles in roles %}
+                                        <option value="{{roles.id}}" {% if user_data.permission.role.id == roles.id %}selected{% endif %} >{{roles.role}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="separator separator-light"></div>
+    
+                        <div class="row">
+                            <div class="col-md-6">
+                            <h6>Department</h6>
+                            <select class="form-select" name="department" required id="department-select">
+                                {% for department in department %}
+                                <option value="{{department.id}}" {% if user_data.department.id == department.id %}selected{% endif %}>{{ department.department }}</option>
+                                {% endfor %}
+                            </select>
+                            </div>
+                            
+                            <div class="col-md-6">
+                            <h6>Designation</h6>
+                            <select class="form-select" value="{{user_data.designation}}" name="designation" required id="designation-select">
+                                {% for designation in designation %}
+                                <option value="{{ designation.id }}" data-department-id="{{ designation.department.id }}">{{designation.designation }}</option>
+                                {% endfor %}
+                            </select>
+                            </div>
+                        </div>
+                        <div class="separator separator-light"></div>
+                        
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Salary</h6>
+                                <div class="form-group">
+                                    <input type="number" class="form-control" value="{{user_data.emp_salary}}" name="salary" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Date Joined</h6>
+                                <div class="form-group">
+                                    <input type="date" class="form-control" value="{{user_data.date_joined|date:'Y-m-d'}}"  name="date_joined">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="separator separator-light"></div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Username</h6>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" value="{{user_data.user.username}}" name="username" >
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Password</h6>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="password" value="{{user_data.emp_password}}">
+                                    <p>*Keep empty to set previous password.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="separator separator-light"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+													
+        </div>
+		
+	</div>
+</div>
+<script>
+	const departmentSelect = document.querySelector('#department-select');
+	const designationSelect = document.querySelector('#designation-select');
+	
+	departmentSelect.addEventListener('change', () => {
+	  const selectedDepartmentId = departmentSelect.value;
+	  const options = designationSelect.querySelectorAll('option');
+	  
+	  options.forEach((option) => {
+		if (option.value && option.dataset.departmentId !== selectedDepartmentId) {
+		  option.disabled = true;
+		  option.selected = false;
+		} else {
+		  option.disabled = false;
+		}
+	  });
+	});
+	</script>
+{% include 'footer.html' %}
