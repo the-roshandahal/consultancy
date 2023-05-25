@@ -9,7 +9,6 @@ class Company(models.Model):
     company_contact_number = models.CharField(max_length=255)
     company_logo = models.ImageField(upload_to='company_images/')
     payment_terms = models.TextField()
-    payment_details = models.TextField()
     created = models.DateField(auto_now_add=True)
 
 

@@ -50,11 +50,10 @@ def add_company_setup(request):
                 company_contact_number = request.POST['company_contact_number']
                 company_logo = request.FILES['company_logo']
                 payment_terms = request.POST['payment_terms']
-                payment_details = request.POST['payment_details']
 
                 Company.objects.create(company_name = company_name,company_address = company_address,
                                     company_email = company_email,company_contact_number = company_contact_number,company_logo = company_logo,
-                                    payment_terms = payment_terms,payment_details = payment_details)
+                                    payment_terms = payment_terms)
                 return redirect('company_setup')
             else:
                 return render(request,'features/add_company_setup.html')
