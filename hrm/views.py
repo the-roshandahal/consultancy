@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from django.shortcuts import render,redirect
 from .models import *
 from features.models import *
@@ -1314,3 +1315,16 @@ def delete_att_user(request,id):
         messages.info(request, "Unauthorized access.")
         return redirect('home')
     
+=======
+from django.shortcuts import render
+from account.context_processors import custom_data_views
+# Create your views here.
+
+def hrm(request):
+    pass
+
+
+def add_emp(request):
+    if 'create_hrm' in custom_data_views:
+        pass
+>>>>>>> 25484f6d8076949124ce1bf5a43fee0153baa412
