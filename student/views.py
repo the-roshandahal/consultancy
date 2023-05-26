@@ -1,9 +1,7 @@
 from django.shortcuts import render,redirect
 from.models import *
 from django.contrib import messages, auth
-from account.views import *
 from account.models import *
-from finance.models import *
 from .models import *
 
 from account.context_processors import custom_data_views
@@ -31,7 +29,7 @@ def add_student(request):
             address = request.POST["address"]
             email = request.POST["email"]
             contact = request.POST["contact"]
-           Student.objects.create(student_name=student_name,
+            Student.objects.create(student_name=student_name,
                                     address=address, email=email, contact=contact)
             return redirect('student')
         else:

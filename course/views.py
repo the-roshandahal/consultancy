@@ -25,9 +25,9 @@ def courses(request):
 
 
 def add_course(request):
-    if 'create_courses' in custom_data_views(request):
+    if 'create_products' in custom_data_views(request):
         if request.method == "POST":
-            course_type = request.POST["course_type"]
+          
             course_title = request.POST["course_title"]
             course_description = request.POST["course_description"]
             course_price = request.POST["course_price"]
@@ -99,10 +99,23 @@ def delete_course(request,id):
         messages.info(request, "Unauthorized access.")
         return redirect('home')
 
-    
+
+def course_setup(request):
+    if 'read_products' in custom_data_views(request):
+        category = CourseCategory.objects.all()
+        
+        context = {
+            'category':category,
+           
+        }
+        return render (request,'courses/course_setup.html',context)
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
+        
 
 def add_course_category(request):
-    if 'create_courses' in custom_data_views(request):
+    if 'create_products' in custom_data_views(request):
         if request.method =="POST":
             course_category = request.POST['course_category']
             if CourseCategory.objects.filter(course_category=course_category).exists():
@@ -112,6 +125,9 @@ def add_course_category(request):
                 CourseCategory.objects.create(course_category=course_category)
                 messages.info(request, "category Added Successfully")
                 return redirect('course_setup')
+
+        else:
+            return redirect('course_setup')
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')

@@ -1,0 +1,108 @@
+{% load static %}{% include 'header.html' %}
+
+		
+
+		<!-- Main Content -->
+<div class="hk-pg-wrapper">
+    <div class="container-xxl">
+        <!-- Page Header -->
+        <div class="hk-pg-header pg-header-wth-tab pt-7">
+            <div class="d-flex">
+                <div class="d-flex flex-wrap justify-content-between flex-1">
+                    <div class="mb-lg-0 mb-2 me-8">
+                        <h1 class="pg-title">Welcome back</h1>
+                        <p>Manage products.</p>
+                    </div>
+                    {% if 'create_products' in permissions %}
+                    <div class="card-action-wrap">
+                        <button class="btn btn-sm btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#createUserModal"><span><span class="icon"><span class="feather-icon"><i data-feather="plus"></i></span></span><span class="btn-text">Add new</span></span></button>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+
+        <div class="modal-content mt-5">
+            <form action="#" method="POST">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createUserModal">Add Product/Service.</h5>
+                </div>
+                <div class="modal-body">                                                                        
+                    <div class="row">
+                        <div class="col-xxl-6 mb-xxl-0 mb-4">
+                            <h6>Category</h6>
+                            <div class="form-group">
+                                <select class="form-select" name="product_category" required="">
+                                    <option value="">Select category</option>
+                                    {% for category in category %}
+                                    <option value="{{category.id}}">{{category.product_category}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>  
+                        </div>
+                        <div class="col-xxl-6 mb-xxl-0 mb-4">
+                            <h6>Title</h6>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name = "product_title" required>
+                            </div>
+                        </div>
+
+                        
+                        
+                       
+                        
+
+                        <div class="col-xxl-6 mb-xxl-0 mb-4">
+                            <h6>Price</h6>
+                            <div class="form-group">
+                                <input type="number" class="form-control" name = "product_price" required>
+                            </div>
+                        </div>
+
+                        <div class="col-xxl-6 mb-xxl-0 mb-4">
+                            <h6>Available Quantity</h6>
+                            <div class="form-group">
+                                <input type="number" class="form-control" name="product_quantity" required id="product_quantity_field">
+                            </div>
+                        </div>
+                        
+
+                        
+
+                        <div class="col-xxl-12 mb-xxl-0 mb-4">
+                            <h6>Description</h6>
+                            <div class="form-group">
+                                <textarea id="summernote" name="product_description" placeholder="Description"></textarea>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+	
+
+
+<script>
+    function handleProductTypeChange() {
+        const productType = document.querySelector('select[name="product_type"]');
+        const productQuantityField = document.querySelector('#product_quantity_field');
+
+        if (productType.value === 'service') {
+            productQuantityField.disabled = true;
+        } else {
+            productQuantityField.disabled = false;
+        }
+    }
+</script>
+
+
+	{% include 'footer.html' %}

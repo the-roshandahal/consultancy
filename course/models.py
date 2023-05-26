@@ -13,7 +13,7 @@ class CourseCategory(models.Model):
 
 
 class Course(models.Model):
-    course_type = models.CharField(max_length=255)
+  
     course_title = models.CharField(max_length=255)
     course_price = models.FloatField()
     course_quantity = models.IntegerField(null = True, blank = True)

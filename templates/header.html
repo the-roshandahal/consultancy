@@ -41,7 +41,7 @@
                                 <a href="">Hrm setup</a>
                             </li>
                             <li>
-                                <a href="">Product setup</a>
+                                <a href="{% url 'add_course_category' %}">Product setup</a>
                             </li>
                             <li>
                                 <a href="">Finance setup</a>
@@ -114,13 +114,16 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#"><i class="material-icons-two-tone">golf_course</i>Courses<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
+                        <a href=""><i class="material-icons-two-tone">golf_course</i>Courses<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                         <ul class="sub-menu">
                             <li>
-                                <a href="">Add Course</a>
+                                <a href="{% url 'add_course_category' %}">Add Course Category</a>
                             </li>
                             <li>
-                                <a href="">Courses</a>
+                                <a href="{% url 'add_course' %}">Add Course</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'courses' %}">Courses</a>
                             </li>
                             
                         </ul>
@@ -133,7 +136,8 @@
                                 <a href="">Dashboard</a>
                             </li>
                             <li>
-                                <a href="">Client</a>
+                                <a href="{% url 'add_student' %}">Student</a>
+
                             </li>
                             <li>
                                 <a href="">Invoice</a>
