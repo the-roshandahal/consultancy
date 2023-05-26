@@ -13,11 +13,9 @@ def courses(request):
     if 'read_product' in custom_data_views(request):
         coursess = Course.objects.all()
         category = CourseCategory.objects.all()
-        unit = CourseUnit.objects.all()
         context={
-            'courses':courses,
+            'courses':coursess,
             'category':category,
-            'unit':unit,
         }
         return render (request,'courses/courses.html',context)
     else:
@@ -39,7 +37,6 @@ def add_course(request):
             category = request.POST["course_category"]
             unit = request.POST["course_unit"]
             course_category = CourseCategory.objects.get(id=category)
-            course_unit = CourseUnit.objects.get(id=unit)
             
             Course.objects.create(course_type=course_type,course_title=course_title, course_description=course_description, 
                                 course_price=course_price, course_category=course_category,course_unit=course_unit)
@@ -47,11 +44,9 @@ def add_course(request):
         else:
             courses = Course.objects.all()
             category = CourseCategory.objects.all()
-            unit = CourseUnit.objects.all()
             context={
                 'courses':courses,
                 'category':category,
-                'unit':unit,
             }
             return render (request,'courses/add_course.html',context)
     else:
@@ -71,7 +66,6 @@ def edit_course(request,id):
             category = request.POST["course_category"]
             unit = request.POST["course_unit"]
             course_category = CourseCategory.objects.get(id=category)
-            course_unit = CourseUnit.objects.get(id=unit)
             course_obj = Course.objects.get(id=id)
             course_obj.course_type=course_type
             course_obj.course_title=course_title
@@ -79,13 +73,11 @@ def edit_course(request,id):
             course_obj.course_price=course_price
            
             course_obj.course_category=course_category
-            course_obj.course_unit=course_unit
             course_obj.save()
             return redirect(courses)
         else:
             course = Course.objects.get(id=id)
             category = CourseCategory.objects.all()
-            unit = CourseUnit.objects.all()
             context={
                 'course':course,
                 'category':category,

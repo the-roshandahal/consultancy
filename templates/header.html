@@ -94,7 +94,7 @@
                                 <a href="">Dashboard</a>
                             </li>
                             <li>
-                                <a href="">Employees</a>
+                                <a href="{% url 'employees' %}">Employees</a>
                             </li>
                             <li>
                                 <a href="">Leave requests</a>
@@ -117,10 +117,10 @@
                         <a href="#"><i class="material-icons-two-tone">golf_course</i>Courses<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                         <ul class="sub-menu">
                             <li>
-                                <a href="">Product and services</a>
+                                <a href="">Add Course</a>
                             </li>
                             <li>
-                                <a href="">Product Stock</a>
+                                <a href="">Courses</a>
                             </li>
                             
                         </ul>
@@ -150,9 +150,9 @@
                     <li>
                         <a href="#"><i class="material-icons-two-tone">person</i>Work Profile<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                         <ul class="sub-menu">
-                            <li>
+                            {% comment %} <li>
                                 <a href="">Log Sheet</a>
-                            </li>
+                            </li> {% endcomment %}
                             <li>
                                 <a href="">Leave</a>
                             </li>
