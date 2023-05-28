@@ -10,7 +10,7 @@ from account.context_processors import custom_data_views
 
  
 def courses(request):
-    if 'read_product' in custom_data_views(request):
+    if 'read_products' in custom_data_views(request):
         coursess = Course.objects.all()
         category = CourseCategory.objects.all()
         context={
@@ -31,16 +31,12 @@ def add_course(request):
             course_title = request.POST["course_title"]
             course_description = request.POST["course_description"]
             course_price = request.POST["course_price"]
-            
-            
-
             category = request.POST["course_category"]
-            unit = request.POST["course_unit"]
             course_category = CourseCategory.objects.get(id=category)
             
-            Course.objects.create(course_type=course_type,course_title=course_title, course_description=course_description, 
-                                course_price=course_price, course_category=course_category,course_unit=course_unit)
-            return redirect(courses)
+            Course.objects.create(course_title=course_title, course_description=course_description, 
+                                course_price=course_price, course_category=course_category)
+            return redirect('courses')
         else:
             courses = Course.objects.all()
             category = CourseCategory.objects.all()

@@ -27,17 +27,17 @@
             <form action="#" method="POST">
                 {% csrf_token %}
                 <div class="modal-header">
-                    <h5 class="modal-title" id="createUserModal">Add Product/Service.</h5>
+                    <h5 class="modal-title" id="createUserModal">Add course.</h5>
                 </div>
                 <div class="modal-body">                                                                        
                     <div class="row">
                         <div class="col-xxl-6 mb-xxl-0 mb-4">
                             <h6>Category</h6>
                             <div class="form-group">
-                                <select class="form-select" name="product_category" required="">
+                                <select class="form-select" name="course_category" required="">
                                     <option value="">Select category</option>
                                     {% for category in category %}
-                                    <option value="{{category.id}}">{{category.product_category}}</option>
+                                    <option value="{{category.id}}">{{category.course_category}}</option>
                                     {% endfor %}
                                 </select>
                             </div>  
@@ -45,7 +45,7 @@
                         <div class="col-xxl-6 mb-xxl-0 mb-4">
                             <h6>Title</h6>
                             <div class="form-group">
-                                <input type="text" class="form-control" name = "product_title" required>
+                                <input type="text" class="form-control" name = "course_title" required>
                             </div>
                         </div>
 
@@ -57,14 +57,7 @@
                         <div class="col-xxl-6 mb-xxl-0 mb-4">
                             <h6>Price</h6>
                             <div class="form-group">
-                                <input type="number" class="form-control" name = "product_price" required>
-                            </div>
-                        </div>
-
-                        <div class="col-xxl-6 mb-xxl-0 mb-4">
-                            <h6>Available Quantity</h6>
-                            <div class="form-group">
-                                <input type="number" class="form-control" name="product_quantity" required id="product_quantity_field">
+                                <input type="number" class="form-control" name = "course_price" required>
                             </div>
                         </div>
                         
@@ -74,7 +67,7 @@
                         <div class="col-xxl-12 mb-xxl-0 mb-4">
                             <h6>Description</h6>
                             <div class="form-group">
-                                <textarea id="summernote" name="product_description" placeholder="Description"></textarea>
+                                <textarea id="summernote" name="course_description" placeholder="Description"></textarea>
                             </div>
                         </div>
                         

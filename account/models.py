@@ -41,11 +41,18 @@ class Permission(models.Model):
     delete_hrm = models.BooleanField(default=0)
     manage_hrm = models.BooleanField(default=0)
 
-    create_products = models.BooleanField(default=0)
-    read_products = models.BooleanField(default=0)
-    update_products = models.BooleanField(default=0)
-    delete_products = models.BooleanField(default=0)
-    manage_products = models.BooleanField(default=0)
+    create_course = models.BooleanField(default=0)
+    read_course = models.BooleanField(default=0)
+    update_course = models.BooleanField(default=0)
+    delete_course = models.BooleanField(default=0)
+    manage_course = models.BooleanField(default=0)
+    
+    create_student = models.BooleanField(default=0)
+    read_student = models.BooleanField(default=0)
+    update_student = models.BooleanField(default=0)
+    delete_student = models.BooleanField(default=0)
+    manage_student = models.BooleanField(default=0)
+    
     def __str__(self):
         return self.role.role
     

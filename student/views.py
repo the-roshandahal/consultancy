@@ -10,7 +10,7 @@ from account.context_processors import custom_data_views
 
 
 def student(request):
-    if 'read_finance' in custom_data_views(request):
+    if 'read_student' in custom_data_views(request):
         student = Student.objects.all()
         context = {
             'student': student
@@ -23,7 +23,7 @@ def student(request):
 
 
 def add_student(request):
-    if 'create_finance' in custom_data_views(request):
+    if 'create_student' in custom_data_views(request):
         if request.method == "POST":
             student_name = request.POST["student_name"]
             address = request.POST["address"]
@@ -40,7 +40,7 @@ def add_student(request):
     
 
 def edit_student(request,id):
-    if 'update_finance' in custom_data_views(request):
+    if 'update_student' in custom_data_views(request):
         if request.method == "POST":
             student_name = request.POST["student_name"]
             address = request.POST["address"]
@@ -68,7 +68,7 @@ def edit_student(request,id):
     
 def delete_student(request,id):
     print('hello')
-    if 'delete_finance' in custom_data_views(request):
+    if 'delete_student' in custom_data_views(request):
         delete_student = Student.objects.get(id=id)
         deleted_student = delete_student
         delete_student.delete()
@@ -80,14 +80,12 @@ def delete_student(request,id):
     
 
 def view_student(request,id):
-    if 'read_finance' in custom_data_views(request):
+    if 'read_student' in custom_data_views(request):
         student = Student.objects.get(id=id)
-        invoices = Invoice.objects.filter(student=id)[:5]
-        receipts = Receipt.objects.filter(student=id)[:5]
+        # invoices = Invoice.objects.filter(student=id)[:5]
+        # receipts = Receipt.objects.filter(student=id)[:5]
         context = {
             'student': student,
-            'invoices': invoices,
-            'receipts': receipts,
         }
         return render(request,'student/view_student.html', context)
     else:
@@ -104,7 +102,7 @@ def upload_document(request):
         file_name = request.POST('file_name')
         student=request.POST['student_id']
         if file:
-            student=Student.objects.get(id=student_id)
+            student=Student.objects.get(id=student)
             Document.objects.create(student=student, file=file, file_name=file_name)
             
             return redirect('document_list')  

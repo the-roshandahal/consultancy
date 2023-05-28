@@ -16,7 +16,6 @@ class Course(models.Model):
   
     course_title = models.CharField(max_length=255)
     course_price = models.FloatField()
-    course_quantity = models.IntegerField(null = True, blank = True)
     course_description = models.TextField(null = True, blank = True)
     course_category = models.ForeignKey(CourseCategory, on_delete=models.SET_NULL, blank=True, null=True,)
     
