@@ -12,7 +12,7 @@ urlpatterns = [
     path("edit_course/<int:id>", views.edit_course, name="edit_course"),
     path("delete_course/<int:id>", views.delete_course, name="delete_course"),
 
-     path("course_setup/", views.course_setup, name="course_setup"),
+    path("course_setup/", views.course_setup, name="course_setup"),
 
     path("add_course_category/", views.add_course_category, name="add_course_category"),
     path("edit_course_category/<int:id>", views.edit_course_category, name="edit_course_category"),

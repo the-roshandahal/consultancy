@@ -23,7 +23,7 @@
         </div>
         <!-- /Page Header -->
         <div class="container">
-            <form action="{% url 'edit_course' course.id %}" method="POST">
+            <form action="{% url 'edit_course_category' course.id %}" method="POST">
                 {% csrf_token %}
                 <div class="modal-body">                                                                        
                     <div class="row">
@@ -40,19 +40,7 @@
                             </div>  
                         </div>
                        
-                        <div class="col-xxl-12 mb-xxl-0 mb-4">
-                            <h6>Title</h6>
-                            <div class="form-group">
-                                <input type="text" class="form-control" value="{{product.product_title}}" name = "product_title" required>
-                            </div>
-                        </div>
-
-                        <div class="col-xxl-12 mb-xxl-0 mb-4">
-                            <h6>Price</h6>
-                            <div class="form-group">
-                                <input type="number" class="form-control" value="{{product.product_price}}" name = "product_price" required>
-                            </div>
-                        </div>
+                      
                         <!-- <div class="col-xxl-12 mb-xxl-0 mb-4">
                             <h6>Available Quantity</h6>
                             <div class="form-group">
@@ -62,12 +50,7 @@
 
                         
 
-                        <div class="col-xxl-12 mb-xxl-0 mb-4">
-                            <h6>Description</h6>
-                            <div class="form-group">
-                                <textarea id="summernote" name="product_description" placeholder="Description">{{product.product_description}}</textarea>
-                            </div>
-                        </div>
+                        
                       
                     </div>
                 </div>

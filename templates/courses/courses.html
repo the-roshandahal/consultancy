@@ -37,10 +37,10 @@
                             <td>{{course.course_price}}</td>
                             
                             <td>
-                                {% if 'update_products' in permissions %}
+                                {% if 'update_course' in permissions %}
                                 <a href="{% url 'edit_course' id=course.id %}" class="btn btn-icon btn-rounded btn-flush-primary flush-soft-hover" data-bs-toggle="tooltip" data-bs-original-title="Edit" ><span class="icon"><span class="feather-icon">Edit</span></span></a>
                                 {% endif %}
-                                {% if 'delete_products' in permissions %}
+                                {% if 'delete_course' in permissions %}
                                 <a href="{% url 'delete_course' id=course.id %}" class="btn btn-icon btn-rounded btn-flush-danger flush-soft-hover" data-bs-toggle="tooltip" data-bs-original-title="Delete" ><span class="icon"><span class="feather-icon">Delete</span></span></a>
                                 {% endif %}
                             </td>

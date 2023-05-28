@@ -10,11 +10,11 @@ from account.context_processors import custom_data_views
 
  
 def courses(request):
-    if 'read_products' in custom_data_views(request):
-        coursess = Course.objects.all()
+    if 'read_course' in custom_data_views(request):
+        courses = Course.objects.all()
         category = CourseCategory.objects.all()
         context={
-            'courses':coursess,
+            'courses':courses,
             'category':category,
         }
         return render (request,'courses/courses.html',context)
@@ -25,7 +25,7 @@ def courses(request):
 
 
 def add_course(request):
-    if 'create_products' in custom_data_views(request):
+    if 'create_course' in custom_data_views(request):
         if request.method == "POST":
           
             course_title = request.POST["course_title"]
@@ -51,7 +51,7 @@ def add_course(request):
 
 
 def edit_course(request,id):
-    if 'update_courses' in custom_data_views(request):
+    if 'update_course' in custom_data_views(request):
         if request.method == "POST":
             course_type = request.POST["course_type"]
             course_title = request.POST["course_title"]
@@ -77,7 +77,7 @@ def edit_course(request,id):
             context={
                 'course':course,
                 'category':category,
-                'unit':unit,
+               
             }
             return render (request,'courses/edit_course.html',context)
     else:
@@ -86,7 +86,7 @@ def edit_course(request,id):
 
 
 def delete_course(request,id):
-    if 'delete_courses' in custom_data_views(request):
+    if 'delete_course' in custom_data_views(request):
         course = Course.objects.get(id=id)
         course.delete()
         messages.info(request, "Course Deleted Successfully")
@@ -97,7 +97,7 @@ def delete_course(request,id):
 
 
 def course_setup(request):
-    if 'read_products' in custom_data_views(request):
+    if 'read_course' in custom_data_views(request):
         category = CourseCategory.objects.all()
         
         context = {
@@ -111,7 +111,7 @@ def course_setup(request):
         
 
 def add_course_category(request):
-    if 'create_products' in custom_data_views(request):
+    if 'create_course' in custom_data_views(request):
         if request.method =="POST":
             course_category = request.POST['course_category']
             if CourseCategory.objects.filter(course_category=course_category).exists():
@@ -129,7 +129,7 @@ def add_course_category(request):
         return redirect('home')
         
 def edit_course_category(request,id):
-    if 'update_courses' in custom_data_views(request):
+    if 'update_course' in custom_data_views(request):
         return render (request,'courses/delete_course.html')
     else:
         messages.info(request, "Unauthorized access.")
@@ -137,7 +137,7 @@ def edit_course_category(request,id):
     
 
 def delete_course_category(request,id):
-    if 'delete_courses' in custom_data_views(request):
+    if 'delete_course' in custom_data_views(request):
         category = CourseCategory.objects.get(id=id)
         category.delete()
         messages.info(request, "Course Category Deleted Successfully")
