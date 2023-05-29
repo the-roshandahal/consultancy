@@ -13,11 +13,11 @@
 					</div>
 					<div class="mb-lg-0 mb-2 me-8">
                         {% if 'read_finance' in permissions %}
-                        <a href="{% url 'single_statement' id=client.id %}">
+                        <a href="{% url 'single_statement' id=student.id %}">
                             <button type="button" class="btn btn-success  btn-animated" data-bs-toggle="modal" data-bs-target="#createUserModal">View Statement</button>
                         </a>
                         {% endif %}
-						{% if 'delete_finance' in permissions %}
+						{% if 'delete_student' in permissions %}
                         <button type="button" class="btn btn-success  btn-animated" data-bs-toggle="modal" data-bs-target="#DeleteModal">Delete Client</button>
                         {% endif %}
 					</div>
@@ -37,7 +37,7 @@
                             </div>
                             <div class="media-body">
                                 <div class="text-high-em">Name</div> 
-                                <div class="fs-7"><a href="#" class="table-link-text link-medium-em">{{client.client_name}}</a></div> 
+                                <div class="fs-7"><a href="#" class="table-link-text link-medium-em">{{student.student_name}}</a></div> 
                             </div>
                         </div>
                         
@@ -55,7 +55,7 @@
                             </div>
                             <div class="media-body">
                                 <div class="text-high-em">Phone Number</div> 
-                                <div class="fs-7"><a href="#" class="table-link-text link-medium-em">{{client.address}}</a></div> 
+                                <div class="fs-7"><a href="#" class="table-link-text link-medium-em">{{student.address}}</a></div> 
                             </div>
                         </div>
                         
@@ -75,7 +75,7 @@
                             </div>
                             <div class="media-body">
                                 <div class="text-high-em">Email</div> 
-                                <div class="fs-7"><a href="#" class="table-link-text link-medium-em">{{client.email}}</a></div> 
+                                <div class="fs-7"><a href="#" class="table-link-text link-medium-em">{{student.email}}</a></div> 
                             </div>
                         </div>
                         
@@ -94,7 +94,7 @@
                             </div>
                             <div class="media-body">
                                 <div class="text-high-em">Address</div> 
-                                <div class="fs-7"><a href="#" class="table-link-text link-medium-em">{{client.contact}}</a></div> 
+                                <div class="fs-7"><a href="#" class="table-link-text link-medium-em">{{student.contact}}</a></div> 
                             </div>
                         </div>
                         
@@ -112,7 +112,7 @@
                             </div>
                             <div class="media-body">
                                 <div class="text-high-em">Date Joined</div> 
-                                <div class="fs-7"><a href="#" class="table-link-text link-medium-em">{{client.created}}</a></div> 
+                                <div class="fs-7"><a href="#" class="table-link-text link-medium-em">{{student.created}}</a></div> 
                             </div>
                         </div>
                         
@@ -238,7 +238,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-				<a href="{% url 'delete_student' id=client.id %}"><button type="button" class="btn btn-primary">Delete</button></a>
+				<a href="{% url 'delete_student' id=student.id %}"><button type="button" class="btn btn-primary">Delete</button></a>
 			</div>
 		</div>
 	</div>

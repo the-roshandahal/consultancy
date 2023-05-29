@@ -4,6 +4,7 @@ from django.contrib import messages, auth
 from account.models import *
 from .models import *
 
+
 from account.context_processors import custom_data_views
 # Create your views here.
 
@@ -25,13 +26,30 @@ def student(request):
 def add_student(request):
     if 'create_student' in custom_data_views(request):
         if request.method == "POST":
-            student_name = request.POST["student_name"]
-            address = request.POST["address"]
+            username = request.POST["username"]
+            password=request.POST["password"]
+            first_name = request.POST["first_name"]
+            last_name=request.POST["last_name"]
             email = request.POST["email"]
+
+            address = request.POST["address"]
             contact = request.POST["contact"]
-            Student.objects.create(student_name=student_name,
-                                    address=address, email=email, contact=contact)
-            return redirect('student')
+            if not username:
+                messages.error(request, "The username must be provided.")
+                return redirect('add_student')
+
+            try:
+                user = User.objects.get(username=username)
+                print("here")
+                messages.error(request, "Username already exists.")
+                return redirect('add_student')
+
+            except User.DoesNotExist:
+                user=User.objects.create_user(username=username,first_name=first_name,last_name=last_name,email=email,password=password)
+                user.save()
+                Student.objects.create(user=user, address=address, contact=contact)
+                return redirect('student')
+            
         else:
             return render(request,'student/add_student.html')
     else:
@@ -42,18 +60,27 @@ def add_student(request):
 def edit_student(request,id):
     if 'update_student' in custom_data_views(request):
         if request.method == "POST":
-            student_name = request.POST["student_name"]
+            first_name = request.POST["first_name"]
+            last_name = request.POST["last_name"]
+            username = request.POST["username"]
+            
             address = request.POST["address"]
             email = request.POST["email"]
             contact = request.POST["contact"]
 
-            student_data = Student.objects.filter(id=id)[0]
+            student_data = Student.objects.get(id=id)
+            user_data = User.objects.get(username=student_data.user)
+            print('usdas')
+            user_data.first_name = first_name
+            user_data.last_name = last_name
+            user_data.email = email
+            user_data.username=username
+            user_data.save()
 
-            student_data.student_name = student_name
             student_data.address = address
-            student_data.email = email
             student_data.contact = contact
             student_data.save()
+
             messages.info(request, "student edited successfully.")
             return redirect('student')
         else:
