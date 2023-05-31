@@ -11,16 +11,7 @@
 						<h1 class="pg-title">Welcome back</h1>
 						<p>Welcome to SPELL CRM Dashboard.</p>
 					</div>
-					<div class="mb-lg-0 mb-2 me-8">
-                        {% if 'read_finance' in permissions %}
-                        <a href="{% url 'single_statement' id=student.id %}">
-                            <button type="button" class="btn btn-success  btn-animated" data-bs-toggle="modal" data-bs-target="#createUserModal">View Statement</button>
-                        </a>
-                        {% endif %}
-						{% if 'delete_student' in permissions %}
-                        <button type="button" class="btn btn-success  btn-animated" data-bs-toggle="modal" data-bs-target="#DeleteModal">Delete Client</button>
-                        {% endif %}
-					</div>
+				
 				</div>
 			</div>
 		</div>
@@ -37,7 +28,7 @@
                             </div>
                             <div class="media-body">
                                 <div class="text-high-em">Name</div> 
-                                <div class="fs-7"><a href="#" class="table-link-text link-medium-em">{{student.student_name}}</a></div> 
+                                <div class="fs-7"><a href="#" class="table-link-text link-medium-em">{{student.user.username}}</a></div> 
                             </div>
                         </div>
                         
@@ -75,7 +66,7 @@
                             </div>
                             <div class="media-body">
                                 <div class="text-high-em">Email</div> 
-                                <div class="fs-7"><a href="#" class="table-link-text link-medium-em">{{student.email}}</a></div> 
+                                <div class="fs-7"><a href="#" class="table-link-text link-medium-em">{{student.user.email}}</a></div> 
                             </div>
                         </div>
                         
@@ -121,100 +112,8 @@
             </div>
         </div>
 
-        <div class="invoice-body mt-3">
-			<div class="container">
-                <h5 class="h5g-title">Invoices</h5>
-				<div class="invoice-list-view">
-					<table class="table nowrap w-100 mb-5">
-						<thead>
-							<tr>
-								<th>Invoice</th>
-								<th>Customer</th>
-								<th>Issue Date</th>
-								<th>Due Date</th>
-								<th>Invoice Amount</th>
-								<th>Created By</th>
-								<th>Actions</th>
-							</tr>
-						</thead>
-						<tbody>
-							{% for invoices in invoices %}
-							<tr>
-								<td><a href="#" class="table-link-text link-high-em">{{invoices.id}}</a></td>
-								<td>{{invoices.customer}}</td>
-								<td>{{invoices.created}}</td>
-								<td>{{invoices.created}}</td>
-								<td>Rs. {{invoices.invoice_amount}}</td>
-								<td>{{invoices.created_by}}</td>
-								
-								<td>
-									<div class="d-flex align-items-center">
-										<div class="d-flex">
-                                            {% if 'read_finance' in permissions %}
-											<a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="View" href="{% url 'view_invoice' id=invoices.id %}"><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="eye"></i></span></span></a>
-                                            {% else %}
-                                            <p>---</p>
-                                            {% endif %}
-										</div>
-									</div>
-								</td>
-							</tr>
-							{% endfor %}
-						</tbody>
-					</table>
-				
-				</div>
-			
-			</div>
-		</div>
-
-        <div class="invoice-body mt-3">
-			<div class="container">
-                <h5 class="h5g-title">Receipts</h5>
-				<div class="invoice-list-view">
-					<table class="table nowrap w-100 mb-5">
-						<thead>
-                            <tr>
-                                <th>Receipt #</th>
-                                <th>Client Name</th>
-                                <th>Payment Method</th>
-                                <th>Paid Amount</th>
-                                <th>Created By</th>
-                                <th>Receipt Date</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for receipts in receipts %}
-                            <tr>
-                                <td><a href="#" class="table-link-text link-high-em">{{receipts.id}}</a></td>
-                                <td>{{receipts.customer}}</td>
-                                <td>{{receipts.payment_method}}</td>
-                                <td>Rs.{{receipts.paid_amount}}</td>
-                                <td>{{receipts.created_by}}</td>
-                                <td>{{receipts.created}}</td>
-                                
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="d-flex">
-                                            {% if 'read_finance' in permissions %}
-                                            <a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="View" href="{% url 'view_receipt' id=receipts.id %}"><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="eye"></i></span></span></a>
-                                            {% else %}
-                                            <p>---</p>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-					</table>
-				
-				</div>
-			
-			</div>
-		</div>
-
+       
+        
 
 
     </div>

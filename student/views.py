@@ -2,8 +2,6 @@ from django.shortcuts import render,redirect
 from.models import *
 from django.contrib import messages, auth
 from account.models import *
-from .models import *
-
 
 from account.context_processors import custom_data_views
 # Create your views here.

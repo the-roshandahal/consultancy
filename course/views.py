@@ -53,17 +53,15 @@ def add_course(request):
 def edit_course(request,id):
     if 'update_course' in custom_data_views(request):
         if request.method == "POST":
-            course_type = request.POST["course_type"]
+            
             course_title = request.POST["course_title"]
             course_description = request.POST["course_description"]
             course_price = request.POST["course_price"]
             
 
             category = request.POST["course_category"]
-            unit = request.POST["course_unit"]
             course_category = CourseCategory.objects.get(id=category)
             course_obj = Course.objects.get(id=id)
-            course_obj.course_type=course_type
             course_obj.course_title=course_title
             course_obj.course_description=course_description
             course_obj.course_price=course_price
@@ -130,11 +128,25 @@ def add_course_category(request):
         
 def edit_course_category(request,id):
     if 'update_course' in custom_data_views(request):
-        return render (request,'courses/delete_course.html')
+        if request.method =="POST":
+            course_category = request.POST['course_category']
+            course_category_obj = CourseCategory.objects.get(id=id)
+            course_category_obj.course_category=course_category
+            course_category_obj.save()
+            messages.info(request, "Category updated successfully")
+            return redirect('course_setup')
+        else:
+            course_category = CourseCategory.objects.get(id=id)
+            context = {
+                'course_category': course_category
+                }
+            return render(request, 'courses/delete_course.html', context)
     else:
         messages.info(request, "Unauthorized access.")
-        return redirect('home')
-    
+        return redirect('course_setup')
+
+        
+   
 
 def delete_course_category(request,id):
     if 'delete_course' in custom_data_views(request):
