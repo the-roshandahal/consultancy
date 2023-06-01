@@ -68,10 +68,10 @@
                                         <div class="d-flex align-items-center">
                                             <div class="d-flex">
                                                 {% if 'manage_hrm' in permissions %}
-                                                <a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Edit" href="{% url 'edit_year' id=year.id %}"><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="edit"></i></span></span></a>
+                                                <a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Edit" href="{% url 'edit_year' id=year.id %}"><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="edit">Edit</i></span></span></a>
                                                 {% endif %}
                                                 {% if 'delete_hrm' in permissions %}
-                                                <a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="modal" data-bs-target="#exampleModalCenterYearDelete{{year.id}}" href="#"><span class="icon"><span class="feather-icon"><i data-feather="archive"></i></span></span></a>
+                                                <a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="modal" data-bs-target="#exampleModalCenterYearDelete{{year.id}}" href="#"><span class="icon"><span class="feather-icon"><i data-feather="archive">Delete</i></span></span></a>
                                                 {% endif %}
                                             </div>
                                         </div>
@@ -122,13 +122,13 @@
                                 <div class="d-flex align-items-center">
                                     <div class="d-flex">
                                         {% if 'manage_hrm' in permissions %}
-                                        <a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Edit" href="{% url 'edit_month' id=month_dict.month.id %}"><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="edit"></i></span></span></a>
+                                        <a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Edit" href="{% url 'edit_month' id=month_dict.month.id %}"><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="edit">Edit</i></span></span></a>
                                         {% endif %}
                                         {% if 'delete_hrm' in permissions %}
-                                        <a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="modal" data-bs-target="#exampleModalCentermonthDelete{{month_dict.month.id}}"><span class="icon"><span class="feather-icon"><i data-feather="archive"></i></span></span></a>
+                                        <a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="modal" data-bs-target="#exampleModalCentermonthDelete{{month_dict.month.id}}"><span class="icon"><span class="feather-icon"><i data-feather="archive">Delete</i></span></span></a>
                                         {% endif %}
                                         {% if 'read_hrm' in permissions %}
-                                        <a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover del-button"  data-bs-toggle="modal" data-bs-target="#exampleModalCenterViewMonth{{month_dict.month.month.id}}"><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="eye"></i></span></span></a>
+                                        <a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover del-button"  data-bs-toggle="modal" data-bs-target="#exampleModalCenterViewMonth{{month_dict.month.month.id}}"><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="eye">View</i></span></span></a>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -168,10 +168,10 @@
                                 <div class="d-flex align-items-center">
                                     <div class="d-flex">
                                         {% if 'manage_hrm' in permissions %}
-                                        <a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Edit" href="{% url 'edit_department' id=department.id %}"><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="edit"></i></span></span></a>
+                                        <a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Edit" href="{% url 'edit_department' id=department.id %}"><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="edit">Edit</i></span></span></a>
                                         {% endif %}
                                         {% if 'delete_hrm' in permissions %}
-										<a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{{department.id}}" href=""><span class="icon"><span class="feather-icon"><i data-feather="archive"></i></span></span></a>
+										<a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{{department.id}}" href=""><span class="icon"><span class="feather-icon"><i data-feather="archive">Delete</i></span></span></a>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -212,10 +212,10 @@
                                 <div class="d-flex align-items-center">
                                     <div class="d-flex">
                                         {% if 'manage_hrm' in permissions %}
-                                        <a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Edit" href="{% url 'edit_designation' id=designation.id %}"><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="edit"></i></span></span></a>
+                                        <a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Edit" href="{% url 'edit_designation' id=designation.id %}"><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="edit">Edit</i></span></span></a>
                                         {% endif %}
                                         {% if 'delete_hrm' in permissions %}
-										<a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="modal" data-bs-target="#exampleModalCenterDesignation{{designation.id}}" href=""><span class="icon"><span class="feather-icon"><i data-feather="archive"></i></span></span></a>
+										<a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="modal" data-bs-target="#exampleModalCenterDesignation{{designation.id}}" href=""><span class="icon"><span class="feather-icon"><i data-feather="archive">Delete</i></span></span></a>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -493,7 +493,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body">
+			{% comment %} <div class="modal-body">
                 <form action="{% url 'add_device_data' %}" method="POST">
                     {% csrf_token %}
 
@@ -514,7 +514,7 @@
                         <button type="submit" class="btn btn-primary">Add</button>
                     </div>
                 </form>
-            </div>
+            </div> {% endcomment %}
 		</div>
         
 	</div>

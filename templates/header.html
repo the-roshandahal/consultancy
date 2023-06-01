@@ -38,7 +38,7 @@
                                 <a href="">Crm setup</a>
                             </li>
                             <li>
-                                <a href="">Hrm setup</a>
+                                <a href="{%url 'hrm_setup' %}">Hrm setup</a>
                             </li>
                             <li>
                                 <a href="{% url 'add_course_category' %}">Product setup</a>
@@ -70,10 +70,10 @@
                         <a href=""><i class="material-icons-two-tone">group</i>Roles and User<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                         <ul class="sub-menu">
                             <li>
-                                <a href="">Roles</a>
+                                <a href="{% url 'role' %}">Roles</a>
                             </li>
                             <li>
-                                <a href="">User</a>
+                                <a href="{% url 'company_user' %}">User</a>
                             </li>
                             
                         </ul>
@@ -91,7 +91,7 @@
                         <a href=""><i class="material-icons-two-tone">person_add</i>Hrm system<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                         <ul class="sub-menu">
                             <li>
-                                <a href="">Dashboard</a>
+                                <a href="{%url 'hrm'%}">Dashboard</a>
                             </li>
                             <li>
                                 <a href="{% url 'employees' %}">Employees</a>

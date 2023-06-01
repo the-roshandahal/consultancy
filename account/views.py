@@ -43,10 +43,11 @@ def logout(request):
 def role(request):
     if 'read_account' in custom_data_views(request):
         roles = Permission.objects.all()
+        print(roles)
         context = {
             'roles':roles,
         }
-        return render (request,'account/roles.html',context)
+        return render (request,'account/role.html',context)
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')
@@ -80,11 +81,19 @@ def create_role(request):
             delete_hrm = request.POST.get('delete_hrm', 0)
             manage_hrm = request.POST.get('manage_hrm', 0)
 
-            create_products = request.POST.get('create_products', 0)
-            read_products = request.POST.get('read_products', 0)
-            update_products = request.POST.get('update_products', 0)
-            delete_products = request.POST.get('delete_products', 0)
-            manage_products = request.POST.get('manage_products', 0)
+            create_course = request.POST.get('create_course', 0)
+            read_course = request.POST.get('read_course', 0)
+            update_course = request.POST.get('update_course', 0)
+            delete_course = request.POST.get('delete_course', 0)
+            manage_course = request.POST.get('manage_course', 0)
+
+            create_student = request.POST.get('create_student', 0)
+            read_student = request.POST.get('read_student', 0)
+            update_student = request.POST.get('update_student', 0)
+            delete_student = request.POST.get('delete_student', 0)
+            manage_student = request.POST.get('manage_student', 0)
+
+
 
             manage_company = request.POST.get('manage_company', 0)
             try:
@@ -97,9 +106,9 @@ def create_role(request):
                                         create_finance =create_finance, read_finance =read_finance, update_finance =update_finance, delete_finance =delete_finance,manage_finance=manage_finance,
                                         create_account =create_account, read_account =read_account, update_account =update_account, delete_account =delete_account,manage_account=manage_account,
                                         create_hrm =create_hrm, read_hrm =read_hrm, update_hrm =update_hrm, delete_hrm =delete_hrm,manage_hrm=manage_hrm,
-                                        create_products =create_products, read_products =read_products, update_products =update_products, delete_products =delete_products,manage_products=manage_products,
+                                        create_course =create_course, read_course =read_course, update_course =update_course, delete_course =delete_course,manage_course=manage_course,
                                         create_leads =create_leads, read_leads =read_leads, update_leads =update_leads, delete_leads =delete_leads,manage_leads=manage_leads,
-                                        manage_company=manage_company
+                                        manage_company=manage_company, create_student =create_student, read_student =read_student, update_student =update_student, delete_student =delete_student,manage_student=manage_student,
                                         )
                 return redirect('role')
 

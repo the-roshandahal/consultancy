@@ -1,8 +1,31 @@
-{% include 'header.html' %}
-<div class="app-content">
-    <div class="content-wrapper">
-        <div class="invoice-body mt-3">
-            <a href="{% url 'create_role' %}"><button>create role</button></a>
+{% load static %}{% include 'header.html' %}
+<!-- Main Content -->
+<div class="hk-pg-wrapper">
+	<div class="container-xxl">
+		
+		<div class="app-content">
+			<div class="content-wrapper">
+		
+				<div class="d-flex flex-wrap justify-content-between flex-1">
+					<div class="mb-md-0 mb-2 me-8">
+						<div class="d-flex align-items-center">
+							<h1 class="pg-title">Roles</h1>
+						</div>
+						<p>Hi {{request.user.first_name}}!</p>
+						
+					</div>
+					{% if 'create_account' in permissions %}
+					<div class="pg-header-action-wrap">
+						<a href="{% url 'create_role' %}"><button class="btn btn-primary">Create Role</button></a>
+					</div>
+					
+					{% endif %}
+				</div>
+			</div>
+		</div>
+
+		<!-- /Add other contents below -->
+		<div class="invoice-body mt-3">
 			<div class="row">
 				<table class="table nowrap w-100 mb-5">
 					<thead>
@@ -22,13 +45,13 @@
 							<td>
 								<div  class="d-flex">
 									{% if 'update_account' in permissions  %}
-									<a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Edit" href="{% url 'edit_role' id=roles.id %}"><span class="icon"><span class="feather-icon"><i data-feather="edit-2"></i></span></span></a>
+									<a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Edit" href="{% url 'edit_role' id=roles.id %}"><span class="icon"><span class="feather-icon"><i data-feather="edit-2"></i>Edit</span></span></a>
 									{% endif %}
 									{% if 'read_account' in permissions  %}
-									<a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" href="{% url 'view_role' id=roles.role_id %}"><span class="icon"><span class="feather-icon"><i data-feather="eye"></i></span></span></a>
+									<a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" href="{% url 'view_role' id=roles.role_id %}"><span class="icon"><span class="feather-icon"><i data-feather="eye">View</i></span></span></a>
 									{% endif %}
 									{% if 'delete_account' in permissions  %}
-									<a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{{roles.id}}" href=""><span class="icon"><span class="feather-icon"><i data-feather="archive"></i></span></span></a>
+									<a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{{roles.id}}" href=""><span class="icon"><span class="feather-icon"><i data-feather="archive">Delete</i></span></span></a>
 									{% endif %}
 								</div>
 							</td>
@@ -41,12 +64,8 @@
 				</table>
 			</div>
 		</div>
-    </div>
+	</div>
 </div>
-
-
-
-
 {% for roles in roles %}
 <div class="modal fade" id="exampleModalCenter{{roles.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter{{roles.id}}" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">

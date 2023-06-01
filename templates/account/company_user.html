@@ -1,0 +1,84 @@
+{% load static %}{% include 'header.html' %}
+<!-- Main Content -->
+
+<div class="app-content">
+    <div class="content-wrapper">
+		<div class="hk-pg-header">
+			<div class="d-flex">
+				<div class="d-flex flex-wrap justify-content-between flex-1">
+					<div class="mb-md-0 mb-2 me-8">
+						<div class="d-flex align-items-center">
+							<h1 class="pg-title">CRM Dashboard</h1>
+						</div>
+						<p id="greeting"></p>
+
+						<script>
+							const now = new Date();
+							const hour = now.getHours();
+					
+							let greeting;
+					
+							if (hour < 12) {
+								greeting = "Good Morning";
+							} else if (hour < 18) {
+								greeting = "Good Afternoon";
+							} else {
+								greeting = "Good Evening";
+							}
+					
+							document.getElementById("greeting").innerHTML = greeting + " {{request.user.first_name}}!";
+						</script>
+					</div>
+					{% if 'create_account' in permissions %}
+					<div class="pg-header-action-wrap">
+						<a href="{% url 'add_employee' %}"><button class="btn btn-primary" >Add User</button></a>
+					</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		
+		
+
+		<div class="invoice-body mt-3">
+			<div class="row">
+				<table id="datable_1" class="table nowrap w-100 mb-5">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Name</th>
+							<th>Role</th>
+							<th>Email Address</th>
+							<th>Department</th>
+							<th>Designation</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for company_users in company_users %}
+						<tr>
+							
+							<td><a href="#" class="table-link-text link-high-em">{{company_users.id}}</a></td>
+							<td>{{company_users.user.first_name}} {{company_users.user.last_name}}</td>
+							<td>{{company_users.permission}}</td>
+							<td>{{company_users.email}}</td>
+							<td>{{company_users.department}}</td>
+							<td>{{company_users.designation}}</td>
+							<td>
+                                <div class="d-flex align-items-center">
+                                    <div class="d-flex">
+                                        {% if 'update_hrm' in permissions %}
+										<a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Edit" href="{% url 'edit_employee' id=company_users.id %}"><span class="icon"><span class="feather-icon"><i data-feather="edit-2"></i></span></span></a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{% include 'footer.html' %}

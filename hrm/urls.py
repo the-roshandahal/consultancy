@@ -25,24 +25,24 @@ urlpatterns = [
     
     
     
-    path("leave/", views.leave, name="leave"),
-    path("apply_leave/", views.apply_leave, name="apply_leave"),
-    path("add_emp_leave/", views.add_emp_leave, name="add_emp_leave"),
-    path("emp_leaves/", views.emp_leaves, name="emp_leaves"),
+    # path("leave/", views.leave, name="leave"),
+    # path("apply_leave/", views.apply_leave, name="apply_leave"),
+    # path("add_emp_leave/", views.add_emp_leave, name="add_emp_leave"),
+    # path("emp_leaves/", views.emp_leaves, name="emp_leaves"),
     
     
-    path("accept_leave/<int:id>", views.accept_leave, name="accept_leave"),
-    path("deny_leave/<int:id>", views.deny_leave, name="deny_leave"),
+    # path("accept_leave/<int:id>", views.accept_leave, name="accept_leave"),
+    # path("deny_leave/<int:id>", views.deny_leave, name="deny_leave"),
     
     
     
-    # path("add_year/", views.add_year, name="add_year"),
-    # path("delete_year/<int:id>", views.delete_year, name="delete_year"),
-    # path("edit_year/<int:id>", views.edit_year, name="edit_year"),
+    path("add_year/", views.add_year, name="add_year"),
+    path("delete_year/<int:id>", views.delete_year, name="delete_year"),
+    path("edit_year/<int:id>", views.edit_year, name="edit_year"),
     
-    # path("add_month/", views.add_month, name="add_month"),
-    # path("delete_month/<int:id>", views.delete_month, name="delete_month"),
-    # path("edit_month/<int:id>", views.edit_month, name="edit_month"),
+    path("add_month/", views.add_month, name="add_month"),
+    path("delete_month/<int:id>", views.delete_month, name="delete_month"),
+    path("edit_month/<int:id>", views.edit_month, name="edit_month"),
 
 
     # path("attendance/", views.attendance, name="attendance"),
