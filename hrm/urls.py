@@ -45,30 +45,6 @@ urlpatterns = [
     path("edit_month/<int:id>", views.edit_month, name="edit_month"),
 
 
-    # path("attendance/", views.attendance, name="attendance"),
-    # path("payroll/", views.payroll, name="payroll"),
-    # path("emp_payslip/", views.emp_payslip, name="emp_payslip"),
-    # path("pay_salary/", views.pay_salary, name="pay_salary"),
-    # path("salary_payment/", views.salary_payment, name="salary_payment"),
-    # path("log_sheet/", views.log_sheet, name="log_sheet"),
-    # path('punch_in/', views.punch_in, name='punch_in'),
-    # path('punch_out/', views.punch_out, name='punch_out'),
-    # path("advance_salary/", views.advance_salary, name="advance_salary"),
-
-
-
-
-    # path("edit_device_data/<int:id>", views.edit_device_data, name="edit_device_data"),
-    # path("delete_device_data/<int:id>", views.delete_device_data, name="delete_device_data"),
-
-    # path("edit_att_user/<int:id>", views.edit_att_user, name="edit_att_user"),
-    # path("delete_att_user/<int:id>", views.delete_att_user, name="delete_att_user"),
-    
-    # path("add_device_data/", views.add_device_data, name="add_device_data"),
-    # path("device_attendance/", views.device_attendance, name="device_attendance"),
-    # path("get_zkusers/", views.get_zkusers, name="get_zkusers"),
-    # path("get_zkattendance/", views.get_zkattendance, name="get_zkattendance"),
-
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

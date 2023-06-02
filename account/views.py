@@ -108,7 +108,8 @@ def create_role(request):
                                         create_hrm =create_hrm, read_hrm =read_hrm, update_hrm =update_hrm, delete_hrm =delete_hrm,manage_hrm=manage_hrm,
                                         create_course =create_course, read_course =read_course, update_course =update_course, delete_course =delete_course,manage_course=manage_course,
                                         create_leads =create_leads, read_leads =read_leads, update_leads =update_leads, delete_leads =delete_leads,manage_leads=manage_leads,
-                                        manage_company=manage_company, create_student =create_student, read_student =read_student, update_student =update_student, delete_student =delete_student,manage_student=manage_student,
+                                        manage_company=manage_company,
+                                        create_student =create_student, read_student =read_student, update_student =update_student, delete_student =delete_student,manage_student=manage_student,
                                         )
                 return redirect('role')
 
