@@ -1,7 +1,25 @@
+
 {% include 'header.html' %}
 <div class="app-content">
     <div class="content-wrapper">
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <div class="example-container">
+            <div class="example-content bg-light">
+                <div class="page-description d-flex align-items-center">
+                    <div class="page-description-content flex-grow-1">
+                        <h1>Company Details</h1>
+                        <span>These details are visible in invoice and receipts.</span>
+                    </div>
+                    <div class="page-description-actions">
+                        
+                        <a href="" class="btn btn-primary"><i class="material-icons">edit</i>Edit</a>
+                        
+                        <a href="" class="btn btn-primary"><i class="material-icons">add</i>Add</a>
+                       
+                    </div>
+                </div>
+
+               <!-- add other contents  -->
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<script>
 			$(document).ready(function() {
 				$("#selectfinance").click(function() {
@@ -21,6 +39,9 @@
 				});
 				$("#selectcompany").click(function() {
 					$("input.company[type=checkbox]").prop("checked", this.checked);
+				});
+				$("#selectstudents").click(function() {
+					$("input.students[type=checkbox]").prop("checked", this.checked);
 				});
 			});
 		</script>
@@ -47,8 +68,8 @@
                                 <th scope="row">Create</th>
                                 <th scope="row">Read</th>
                                 <th scope="row">Update</th>
-                                <th scope="row">Manage</th>
                                 <th scope="row">Delete</th>
+                                <th scope="row">Manage</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -80,19 +101,19 @@
                                     Courses
                                 </th>
                                 <td>
-                                    <input type="checkbox" class="form-check-input products" id="customCheck1" name="create_products" value=True>
+                                    <input type="checkbox" class="form-check-input products" id="customCheck1" name="create_course" value=True>
                                 </td>
                                 <td>
-                                    <input type="checkbox" class="form-check-input products" id="customCheck1" name="read_products" value=True>
+                                    <input type="checkbox" class="form-check-input products" id="customCheck1" name="read_course" value=True>
                                 </td>
                                 <td>
-                                    <input type="checkbox" class="form-check-input products" id="customCheck1" name="update_products" value=True>
+                                    <input type="checkbox" class="form-check-input products" id="customCheck1" name="update_course" value=True>
                                 </td>
                                 <td>
-                                    <input type="checkbox" class="form-check-input products" id="customCheck1" name="delete_products" value=True>
+                                    <input type="checkbox" class="form-check-input products" id="customCheck1" name="delete_course" value=True>
                                 </td>
                                 <td>
-                                    <input type="checkbox" class="form-check-input products" id="customCheck1" name="manage_products" value=True>
+                                    <input type="checkbox" class="form-check-input products" id="customCheck1" name="manage_course" value=True>
                                 </td>
                             </tr>
                             <tr>
@@ -101,19 +122,19 @@
                                     Students
                                 </th>
                                 <td>
-                                    <input type="checkbox" class="form-check-input students" id="customCheck1" name="create_students" value=True>
+                                    <input type="checkbox" class="form-check-input students" id="customCheck1" name="create_student" value=True>
                                 </td>
                                 <td>
-                                    <input type="checkbox" class="form-check-input students" id="customCheck1" name="read_students" value=True>
+                                    <input type="checkbox" class="form-check-input students" id="customCheck1" name="read_student" value=True>
                                 </td>
                                 <td>
-                                    <input type="checkbox" class="form-check-input students" id="customCheck1" name="update_students" value=True>
+                                    <input type="checkbox" class="form-check-input students" id="customCheck1" name="update_student" value=True>
                                 </td>
                                 <td>
-                                    <input type="checkbox" class="form-check-input students" id="customCheck1" name="delete_students" value=True>
+                                    <input type="checkbox" class="form-check-input students" id="customCheck1" name="delete_student" value=True>
                                 </td>
                                 <td>
-                                    <input type="checkbox" class="form-check-input students" id="customCheck1" name="manage_students" value=True>
+                                    <input type="checkbox" class="form-check-input students" id="customCheck1" name="manage_student" value=True>
                                 </td>
                             </tr>
                             <tr>
@@ -161,23 +182,23 @@
                             </tr>
                             <tr>
                                 <th scope="row">
-                                    <input type="checkbox" class="form-check-input" id="selectleads">
+                                    <input type="checkbox" class="form-check-input" id="selectlead">
                                     Leads
                                 </th>
                                 <td>
-                                    <input type="checkbox" class="form-check-input leads" id="customCheck1" name="create_leads" value=True>
+                                    <input type="checkbox" class="form-check-input lead" id="customCheck1" name="create_leads" value=True>
                                 </td>
                                 <td>
-                                    <input type="checkbox" class="form-check-input leads" id="customCheck1" name="read_leads" value=True>
+                                    <input type="checkbox" class="form-check-input lead" id="customCheck1" name="read_leads" value=True>
                                 </td>
                                 <td>
-                                    <input type="checkbox" class="form-check-input leads" id="customCheck1" name="update_leads" value=True>
+                                    <input type="checkbox" class="form-check-input lead" id="customCheck1" name="update_leads" value=True>
                                 </td>
                                 <td>
-                                    <input type="checkbox" class="form-check-input leads" id="customCheck1" name="delete_leads" value=True>
+                                    <input type="checkbox" class="form-check-input lead" id="customCheck1" name="delete_leads" value=True>
                                 </td>
                                 <td>
-                                    <input type="checkbox" class="form-check-input leads" id="customCheck1" name="manage_leads" value=True>
+                                    <input type="checkbox" class="form-check-input lead" id="customCheck1" name="manage_leads" value=True>
                                 </td>
                             </tr>
                             <tr>
@@ -206,6 +227,13 @@
             </div>
 													
         </div>
+
+
+
+
+            </div>
+        </div>
     </div>
 </div>
+
 {% include 'footer.html' %}

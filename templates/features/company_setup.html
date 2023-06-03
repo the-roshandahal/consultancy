@@ -1,83 +1,83 @@
 {% include 'header.html' %}
 <div class="app-content">
-                <div class="content-wrapper">
-                    <div class="container-fluid">
+    <div class="content-wrapper">
+        <div class="example-container">
+            <div class="example-content bg-light">
+                <div class="page-description d-flex align-items-center">
+                    <div class="page-description-content flex-grow-1">
+                        <h1>Company Details</h1>
+                        <span>These details are visible in invoice and receipts.</span>
+                    </div>
+                    <div class="page-description-actions">
                         {% if company_setup %}
-                        <div class="row mt-5">
-                            <div class="col-lg-12 col-sm-12">
-                                <div class="card">
-                                    <div class="card-header card-header-action">
-                                        <h6>Company Details</h6>
-                                        <p>These details are visible in invoice and receipts.</p>
+                        <a href="{% url 'edit_company_setup' id=company_setup.id %}" class="btn btn-primary"><i class="material-icons">edit</i>Edit</a>
+                        {% else %}
+                        <a href="{% url 'add_company_setup' %}" class="btn btn-primary"><i class="material-icons">add</i>Add</a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if company_setup %}
+                <div class="row mt-5">
+                    <div class="col-lg-12 col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-6 mt-2">
+                                        <h5 class="card-title">Company Name</h5>
+                                        <p>{{company_setup.company_name}} </p>
                                     </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <h5 class="card-title">Company Name</h5>
-                                                <p>{{company_setup.company_name}} </p>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <h5 class="card-title">Company Email</h5>
-                                                <p>{{company_setup.company_email}} </p>
-                                            </div>
-                                        </div>
-                                        <div class="separator"></div>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <h5 class="card-title">Company Contact Number</h5>
-                                                <p>{{company_setup.company_contact_number}} </p>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <h5 class="card-title">Company Address</h5>
-                                                <p>{{company_setup.company_address}} </p>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="separator"></div>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <h5 class="card-title">Company Payment Details</h5>
-                                                <p>{{company_setup.payment_details|safe}} </p>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <h5 class="card-title">Company Payment Terms</h5>
-                                                <p>{{company_setup.payment_terms|safe}} </p>
-                                            </div>
-                                        </div>
-                                        <div class="separator"></div>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <h5 class="card-title">Company Logo</h5>
-                                                <img src="{{company_setup.company_logo.url}}" class="img-fluid img-thumbnail p-5" alt="img">
-                                            </div>
-                                        </div>
-                                        <div class="separator-full"></div>
-                                        <a href="{% url 'edit_company_setup' id=company_setup.id %}" class="btn btn-primary" >Edit</a>
+                                    <div class="col-lg-6 mt-2">
+                                        <h5 class="card-title">Company Email</h5>
+                                        <p>{{company_setup.company_email}} </p>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6 mt-2">
+                                        <h5 class="card-title">Company Contact Number</h5>
+                                        <p>{{company_setup.company_contact_number}} </p>
+                                    </div>
+                                    <div class="col-lg-6 mt-2">
+                                        <h5 class="card-title">Company Address</h5>
+                                        <p>{{company_setup.company_address}} </p>
+                                    </div>
+                                </div>
+                                
+
+                                <div class="row">
+                                    <div class="col-lg-6 mt-2">
+                                        <h5 class="card-title">Company Payment Terms</h5>
+                                        <p>{{company_setup.payment_terms|safe}} </p>
+                                    </div>
+                                    <div class="col-lg-6 mt-2">
+                                        <h5 class="card-title">Company Logo</h5>
+                                        <img src="{{company_setup.company_logo.url}}" class="img-fluid img-thumbnail p-5" alt="img" style="height:200px;">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
-                        {% else %}   
-                                                                                
-                        <div class="row mt-5">
-                            <div class="col-lg-12 col-sm-12">
-                                <div class="card">
-                                        <div class="card-header card-header-action">
-                                            <h6>Company Setup.</h6>
-                                        </div>
-                                    <div class="card-body">
-                                        <h5 class="card-title">Add Company Details</h5>
-                                        <p class="card-text">You havent added any company details.</p>
-                                        <a href="{% url 'add_company_setup' %}" class="btn btn-primary">Add Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>                                                                        
-                        {% endif %}                                  
-                        
+                    </div>
                 </div>
+                {% else %}                                                     
+                <div class="row mt-5">
+                    <div class="col-lg-12 col-sm-12">
+                        <div class="card">
+                                <div class="card-header card-header-action">
+                                    <h6>Company Setup.</h6>
+                                </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Add Company Details</h5>
+                                <p class="card-text">You havent added any company details.</p>
+                                <a href="{% url 'add_company_setup' %}" class="btn btn-primary">Add Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>                                                                        
+                {% endif %}
             </div>
         </div>
+    </div>
+</div>
 
 {% include 'footer.html' %}

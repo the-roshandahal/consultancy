@@ -43,7 +43,6 @@ def logout(request):
 def role(request):
     if 'read_account' in custom_data_views(request):
         roles = Permission.objects.all()
-        print(roles)
         context = {
             'roles':roles,
         }
@@ -180,8 +179,10 @@ def edit_role(request, id):
 
 def delete_role(request, id):
     if 'delete_account' in custom_data_views(request):
-        role_data = Role.objects.get(id=id)
-        permission = Permission.objects.get(role=role_data)
+        print(id)
+        permission = Permission.objects.get(id=id)
+        
+        role_data = Role.objects.get(id=permission.role.id)
         employees = Employee.objects.filter(permission=permission).exists()
 
         if employees:
@@ -200,7 +201,7 @@ def delete_role(request, id):
 
 def view_role(request,id):
     if 'read_account' in custom_data_views(request):
-        role_data = Permission.objects.get(role=id)
+        role_data = Permission.objects.get(id=id)
         print(role_data)
         context={
                 'role_data':role_data,

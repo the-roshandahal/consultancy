@@ -1,74 +1,71 @@
-{% load static %}{% include 'header.html' %}
-<!-- Main Content -->
-<div class="hk-pg-wrapper">
-	<div class="container-xxl">
-		<!-- /Add other contents below -->
-        <div class="container mt-4">
-            <div class="hk-pg-header pg-header-wth-tab pt-7">
-                <div class="d-flex">
-                    <div class="d-flex flex-wrap justify-content-between flex-1">
-                        
-                        
+{% include 'header.html' %}
+<div class="app-content">
+    <div class="content-wrapper">
+        <div class="example-container">
+            <div class="example-content bg-light">
+                <div class="page-description d-flex align-items-center">
+                    <div class="page-description-content flex-grow-1">
+                        <h1>Company Details</h1>
+                        <span>These details are visible in invoice and receipts.</span>
                     </div>
                 </div>
-            </div>
-            <div class="row mt-3">
-                <div class="mb-lg-0 mb-2 me-8">
-                    <h1 class="pg-title">Product Category</h1>
-                </div>
                 
-                <div class="mb-lg-0 mb-2 me-8">
-                    <button type="button" class="btn btn-success btn-animated" data-bs-toggle="modal" data-bs-target="#exampleModalCenterAddCategory">Add Category</button>
+                <!-- add other contents  -->
+                <div class="row">
+                    <div class="page-description d-flex align-items-center">
+                        <div class="page-description-content flex-grow-1">
+                            <h2>Course Category</h2>
+                        </div>
+                        <div class="page-description-actions">  
+                            {% if 'manage_course' in permissions %}                              
+                            <a data-bs-toggle="modal" data-bs-target="#exampleModalCenterAddCategory" class="btn btn-primary"><i class="material-icons">add</i>Add</a>
+                            {% endif %}                         
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Category</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for category in category %}
+                                    <tr>
+                                        <td>{{category.course_category}}</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="d-flex">
+                                                    {% if 'manage_course' in permissions %}
+                                                    <a href="{% url 'edit_course_category' id=category.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
+                                                    {% endif %}
+                                                    {% if 'delete_course' in permissions %}
+                                                    <a href="#" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCentercategoryDelete{{category.id}}"><i class="material-icons">delete</i></a>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-                <table class="table table-hover mb-0">
-                    <thead>
-                        <tr>
-                            <th>Category</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for category in category %}
-                        <tr>
-                            <td>{{category.course_category}}</td>
-                           {% if 'update_course' in permissions or 'delete_course' in permissions %}
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="d-flex">
-                                        {% if 'update_course' in permissions %}
-                                        <a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Edit" href="{% url 'edit_course_category' id=category.id %}"><span class="btn-icon-wrap"><span class="feather-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></span></span></a>
-                                        {% endif %}
-                                        {% if 'delete_course' in permissions %}
-                                        <a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover del-button" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Delete" href="{% url 'delete_course_category' id=category.id %}"><span class="btn-icon-wrap"><span class="feather-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></span></span></a>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </td>
-                            
-                            {% else %} 
-                            <td>----</td>
-                           {% endif %} 
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+
             </div>
         </div>
-
-        <div class="separator"></div>
-
-       													
     </div>
 </div>
-
-
 
 
 <div class="modal fade" id="exampleModalCenterAddCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterAddCategory" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title">Add Year</h5>
+				<h5 class="modal-title">Add Category</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -90,24 +87,30 @@
             </div>
 		</div>
 	</div>
+</div>			
+
+
+{% for category in category %}
+<div class="modal fade" id="exampleModalCentercategoryDelete{{category.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCentercategoryDelete{{category.id}}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete category</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete {{category.category}}?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a href="{% url 'delete_course_category' id=category.id %}"><button type="button" class="btn btn-primary">Delete</button></a>
+            </div>
+        </div>
+    </div>
 </div>
+{% endfor %}
 
 
-<div class="modal fade" id="exampleModalCenterAddUnit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterAddUnit" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title">Add Year</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			
-		</div>
-	</div>
-</div>
-
-
-
-													
 {% include 'footer.html' %}

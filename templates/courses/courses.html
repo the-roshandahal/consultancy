@@ -1,57 +1,81 @@
-{% load static %}{% include 'header.html' %}
-
-		
-
-		<!-- Main Content -->
-<div class="hk-pg-wrapper">
-    <div class="container-xxl">
-        <!-- Page Header -->
-        <div class="hk-pg-header pg-header-wth-tab pt-7">
-            <div class="d-flex">
-                <div class="d-flex flex-wrap justify-content-between flex-1">
-                    <div class="mb-lg-0 mb-2 me-8">
-                        <h1 class="pg-title">Welcome back</h1>
-                        <p>Manage products.</p>
+{% include 'header.html' %}
+<div class="app-content">
+    <div class="content-wrapper">
+        <div class="example-container">
+            <div class="example-content bg-light">
+                <div class="page-description d-flex align-items-center">
+                    <div class="page-description-content flex-grow-1">
+                        <h1>Company Details</h1>
+                        <span>These details are visible in invoice and receipts.</span>
+                    </div>
+                    <div class="page-description-actions">
+                        
+                        
+                        <a href="{% url 'add_course' %}" class="btn btn-primary"><i class="material-icons">add</i>Add</a>
+                        
                     </div>
                 </div>
+                
+                <!-- add other contents  -->
+                <div class="row">
+                    <table id="datable_1" class="table nowrap w-100 mb-5">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for course in courses %}
+                            <tr>
+                                <td>{{course.course_title}}</td>
+                                <td>{{course.course_category}}</td>
+                                <td>{{course.course_price}}</td>
+                                
+                                <td>
+                                    {% if 'update_course' in permissions %}
+                                    <a href="{% url 'edit_course' id=course.id %}" class="btn btn-primary"><i class="material-icons">edit</i>Edit</a>
+                                    {% endif %}
+
+                                    {% if 'delete_course' in permissions %}                                    
+                                    <a data-bs-toggle="modal" data-bs-target="#exampleModalCenterCourseDelete{{course.id}}" class="btn btn-primary"><i class="material-icons">delete</i>Delete</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+
+
             </div>
         </div>
-        <!-- /Page Header -->
-
-        <div class="invoice-body mt-3">
-			<div class="row">
-				<table id="datable_1" class="table nowrap w-100 mb-5">
-					<thead>
-						<tr>
-							<th>Title</th>
-                            <th>Category</th>
-                            <th>Price</th>
-                            <th>Action</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for course in courses %}
-						<tr>
-							<td>{{course.course_title}}</td>
-                            <td>{{course.course_category}}</td>
-                            <td>{{course.course_price}}</td>
-                            
-                            <td>
-                                {% if 'update_course' in permissions %}
-                                <a href="{% url 'edit_course' id=course.id %}" class="btn btn-icon btn-rounded btn-flush-primary flush-soft-hover" data-bs-toggle="tooltip" data-bs-original-title="Edit" ><span class="icon"><span class="feather-icon">Edit</span></span></a>
-                                {% endif %}
-                                {% if 'delete_course' in permissions %}
-                                <a href="{% url 'delete_course' id=course.id %}" class="btn btn-icon btn-rounded btn-flush-danger flush-soft-hover" data-bs-toggle="tooltip" data-bs-original-title="Delete" ><span class="icon"><span class="feather-icon">Delete</span></span></a>
-                                {% endif %}
-                            </td>
-						</tr>
-						{% endfor %}
-					</tbody>
-				</table>
-			</div>
-		</div>
     </div>
 </div>
 
-	
-	{% include 'footer.html' %}
+
+{% for course in courses %}
+<div class="modal fade" id="exampleModalCenterCourseDelete{{course.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterCourseDelete{{course.id}}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete course</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete {{course.course}}?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a href="{% url 'delete_course' id=course.id %}"><button type="button" class="btn btn-primary">Delete</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% include 'footer.html' %}

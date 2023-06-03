@@ -7,7 +7,7 @@
                 <a href="" class="logo-icon"><span class="logo-text">Neptune</span></a>
                 <div class="sidebar-user-switcher user-activity-online">
                     <a href="#">
-                        <img src="{% static 'assets/images/avatars/avatar.png' %}">
+                        <img src="{{company.company_logo.url}}">
                         <span class="activity-indicator"></span>
                         <span class="user-info-text">Chloe<br><span class="user-state-info">On a call</span></span>
                     </a>
@@ -41,7 +41,7 @@
                                 <a href="{%url 'hrm_setup' %}">Hrm setup</a>
                             </li>
                             <li>
-                                <a href="{% url 'add_course_category' %}">Product setup</a>
+                                <a href="{% url 'add_course_category' %}">Course setup</a>
                             </li>
                             <li>
                                 <a href="">Finance setup</a>
@@ -79,7 +79,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href=""><i class="material-icons-two-tone"></i>Crm system<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
+                        <a href=""><i class="material-icons-two-tone">add_link</i>Crm system<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                         <ul class="sub-menu">
                             <li>
                                 <a href="">Leads</a>
@@ -90,9 +90,6 @@
                     <li>
                         <a href=""><i class="material-icons-two-tone">person_add</i>Hrm system<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                         <ul class="sub-menu">
-                            <li>
-                                <a href="{%url 'hrm'%}">Dashboard</a>
-                            </li>
                             <li>
                                 <a href="{% url 'employees' %}">Employees</a>
                             </li>

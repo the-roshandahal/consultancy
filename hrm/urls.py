@@ -6,7 +6,6 @@ from django.views.static import serve
 from django.conf.urls.static import static  
 
 urlpatterns = [
-    path("hrm/", views.hrm, name="hrm"),
     path("hrm_setup/", views.hrm_setup, name="hrm_setup"),
 
     path("add_designation/", views.add_designation, name="add_designation"),

@@ -1,78 +1,201 @@
-{% load static %}{% include 'header.html' %}
+{% include 'header.html' %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-<!-- Main Content -->
-<div class="hk-pg-wrapper">
-	<div class="container-xxl">
-		<!-- Page Header -->
-		<div class="hk-pg-header pg-header-wth-tab pt-7">
-			<div class="d-flex">
-				<div class="d-flex flex-wrap justify-content-between flex-1">
-					<div class="mb-lg-0 mb-2 me-8">
-						<div class="d-flex align-items-center">
-							<h1 class="pg-title">HRM Setup</h1>
-						</div>
-						<p id="greeting"></p>
-
-						<script>
-							const now = new Date();
-							const hour = now.getHours();
-					
-							let greeting;
-					
-							if (hour < 12) {
-								greeting = "Good Morning";
-							} else if (hour < 18) {
-								greeting = "Good Afternoon";
-							} else {
-								greeting = "Good Evening";
-							}
-					
-							document.getElementById("greeting").innerHTML = greeting + " {{request.user.first_name}}!";
-						</script>
-					</div>
-					
-				</div>
-			</div>
-		</div>
-		<!-- /Page Header -->
-		<!-- /Add other contents below -->
-        <div class="container mt-4">
-            <div class="row">
-                <div class="d-flex">
-                    <div class="d-flex flex-wrap justify-content-between flex-1">
-                        <div class="mb-lg-0 mb-2 me-8">
-                            <h4>Year</h4>
-                        </div>
-                        {% if 'manage_hrm' in permissions %}
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenterAddYear">Add</button> 
-                        {% endif %}                         
+<div class="app-content">
+    <div class="content-wrapper">
+        <div class="example-container">
+            <div class="example-content bg-light">
+                <div class="page-description d-flex align-items-center">
+                    <div class="page-description-content flex-grow-1">
+                        <h1>HRM Setup</h1>
                     </div>
                 </div>
-                <div class="flex">
-                    <div class="table-responsive">
+
+               <!-- add other contents  -->
+
+               <div class="container mt-4">
+                    <div class="row">
+                        <div class="page-description d-flex align-items-center">
+                            <div class="page-description-content flex-grow-1">
+                                <h2>Year</h2>
+                            </div>
+                            <div class="page-description-actions">  
+                                {% if 'manage_hrm' in permissions %}                              
+                                <a href="" class="btn btn-primary"><i class="material-icons">add</i>Add</a>
+                                {% endif %}                         
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Year</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for year in year %}
+                                        <tr>
+                                            <td>{{year.year}}</td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="d-flex">
+                                                        {% if 'manage_hrm' in permissions %}
+                                                        <a href="{% url 'edit_year' id=year.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
+                                                        {% endif %}
+                                                        {% if 'delete_hrm' in permissions %}
+                                                        <a href="#" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenterYearDelete{{year.id}}"><i class="material-icons">delete</i></a>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="page-description d-flex align-items-center">
+                            <div class="page-description-content flex-grow-1">
+                                <h2>Month</h2>
+                            </div>
+                            <div class="page-description-actions">  
+                                {% if 'manage_hrm' in permissions %}                              
+                                <a href="" class="btn btn-primary"><i class="material-icons">add</i>Add</a>
+                                {% endif %}                         
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Month</th>
+                                            <th>Year</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th>Holidays</th>
+                                            <th>Is Active</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for month_dict  in month_list  %}
+                                        <tr>
+                                            <td>{{month_dict.month.month}}</td>
+                                            <th>{{month_dict.month.year}}</th>
+                                            <td>{{month_dict.month.start_date}}</td>
+                                            <td>{{month_dict.month.end_date}}</td>
+                                            <td>{{ month_dict.holiday_count }}</td>
+                                            <td>{{ month_dict.month.is_active }}</td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    {% if 'manage_hrm' in permissions %}
+                                                        <a href="{% url 'edit_month' id=month_dict.month.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
+                                                    {% endif %}
+
+                                                    {% if 'delete_hrm' in permissions %}
+                                                        <a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenterViewMonth{{month_dict.month.month.id}}"><i class="material-icons">visibility</i></a>
+                                                    {% endif %}
+                                                    
+                                                    {% if 'read_hrm' in permissions %}
+                                                        <a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCentermonthDelete{{month_dict.month.id}}"><i class="material-icons">delete</i></a>
+                                                    {% endif %}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="page-description d-flex align-items-center">
+                            <div class="page-description-content flex-grow-1">
+                                <h2>Department</h2>
+                            </div>
+                            <div class="page-description-actions">  
+                                {% if 'manage_hrm' in permissions %}                              
+                                <a href="" class="btn btn-primary"><i class="material-icons">add</i>Add</a>
+                                {% endif %}                         
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Department</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for department  in department  %}
+                                        <tr>
+                                            <td>{{department.department}}</td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    {% if 'manage_hrm' in permissions %}
+                                                        <a href="{% url 'edit_department' id=department.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
+                                                    {% endif %}
+
+                                                    {% if 'delete_hrm' in permissions %}
+                                                        <a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{{department.id}}"><i class="material-icons">delete</i></a>
+                                                    {% endif %}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-3">
+                        <div class="page-description d-flex align-items-center">
+                            <div class="page-description-content flex-grow-1">
+                                <h2>Designation</h2>
+                            </div>
+                            <div class="page-description-actions">  
+                                {% if 'manage_hrm' in permissions %}                              
+                                <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenterAddDesignation"><i class="material-icons">add</i>Add</a>
+                                {% endif %}                         
+                            </div>
+                        </div>
+
                         <table class="table mb-0">
                             <thead>
                                 <tr>
-                                    <th>Year</th>
+                                    <th>Designation</th>
+                                    <th>Department</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for year in year %}
+                                {% for designation in designation %}
                                 <tr>
-                                    <td>{{year.year}}</td>
+                                    <td>{{designation.designation}}</td>
+                                    <td>{{designation.department}}</td>
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="d-flex">
-                                                {% if 'manage_hrm' in permissions %}
-                                                <a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Edit" href="{% url 'edit_year' id=year.id %}"><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="edit">Edit</i></span></span></a>
-                                                {% endif %}
-                                                {% if 'delete_hrm' in permissions %}
-                                                <a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="modal" data-bs-target="#exampleModalCenterYearDelete{{year.id}}" href="#"><span class="icon"><span class="feather-icon"><i data-feather="archive">Delete</i></span></span></a>
-                                                {% endif %}
+                                                <div class="d-flex">
+                                                    {% if 'manage_hrm' in permissions %}
+                                                        <a href="{% url 'edit_designation' id=designation.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
+                                                    {% endif %}
+
+                                                    {% if 'delete_hrm' in permissions %}
+                                                        <a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenterDesignation{{designation.id}}"><i class="material-icons">delete</i></a>
+                                                    {% endif %}
+                                                </div>
                                             </div>
                                         </div>
                                     </td>
@@ -82,198 +205,19 @@
                         </table>
                     </div>
                 </div>
-            </div>
-            <div class="separator"></div>
-            <div class="row mt-3">
-                <div class="d-flex">
-                    <div class="d-flex flex-wrap justify-content-between flex-1">
-                        <div class="mb-lg-0 mb-2 me-8">
-                            <h4>Months</h4>
-                        </div>
-                        {% if 'manage_hrm' in permissions %}
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenterAddMonth">Add</button> 
-                        {% endif %}                         
-                    </div>
-                </div>
 
-                    <div class="table-responsive">                                                             
-                <table class="table mb-0">
-                    <thead>
-                        <tr>
-                            <th>Month</th>
-                            <th>Year</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Holidays</th>
-                            <th>Is Active</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for month_dict  in month_list  %}
-                        <tr>
-                            <td>{{month_dict.month.month}}</td>
-                            <th>{{month_dict.month.year}}</th>
-                            <td>{{month_dict.month.start_date}}</td>
-                            <td>{{month_dict.month.end_date}}</td>
-                            <td>{{ month_dict.holiday_count }}</td>
-                            <td>{{ month_dict.month.is_active }}</td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="d-flex">
-                                        {% if 'manage_hrm' in permissions %}
-                                        <a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Edit" href="{% url 'edit_month' id=month_dict.month.id %}"><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="edit">Edit</i></span></span></a>
-                                        {% endif %}
-                                        {% if 'delete_hrm' in permissions %}
-                                        <a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="modal" data-bs-target="#exampleModalCentermonthDelete{{month_dict.month.id}}"><span class="icon"><span class="feather-icon"><i data-feather="archive">Delete</i></span></span></a>
-                                        {% endif %}
-                                        {% if 'read_hrm' in permissions %}
-                                        <a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover del-button"  data-bs-toggle="modal" data-bs-target="#exampleModalCenterViewMonth{{month_dict.month.month.id}}"><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="eye">View</i></span></span></a>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                </div>    
-            </div>
-            <div class="separator"></div>
-            <div class="row mt-3">
-                <div class="d-flex">
-                    <div class="d-flex flex-wrap justify-content-between flex-1">
-                        <div class="mb-lg-0 mb-2 me-8">
-                            <h4>Department</h4>
-                        </div>
-                        {% if 'manage_hrm' in permissions %}
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenterAddDepartment">Add</button> 
-                        {% endif %}                         
-                    </div>
-                </div>
 
-                                                                                        
-                <table class="table mb-0">
-                    <thead>
-                        <tr>
-                            <th>Department</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for department in department %}
-                        <tr>
-                            <td>{{department.department}}</td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="d-flex">
-                                        {% if 'manage_hrm' in permissions %}
-                                        <a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Edit" href="{% url 'edit_department' id=department.id %}"><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="edit">Edit</i></span></span></a>
-                                        {% endif %}
-                                        {% if 'delete_hrm' in permissions %}
-										<a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{{department.id}}" href=""><span class="icon"><span class="feather-icon"><i data-feather="archive">Delete</i></span></span></a>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            <div class="separator"></div>
-            <div class="row mt-3">
-                <div class="d-flex">
-                    <div class="d-flex flex-wrap justify-content-between flex-1">
-                        <div class="mb-lg-0 mb-2 me-8">
-                            <h4>Designation</h4>
-                        </div>
-                        {% if 'manage_hrm' in permissions %}
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenterAddDesignation">Add</button> 
-                        {% endif %}                         
-                    </div>
-                </div>
 
-                                                                                        
-                <table class="table mb-0">
-                    <thead>
-                        <tr>
-                            <th>Designation</th>
-                            <th>Department</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for designation in designation %}
-                        <tr>
-                            <td>{{designation.designation}}</td>
-                            <td>{{designation.department}}</td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="d-flex">
-                                        {% if 'manage_hrm' in permissions %}
-                                        <a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Edit" href="{% url 'edit_designation' id=designation.id %}"><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="edit">Edit</i></span></span></a>
-                                        {% endif %}
-                                        {% if 'delete_hrm' in permissions %}
-										<a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="modal" data-bs-target="#exampleModalCenterDesignation{{designation.id}}" href=""><span class="icon"><span class="feather-icon"><i data-feather="archive">Delete</i></span></span></a>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            <div class="separator"></div>
-            <div class="row mt-3">
-                <div class="d-flex">
-                    <div class="d-flex flex-wrap justify-content-between flex-1">
-                        <div class="mb-lg-0 mb-2 me-8">
-                            <h4>Attendance Device</h4>
-                        </div>
-                        {% if can_add == True %}
-                        {% if 'manage_hrm' in permissions %}
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenterAddAttendanceDevice">Add</button> 
-                        {% endif %}                         
-                        {% endif %}                         
-                    </div>
-                </div>
-                {% if device_data %}
-                
-                <table class="table mb-0">
-                    <thead>
-                        <tr>
-                            <th>IP Address</th>
-                            <th>Port</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{{device_data.ip_address}}</td>
-                            <td>{{device_data.port}}</td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="d-flex">
-                                        {% if 'manage_hrm' in permissions %}
-                                        <a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Edit" href="{% url 'edit_device_data' id=device_data.id %}"><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="edit"></i></span></span></a>
-                                        {% endif %}
-                                        {% if 'manage_hrm' in permissions %}
-										<a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="modal" data-bs-target="#exampleModalCenterDeleteDeviceData" href=""><span class="icon"><span class="feather-icon"><i data-feather="archive"></i></span></span></a>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        
-                    </tbody>
-                </table>
-                {% endif %}
+
+
+
             </div>
         </div>
-	</div>
+    </div>
 </div>
+
+
+
 
 {% for month_dict in month_list %}
 <div class="modal fade" id="exampleModalCenterViewMonth{{month_dict.month.month.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterViewMonth{{month_dict.month.month.id}}" aria-hidden="true">
@@ -296,7 +240,7 @@
                         <p>{{month_dict.month.month}}</p>
                     </div>
                 </div>
-                <div class="separator"></div>
+                
                 <div class="row">
                     <div class="col-lg-6">
                         <h5 class="modal-title">Start Date </h5>
@@ -307,7 +251,7 @@
                         <p>{{month_dict.month.end_date}}</p>
                     </div>
                 </div>
-                <div class="separator"></div>
+                
                 <div class="row">
                     <div class="col-lg-12">
                         <h5 class="modal-title">Holidays </h5>
@@ -411,7 +355,7 @@
 		</div>
 	</div>
 </div>
-	
+
 <div class="modal fade" id="exampleModalCenterAddDepartment" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterAddDepartment" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
