@@ -1,83 +1,65 @@
-{% load static %}{% include 'header.html' %}
-<!-- Main Content -->
-<div class="hk-pg-wrapper">
-	<div class="container-xxl">
-		<div class="hk-pg-header">
-			<div class="d-flex">
-				<div class="d-flex flex-wrap justify-content-between flex-1">
-					<div class="mb-md-0 mb-2 me-8">
-						<div class="d-flex align-items-center">
-							<h1 class="pg-title">Clients</h1>
-							<!-- <span class="badge badge-soft-primary ms-3">Badge</span> -->
-						</div>
-						<p id="greeting"></p>
-
-						<script>
-							const now = new Date();
-							const hour = now.getHours();
-					
-							let greeting;
-					
-							if (hour < 12) {
-								greeting = "Good Morning";
-							} else if (hour < 18) {
-								greeting = "Good Afternoon";
-							} else {
-								greeting = "Good Evening";
-							}
-					
-							document.getElementById("greeting").innerHTML = greeting + " {{request.user.first_name}}!";
-						</script>
-						
-					</div>
-					<div class="pg-header-action-wrap">
-						{% if 'create_student' in permissions %}
-						<a href="{% url 'add_student' %}"><button class="btn btn-primary" >Add Client</button></a>
-						{% endif %}
-					</div> 
+{% include 'header.html' %}
+<div class="app-content">
+    <div class="content-wrapper">
+        <div class="example-container">
+            <div class="example-content bg-light">
+                <div class="page-description d-flex align-items-center">
+                    <div class="page-description-content flex-grow-1">
+                        <h1>Students</h1>
+                        <span>Manage your students</span>
+                    </div>
+                    <div class="page-description-actions">
+                        
+                        
+                        <a href="{% url 'add_student' %}" class="btn btn-primary"><i class="material-icons">add</i>Add</a>
+                        
+                    </div>
+                </div>
+                
+                <!-- add other contents  -->
+				<div class="row">
+					<table id="datable_1" class="table nowrap w-100 mb-5">
+						<thead>
+							<tr>
+								<th>Student Name</th>
+								<th>Contact Number</th>
+								<th>Email</th>
+								<th>Address</th>
+								<th>Course</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for student in student %}
+							<tr>
+								<td>{{student.user}}</td>
+								<td>{{student.contact}}</td>
+								<td>{{student.user.email}}</td>
+								<td>{{student.user.email}}</td>
+								<td>{{student.address}}</td>
+								<td>
+									<div class="d-flex align-items-center">
+										<div class="d-flex">
+											{% if 'update_student' in permissions %}
+											<a href="{% url 'edit_student' id=student.id %}" class="btn btn-primary"><i class="material-icons">edit</i></a>
+											{% endif %}
+											{% if 'read_student' in permissions %}
+											<a href="{% url 'view_student' id=student.id %}" class="btn btn-primary"><i class="material-icons">visibility</i></a>
+											{% endif %}
+										</div>
+									</div>
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
 				</div>
-			</div>
-		</div>
-		<!-- /Add other contents below -->
 
 
-        <div class="invoice-body mt-3">
-			<div class="row">
-				<table id="datable_1" class="table nowrap w-100 mb-5">
-					<thead>
-						<tr>
-							<th>Client Name</th>
-                            <th>Contact Number</th>
-                            <th>Email</th>
-                            <th>Address</th>
-                            <th>Action</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for student in student %}
-						<tr>
-							<td>{{student.user}}</td>
-                            <td>{{student.contact}}</td>
-                            <td>{{student.user.email}}</td>
-                            <td>{{student.address}}</td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="d-flex">
-                                        {% if 'update_student' in permissions %}
-                                        <a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Edit" href="{% url 'edit_student' id=student.id %}"><span class="btn-icon-wrap"><span class="feather-icon">Edit</span></span></a>
-                                        {% endif %}
-                                        {% if 'read_student' in permissions %}
-                                        <a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="View" href="{% url 'view_student' id=student.id %}"><span class="btn-icon-wrap"><span class="feather-icon">View</span></span></a>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </td>
-						</tr>
-						{% endfor %}
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
+
+            </div>
+        </div>
+    </div>
 </div>
+
 {% include 'footer.html' %}
