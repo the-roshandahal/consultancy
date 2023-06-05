@@ -6,6 +6,147 @@ from account.models import *
 from account.context_processors import custom_data_views
 # Create your views here.
 
+def student_setup(request):
+    if 'read_student' in custom_data_views(request):
+        student_stage = StudentStage.objects.all()
+        student_source = StudentSource.objects.all()
+        context = {
+            'student_source':student_source,
+            'student_stage':student_stage,
+        }
+        return render (request,'Student/student_setup.html',context)
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
+
+def create_stage(request):
+    if 'create_student' in custom_data_views(request):
+        if request.method =="POST":
+            student_stage = request.POST['student_stage']
+            StudentStage.objects.create(stage=student_stage)
+            messages.info(request, "Student Stage Created Successfully.")
+            return redirect('student_setup')
+        else:
+            return redirect('student_setup')
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
+
+def edit_stage(request,id):
+    if 'update_student' in custom_data_views(request):
+        if request.method =="POST":
+            student_stage = request.POST['student_stage']
+            Student = StudentStage.objects.get(id=id)
+            Student.stage = student_stage
+            Student.save()
+            messages.info(request, "Student Stage Updated Successfully.")
+            return redirect('student_setup')
+        else:
+            stage = StudentStage.objects.get(id=id)
+            context={
+                'stage':stage
+            }
+            return render(request,'student/edit_stage.html',context)
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
+    
+def delete_stage(request,id):
+    if 'delete_student' in custom_data_views(request):
+        stage_data = StudentStage.objects.get(id=id)
+        deleted_role = stage_data.stage
+        stage_data.delete()
+        messages.info(request, f"{deleted_role} Deleted Successfully")
+        return redirect('student_setup')
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
+
+def create_source(request):
+    if 'create_student' in custom_data_views(request):
+        if request.method =="POST":
+            student_source = request.POST['student_source']
+            StudentSource.objects.create(source=student_source)
+            messages.info(request, "Student Source Created Successfully.")
+            return redirect('student_setup')
+        else:
+            return redirect('student_setup')
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
+
+def edit_source(request,id):
+    if 'update_student' in custom_data_views(request):
+        if request.method =="POST":
+            student_source = request.POST['student_source']
+            Student = StudentSource.objects.get(id=id)
+            Student.source = student_source
+            Student.save()
+            messages.info(request, "Student Source Updated Successfully.")
+            return redirect('student_setup')
+        else:
+            source = StudentSource.objects.get(id=id)
+            context={
+                'source':source
+            }
+            return render(request,'student/edit_source.html',context)
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
+      
+def delete_source(request,id):
+    if 'delete_student' in custom_data_views(request):
+        source_data = StudentSource.objects.get(id=id)
+        deleted_role = source_data.source
+        source_data.delete()
+        messages.info(request, f"{deleted_role} Deleted Successfully")
+        return redirect('student_setup')
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
+
+def create_enrollment(request):
+    if 'create_student' in custom_data_views(request):
+        if request.method =="POST":
+            enrollment_type = request.POST['enrollment_type']
+            EnrollmentType.objects.create( enrollment_type= enrollment_type)
+            messages.info(request, "Enrollment Created Successfully.")
+            return redirect('student_setup')
+        else:
+            return redirect('student_setup')
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
+
+def edit_enrollment(request,id):
+    if 'update_student' in custom_data_views(request):
+        if request.method =="POST":
+            enrollment_type = request.POST['enrollment_type']
+            Enrollment = EnrollmentType.objects.get(id=id)
+            Enrollment.enrollment_type= enrollment_type
+            Enrollment.save()
+            messages.info(request, "Enrollment Type Updated Successfully.")
+            return redirect('student_setup')
+        else:
+            enrollment_type = EnrollmentType.objects.get(id=id)
+            context={
+                'enrollment_type':enrollment_type
+            }
+            return render(request,'student/edit_enrollment.html',context)
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
+    
+def delete_enrollment(request,id):
+    if 'delete_student' in custom_data_views(request):
+        enrollmentType_data = EnrollmentType.objects.get(id=id)
+        deleted_role = enrollment_type_data.stage
+        enrollment_type_data.delete()
+        messages.info(request, f"{deleted_role} Deleted Successfully")
+        return redirect('student_setup')
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')        
 
 
 def student(request):

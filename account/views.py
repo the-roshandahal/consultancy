@@ -153,11 +153,11 @@ def edit_role(request, id):
             permission.delete_hrm = request.POST.get('delete_hrm', 0)
             permission.manage_hrm = request.POST.get('manage_hrm', 0)
 
-            permission.create_products = request.POST.get('create_products', 0)
-            permission.read_products = request.POST.get('read_products', 0)
-            permission.update_products = request.POST.get('update_products', 0)
-            permission.delete_products = request.POST.get('delete_products', 0)
-            permission.manage_products = request.POST.get('manage_products', 0)
+            permission.create_student = request.POST.get('create_student', 0)
+            permission.read_student = request.POST.get('read_student', 0)
+            permission.update_student = request.POST.get('update_student', 0)
+            permission.delete_student = request.POST.get('delete_student', 0)
+            permission.manage_student = request.POST.get('manage_student', 0)
 
             permission.manage_company = request.POST.get('manage_company', 0)
             try:
