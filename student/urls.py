@@ -12,6 +12,6 @@ urlpatterns = [
     path("edit_student/<int:id>", views.edit_student, name="edit_student"),
     path("delete_student/<int:id>", views.delete_student, name="delete_student"),
     path("view_student/<int:id>", views.view_student, name="view_student"),
-    path("upload_document/", views.upload_document, name="upload_document"),
+    # path("upload_document/", views.upload_document, name="upload_document"),
 
 ]

@@ -32,24 +32,55 @@ def add_student(request):
 
             address = request.POST["address"]
             contact = request.POST["contact"]
+
+            enrollment_type = request.POST["enrollment_type"]
+            course = request.POST.getlist("course")
+            source = request.POST["source"]
+            stage = request.POST["stage"]
+            assigned_to = request.POST.getlist("assigned_to")
+            log = request.POST["log"]
+            
             if not username:
                 messages.error(request, "The username must be provided.")
                 return redirect('add_student')
-
             try:
                 user = User.objects.get(username=username)
-                print("here")
                 messages.error(request, "Username already exists.")
                 return redirect('add_student')
 
             except User.DoesNotExist:
                 user=User.objects.create_user(username=username,first_name=first_name,last_name=last_name,email=email,password=password)
+
+                enrollment_type = EnrollmentType.objects.get(id=enrollment_type)
+                source = StudentSource.objects.get(id=source)
+                stage = StudentStage.objects.get(id=stage)
+
+                if log == "on":
+                    log_status = True
+                else:
+                    log_status= False
+
                 user.save()
-                Student.objects.create(user=user, address=address, contact=contact)
+                student = Student.objects.create(user=user, address=address, contact=contact,enrollment_type=enrollment_type,source=source,stage=stage,log_status = log_status)
+                student.assigned_to.set(assigned_to)
+                student.course.set(course)
+                student.save()
                 return redirect('student')
             
         else:
-            return render(request,'student/add_student.html')
+            enrollment_type = EnrollmentType.objects.all()
+            stage = StudentStage.objects.all()
+            student_source = StudentSource.objects.all()
+            course = Course.objects.all()
+            assign = Employee.objects.all()
+            context = {
+                'enrollment_type':enrollment_type,
+                'stage':stage,
+                'student_source':student_source,
+                'assign':assign,
+                'course':course,
+            }
+            return render(request,'student/add_student.html',context)
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')
@@ -121,15 +152,15 @@ def view_student(request,id):
 
 
 
-def upload_document(request):
-    if request.method == 'POST':
-        file = request.FILES.get('file')
-        file_name = request.POST('file_name')
-        student=request.POST['student_id']
-        if file:
-            student=Student.objects.get(id=student)
-            Document.objects.create(student=student, file=file, file_name=file_name)
+# def upload_document(request):
+#     if request.method == 'POST':
+#         file = request.FILES.get('file')
+#         file_name = request.POST('file_name')
+#         student=request.POST['student_id']
+#         if file:
+#             student=Student.objects.get(id=student)
+#             Document.objects.create(student=student, file=file, file_name=file_name)
             
-            return redirect('document_list')  
-    return render(request, 'students/upload_document.html')
+#             return redirect('document_list')  
+#     return render(request, 'students/upload_document.html')
     
