@@ -447,6 +447,7 @@ def delete_employee(request,id):
         return redirect('home')
     
 
-
+def attendance(request):
+    return render(request,'hrm/attendance.html')
 
 
