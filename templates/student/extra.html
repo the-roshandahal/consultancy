@@ -1,0 +1,487 @@
+{% include 'header.html' %}
+<div class="app-content">
+    <div class="content-wrapper">
+        <div class="example-container">
+            <div class="example-content bg-light">
+                <div class="page-description d-flex align-items-center">
+                    <div class="page-description-content flex-grow-1">
+                        <h1>Company Details</h1>
+                        <span>These details are visible in invoice and receipts.</span>
+                    </div>
+                    <div class="page-description-actions">
+                        
+                        <a href="" class="btn btn-primary"><i class="material-icons">edit</i>Edit</a>
+                        
+                        <a href="" class="btn btn-dark"><i class="material-icons">add</i>Add</a>
+                        
+                    </div>
+                </div>
+                
+                <!-- add other contents  -->
+				<div class="container mt-4">
+                    <div class="row">
+                        <div class="page-description d-flex align-items-center">
+                            <div class="page-description-content flex-grow-1">
+                                <h2>Year</h2>
+                            </div>
+                            <div class="page-description-actions">  
+                                {% if 'manage_hrm' in permissions %}                              
+                                <a href="" class="btn btn-primary"><i class="material-icons">add</i>Add</a>
+                                {% endif %}                         
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Year</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for year in year %}
+                                        <tr>
+                                            <td>{{year.year}}</td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="d-flex">
+                                                        {% if 'manage_hrm' in permissions %}
+                                                        <a href="{% url 'edit_year' id=year.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
+                                                        {% endif %}
+                                                        {% if 'delete_hrm' in permissions %}
+                                                        <a href="#" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenterYearDelete{{year.id}}"><i class="material-icons">delete</i></a>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="page-description d-flex align-items-center">
+                            <div class="page-description-content flex-grow-1">
+                                <h2>Month</h2>
+                            </div>
+                            <div class="page-description-actions">  
+                                {% if 'manage_hrm' in permissions %}                              
+                                <a href="" class="btn btn-primary"><i class="material-icons">add</i>Add</a>
+                                {% endif %}                         
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Month</th>
+                                            <th>Year</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th>Holidays</th>
+                                            <th>Is Active</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for month_dict  in month_list  %}
+                                        <tr>
+                                            <td>{{month_dict.month.month}}</td>
+                                            <th>{{month_dict.month.year}}</th>
+                                            <td>{{month_dict.month.start_date}}</td>
+                                            <td>{{month_dict.month.end_date}}</td>
+                                            <td>{{ month_dict.holiday_count }}</td>
+                                            <td>{{ month_dict.month.is_active }}</td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    {% if 'manage_hrm' in permissions %}
+                                                        <a href="{% url 'edit_month' id=month_dict.month.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
+                                                    {% endif %}
+
+                                                    {% if 'delete_hrm' in permissions %}
+                                                        <a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenterViewMonth{{month_dict.month.month.id}}"><i class="material-icons">visibility</i></a>
+                                                    {% endif %}
+                                                    
+                                                    {% if 'read_hrm' in permissions %}
+                                                        <a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCentermonthDelete{{month_dict.month.id}}"><i class="material-icons">delete</i></a>
+                                                    {% endif %}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="page-description d-flex align-items-center">
+                            <div class="page-description-content flex-grow-1">
+                                <h2>Department</h2>
+                            </div>
+                            <div class="page-description-actions">  
+                                {% if 'manage_hrm' in permissions %}                              
+                                <a href="" class="btn btn-primary"><i class="material-icons">add</i>Add</a>
+                                {% endif %}                         
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Department</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for department  in department  %}
+                                        <tr>
+                                            <td>{{department.department}}</td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    {% if 'manage_hrm' in permissions %}
+                                                        <a href="{% url 'edit_department' id=department.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
+                                                    {% endif %}
+
+                                                    {% if 'delete_hrm' in permissions %}
+                                                        <a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{{department.id}}"><i class="material-icons">delete</i></a>
+                                                    {% endif %}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-3">
+                        <div class="page-description d-flex align-items-center">
+                            <div class="page-description-content flex-grow-1">
+                                <h2>Designation</h2>
+                            </div>
+                            <div class="page-description-actions">  
+                                {% if 'manage_hrm' in permissions %}                              
+                                <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenterAddDesignation"><i class="material-icons">add</i>Add</a>
+                                {% endif %}                         
+                            </div>
+                        </div>
+
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Designation</th>
+                                    <th>Department</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for designation in designation %}
+                                <tr>
+                                    <td>{{designation.designation}}</td>
+                                    <td>{{designation.department}}</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="d-flex">
+                                                <div class="d-flex">
+                                                    {% if 'manage_hrm' in permissions %}
+                                                        <a href="{% url 'edit_designation' id=designation.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
+                                                    {% endif %}
+
+                                                    {% if 'delete_hrm' in permissions %}
+                                                        <a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenterDesignation{{designation.id}}"><i class="material-icons">delete</i></a>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+
+
+
+
+            </div>
+		<div class="page-description d-flex align-items-center">
+			<div class="page-description-content flex-grow-1">
+				<h2>Stage</h2>
+			</div>		
+			<div class="page-description-actions">  	
+				{% if 'manage_student' in permissions %}
+				        <a href="#" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#createUserModal"><i class="material-icons">add</i>Add Stage</a>
+						
+						<div class="modal fade" id="createUserModal" tabindex="-1" role="dialog" aria-labelledby="createUserModal" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<form action="{% url 'create_stage' %}" method="POST">
+										{% csrf_token %}
+										<div class="modal-header">
+											<h5 class="modal-title" id="createUserModal">Create Stage</h5>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<div class="col-md-12 mb-3">
+												<label for="">Stage Name</label>
+												<input type="text" class="form-control"  placeholder="Initial" name='student_stage'>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+											<button type="submit" class="btn btn-primary">Add</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+
+
+						<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createUserModalSource">Add  Source</button>
+						<div class="modal fade" id="createUserModalSource" tabindex="-1" role="dialog" aria-labelledby="createUserModalSource" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<form action="{% url 'create_source' %}" method="POST">
+										{% csrf_token %}
+										<div class="modal-header">
+											<h5 class="modal-title" id="createUserModalSource">Create Source</h5>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<div class="col-md-12 mb-3">
+												<label for="">Source Name</label>
+												<input type="text" class="form-control"  placeholder="Facebook" name='student_source'>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+											<button type="submit" class="btn btn-primary">Add</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createUserModalEnrollment">Add  Enrollment Type</button>
+						<div class="modal fade" id="createUserModalEnrollment" tabindex="-1" role="dialog" aria-labelledby="createUserModalEnrollment" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<form action="{% url 'create_enrollment' %}" method="POST">
+										{% csrf_token %}
+										<div class="modal-header">
+											<h5 class="modal-title" id="createUserModalenrollment">Create Enrollment Type</h5>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<div class="col-md-12 mb-3">
+												<label for="">Enrollment Type</label>
+												<input type="text" class="form-control"  placeholder="course" name='enrollment_type'>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+											<button type="submit" class="btn btn-primary">Add</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- /Add other contents below -->
+		<div class="container mt-5">												
+            <div class="row">
+                <div class="table-responsive">
+					<table class="table nowrap">
+						<thead>
+							<tr>
+								<th>Stage</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for student_stage in student_stage %}
+							<tr>
+								
+								<td><span class="badge badge-lg badge-light">{{student_stage.stage}}</span></td>
+								<td>
+									<div  class="d-flex align-items-center justify-content-end">
+										{% if 'update_student' in permissions or 'delete_student' in permissions %}
+											{% if 'update_student' in permissions%}
+												<a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Edit" href="{% url 'edit_stage' id=student_stage.id %}"><span class="icon"><span class="feather-icon"><i data-feather="edit-2">Edit</i></span></span></a>
+											{% endif %}
+											{% if 'delete_student' in permissions %}
+												<a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{{student_stage.id}}" href=""><span class="icon"><span class="feather-icon"><i data-feather="archive">Delete</i></span></span></a>
+											{% endif %}
+											{% else %}
+											<p>None</p>
+										{% endif %}
+									</div>
+								</td>
+							</tr>
+							{% endfor %}
+							{% for student_stage in student_stage %}
+							<div class="modal fade" id="exampleModalCenter{{student_stage.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter{{student_stage.id}}" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title">Delete Stage</h5>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<p>Are you sure you want to delete this stage?</p>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+											<a href="{% url 'delete_stage' id=student_stage.id %}"><button type="button" class="btn btn-primary">Delete</button></a>
+										</div>
+									</div>
+								</div>
+							</div>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+            </div>										
+        </div>
+		<div class="container mt-5">												
+            <div class="row">
+                <div class="table-responsive">
+					<table class="table nowrap">
+						<thead>
+							<tr>
+								<th>Source</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for student_source in student_source %}
+							<tr class="mt-1">
+								
+								<td><span class="badge badge-lg badge-light">{{student_source.source}}</span></td>
+								<td>
+									<div  class="d-flex align-items-center justify-content-end">
+									{% if 'manage_student' in permissions%}
+										<a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Edit" href="{% url 'edit_source' id=student_source.id %}"><span class="icon"><span class="feather-icon"><i data-feather="edit-2">Edit</i></span></span></a>
+									{% endif %}
+									{% if 'delete_student' in permissions %}
+										<a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{{student_source.id}}" href=""><span class="icon"><span class="feather-icon"><i data-feather="archive">Delete</i></span></span></a>
+									{% endif %}
+											
+									</div>
+								</td>
+							</tr>
+							{% endfor %}
+							{% for student_source in student_source %}
+							<div class="modal fade" id="exampleModalCenter{{student_source.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter{{student_source.id}}" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title">Delete Student Source</h5>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<p>Are you sure you want to delete this source?</p>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+											<a href="{% url 'delete_source' id=student_source.id %}"><button type="button" class="btn btn-primary">Delete</button></a>
+										</div>
+									</div>
+								</div>
+							</div>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+            </div>										
+        </div>
+		<div class="container mt-5">												
+            <div class="row">
+                <div class="table-responsive">
+					<table class="table nowrap">
+						<thead>
+							<tr>
+								<th>Enrollment Type</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for enrollment_type in enrollment_type %}
+							<tr class="mt-1">
+								
+								<td><span class="badge badge-lg badge-light">{{enrollment_type.enrollment_type}}</span></td>
+								<td>
+									<div  class="d-flex align-items-center justify-content-end">
+									{% if 'manage_student' in permissions%}
+										<a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Edit" href="{% url 'edit_enrollment' id=enrollment_type.id %}"><span class="icon"><span class="feather-icon"><i data-feather="edit-2">Edit</i></span></span></a>
+									{% endif %}
+									{% if 'delete_student' in permissions %}
+										<a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{{enrollment_type.id}}" href=""><span class="icon"><span class="feather-icon"><i data-feather="archive">Delete</i></span></span></a>
+									{% endif %}
+											
+									</div>
+								</td>
+							</tr>
+							{% endfor %}
+							{% for enrollment_type in enrollment_type %}
+							<div class="modal fade" id="exampleModalCenter{{enrollment_type.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter{{enrollment_type.id}}" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title">Delete Student Enrollment Type</h5>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<p>Are you sure you want to delete this enrollment type?</p>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+											<a href="{% url 'delete_enrollment' id=enrollment_type.id %}"><button type="button" class="btn btn-primary">Delete</button></a>
+										</div>
+									</div>
+								</div>
+							</div>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+            </div>										
+        </div>
+                
+                
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'footer.html' %}

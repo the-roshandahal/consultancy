@@ -8,3 +8,4 @@ from .models import *
 admin.site.register(StudentSource)
 admin.site.register(EnrollmentType)
 admin.site.register(StudentStage)
+admin.site.register(Student)

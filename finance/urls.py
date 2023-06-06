@@ -8,6 +8,8 @@ from .import views
 
 urlpatterns = [
     path("invoice/", views.invoice, name="invoice"),
+    path("create_invoice/", views.create_invoice, name="create_invoice"),   
+    path("view_invoice/<int:id>", views.view_invoice, name="view_invoice"),
     
 
 ]

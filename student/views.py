@@ -10,9 +10,12 @@ def student_setup(request):
     if 'read_student' in custom_data_views(request):
         student_stage = StudentStage.objects.all()
         student_source = StudentSource.objects.all()
+        enrollment_type = EnrollmentType.objects.all()
+
         context = {
             'student_source':student_source,
             'student_stage':student_stage,
+            'enrollment_type':enrollment_type,
         }
         return render (request,'Student/student_setup.html',context)
     else:
@@ -140,8 +143,8 @@ def edit_enrollment(request,id):
 def delete_enrollment(request,id):
     if 'delete_student' in custom_data_views(request):
         enrollmentType_data = EnrollmentType.objects.get(id=id)
-        deleted_role = enrollment_type_data.stage
-        enrollment_type_data.delete()
+        deleted_role = enrollmentType_data.enrollment_type
+        enrollmentType_data.delete()
         messages.info(request, f"{deleted_role} Deleted Successfully")
         return redirect('student_setup')
     else:

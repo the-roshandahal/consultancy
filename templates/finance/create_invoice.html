@@ -1,0 +1,223 @@
+{% include 'header.html' %}
+
+<div class="app-content">
+    <div class="content-wrapper">
+        <div class="invoiceapp-wrap invoiceapp-setting-active">
+            <div class="invoice-body">
+                <div class="container">
+                    <div class="create-invoice-wrap mt-xxl-5 p-md-5 p-3">
+                        
+                        <form action="{% url 'create_invoice' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="row mb-3">
+                                <div class="col-xxl-6 mb-xxl-0">
+                                    <h6>Billed To</h6>
+                                    <div class="form-group">
+                                        <select class="form-select" name="student" required>
+                                            <option value="">Select Student</option>
+                                            {% for student in student %}
+                                            <option value = '{{student.id}}'>{{student.user}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3" id="items">
+                                <div class="row testing">
+
+                                    <div class="col-xxl-3 mb-xxl-0">
+                                        <h6>Select Courses</h6>
+                                        <div class="form-group">
+                                            <select class="form-select packageS" name="selected_course" id="packageS">
+                                                <option value="" data-id="0" selected>Select Courses</option>
+                                                {% for course in course %}
+                                                <option value="{{course.id}}" data-id="{{course.course_price}}">{{course.course_title}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+    
+                                    <div class="col-xxl-3 mb-xxl-0">
+                                        <h6>Amount Rs.</h6>
+                                        <input type="number" class="form-control amountNew" id="courseAmount" placeholder="Amoufsdfsdsnt" name = "selected_course_amount" value=0>
+                                    </div>
+    
+                                    
+                                    <div class="col-xxl-2 mb-xxl-0">
+                                        <h6>Discount</h6>
+                                        <input type="text" class="form-control discountNew" id="discount" placeholder="Quantity" name = "selected_course_discount" value=0>
+                                    </div>
+                                    
+                                    <div class="col-xxl-2 mb-xxl-0">
+                                        <h6>Total</h6>
+                                        <input type="number" class="form-control totalNew" id="total" placeholder="Total" disabled>
+                                    </div>
+                                </div>
+                                  
+                                  
+                                
+                            </div>
+                            <div class="row">
+                                <div class="col text-start">
+                                    <a class="d-inline-flex align-items-center" id='add'>
+                                        <i class="ri-add-box-line me-1"></i> Add More
+                                    </a>
+                                </div>
+                                
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-xxl-6">
+                                    <h6 class="float-right">Sub Total</h6>
+                                </div>
+                                <div class="col-xxl-6">
+                                    <input type="text" class="form-control"  disabled id="subtotal" >
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-xxl-6">
+                                    <h6>Miscellaneous</h6>
+                                    <input type="text" class="form-control" name = "misc_name">
+                                </div>
+                                <div class="col-xxl-6">
+                                    <h6>Miscellaneous Amount</h6>
+                                    <input type="number"
+                                    class="form-control"
+                                    id="misc_amount_id"
+                                    placeholder="Miscellaneous Amount"
+                                    name = "misc_amount"
+                                    min=0
+                                    value = 0>
+                                </div>
+                            </div>
+                            
+                            
+
+                            {% comment %} <div class="row mb-3">
+                                <div class="col-xxl-6">
+                                    <h6>Discount Amount</h6>
+                                </div>
+                                <div class="col-xxl-6">
+                                    <input type="number" class="form-control" placeholder="Discount Amount" name="discount" id ="disAmt" value = 0>
+                                </div>
+                            </div> {% endcomment %}
+                            
+
+                            <div class="row mb-3">
+                                <div class="col-xxl-6">
+                                    <h6>Total</h6>
+                                </div>
+                                <div class="col-xxl-6">
+                                    <input type="text" class="form-control" placeholder="Disabled" disabled id="totalAmt">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-xxl-6">
+                                    <h6>Due Date</h6>
+                                </div>
+                                <div class="col-xxl-6">
+                                    <input type="date" class="form-control" placeholder="Due Date" name="due_date" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-xxl-6">
+                                    <h6>Remarks</h6>
+                                </div>
+                                <div class="col-xxl-6">
+                                    <textarea class="form-control" rows="6" placeholder="Write an internal note" name="remarks"></textarea>
+                                </div>
+                            </div>
+                            <a href="#" ><button class="btn btn-primary ms-2 d-sm-inline-block d-none">Create Invoice</button></a>
+                        </form>
+                    </div>
+                </div>
+                
+            <div>
+
+        </div>
+    </div>
+</div>
+
+    
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+     <script>
+        $(document).ready(function() {
+            $(".delete").hide();
+            //when the Add Field button is clicked
+            $("#add").click(function(e) {
+              $(".delete").fadeIn("1500");
+              //Append a new row of code to the "#items" div
+              $("#items").append(
+                '<div class="row testing"><div class="next-referral mb-3 row"><div class="col-xxl-3 mb-xxl-0"><h6>Select course/Service</h6><div class="form-group"><select class="form-select packageS" name="selected_course" id="packageS"><option value="" data-id="0" selected>Select course/Service</option>{% for course in course %}<option value="{{course.id}}" data-id="{{course.course_price}}">{{course.course_title}}</option>{% endfor %}</select></div></div><div class="col-xxl-3 mb-xxl-0"><h6>Amount</h6><input type="number" class="form-control amountNew" id="amount" placeholder="Amount" name = "selected_course_amount"></div><div class="col-xxl-2 mb-xxl-0"><h6>Quantity</h6><input type="text" class="form-control quantityNew" id="quantity" placeholder="Quantity" name = "selected_course_quantity" value=1></div><div class="col-xxl-2 mb-xxl-0"><h6>Discount</h6><input type="text" class="form-control discountNew" id="discount" placeholder="Quantity" name = "selected_course_discount" value=0></div><div class="col-xxl-2 mb-xxl-0"><h6>Total</h6><input type="number" class="form-control totalNew" id="total" placeholder="Total" name="total" disabled></div><div class="row"><div class="col text-end"><a class="d-inline-flex align-items-center delete"><i class="ri-scissors-cut-line me-1"></i> Remove</a></div></div></div></div>'
+              );
+            });
+            $("body").on("click", ".delete", function(e) {
+                console.log('click on delete');
+              $(this).closest('.next-referral').remove();
+              calculateSubTotal();
+            });
+
+            $(document).on('change','.packageS',function(){
+                console.log('cjamge');
+                var selected=$(this).closest('.packageS').find(":selected").data('id');
+                $(this).closest('.testing').find(".amountNew").val(selected);
+                var quantity=$(this).closest('.testing').find(".quantityNew").val();
+                var discount=$(this).closest('.testing').find(".discountNew").val();
+                var total=(parseFloat(selected)*parseFloat(quantity)) -parseFloat(discount);  
+                $(this).closest('.testing').find(".totalNew").val(total);
+                calculateSubTotal()
+            });
+            $(document).on('keyup','.amountNew',function(){
+                var quantity=$(this).closest('.testing').find(".quantityNew").val();
+                var discount=$(this).closest('.testing').find(".discountNew").val();
+                var total=(parseFloat(quantity)*parseFloat($(this).val()))-parseFloat(discount);
+                $(this).closest('.testing').find(".totalNew").val(total);
+                calculateSubTotal()
+            });
+            $(document).on('keyup','.discountNew',function(){
+                var quantity=$(this).closest('.testing').find(".quantityNew").val();
+                var amount=$(this).closest('.testing').find(".amountNew").val();
+                var total=(parseFloat(quantity)*parseFloat(amount))-parseFloat($(this).val());
+                $(this).closest('.testing').find(".totalNew").val(total);
+                calculateSubTotal()
+            });
+            $(document).on('keyup','.quantityNew',function(){
+               
+                var amt=$(this).closest('.testing').find(".amountNew").val();
+                var discount=$(this).closest('.testing').find(".discountNew").val();
+                var total=(parseFloat(amt)*parseFloat($(this).val()))-parseFloat(discount);
+                $(this).closest('.testing').find(".totalNew").val(total);
+                calculateSubTotal()
+            });
+            $(document).on('keyup','#misc_amount_id',function(){
+                calculateTotal()
+            })
+             function calculateSubTotal(){
+                var sum = 0;
+                $('.totalNew').each(function(){
+                    sum += parseFloat($(this).val());
+                });
+                
+                $('#subtotal').val(sum);
+                calculateTotal();
+            } 
+            {% comment %} $(document).on('keyup','#disAmt',function(){
+                calculateTotal()
+            }) {% endcomment %}
+
+            function calculateTotal(){
+                $disAmt=parseFloat($('#misc_amount_id').val());
+                $subtotal=parseFloat($('#subtotal').val());
+                var total= $subtotal+$disAmt;
+                $('#totalAmt').val(total);
+            }
+          });
+    </script>
+
+<!-- /Main Content -->
+{% include 'footer.html' %}
+
+
+
