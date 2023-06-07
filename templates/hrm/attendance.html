@@ -42,6 +42,8 @@
                     }
                 </style>
                 <h1>Attendance Form</h1>
+                <p>{{today_date}}</p>
+                <p>status = {{status}}</p>
 
                 <form method="POST" action="{% url 'manage_attendance' %}">
                   {% csrf_token %}
@@ -50,24 +52,17 @@
                     <thead>
                       <tr>
                         <th>Employee</th>
-                        <th>Date</th>
                         <th>Status</th>
                         <th>Reason</th>
-                        <th>Is Opened</th>
                       </tr>
                     </thead>
                     <tbody>
                     
+                      {% for employee in employee %}
                       <tr>
                         <td>
-                          <select name="employee">
-                            {% for employee in employee %}
-                            <option value="{{employee.id}}">{{employee.user.first_name}}</option>
-                            {% endfor %}
-                            <!-- Add more options for employees -->
-                          </select>
+                            <input type="text" value="{{employee.id}}" name="employee">{{employee.user.first_name}}
                         </td>
-                        <td><input type="date" name="date"></td>
                         <td>
                           <select name="status">
                             <option value="present">Present</option>
@@ -75,9 +70,9 @@
                             <option value="absent">Absent</option>
                           </select>
                         </td>
-                        <td><input type="text" name="reason"></td>
-                        <td><input type="checkbox" name="is_opened"></td>
+                        <td><input type="text" name="reason" value="None"></td>
                       </tr>
+                      {% endfor %}
                  
                     </tbody>
                   </table>

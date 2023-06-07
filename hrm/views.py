@@ -465,30 +465,44 @@ def attendance(request):
 
 def manage_attendance(request):
     if request.method == "POST":
-        status = request.POST.getlist("status")
-        reason = request.POST["reason"]
-        employee = request.POST["employee"]
-        employees = Employee.objects.get(id=employee)
-       
-            
-        today = date.today()
-        attendance = Attendance.objects.filter(date=today).first()
-       
-        if not attendance:
+        status_list = request.POST.getlist("status")
+        reason_list = request.POST.getlist("reason")
+        employee_list = request.POST.getlist("employee")
 
-            attendance = Attendance.objects.create(employees=employees,status=status,reason=reason, date=today, is_opened=True)
-        elif attendance.is_opened:
-            return redirect('attendance')
-        else:
-            pass    
+        today_date = date.today()
+
+        print(employee_list)
+        print(status_list)
+        print(reason_list)
+
+        for status, reason, employee_id in zip(status_list, reason_list, employee_list):
+            employee = Employee.objects.get(id=int(employee_id))
+            attendance = Attendance.objects.create(employee=employee,date=today_date,status=status,reason=reason)
+            
+            print(attendance)
+            
+        return redirect('manage_attendance')
         
         
     else:
+        today_date=date.today()
+        today_attendance = Attendance.objects.filter(date=today_date)
+        if today_attendance.exists():
+            attendance_object = Attendance.objects.filter(date=today_date)
+            status = "taken"
+        else:
+            attendance_object=None
+            status = "not-taken"
+
         employee=Employee.objects.all()
         attendance=Attendance.objects.all()
+
         context={
+            'today_date':today_date,
             'employee':employee,
             'attendance':attendance,
+            'status':status,
+            'attendance_object':attendance_object,
         }
         return render(request, 'hrm/attendance.html',context)
             
