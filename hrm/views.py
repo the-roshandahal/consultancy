@@ -12,7 +12,10 @@ from account.context_processors import custom_data_views
 from django.db.models import Count
 from zk import ZK, const
 from datetime import datetime
+from datetime import date
 from django.utils.timezone import make_aware
+from datetime import date
+
 
 
 def hrm_setup(request):
@@ -445,9 +448,49 @@ def delete_employee(request,id):
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')
-    
 
 def attendance(request):
-    return render(request,'hrm/attendance.html')
+    # if 'read_hrm' in custom_data_views(request):
+    #     attendance = Attendance.objects.all()
+        
 
+    #     context = {
+    #         'attendance':attendance,
+            
+    #     }
+        return render (request,'hrm/attendance.html')
+    # else:
+    #     messages.info(request, "Unauthorized access.")
+    #     return redirect('home')
 
+def manage_attendance(request):
+    if request.method == "POST":
+        status = request.POST.getlist("status")
+        reason = request.POST["reason"]
+        employee = request.POST["employee"]
+        employees = Employee.objects.get(id=employee)
+       
+            
+        today = date.today()
+        attendance = Attendance.objects.filter(date=today).first()
+       
+        if not attendance:
+
+            attendance = Attendance.objects.create(employees=employees,status=status,reason=reason, date=today, is_opened=True)
+        elif attendance.is_opened:
+            return redirect('attendance')
+        else:
+            pass    
+        
+        
+    else:
+        employee=Employee.objects.all()
+        attendance=Attendance.objects.all()
+        context={
+            'employee':employee,
+            'attendance':attendance,
+        }
+        return render(request, 'hrm/attendance.html',context)
+            
+    
+    

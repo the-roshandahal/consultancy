@@ -6,7 +6,7 @@
                 <div class="page-description d-flex align-items-center">
                     <div class="page-description-content flex-grow-1">
                         <h1>Company Details</h1>
-                        <span>These details are visible in invoice and receipts.</span>
+                        <span></span>
                     </div>
                     <div class="page-description-actions">
                         
@@ -40,41 +40,50 @@
                     input[type="radio"] {
                       margin-right: 5px;
                     }
-                  </style>
-                  <div class="table-container">
+                </style>
+                <h1>Attendance Form</h1>
+
+                <form method="POST" action="{% url 'manage_attendance' %}">
+                  {% csrf_token %}
+                  
                   <table>
                     <thead>
                       <tr>
-                        <th>Staff Name</th>
-                        <th>Present</th>
-                        <th>Absent</th>
-                        <th>Half Day</th>
+                        <th>Employee</th>
+                        <th>Date</th>
+                        <th>Status</th>
                         <th>Reason</th>
+                        <th>Is Opened</th>
                       </tr>
                     </thead>
                     <tbody>
+                    
                       <tr>
-                        <td><input type="text" name="staff_name"></td>
-                        <td><input type="radio" name="attendance" value="absent" onclick="toggleReasonInput(this)"></td>
-                        <td><input type="radio" name="attendance" value="present" onclick="toggleReasonInput(this)"></td>
-                        <td><input type="radio" name="attendance" value="half_day" onclick="toggleReasonInput(this)"></td>
-                        <td><input type="text" name="reason" class="reason-input"></td>
+                        <td>
+                          <select name="employee">
+                            {% for employee in employee %}
+                            <option value="{{employee.id}}">{{employee.user.first_name}}</option>
+                            {% endfor %}
+                            <!-- Add more options for employees -->
+                          </select>
+                        </td>
+                        <td><input type="date" name="date"></td>
+                        <td>
+                          <select name="status">
+                            <option value="present">Present</option>
+                            <option value="half_day">Half Day</option>
+                            <option value="absent">Absent</option>
+                          </select>
+                        </td>
+                        <td><input type="text" name="reason"></td>
+                        <td><input type="checkbox" name="is_opened"></td>
                       </tr>
-                      <!-- Add more rows as needed -->
+                 
                     </tbody>
                   </table>
-                </div>
-                  
-                  <script>
-                    function toggleReasonInput(radio) {
-                      var reasonInput = radio.parentNode.nextElementSibling.querySelector('.reason-input');
-                      reasonInput.style.display = radio.value === 'absent' || radio.value === 'half_day' ? 'block' : 'none';
-                    }
-                  </script>
-
-
-
-                </div>
+                
+                  <button type="submit">Save</button>
+                </form>
             </div>
         </div>
     </div>

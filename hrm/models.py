@@ -133,14 +133,16 @@ class DeviceAttendanceUser(models.Model):
         verbose_name_plural = "02. Attendance Users"
 
 
-
-class DeviceAttendance(models.Model):
-    att_user = models.ForeignKey(DeviceAttendanceUser, on_delete=models.CASCADE)
+ATTENDANCE_CHOICES = [('present', 'Present'),('absent', 'Absent'),('half_day', 'Half Day'),]
+class Attendance(models.Model):
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     date = models.DateField()
-    punchin_timestamp = models.TimeField()
-    punchout_timestamp = models.TimeField(null=True, blank=True)
+    status = models.CharField(max_length=20, choices=ATTENDANCE_CHOICES)
+    reason = models.TextField(blank=True, null=True)
+    is_opened = models.BooleanField(default=False)
+
     def __str__(self):
-        return f"{self.att_user.uid} -{self.date}- {self.punchin_timestamp} - {self.punchout_timestamp}"
+        return f"{self.employee} - {self.date}"    
 
     class Meta:
         verbose_name_plural = "02. Attendance"
