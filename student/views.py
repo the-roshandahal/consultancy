@@ -241,6 +241,16 @@ def edit_student(request,id):
             email = request.POST["email"]
             contact = request.POST["contact"]
 
+            enrollment_type = request.POST["enrollment_type"]
+            enrollmenttype = EnrollmentType.objects.get(id=enrollment_type)
+            
+            source = request.POST["source"]
+            student_source = StudentSource.objects.get(id=source)
+
+            stage = request.POST["stage"]
+            stages = StudentStage.objects.get(id=stage)
+
+            
             student_data = Student.objects.get(id=id)
             user_data = User.objects.get(username=student_data.user)
             print('usdas')
@@ -252,14 +262,30 @@ def edit_student(request,id):
 
             student_data.address = address
             student_data.contact = contact
+            student_data.student_source=student_source
+            student_data.stages=stages
+            student_data.enrollmenttype=enrollmenttype
+           
+          
             student_data.save()
 
             messages.info(request, "student edited successfully.")
             return redirect('student')
         else:
             student_data = Student.objects.filter(id=id)[0]
+            enrollment_type = EnrollmentType.objects.all()
+            stage = StudentStage.objects.all()
+            student_source = StudentSource.objects.all()
+            course = Course.objects.all()
+            assign = Employee.objects.all()
+
             context = {
-                'student_data':student_data
+                'student_data':student_data,
+                'enrollment_type':enrollment_type,
+                'stage':stage,
+                'student_source':student_source,
+                'assign':assign,
+                'course':course,
             }
             return render(request,'student/edit_student.html',context)
     else:

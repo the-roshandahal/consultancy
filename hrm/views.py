@@ -15,6 +15,7 @@ from datetime import datetime
 from datetime import date
 from django.utils.timezone import make_aware
 from datetime import date
+from django.db import transaction
 
 
 
@@ -449,27 +450,31 @@ def delete_employee(request,id):
         messages.info(request, "Unauthorized access.")
         return redirect('home')
 
-def attendance(request):
-    # if 'read_hrm' in custom_data_views(request):
-    #     attendance = Attendance.objects.all()
-        
-
-    #     context = {
-    #         'attendance':attendance,
-            
-    #     }
-        return render (request,'hrm/attendance.html')
-    # else:
-    #     messages.info(request, "Unauthorized access.")
-    #     return redirect('home')
 
 def manage_attendance(request):
     if request.method == "POST":
         today_date = date.today()
         recent_attendance = Attendance.objects.filter(date=today_date).first()
         if recent_attendance:
-            # update the todady's data of every employee
-            print("attendance already taken for today")
+            with transaction.atomic():
+                Attendance.objects.filter(date=today_date).delete()
+
+                status_list = request.POST.getlist("status")
+                reason_list = request.POST.getlist("reason")
+                employee_list = request.POST.getlist("employee")
+
+                for status, reason, employee_id in zip(status_list, reason_list, employee_list):
+                    employee = Employee.objects.get(id=int(employee_id))
+                    attendance = Attendance.objects.create(
+                        employee=employee,
+                        date=today_date,
+                        status=status,
+                        reason=reason
+                    )
+                    attendance.save()
+                messages.info(request, f"Attendance Updated for today.")
+            return redirect('manage_attendance')
+
         else:
             status_list = request.POST.getlist("status")
             reason_list = request.POST.getlist("reason")
@@ -480,8 +485,8 @@ def manage_attendance(request):
                 attendance = Attendance.objects.create(employee=employee,date=today_date,status=status,reason=reason)
                 attendance.save()
             messages.info(request, f"Attendance Updated for date:{today_date}")
+            return redirect('manage_attendance')
 
-        return redirect('manage_attendance')
     else:
         today_date=date.today()
         today_attendance = Attendance.objects.filter(date=today_date)
@@ -493,16 +498,11 @@ def manage_attendance(request):
             status = "not-taken"
 
         employee=Employee.objects.all()
-        attendance=Attendance.objects.all()
 
         context={
             'today_date':today_date,
             'employee':employee,
-            'attendance':attendance,
             'status':status,
             'attendance_object':attendance_object,
         }
         return render(request, 'hrm/attendance.html',context)
-            
-    
-    
