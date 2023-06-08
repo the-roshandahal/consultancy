@@ -465,29 +465,24 @@ def attendance(request):
 
 def manage_attendance(request):
     if request.method == "POST":
-        status_list = request.POST.getlist("status")
-        reason_list = request.POST.getlist("reason")
-        employee_list = request.POST.getlist("employee")
-
         today_date = date.today()
+        recent_attendance = Attendance.objects.filter(date=today_date).first()
+        if recent_attendance:
+            # update the todady's data of every employee
+            print("attendance already taken for today")
+        else:
+            status_list = request.POST.getlist("status")
+            reason_list = request.POST.getlist("reason")
+            employee_list = request.POST.getlist("employee")
 
-        print(employee_list)
-        print(status_list)
-        print(reason_list)
+            for status, reason, employee_id in zip(status_list, reason_list, employee_list):
+                employee = Employee.objects.get(id=int(employee_id))
+                attendance = Attendance.objects.create(employee=employee,date=today_date,status=status,reason=reason)
+                attendance.save()
+            messages.info(request, f"Attendance Updated for date:{today_date}")
 
-        for status, reason, employee_id in zip(status_list, reason_list, employee_list):
-            employee = Employee.objects.get(id=int(employee_id))
-            attendance = Attendance.objects.create(employee=employee,date=today_date,status=status,reason=reason)
-            
-            print(attendance)
-        messages.info(request, f"Attendance Updated for date:{today_date}")
-
-        print("POST")
         return redirect('manage_attendance')
-        
-        
     else:
-        print("here")
         today_date=date.today()
         today_attendance = Attendance.objects.filter(date=today_date)
         if today_attendance.exists():
