@@ -16,52 +16,26 @@
                         
                     </div>
                 </div>
-                <style>
-                    /* Table Styles */
-                    table {
-                      width: 100%;
-                      border-collapse: collapse;
-                    }
-                    th, td {
-                      padding: 8px;
-                      text-align: left;
-                      border-bottom: 1px solid #ddd;
-                    }
-                    th {
-                      background-color: #f2f2f2;
-                    }
-                  
-                    /* Reason Input Style */
-                    .reason-input {
-                      display: none;
-                    }
-                  
-                    /* Radio Button Style */
-                    input[type="radio"] {
-                      margin-right: 5px;
-                    }
-                </style>
-                <h1>Attendance Form</h1>
-                <p>{{today_date}}</p>
-                <p>status = {{status}}</p>
-
-                <form method="POST" action="{% url 'manage_attendance' %}">
-                  {% csrf_token %}
-                  
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>Employee</th>
-                        <th>Status</th>
-                        <th>Reason</th>
-                      </tr>
-                    </thead>
+                <div class="card-body">
+                  <h1>Attendance Form</h1>
+                  <p>{{today_date}}</p>
+                  <p>status = {{status}}</p>
+                  <form method="POST" action="{% url 'manage_attendance' %}">
+                    {% csrf_token %}
+                    <table id="datatable1" class="display" style="width:100%">
+                      <thead>
+                        <tr>
+                          <th>Employee</th>
+                          <th>Status</th>
+                          <th>Reason</th>
+                        </tr>
+                      </thead>
                     <tbody>
-                    
                       {% for employee in employee %}
-                      <tr>
-                        <td>
-                            <input type="text" value="{{employee.id}}" name="employee">{{employee.user.first_name}}
+
+                        <tr>
+                          <td>
+                            <input type="hidden" value="{{employee.id}}" name="employee">{{employee.user.first_name}}
                         </td>
                         <td>
                           <select name="status">
@@ -72,15 +46,20 @@
                         </td>
                         <td><input type="text" name="reason" value="None"></td>
                       </tr>
-                      {% endfor %}
-                 
-                    </tbody>
-                  </table>
-                
-                  <button type="submit">Save</button>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                    <a href="" class="btn btn-primary"><i class="material-icons"></i>Save</a>
                 </form>
             </div>
         </div>
     </div>
-    
+  </div>   
+                                                
 {% include 'footer.html' %}
+                                          
+                      
+                                              
+                                            
+                                            
+                                              
