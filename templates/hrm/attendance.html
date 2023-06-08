@@ -26,7 +26,7 @@
                       <thead>
                         <tr>
                           <th>Employee</th>
-                          <th>Status</th>
+                          <th colspan=5>Status</th>
                           <th>Reason</th>
                         </tr>
                       </thead>
@@ -34,17 +34,22 @@
                       {% for employee in employee %}
 
                         <tr>
-                          <td>
+                          <td colspan=5>
                             <input type="hidden" value="{{employee.id}}" name="employee">{{employee.user.first_name}}
                         </td>
                         <td>
-                          <select name="status">
-                            <option value="present">Present</option>
-                            <option value="half_day">Half Day</option>
-                            <option value="absent">Absent</option>
-                          </select>
+                          <select class="js-states form-control" tabindex="-1" style="display: none; width: 100%" name="status">
+                            <optgroup label="Attendance Status">
+                              <option value="present">Present</option>
+                              <option value="half_day">Half Day</option>
+                              <option value="absent">Absent</option>
+                            </optgroup>
+                            
+                        </select>
                         </td>
-                        <td><input type="text" name="reason" value="None"></td>
+                        <td>                                
+                          <input type="text" class="form-control" name = "reason" value="none">
+                        </td>
                       </tr>
                         {% endfor %}
                       </tbody>
