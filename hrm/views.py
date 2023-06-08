@@ -480,11 +480,14 @@ def manage_attendance(request):
             attendance = Attendance.objects.create(employee=employee,date=today_date,status=status,reason=reason)
             
             print(attendance)
-            
+        messages.info(request, f"Attendance Updated for date:{today_date}")
+
+        print("POST")
         return redirect('manage_attendance')
         
         
     else:
+        print("here")
         today_date=date.today()
         today_attendance = Attendance.objects.filter(date=today_date)
         if today_attendance.exists():
