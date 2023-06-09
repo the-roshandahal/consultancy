@@ -81,3 +81,5 @@ class Expense(models.Model):
     
     class Meta:
         verbose_name_plural = "04. Expense"
+
+

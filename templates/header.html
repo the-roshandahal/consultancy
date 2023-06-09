@@ -44,7 +44,7 @@
                                 <a href="{% url 'add_course_category' %}">Course setup</a>
                             </li>
                             <li>
-                                <a href="">Finance setup</a>
+                                <a href="{% url 'finance_setup' %}">Finance setup</a>
                             </li>
                             
                            
@@ -141,7 +141,7 @@
                         <a href="#"><i class="material-icons-two-tone">account_balance</i>Accounting<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                         <ul class="sub-menu">
                             <li>
-                                <a href="">Dashboard</a>
+                                <a href="{% url 'finance' %}">Dashboard</a>
                             </li>
                             <li>
                                 <a href="{% url 'student' %}">Student</a>
@@ -151,10 +151,10 @@
                                 <a href="{% url 'invoice' %}">Invoice</a>
                             </li>
                             <li>
-                                <a href="">Receipt</a>
+                                <a href="{% url 'receipt' %}">Receipt</a>
                             </li>
                             <li>
-                                <a href="">Expense</a>
+                                <a href="{% url 'expenses' %}">Expense</a>
                             </li>
                            
                         </ul>

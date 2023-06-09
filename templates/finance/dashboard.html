@@ -1,0 +1,183 @@
+{% load static %}{% include 'header.html' %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Main Content -->
+<div class="app-content">
+    <div class="content-wrapper">
+		<!-- Page Header -->												
+		<div class="hk-pg-header">
+			<div class="d-flex">
+				<div class="d-flex flex-wrap justify-content-between flex-1">
+					<div class="mb-md-0 mb-2 me-8">
+						<div class="d-flex align-items-center">
+							<h1 class="pg-title">Accounting Dashboard</h1>
+							
+						</div>
+						<p id="greeting"></p>
+
+						<script>
+							const now = new Date();
+							const hour = now.getHours();
+					
+							let greeting;
+					
+							if (hour < 12) {
+								greeting = "Good Morning";
+							} else if (hour < 18) {
+								greeting = "Good Afternoon";
+							} else {
+								greeting = "Good Evening";
+							}
+					
+							document.getElementById("greeting").innerHTML = greeting + " {{request.user.first_name}}!";
+						</script>
+						
+					</div>
+					
+				</div>
+			</div>
+		</div>	
+
+		
+		<div class="row mt-3">
+			<div class="col-xxl-6 col-lg-6 col-md-12 mb-md-4 mb-3">
+				<div class="card card-border mb-0 h-100">
+					<div class="card-header card-header-action">
+						<h6>Weekly Finance Overview</h6>
+					</div>
+					<div class="card-body">
+						<canvas id="myChart"></canvas>
+						<div class="separator-full mt-5"></div>
+						<div class="flex-grow-1 ms-lg-3">
+							<div class="row">
+								<div class="col-xxl-4 col-sm-6 mb-xxl-0 mb-3">
+									<span class="d-block fw-medium fs-7">Invoice Summary</span>
+									<div class="d-flex align-items-center">
+										<span class="d-block fs-4 fw-medium text-dark mb-0">Rs. {{weekly_invoice_total}}</span>
+									</div>
+								</div>
+								<div class="col-xxl-4 col-sm-6 mb-xxl-0 mb-3">
+									<span class="d-block fw-medium fs-7">Expenses Summary</span>
+									<div class="d-flex align-items-center">
+										<span class="d-block fs-4 fw-medium text-dark mb-0">Rs. {{weekly_expense_total}}</span>
+									</div>
+								</div>
+								<div class="col-xxl-4 col-sm-6 mb-xxl-0 mb-3">
+									<span class="d-block fw-medium fs-7">Receipt summary</span>
+									<div class="d-flex align-items-center">
+										<span class="d-block fs-4 fw-medium text-dark mb-0">Rs. {{weekly_receipt_total}}</span>
+									</div>
+								</div>
+								
+							</div>	
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xxl-6 col-lg-6 col-md-12 mb-md-4 mb-3">
+				<div class="card card-border mb-0 h-100">
+					<div class="card-header card-header-action">
+						<h6>Pending Dues</h6>
+					</div>
+					<div class="card-body">
+						<input class="form-control mb-2 table-search" id="" type="text" placeholder="Search...">
+						<div class="table-responsive">
+							<table class="table table-filter mb-0">
+								<thead>
+									<tr>
+										<th>Customer Name</th>
+										<th>Balance</th>
+										<th>Actions</th>
+									</tr>
+								</thead>
+								<tbody class="nicescroll-bar">
+									{% for recent_statements in recent_statements %}
+									<tr>
+										<td>{{ recent_statements.customer }}</td>
+										<td>{{ recent_statements.balance }}</td>
+
+										<td>
+											<div class="d-flex align-items-center">
+												<div class="d-flex">
+													{% if 'read_finance' in permissions %}
+													<a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="View" href="{% url 'view_client' id=recent_statements.customer.id %}"><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="eye"></i></span></span></a>
+													{% else %}
+													<p>---</p>
+													{% endif %}
+												</div>
+											</div>
+										</td>
+									</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+
+
+
+<script>
+  // Define the data for Invoice, expense, and receipt
+  const invoiceData = [{% for totals in totals_by_day %}{{ totals.invoice_total|default_if_none:0 }}{% if not forloop.last %}, {% endif %}{% endfor %}];
+  const expenseData = [{% for totals in totals_by_day %}{{ totals.expense_total|default_if_none:0 }}{% if not forloop.last %}, {% endif %}{% endfor %}];
+  const receiptData = [{% for totals in totals_by_day %}{{ totals.receipt_total|default_if_none:0 }}{% if not forloop.last %}, {% endif %}{% endfor %}];
+
+  // Define the labels for the last 7 days
+  const labels = [{% for totals in totals_by_day %}"{{ totals.date }}"{% if not forloop.last %}, {% endif %}{% endfor %}];
+  // Create the chart
+  const ctx = document.getElementById('myChart').getContext('2d');
+  const chart = new Chart(ctx, {
+	type: 'line',
+	data: {
+	  labels: labels,
+	  datasets: [{
+		label: 'Invoice',
+		data: invoiceData,
+		borderColor: '#585858',
+		fill: false
+	  }, {
+		label: 'Expense',
+		data: expenseData,
+		borderColor: '#007D88',
+		fill: false
+	  }, {
+		label: 'Receipt',
+		data: receiptData,
+		borderColor: '#25cba1',
+		fill: false
+	  }]
+	},
+	options: {
+		legend: {
+			show:true,
+			fill: true
+		},
+		responsive: true,
+		scales: {
+		  xAxes: [{
+			display: true,
+			scaleLabel: {
+			  display: true,
+			  labelString: 'Date'
+			}
+		  }],
+		  yAxes: [{
+			display: true,
+			scaleLabel: {
+			  display: true,
+			  labelString: 'Amount'
+			}
+		  }]
+		}
+	  }
+	});
+</script>
+
+{% include 'footer.html' %}

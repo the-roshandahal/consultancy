@@ -61,14 +61,14 @@
 						{% for invoices in invoices %}
 						<tr>
 							<td><a href="#" class="table-link-text link-high-em">{{invoices.id}}</a></td>
-							<td>{{invoices.customer}}</td>
+							<td>{{ invoices.student.user.first_name|add:" " }}{{ invoices.student.user.last_name }}</td>
 							<td>{{invoices.created}}</td>
 							<td>{{invoices.created}}</td>
 							<td>Rs. {{invoices.invoice_amount}}</td>
 							<td>{{invoices.created_by}}</td>
 							{% if 'read_finance' in permissions %}
 							<td>
-								<a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="View" href="{% url 'view_invoice' id=invoices.id %}"><span class="btn-icon-wrap"><span class="feather-icon"><i data-feather="eye"></i></span></span></a>
+								<a  href="{% url 'view_invoice' id=invoices.id %}" class="btn btn-primary"><i class="material-icons">visibility</i></a>
 							</td>
 							{% else %}
                             <td>---</td>

@@ -1,0 +1,180 @@
+{% load static %}{% include 'nav_links.html' %}
+<style>
+    @media print {
+        thead tr th{
+            background-color: #007d88 !important;
+            -webkit-print-color-adjust:exact;
+        }
+        .companycol{
+            float: left;
+            width:65%;
+        }
+        .invoicecol{
+            width:35%;
+            align-items: right;
+        }
+        .logo{
+            width:70%;
+            float: left;
+        }
+        .invoiceidcol{
+            width:30%;
+            float: right;
+        }
+        .headrow{
+            display:flex;
+            flex-direction: row-reverse;
+        }
+        .termsncond{
+            width:50%;
+        }
+        .notetoclient{
+            width:50%;
+        }
+        .bottomrow{
+            display:flex;
+            justify-content:space-between;
+        }
+        p,li,span,td{
+            font-size: 13px;
+        }
+        .flex-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-top: 50px;
+          }
+          
+          .company-signature {
+            font-weight: bold;
+            border-top: 1px solid #007d88;
+          }
+          
+          .receiver-signature {
+            border-top: 1px solid #007d88;
+            font-weight: bold;
+        }
+          
+          .spacer {
+            flex-grow: 1;
+          }
+      }
+      
+      
+      
+</style>
+<div class="container mt-5">
+    <div class="container html-content" id='printMe'>
+        <div class="template-invoice-wrap mt-xxl-5 p-md-5 p-3">
+            <div class="row logorow headrow">
+                <div class="col-lg-3 col-md-5 order-md-0 order-1 logo">
+                    <img src="{{company.company_logo.url}}" alt="{{company.company_name}}" height="80">
+                </div>
+                <div class="col-lg-4 offset-lg-5 offset-md-3 col-md-4 mb-md-0 mb-2 invoiceidcol">
+                    <h2 class="d-flex justify-content-md-end mb-0 invoiceid">Receipt #{{receipt.id}}</h2>
+                </div>	
+            </div>	
+            <div class="row mt-4 headrow">
+                <div class="col-md-4 order-md-0 order-1 companycol">
+                    <div class="address-wrap">
+                        <h6>{{company.company_name}}</h6>
+                        <p>{{company.company_address}}</p>
+                        <p>{{company.company_email}}</p>
+                        <p>{{company.company_contact_number}}</p>
+                    </div>
+                </div>
+                <div class="col-md-5 offset-md-3 mb-4 mb-md-0 invoicecol">
+                    <div class="d-flex justify-content-md-end">
+                        <div class="text-md-end me-3">
+                            
+                            <div class="mb-1">Receipt Date*</div>
+                            <div>Created By</div>
+                        </div>
+                        <div class="text-dark">
+                            
+                            <div class="mb-1">{{receipt.created}}</div>
+                            <div>{{receipt.created_by}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="separator separator-light"></div>
+            <div class="row">
+                <div class="col-md-3">
+                    <h6 class="text-uppercase fs-7 mb-2">Billed To</h6>
+                    <div class="Billto-wrap">
+                        <h6>{{receipt.customer.client_name}}</h6>
+                        <p>{{receipt.customer.address}}</p>
+                        <p>{{receipt.customer.contact}}</p>
+                        <p>{{receipt.customer.email}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="table-wrap mt-6" >
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="thead-primary">
+                            <tr>
+                                <th  colspan="4" >Description</th>
+                                <th class="text-center">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr>
+                                <td class="w-70" colspan="4">
+                                    <h6>Paid Amount</h6>
+                                </td>
+                                <td class="w-20 text-center text-dark">Rs. {{receipt.paid_amount}}</td>
+                            </tr>
+                            
+                            <tr>
+                                <td colspan="4" class="text-dark border">Payment Method</td>
+                                <td class="text-center text-dark border">{{receipt.payment_method}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" class="text-dark border">Total</td>
+                                <td class="text-center text-dark border">Rs. {{receipt.paid_amount}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>	
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <h6>Thank you for the purchase.</h6>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                  {% if receipt.payment_receipt %}
+                  <h6>Payment Evidence</h6>
+                    <img src="{{receipt.payment_receipt.url}}" alt="payment_receipt" width=" 600">
+                    {% endif %}
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container btns">
+        <button class="btn btn-primary me-3"  onclick="printDiv('printMe')">Print</button>
+    </div>
+</div>
+
+
+
+<script>
+    function printDiv(divName){
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+
+    }
+</script>
+
+{% include 'footer.html' %}
