@@ -1,202 +1,92 @@
-{% load static %}{% include 'nav_links.html' %}
-<style>
-    @media print {
-        thead tr th{
-            background-color: #007d88 !important;
-            -webkit-print-color-adjust:exact;
-        }
-        .companycol{
-            float: left;
-            width:65%;
-        }
-        .invoicecol{
-            width:35%;
-            align-items: right;
-        }
-        .logo{
-            width:70%;
-            float: left;
-        }
-        .invoiceidcol{
-            width:30%;
-            float: right;
-        }
-        .headrow{
-            display:flex;
-            flex-direction: row-reverse;
-        }
-        .termsncond{
-            width:50%;
-        }
-        .notetoclient{
-            width:50%;
-        }
-        .bottomrow{
-            display:flex;
-            justify-content:space-between;
-        }
-        p,li,span,td{
-            font-size: 13px;
-        }
+{% load static %}
+{% include 'header.html' %}
 
 
-
-        .flex-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            margin-top: 50px;
-          }
-          
-          .company-signature {
-            font-weight: bold;
-            border-top: 1px solid #007d88;
-         
-          }
-          
-          .receiver-signature {
-            border-top: 1px solid #007d88;
-            font-weight: bold;
-            margin: 0 20px;
-        }
-          
-          .spacer {
-            flex-grow: 1;
-           
-          }
-      }
-      
-      
-      
-</style>
-<div class="container mt-5">
-    <div class="container html-content" id='printMe'>
-        <div class="template-invoice-wrap mt-xxl-5 p-md-5 p-3">
-            <div class="row logorow headrow">
-                <div class="col-lg-3 col-md-5 order-md-0 order-1 logo">
-                    <img src="{{company.company_logo.url}}" alt="{{company.company_name}}" height="80">
-                </div>
-                <div class="col-lg-4 offset-lg-5 offset-md-3 col-md-4 mb-md-0 mb-2 invoiceidcol">
-                    <h2 class="d-flex justify-content-md-end mb-0 invoiceid">Invoice #{{invoice.id}}</h2>
-                </div>	
-            </div>	
-            <div class="separator separator-light"></div>
-
-            <div class="row mt-4 headrow">
-                <div class="col-md-4 order-md-0 order-1 companycol">
-                    <div class="address-wrap">
-                        <h6>{{company.company_name}}</h6>
-                        <p>{{company.company_address}}</p>
-                        <p>{{company.company_email}}</p>
-                        <p>{{company.company_contact_number}}</p>
-                    </div>
-                </div>
-                <div class="col-md-5 offset-md-3 mb-4 mb-md-0 invoicecol">
-                    <div class="d-flex justify-content-md-end">
-                        <div class="text-md-end me-3">
-                            
-                            <div class="mb-1"><span>Invoice Date*</span></div>
-                            <div class="mb-1"><span>Due Date*</span></div>
-                            <div><span>Created By</span></div>
-                        </div>
-                        <div class="text-dark">
-                            
-                            <div class="mb-1"><span>{{invoice.created}}</span></div>
-                            <div class="mb-1"><span>{{invoice.due_date}}</span></div>
-                            <div><span>{{invoice.created_by}}</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="separator separator-light"></div>
+<div class="app-content">
+    <div class="content-wrapper">
+        <div class="container">
             <div class="row">
-                <div class="col-md-3">
-                    <h6 class="text-uppercase fs-7 mb-2">Billed To</h6>
-                    <div class="Billto-wrap">
-                        <h6>{{invoice.student.user}}</h6>
-                        <p>{{invoice.student.address}}</p>
-                        <p>{{invoice.student.contact}}</p>
-                        <p>{{invoice.student.user.email}}</p>
+                <div class="col">
+                    <div class="card invoice" id='printMe'>
+                        <div class="card-body">
+                            <div class="invoice-header">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <img src="{{company.company_logo.url}}" alt="{{company.company_name}}" height="60">
+                                    </div>
+                                    <div class="col-3">
+                                        <span class="invoice-issue-date">Invoice #{{invoice.id}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row invoice-summary">
+                                <div class="col-lg-4">
+                                    <div class="invoice-info">
+                                        <p class="bold">Billed From </p>
+                                        <p>{{company.company_name}}</p>
+                                        <p>{{company.company_address}}</p>
+                                        <p>{{company.company_email}}</p>
+                                        <p>{{company.company_contact_number}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6"></div>
+                                <div class="col-lg-2">
+                                    <div class="invoice-info">
+                                        <p class="bold">Billed To </p>
+                                        <p>{{invoice.student.user.first_name}} {{invoice.student.user.last_name}}</p>
+                                        <p>{{invoice.student.address}}</p>
+                                        <p>{{invoice.student.contact}}</p>
+                                        <p>{{invoice.student.user.email}}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row invoice-summary">
+                                <div class="col-lg-12">
+                                    <div class="invoice-info">
+                                        <p  class="bold">Title<span>Amount</span></p>
+                                        {% for course in course %}
+                                        <p>{{course.course}}<span>Rs. {{course.course_price}}</span></p>
+                                        {% endfor %}
+                                        {% if invoice.misc_name and invoice.misc_amount %}
+                                        <p>{{invoice.misc_name}}<span>Rs. {{invoice.misc_amount}}</span></p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                          
+                        <div class="card-footer">
+                            <div class="row invoice-summary">
+                                <div class="col-lg-4">
+                                    <div class="invoice-info">
+                                        <p>Invoice Number: <span>{{invoice.id}}</span></p>
+                                        <p>Created By: <span>{{invoice.created_by}}</span></p>
+                                        <p>Issue Date: <span>{{invoice.created}}</span></p>
+                                        <p>Due Date: <span>{{invoice.due_date}}</span></p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5"></div>
+                                <div class="col-lg-3">
+                                    <div class="invoice-info">
+                                        
+                                        <p class="bold">Total <span>Rs. {{invoice.invoice_amount}}</span></p>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="invoice-info-actions">
+                        <a class="btn btn-primary" type="button"  onclick="printDiv('printMe')">Print Invoice</a>
                     </div>
                 </div>
-            </div>
-            <div class="table-wrap mt-6" >
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead class="thead-primary">
-                            <tr>
-                                <th  colspan="4" >Course </th>
-                                <th class="text-center">Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for course in course %}
-                            <tr>
-                                <td class="w-60" colspan="4">
-                                    {{course.course}}
-                                </td>
-                               
-                                <td class="w-30 text-center text-dark">Rs. {{course.course_price}}</td>
-                            </tr>
-                            {% endfor %}
-    
-    
-                            {% if invoice.misc_name and invoice.misc_amount %}
-                            <tr>
-                                
-                                <td class="w-60" colspan="4">
-                                    {{invoice.misc_name}}
-                                </td>
-                                <td></td>
-                                <td class="w-30 text-center text-dark">Rs. {{invoice.misc_amount}}</td>
-                            </tr>
-                            {% endif %}
-    
-                         
-                            <tr>
-                                <td></td>
-                                <td colspan="8" class="text-dark border text-center ">Grand Total</td>
-                                <td class="text-center text-dark border">Rs. {{invoice.invoice_amount}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>	
-            </div>
-            <div class="separator separator-light"></div>
-
-            <div class="row bottomrow">
-                <div class="col-lg-6 col-md-6 notetoclient">
-                    <h6>Note to client</h6>
-                    <p>{{company.payment_details|safe}}</p>
-                </div>
-                <div class="col-lg-6 col-md-6 termsncond">
-                    <h6>Terms  & Conditions</h6>
-                    <p></p>
-                    
-                </div>
-            </div>
-
-
-
-            <div class="flex-container">
-                <div class="company-signature">Company Signature</div>
-              
-                <div class="receiver-signature">Receiver Signature</div>
-              </div>
             </div>
         </div>
     </div>
-
-    <div class="container btns">
-        <button class="btn btn-primary me-3"  onclick="printDiv('printMe')">Print</button>
-    </div>
 </div>
-
-
-
-
-
 
 <script>
     function printDiv(divName){

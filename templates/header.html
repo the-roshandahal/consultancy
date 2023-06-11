@@ -44,6 +44,9 @@
                                 <a href="{% url 'add_course_category' %}">Course setup</a>
                             </li>
                             <li>
+                                <a href="{% url 'student_setup' %}">Student Setup</a>
+                            </li>
+                            <li>
                                 <a href="{% url 'finance_setup' %}">Finance setup</a>
                             </li>
                             
@@ -65,18 +68,6 @@
                     </li>
                     <li class="sidebar-title">
                         Features
-                    </li>
-                    <li>
-                        <a href=""><i class="material-icons-two-tone">group</i>Roles and User<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
-                        <ul class="sub-menu">
-                            <li>
-                                <a href="{% url 'role' %}">Roles</a>
-                            </li>
-                            <li>
-                                <a href="{% url 'company_user' %}">User</a>
-                            </li>
-                            
-                        </ul>
                     </li>
                     <li>
                         <a href=""><i class="material-icons-two-tone">add_link</i>Crm system<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
@@ -116,11 +107,12 @@
                     <li>
                         <a href=""><i class="material-icons-two-tone">golf_course</i>Courses<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                         <ul class="sub-menu">
-                            <li>
-                                <a href="{% url 'add_course_category' %}">Add Course Category</a>
-                            </li>
+                            
                             <li>
                                 <a href="{% url 'courses' %}">Courses</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'services' %}">Services</a>
                             </li>
                             
                         </ul>
@@ -128,9 +120,7 @@
                     <li>
                         <a href="#"><i class="material-icons-two-tone">emoji_people</i>Students<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                         <ul class="sub-menu">
-                            <li>
-                                <a href="{% url 'student_setup' %}">Student Setup</a>
-                            </li>
+                            
                             <li>
                                 <a href="{% url 'student' %}">Student</a>
 
@@ -141,13 +131,6 @@
                         <a href="#"><i class="material-icons-two-tone">account_balance</i>Accounting<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                         <ul class="sub-menu">
                             <li>
-                                <a href="{% url 'finance' %}">Dashboard</a>
-                            </li>
-                            <li>
-                                <a href="{% url 'student' %}">Student</a>
-
-                            </li>
-                            <li>
                                 <a href="{% url 'invoice' %}">Invoice</a>
                             </li>
                             <li>
@@ -157,20 +140,6 @@
                                 <a href="{% url 'expenses' %}">Expense</a>
                             </li>
                            
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#"><i class="material-icons-two-tone">person</i>Work Profile<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
-                        <ul class="sub-menu">
-                            {% comment %} <li>
-                                <a href="">Log Sheet</a>
-                            </li> {% endcomment %}
-                            <li>
-                                <a href="">Leave</a>
-                            </li>
-                            <li>
-                                <a href="">Pay Slip</a>
-                            </li>
                         </ul>
                     </li>
                     <li>
@@ -297,5 +266,3 @@
                     </div>
                 </nav>
             </div>
-
-

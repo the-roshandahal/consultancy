@@ -1,17 +1,24 @@
 {% include 'header.html' %}
-
 <div class="app-content">
     <div class="content-wrapper">
-        <div class="invoiceapp-wrap invoiceapp-setting-active">
-            <div class="invoice-body">
-                <div class="container">
+        <div class="example-container">
+            <div class="example-content bg-light">
+                <div class="page-description d-flex align-items-center">
+                    <div class="page-description-content flex-grow-1">
+                        <h1>Company Details</h1>
+                        <span>These details are visible in invoice and receipts.</span>
+                    </div>
+                </div>
+                
+                <!-- add other contents  -->
+                <div class="card container">
                     <div class="create-invoice-wrap mt-xxl-5 p-md-5 p-3">
                         
                         <form action="{% url 'create_invoice' %}" method="POST">
                             {% csrf_token %}
                             <div class="row mb-3">
                                 <div class="col-xxl-6 mb-xxl-0">
-                                    <h6>Billed To</h6>
+                                    <label>Billed To</label>
                                     <div class="form-group">
                                         <select class="form-select" name="student" required>
                                             <option value="">Select Student</option>
@@ -25,40 +32,39 @@
                             
                             <div class="row mb-3" id="items">
                                 <div class="row testing">
-
-                                    <div class="col-xxl-3 mb-xxl-0">
-                                        <h6>Select Courses</h6>
+                                    <div class="col-xxl-4 mb-xxl-0">
+                                        <label>Select Course/Services</label>
                                         <div class="form-group">
-                                            <select class="form-select packageS" name="selected_course" id="packageS">
-                                                <option value="" data-id="0" selected>Select Courses</option>
+                                            <select class="form-select packageS" name="selected_course" id="packageS" required>
+                                                <option value="" data-id="0" selected>Select Course/ Services</option>
                                                 {% for course in course %}
-                                                <option value="{{course.id}}" data-id="{{course.course_price}}">{{course.course_title}}</option>
+                                                <option value="{{course.id}}" data-id="{{course.course_price}}">Course - {{course.course_title}}</option>
+                                                {% endfor %}
+                                                {% for service in service %}
+                                                <option value="{{service.id}}" data-id="{{service.service_price}}">Service - {{service.service_title}}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
                                     </div>
     
-                                    <div class="col-xxl-3 mb-xxl-0">
-                                        <h6>Amount Rs.</h6>
+                                    <div class="col-xxl-2 mb-xxl-0">
+                                        <label>Amount Rs.</label>
                                         <input type="number" class="form-control amountNew" id="courseAmount" placeholder="Amoufsdfsdsnt" name = "selected_course_amount" value=0>
                                     </div>
-    
+                                    <div class="col-xxl-2 mb-xxl-0"><label>Quantity</label><input type="text" class="form-control quantityNew" id="quantity" placeholder="Quantity" name="selected_course_quantity" value="1"></div>
                                     
                                     <div class="col-xxl-2 mb-xxl-0">
-                                        <h6>Discount</h6>
+                                        <label>Discount</label>
                                         <input type="text" class="form-control discountNew" id="discount" placeholder="Quantity" name = "selected_course_discount" value=0>
                                     </div>
                                     
                                     <div class="col-xxl-2 mb-xxl-0">
-                                        <h6>Total</h6>
+                                        <label>Total</label>
                                         <input type="number" class="form-control totalNew" id="total" placeholder="Total" disabled>
                                     </div>
                                 </div>
-                                  
-                                  
-                                
                             </div>
-                            <div class="row">
+                            <div class="row ">
                                 <div class="col text-start">
                                     <a class="d-inline-flex align-items-center" id='add'>
                                         <i class="ri-add-box-line me-1"></i> Add More
@@ -68,7 +74,7 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="col-xxl-6">
-                                    <h6 class="float-right">Sub Total</h6>
+                                    <label class="float-right">Sub Total</label>
                                 </div>
                                 <div class="col-xxl-6">
                                     <input type="text" class="form-control"  disabled id="subtotal" >
@@ -76,11 +82,11 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="col-xxl-6">
-                                    <h6>Miscellaneous</h6>
+                                    <label>Miscellaneous</label>
                                     <input type="text" class="form-control" name = "misc_name">
                                 </div>
                                 <div class="col-xxl-6">
-                                    <h6>Miscellaneous Amount</h6>
+                                    <label>Miscellaneous Amount</label>
                                     <input type="number"
                                     class="form-control"
                                     id="misc_amount_id"
@@ -90,22 +96,9 @@
                                     value = 0>
                                 </div>
                             </div>
-                            
-                            
-
-                            {% comment %} <div class="row mb-3">
-                                <div class="col-xxl-6">
-                                    <h6>Discount Amount</h6>
-                                </div>
-                                <div class="col-xxl-6">
-                                    <input type="number" class="form-control" placeholder="Discount Amount" name="discount" id ="disAmt" value = 0>
-                                </div>
-                            </div> {% endcomment %}
-                            
-
                             <div class="row mb-3">
                                 <div class="col-xxl-6">
-                                    <h6>Total</h6>
+                                    <label>Total</label>
                                 </div>
                                 <div class="col-xxl-6">
                                     <input type="text" class="form-control" placeholder="Disabled" disabled id="totalAmt">
@@ -113,15 +106,15 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="col-xxl-6">
-                                    <h6>Due Date</h6>
+                                    <label>Due Date</label>
                                 </div>
                                 <div class="col-xxl-6">
-                                    <input type="date" class="form-control" placeholder="Due Date" name="due_date" required>
+                                    <input type="date" class="form-control" placeholder="Due Date" name="due_date" required value="{{ due_date }}">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-xxl-6">
-                                    <h6>Remarks</h6>
+                                    <label>Remarks</label>
                                 </div>
                                 <div class="col-xxl-6">
                                     <textarea class="form-control" rows="6" placeholder="Write an internal note" name="remarks"></textarea>
@@ -132,13 +125,17 @@
                     </div>
                 </div>
                 
-            <div>
+                
 
+
+
+            </div>
         </div>
     </div>
 </div>
 
-    
+
+
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
 <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -150,7 +147,7 @@
               $(".delete").fadeIn("1500");
               //Append a new row of code to the "#items" div
               $("#items").append(
-                '<div class="row testing"><div class="next-referral mb-3 row"><div class="col-xxl-3 mb-xxl-0"><h6>Select course/Service</h6><div class="form-group"><select class="form-select packageS" name="selected_course" id="packageS"><option value="" data-id="0" selected>Select course/Service</option>{% for course in course %}<option value="{{course.id}}" data-id="{{course.course_price}}">{{course.course_title}}</option>{% endfor %}</select></div></div><div class="col-xxl-3 mb-xxl-0"><h6>Amount</h6><input type="number" class="form-control amountNew" id="amount" placeholder="Amount" name = "selected_course_amount"></div><div class="col-xxl-2 mb-xxl-0"><h6>Quantity</h6><input type="text" class="form-control quantityNew" id="quantity" placeholder="Quantity" name = "selected_course_quantity" value=1></div><div class="col-xxl-2 mb-xxl-0"><h6>Discount</h6><input type="text" class="form-control discountNew" id="discount" placeholder="Quantity" name = "selected_course_discount" value=0></div><div class="col-xxl-2 mb-xxl-0"><h6>Total</h6><input type="number" class="form-control totalNew" id="total" placeholder="Total" name="total" disabled></div><div class="row"><div class="col text-end"><a class="d-inline-flex align-items-center delete"><i class="ri-scissors-cut-line me-1"></i> Remove</a></div></div></div></div>'
+                '<div class="row testing mt-3"><div class="next-referral mb-3 row"><div class="col-xxl-4 mb-xxl-0"><label>Select Course/Service</label><div class="form-group"><select class="form-select packageS" name="selected_course" id="packageS"><option value="" data-id="0" selected>Select course/Service</option>{% for course in course %}<option value="{{course.id}}" data-id="{{course.course_price}}">{{course.course_title}}</option>{% endfor %}</select></div></div><div class="col-xxl-2 mb-xxl-0"><label>Amount</label><input type="number" class="form-control amountNew" id="amount" placeholder="Amount" name = "selected_course_amount"></div><div class="col-xxl-2 mb-xxl-0"><label>Quantity</label><input type="text" class="form-control quantityNew" id="quantity" placeholder="Quantity" name = "selected_course_quantity" value=1></div><div class="col-xxl-2 mb-xxl-0"><label>Discount</label><input type="text" class="form-control discountNew" id="discount" placeholder="Quantity" name = "selected_course_discount" value=0></div><div class="col-xxl-2 mb-xxl-0"><label>Total</label><input type="number" class="form-control totalNew" id="total" placeholder="Total" name="total" disabled></div><div class="row"><div class="col text-end"><a class="d-inline-flex align-items-center delete"><i class="ri-scissors-cut-line me-1"></i> Remove</a></div></div></div></div>'
               );
             });
             $("body").on("click", ".delete", function(e) {

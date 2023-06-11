@@ -113,9 +113,13 @@ def create_invoice(request):
         else:
             course = Course.objects.all()
             student = Student.objects.all()
+            tomorrow = datetime.now().date() + timedelta(days=2)
+            default_due_date = tomorrow.strftime("%Y-%m-%d")
             context = {
                 'course': course,
-                'student': student
+                'student': student,
+                'due_date':default_due_date,
+
             }
             return render(request, "finance/create_invoice.html", context)
 

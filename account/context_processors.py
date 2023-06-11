@@ -130,7 +130,7 @@ def custom_data_views(request):
                            'create_leads', 'read_leads', 'update_leads', 'delete_leads', 'manage_leads', 
                            'create_hrm', 'read_hrm', 'update_hrm', 'delete_hrm', 'manage_hrm',
                            'create_course', 'read_course', 'update_course', 'delete_course','manage_course',
-                           'create_student', 'read_student', 'update_student', 'delete_student', 'manage_student'
+                           'create_student', 'read_student', 'update_student', 'delete_student', 'manage_student',
                            'manage_company']
             return views_permissions
             

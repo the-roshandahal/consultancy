@@ -158,3 +158,8 @@ def delete_course_category(request,id):
         messages.info(request, "Unauthorized access.")
         return redirect('home')
 
+
+
+
+def services(request):
+    return redirect('courses')

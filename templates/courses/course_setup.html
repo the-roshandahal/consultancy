@@ -24,33 +24,39 @@
                     </div>
                     <div class="flex">
                         <div class="table-responsive">
-                            <table class="table mb-0">
+                            <table id="datatable2" class="display" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>Category</th>
-                                        <th>Action</th>
+                                        <th class="text-right">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for category in category %}
                                     <tr>
                                         <td>{{category.course_category}}</td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="d-flex">
-                                                    {% if 'manage_course' in permissions %}
-                                                    <a href="{% url 'edit_course_category' id=category.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
-                                                    {% endif %}
-                                                    {% if 'delete_course' in permissions %}
-                                                    <a href="#" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCentercategoryDelete{{category.id}}"><i class="material-icons">delete</i></a>
-                                                    {% endif %}
-                                                </div>
-                                            </div>
-                                        </td>
+                                        {% if 'read_account' in permissions  %}
+                                            <td class="text-right">
+                                                {% if 'manage_course' in permissions %}
+                                                <a href="{% url 'edit_course_category' id=category.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
+                                                {% endif %}
+                                                {% if 'delete_course' in permissions %}
+                                                <a href="#" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCentercategoryDelete{{category.id}}"><i class="material-icons">delete</i></a>
+                                                {% endif %}
+                                            </td>
+                                        {% else %}
+                                            <td class="text-right">----</td>
+                                        {% endif %}
                                     </tr>
                                     {% endfor %}
                                 </tbody>
                             </table>
+    
+                            <style>
+                                .text-right {
+                                  text-align: right;
+                                }
+                              </style>
                         </div>
                     </div>
                 </div>
@@ -59,7 +65,11 @@
         </div>
     </div>
 </div>
-
+<style>
+    .text-right {
+      text-align: right;
+    }
+  </style>
 
 <div class="modal fade" id="exampleModalCenterAddCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterAddCategory" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">

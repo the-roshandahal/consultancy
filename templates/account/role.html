@@ -31,7 +31,7 @@
 									<td>{{role.role}}</td>
 									{% if 'read_account' in permissions  %}
 										<td class="text-right">
-											<a href="{% url 'view_role' id=role.id %}" class="btn btn-primary"><i class="material-icons">visibility</i>View</a>
+											<a href="{% url 'view_role' id=role.id %}" class="btn btn-primary"><i class="material-icons">visibility</i></a>
 										</td>
 									{% else %}
 										<td class="text-right">----</td>

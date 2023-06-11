@@ -1,19 +1,16 @@
-{% load static %}{% include 'header.html' %}
-<!-- Main Content -->
+{% include 'header.html' %}
 <div class="app-content">
     <div class="content-wrapper">
-		<div class="hk-pg-header">
-			<div class="d-flex">
-				<div class="d-flex flex-wrap justify-content-between flex-1">
-					<div class="mb-md-0 mb-2 me-8">
-						<div class="d-flex align-items-center">
-							<h1 class="pg-title">Finance Setup</h1>
-						</div>
-						
-					</div>
-					<div class="pg-header-action-wrap">
-						{% if 'create_finance' in permissions %}
-						<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createUserModalSource">Add  Expense Type</button>
+        <div class="example-container">
+            <div class="example-content bg-light">
+                <div class="page-description d-flex align-items-center">
+                    <div class="page-description-content flex-grow-1">
+                        <h1>Company Details</h1>
+                        <span>These details are visible in invoice and receipts.</span>
+                    </div>
+                    <div class="page-description-actions">                        
+                        {% if 'create_finance' in permissions %}
+                        <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createUserModalSource"><i class="material-icons">add</i>Add</a>
 						<div class="modal fade" id="createUserModalSource" tabindex="-1" role="dialog" aria-labelledby="createUserModalSource" aria-hidden="true">
 							<div class="modal-dialog" role="document">
 								<div class="modal-content">
@@ -40,14 +37,12 @@
 							</div>
 						</div>
 						{% endif %}
-					</div>
-				</div>
-			</div>
-		</div>
+                        
+                    </div>
+                </div>
+                
+                <!-- add other contents  -->
 
-		<!-- /Add other contents below -->
-		<div class="container mt-5">												
-            <div class="row">
                 <div class="table-responsive">
 					<table class="table nowrap">
 						<thead>
@@ -101,9 +96,13 @@
 						</tbody>
 					</table>
 				</div>
-            </div>										
+                
+
+
+
+            </div>
         </div>
-	</div>
+    </div>
 </div>
 
 {% include 'footer.html' %}

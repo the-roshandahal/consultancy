@@ -1,31 +1,34 @@
 {% include 'header.html' %}
-
 <div class="app-content">
     <div class="content-wrapper">
-        <div class="invoiceapp-wrap invoiceapp-setting-active">
-            <div class="invoice-body">
-                <div class="container">
+        <div class="example-container">
+            <div class="example-content bg-light">
+                <div class="page-description d-flex align-items-center">
+                    <div class="page-description-content flex-grow-1">
+                        <h1>Company Details</h1>
+                        <span>These details are visible in invoice and receipts.</span>
+                    </div>
+                </div>
+                
+                <!-- add other contents  -->
+                <div class="card container">
                     <div class="create-invoice-wrap mt-xxl-5 p-md-5 p-3">
-                        <div class="separator separator-light"></div>
                         <form action="{% url 'create_receipt' %}" method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="row">
                                 <div class="col-xxl-6 mb-xxl-0 mb-4">
-                                    <h6>Billed To</h6>
-                                        <div class="form-group">
-                                            <select class="form-select" name="student" required>
-                                                <option value="">Select Student</option>
-                                                {% for student in student %}
-                                                <option value = '{{student.id}}'>{{student.user.first_name}}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                        <a class="d-inline-flex align-items-center" data-bs-toggle="modal" data-bs-target="#billed_info" href="{% url 'add_student' %}">
-                                        <i class="ri-add-box-line me-1"></i> Add new student </a>
+                                    <label>Billed To</label>
+                                    <div class="form-group">
+                                        <select class="form-select" name="student" required>
+                                            <option value="">Select Student</option>
+                                            {% for student in student %}
+                                            <option value = '{{student.id}}'>{{student.user.first_name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
                                 </div>
-
                                 <div class="col-xxl-6 mb-xxl-0 mb-4">
-                                    <h6>Payment Method </h6>
+                                    <label>Payment Method </label>
                                     <div class="form-group">
                                         <select class="form-select" name="payment_method" id="packageS">
                                             <option value="esewa">Esewa</option>
@@ -36,47 +39,47 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="separator separator-light"></div>
+    
 
 
-
-                            <div class="row">
+                            <div class="row mt-3">
                                 <div class="col-xxl-6">
-                                    <h6 class="float-right">Paid Amount</h6>
+                                    <label class="float-right">Paid Amount</label>
                                 </div>
                                 <div class="col-xxl-6">
                                     <input type="text" class="form-control" name = "paid_amount">
                                 </div>
                             </div>
-                            <div class="separator separator-light"></div>
-
-                            <div class="row">
+    
+                            <div class="row mt-3">
                                 <div class="col-xxl-6">
-                                    <h6>Payment Receipt</h6>
+                                    <label>Payment Receipt</label>
                                 </div>
                                 <div class="col-xxl-6">
                                     <input type="file" class="form-control" name="payment_receipt">
                                 </div>
                             </div>
-                            <div class="separator separator-light"></div>
-
-                            <div class="row">
+    
+                            <div class="row mt-3">
                                 <div class="col-xxl-6">
-                                    <h6>Remarks</h6>
+                                    <label>Remarks</label>
                                 </div>
                                 <div class="col-xxl-6">
                                     <textarea class="form-control" rows="6" placeholder="Write an internal note" name="remarks"></textarea>
                                 </div>
                             </div>
-                            <a href="#" ><button class="btn btn-primary ms-2 d-sm-inline-block d-none">save</button></a>
+                            <a href="#" ><button class="btn btn-primary ms-2 d-sm-inline-block d-none">Save</button></a>
                         </form>
                     </div>
                 </div>
                 
-            <div>
+                
 
+
+
+            </div>
         </div>
     </div>
 </div>
+
 {% include 'footer.html' %}
- 
