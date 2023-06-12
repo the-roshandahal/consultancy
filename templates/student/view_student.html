@@ -18,7 +18,7 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="card-title">Student Name<span class="badge "><div class="page-description-actions">
+                                <h5 class="card-title">{{student.user.first_name|add:" " }}{{student.user.last_name }}<span class="badge "><div class="page-description-actions">
                         
                                     <div class="dropdown">
                                         <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
@@ -51,54 +51,40 @@
 
                                         <div class="tab-content" id="pills-tabContent">
                                             <div class="tab-pane fade active show" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                                                <div class="row widget widget-list mt-5">
-                                                    <div class="col-4">
-                                                        <ul class="widget-list-content list-unstyled">
-                                                            <li class="widget-list-item widget-list-item-green">
-                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">article</i></span>
-                                                                <span class="widget-list-item-description">
-                                                                    <a href="#" class="widget-list-item-description-title">
-                                                                        Dashboard UI optimisations
-                                                                    </a>
-                                                                    <span class="widget-list-item-description-subtitle">
-                                                                        Oskar Hudson
-                                                                    </span>
-                                                                </span>
-                                                            </li>
-                                                            
-                                                        </ul>
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <ul class="widget-list-content list-unstyled">
-                                                            <li class="widget-list-item widget-list-item-green">
-                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">article</i></span>
-                                                                <span class="widget-list-item-description">
-                                                                    <a href="#" class="widget-list-item-description-title">
-                                                                        Dashboard UI optimisations
-                                                                    </a>
-                                                                    <span class="widget-list-item-description-subtitle">
-                                                                        Oskar Hudson
-                                                                    </span>
-                                                                </span>
-                                                            </li>
-                                                            
-                                                        </ul>
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <ul class="widget-list-content list-unstyled">
-                                                            <li class="widget-list-item widget-list-item-green">
-                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">article</i></span>
-                                                                <span class="widget-list-item-description">
-                                                                    <a href="#" class="widget-list-item-description-title">
-                                                                        Dashboard UI optimisations
-                                                                    </a>
-                                                                    <span class="widget-list-item-description-subtitle">
-                                                                        Oskar Hudson
-                                                                    </span>
-                                                                </span>
-                                                            </li>
-                                                            
-                                                        </ul>
+                                                <div class="invoice-body mt-3">
+                                                    <div class="container">
+                                                        <h5 class="h5g-title">Invoices</h5>
+                                                        <div class="invoice-list-view">
+                                                            <table class="table nowrap w-100 mb-5">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Invoice</th>
+                                                                        <th>Student</th>
+                                                                        <th>Issue Date</th>
+                                                                        <th>Due Date</th>
+                                                                        <th>Invoice Amount</th>
+                                                                        <th>Created By</th>
+                                                                        <th>Actions</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    {% for invoices in invoices %}
+                                                                    <tr>
+                                                                        <td><a href="#" class="table-link-text link-high-em">{{invoices.id}}</a></td>
+                                                                        <td>{{invoices.student.user.first_name|add:" " }}{{ invoices.student.user.last_name }}</td>
+                                                                        <td>{{invoices.created}}</td>
+                                                                        <td>{{invoices.created}}</td>
+                                                                        <td>Rs.{{invoices.invoice_amount}}</td>
+                                                                        <td>{{invoices.created_by}}</td>
+                                                                        
+                                                                        
+                                                                    </tr>
+                                                                    {% endfor %}
+                                                                </tbody>
+                                                            </table>
+                                                        
+                                                        </div>
+                                                    
                                                     </div>
                                                 </div>
                                             </div>

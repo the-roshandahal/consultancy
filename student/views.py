@@ -1,9 +1,12 @@
 from django.shortcuts import render,redirect
 from.models import *
 from django.contrib import messages, auth
+from account.views import *
 from account.models import *
-
+from finance.models import *
 from account.context_processors import custom_data_views
+
+
 # Create your views here.
 
 def student_setup(request):
@@ -247,8 +250,7 @@ def edit_student(request,id):
             source = request.POST["source"]
             student_source = StudentSource.objects.get(id=source)
 
-            stage = request.POST["stage"]
-            stages = StudentStage.objects.get(id=stage)
+            
 
             
             student_data = Student.objects.get(id=id)
@@ -262,9 +264,11 @@ def edit_student(request,id):
 
             student_data.address = address
             student_data.contact = contact
-            student_data.student_source=student_source
-            student_data.stages=stages
-            student_data.enrollmenttype=enrollmenttype
+            student_data.source=student_source
+            
+            
+
+            student_data.enrollment_type=enrollmenttype
            
           
             student_data.save()
@@ -272,19 +276,16 @@ def edit_student(request,id):
             messages.info(request, "student edited successfully.")
             return redirect('student')
         else:
-            student_data = Student.objects.filter(id=id)[0]
+            student_data = Student.objects.get(id=id)
             enrollment_type = EnrollmentType.objects.all()
-            stage = StudentStage.objects.all()
             student_source = StudentSource.objects.all()
             course = Course.objects.all()
-            assign = Employee.objects.all()
+            
 
             context = {
                 'student_data':student_data,
                 'enrollment_type':enrollment_type,
-                'stage':stage,
                 'student_source':student_source,
-                'assign':assign,
                 'course':course,
             }
             return render(request,'student/edit_student.html',context)
@@ -308,17 +309,28 @@ def delete_student(request,id):
 def view_student(request,id):
     if 'read_student' in custom_data_views(request):
         student = Student.objects.get(id=id)
-        # invoices = Invoice.objects.filter(student=id)[:5]
-        # receipts = Receipt.objects.filter(student=id)[:5]
+        invoices = Invoice.objects.filter(student=id)
         context = {
             'student': student,
+            'invoices':invoices,
         }
         return render(request,'student/view_student.html', context)
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')
 
+def student_notes(request,id):
+    if 'read_student' in custom_data_views(request):
+        student_notes = StudentNotes.objects.all()
+        context = {
+            'student_notes': student_notes
+            }
+        return render(request, 'student_notes.html', context)
+    else:
 
+         
+
+    
 
 
 

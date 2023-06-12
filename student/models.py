@@ -101,3 +101,4 @@ class StudentFiles(models.Model):
 
     class Meta:
         verbose_name_plural = "06. Student Files"
+
