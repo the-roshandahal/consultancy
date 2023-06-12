@@ -1,0 +1,174 @@
+{% include 'header.html' %}
+<div class="app-content">
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div class="card todo-container">
+                        <div class="row">
+                            <div class="col-xl-4 col-xxl-3">
+                                <div class="todo-menu">
+
+                                    <h5 class="todo-menu-title">Status</h5>
+                                    <ul class="list-unstyled todo-status-filter">
+                                        <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                            <button class="nav-link active" id="v-pills-pendingtask-tab" data-bs-toggle="pill" data-bs-target="#v-pills-pendingtask" type="button" role="tab" aria-controls="v-pills-pendingtask" aria-selected="true">Pending Tasks</button>
+                                            <button class="nav-link" id="v-pills-mytask-tab" data-bs-toggle="pill" data-bs-target="#v-pills-mytask" type="button" role="tab" aria-controls="v-pills-mytask" aria-selected="false">My Tasks</button>
+                                            <button class="nav-link" id="v-pills-completedtask-tab" data-bs-toggle="pill" data-bs-target="#v-pills-completedtask" type="button" role="tab" aria-controls="v-pills-completedtask" aria-selected="false">Completed Tasks</button>
+                                        </div>
+                                    </ul>
+                                    <a class="btn btn-primary d-block m-b-lg" data-bs-toggle="modal" data-bs-target="#createUserModal">Create new</a>
+                                </div>
+                            </div>
+                            <div class="col-xl-8 col-xxl-9">
+                                <div class="tab-content" id="v-pills-tabContent">
+                                    <div class="tab-pane fade show active" id="v-pills-pendingtask" role="tabpanel" aria-labelledby="v-pills-pendingtask-tab">
+                                        <div class="todo-list">
+                                            <p>Pending Tasks</p>
+                                            <ul class="list-unstyled">
+                                                {% for mytasks in incomplete_todo %}
+                                                <li class="todo-item">
+                                                    <div class="todo-item-content">
+                                                        <span class="todo-item-title">{{mytasks.task_title}}<span class="badge badge-style-light rounded-pill badge-warning">{{mytasks.priority}}</span><span class="badge badge-style-bordered badge-primary">{{mytasks.status}}</span></span>
+                                                        <span class="todo-item-subtitle">{{mytasks.task}}</span>
+                                                        <span class="todo-item-subtitle">Deadline: {{mytasks.deadline}}</span>
+                                                    </div>
+                                                    <P>Task From: <span class="badge badge-style-light rounded-pill badge-success">{{mytasks.task_from}}</span></P>
+                                                    <div class="todo-item-actions" data-bs-toggle="tooltip" data-bs-placement="top" title="Mark as done">
+                                                        <a href="{% url 'change_status' id=mytasks.id %}" class="todo-item-done"><i class="material-icons-outlined no-m">done</i></a>
+                                                    </div>
+                                                </li>
+                                                {% endfor %}
+                                                {% for mytasks in reassigned_todo %}
+                                                <li class="todo-item">
+                                                    <div class="todo-item-content">
+                                                        <span class="todo-item-title">{{mytasks.task_title}}<span class="badge badge-style-light rounded-pill badge-warning">{{mytasks.priority}}</span><span class="badge badge-style-bordered badge-primary">{{mytasks.status}}</span></span>
+                                                        <span class="todo-item-subtitle">{{mytasks.task}}</span>
+                                                        <span class="todo-item-subtitle">Deadline: {{mytasks.deadline}}</span>
+                                                    </div>
+                                                    <P>Task From: <span class="badge badge-style-light rounded-pill badge-success">{{mytasks.task_from}}</span></P>
+                                                    <div class="todo-item-actions"  data-bs-toggle="tooltip" data-bs-placement="top" title="Mark as done">
+                                                        <a href="{% url 'change_status' id=mytasks.id %}" class="todo-item-done"><i class="material-icons-outlined no-m">done</i></a>
+                                                    </div>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+
+                                    </div>
+
+
+
+
+                                    <div class="tab-pane fade" id="v-pills-mytask" role="tabpanel" aria-labelledby="v-pills-mytask-tab">
+                                        <div class="todo-list">
+                                            <p>My Tasks</p>
+                                            <ul class="list-unstyled">
+                                                {% for mytasks in mytasks %}
+                                                <li class="todo-item">
+                                                    <div class="todo-item-content">
+                                                        <span class="todo-item-title">{{mytasks.task_title}}<span class="badge badge-style-light rounded-pill badge-warning">{{mytasks.priority}}</span><span class="badge badge-style-bordered badge-primary">{{mytasks.status}}</span></span>
+                                                        <span class="todo-item-subtitle">{{mytasks.task}}</span>
+                                                        <span class="todo-item-subtitle">Deadline: {{mytasks.deadline}}</span>
+                                                    </div>
+                                                    <P>Assigned to: <span class="badge badge-style-light rounded-pill badge-success">{{mytasks.task_to}}</span></P>
+                                                    <div class="todo-item-actions" data-bs-toggle="tooltip" data-bs-placement="top" {% if mytasks.status == 'completed' %}title="Reassign Task" {% else %}title="Mark as done"{% endif %}>
+                                                        <a href="{% url 'change_status' id=mytasks.id %}" class="todo-item-done"><i class="material-icons-outlined no-m">done</i></a>
+                                                    </div>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="v-pills-completedtask" role="tabpanel" aria-labelledby="v-pills-completedtask-tab">
+                                        <div class="todo-list">
+                                            <p>Completed Tasks</p>
+                                            <ul class="list-unstyled">
+                                                {% for mytasks in completed_todo %}
+                                                <li class="todo-item">
+                                                    <div class="todo-item-content">
+                                                        <span class="todo-item-title">{{mytasks.task_title}}<span class="badge badge-style-light rounded-pill badge-warning">{{mytasks.priority}}</span><span class="badge badge-style-bordered badge-primary">{{mytasks.status}}</span></span>
+                                                        <span class="todo-item-subtitle">{{mytasks.task}}</span>
+                                                        <span class="todo-item-subtitle">Deadline: {{mytasks.deadline}}</span>
+                                                    </div>
+                                                    <P>Task From: <span class="badge badge-style-light rounded-pill badge-success">{{mytasks.task_from}}</span></P>
+                                                    {% if company_user == mytasks.task_from %}
+                                                    <div class="todo-item-actions" data-bs-toggle="tooltip" data-bs-placement="top" title="Reassign Task">
+                                                        <a href="{% url 'change_status' id=mytasks.id %}" class="todo-item-done"><i class="material-icons-outlined no-m">done</i></a>
+                                                    </div>
+                                                    {% endif %}
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="createUserModal" tabindex="-1" role="dialog" aria-labelledby="createUserModal" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<form action="{% url 'add_todo' %}" method="POST">
+				{% csrf_token %}
+				<div class="modal-header">
+					<h5 class="modal-title" id="createUserModal">Add Task</h5>
+				</div>
+				<div class="modal-body">
+					<div class="col-md-12 mb-3">
+						<label for="">Task Title</label>
+						<input type="text" class="form-control"  placeholder="Initial" name='task_title'>
+					</div>
+					<div class="col-md-12 mb-3">
+						<label for="">Task Description</label>
+						<input type="text" class="form-control"  placeholder="Initial" name='task'>
+					</div>
+					<div class="col-md-12 mb-3">
+						<label for="">Deadline</label>
+						<input type="date" class="form-control"  placeholder="Initial" name='deadline'>
+					</div>
+					<div class="col-md-12 mb-3">
+						<div class="row">
+                            <label for="">Priority</label>
+                            <div class="col-4 mt-2">
+                                <label for="">Low</label>
+                                <input type="radio" class="form-check-input lead" id="customCheck1" name="priority" value='low'>
+                            </div>
+                            <div class="col-4">
+                                <label for="">Medium</label>
+                                <input type="radio" class="form-check-input lead" id="customCheck1" name="priority" value='medium'>
+                            </div>
+                            <div class="col-4">
+                                <label for="">High</label>
+                                <input type="radio" class="form-check-input lead" id="customCheck1" name="priority" value='high'>
+                            </div>
+                        </div>
+                    </div>
+					<div class="col-md-12 mb-3">
+						<div class="row">
+                            <label for="">Assign to</label>
+                            {% for user in users %}
+                            <div class="col-4 mt-2">
+                                <label for="">{{user.user.first_name}}</label>
+                                <input type="checkbox" class="form-check-input lead" id="customCheck1" name="assign_to" value="{{user.id}}">
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Add</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% include 'footer.html' %}

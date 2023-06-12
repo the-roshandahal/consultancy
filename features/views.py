@@ -91,3 +91,94 @@ def edit_company_setup(request,id):
   
 
 
+   
+def todo(request):
+    if request.user.is_authenticated:
+        if request.user.is_superuser:
+            users = Employee.objects.all()
+            context = {
+                'users':users,
+            }
+            return render (request, 'features/todo.html',context)
+        else:
+            logged_in_user = User.objects.get(username=request.user)
+            company_user = Employee.objects.get(user=logged_in_user)
+
+            completed_todo = ToDo.objects.filter(task_to = company_user, status = 'completed')
+            incomplete_todo = ToDo.objects.filter(task_to = company_user, status = 'incomplete')
+            reassigned_todo = ToDo.objects.filter(task_to = company_user, status = 'reassigned')
+
+            mytasks = ToDo.objects.filter(task_from= company_user)
+            
+            users = Employee.objects.all()
+            print(company_user)
+            context = {
+                'reassigned_todo':reassigned_todo,
+                'completed_todo':completed_todo,
+                'incomplete_todo':incomplete_todo,
+                'mytasks':mytasks,
+                'users':users,
+                'company_user':str(company_user)
+            }
+            return render (request, 'features/todo.html',context)
+
+
+def add_todo(request):
+    if request.user.is_authenticated:
+        if request.user.is_superuser:
+            messages.info(request, "Superuser can't add tasks. Please use your employee account to continue.")
+
+            return redirect(todo)
+        else:
+            if request.method == "POST":
+                print('here')
+                task_title = request.POST["task_title"]
+                task = request.POST["task"]
+                deadline = request.POST["deadline"]
+                priority = request.POST["priority"]
+                assign_to = request.POST.getlist("assign_to")
+
+
+                logged_in_user = User.objects.get(username=request.user)
+                task_from = Employee.objects.get(user=logged_in_user)
+                for assign_to in assign_to:
+                    assign_to = Employee.objects.get(id=assign_to)
+                    print(assign_to)
+                    todo_obj = ToDo.objects.create(task_title=task_title,task=task,deadline=deadline,priority=priority,task_to=assign_to,task_from=task_from)
+                    print(todo_obj)
+                return redirect('todo')
+            return redirect ('todo')
+
+
+def change_status(request,id):
+    if request.user.is_authenticated:
+        todo_data = ToDo.objects.get(id=id)
+        if todo_data.status == 'incomplete':
+            status_update = ToDo.objects.filter(id=id)[0]
+            status_update.status = "completed"
+            status_update.save()
+            messages.info(request, "Status Changed to completed")
+            return redirect(todo)
+
+        elif todo_data.status =='reassigned':
+            status_update = ToDo.objects.filter(id=id)[0]
+            status_update.status = "completed"
+            status_update.save()
+            messages.info(request, "Status Changed to completed")
+            return redirect(todo)
+
+        else:
+            status_update = ToDo.objects.filter(id=id)[0]
+            status_update.status = "incomplete"
+            status_update.save()
+            messages.info(request, "Status Changed to Incomplete")
+            return redirect(todo)
+
+def reassign(request,id):
+    if request.user.is_authenticated:
+        status_update = ToDo.objects.filter(id=id)[0]
+        status_update.status = "reassigned"
+        status_update.save()
+        messages.info(request, "Status Changed to Resassigned")
+        return redirect(todo)
+
