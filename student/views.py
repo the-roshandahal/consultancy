@@ -310,26 +310,64 @@ def view_student(request,id):
     if 'read_student' in custom_data_views(request):
         student = Student.objects.get(id=id)
         invoices = Invoice.objects.filter(student=id)
+        receipts=Receipt.objects.filter(student=id)
+        # notes=StudentNotes.object.filter(student=id)
         context = {
             'student': student,
             'invoices':invoices,
+            'receipts':receipts,
+            # 'notes':notes,
         }
         return render(request,'student/view_student.html', context)
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')
 
-def student_notes(request,id):
-    if 'read_student' in custom_data_views(request):
-        student_notes = StudentNotes.objects.all()
-        context = {
-            'student_notes': student_notes
-            }
-        return render(request, 'student_notes.html', context)
-    else:
-        pass
+def add_student_notes(request,id):
+    if 'create_student' in custom_data_views(request):
+        if request.method == 'POST':
+            student = request.POST["student"]
+            student = Student.objects.get(id=id)
+            notes = request.POST['notes']
 
-         
+            student_notes = StudentNotes.objects.create(student=student, notes=notes)
+            student_notes.save()
+
+            return redirect('')
+
+        else:
+            student = Student.objects.get(id=id)
+
+            context = {
+                'student': student
+            }
+            return render(request, '', context)
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
+
+def edit_student_notes(request,id):
+    if 'update_student' in custom_data_views(request):
+        if request.method == 'POST':
+            student = Student.objects.get(id=id)
+            notes = request.POST['notes']
+
+            student.notes=notes
+            student.save()
+
+            return redirect('')
+
+        else:
+            student = Student.objects.get(id=id)
+            context = {
+                'student': student
+            }
+            return render(request, '', context)
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
+
+
 
     
 
@@ -346,3 +384,4 @@ def student_notes(request,id):
             
 #             return redirect('document_list')  
 #     return render(request, 'students/upload_document.html')
+    

@@ -39,7 +39,7 @@
                                     <div class="example-content">
                                         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                             <li class="nav-item" role="presentation">
-                                                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">General</button>
+                                                <button class="nav-link active"  id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">General</button>
                                             </li>
                                             <li class="nav-item" role="presentation">
                                                 <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Notes & Files</button>
@@ -51,33 +51,160 @@
 
                                         <div class="tab-content" id="pills-tabContent">
                                             <div class="tab-pane fade active show" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                                                <div class="row widget widget-list mt-5">
+                                                    <div class="col-4">
+                                                        <ul class="widget-list-content list-unstyled">
+                                                            <li class="widget-list-item widget-list-item-green">
+                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">person</i></span>
+                                                                <span class="widget-list-item-description">
+                                                                    <a href="#" class="widget-list-item-description-title">
+                                                                       Student Name
+                                                                    </a>
+                                                                    <span class="widget-list-item-description-subtitle">
+                                                                        {{student.user.first_name|add:" " }}{{student.user.last_name }}
+                                                                    </span>
+                                                                </span>
+                                                            </li>
+                                                            
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <ul class="widget-list-content list-unstyled">
+                                                            <li class="widget-list-item widget-list-item-green">
+                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">place</i></span>
+                                                                <span class="widget-list-item-description">
+                                                                    <a href="#" class="widget-list-item-description-title">
+                                                                        Address
+                                                                    </a>
+                                                                    <span class="widget-list-item-description-subtitle">
+                                                                        {{student.address}}
+                                                                    </span>
+                                                                </span>
+                                                            </li>
+                                                            
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <ul class="widget-list-content list-unstyled">
+                                                            <li class="widget-list-item widget-list-item-green">
+                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">email</i></span>
+                                                                <span class="widget-list-item-description">
+                                                                    <a href="#" class="widget-list-item-description-title">
+                                                                        Email
+                                                                    </a>
+                                                                    <span class="widget-list-item-description-subtitle">
+                                                                        {{student.user.email}}
+                                                                    </span>
+                                                                </span>
+                                                            </li>
+                                                            
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <ul class="widget-list-content list-unstyled">
+                                                            <li class="widget-list-item widget-list-item-green">
+                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">call</i></span>
+                                                                <span class="widget-list-item-description">
+                                                                    <a href="#" class="widget-list-item-description-title">
+                                                                        Contact Number
+                                                                    </a>
+                                                                    <span class="widget-list-item-description-subtitle">
+                                                                        {{student.contact}}
+                                                                    </span>
+                                                                </span>
+                                                            </li>
+                                                            
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <ul class="widget-list-content list-unstyled">
+                                                            <li class="widget-list-item widget-list-item-green">
+                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">create</i></span>
+                                                                <span class="widget-list-item-description">
+                                                                    <a href="#" class="widget-list-item-description-title">
+                                                                        Date Joined
+                                                                    </a>
+                                                                    <span class="widget-list-item-description-subtitle">
+                                                                        {{student.created}}
+                                                                    </span>
+                                                                </span>
+                                                            </li>
+                                                            
+                                                        </ul>
+                                                    </div>
+                                                    <div class="invoice-body mt-3">
+                                                        <div class="container">
+                                                            <h5 class="h5g-title">Invoice</h5>
+                                                            <div class="invoice-list-view">
+                                                                <table class="table nowrap w-100 mb-5">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Invoice</th>
+                                                                            <th>Student</th>
+                                                                            <th>Issue Date</th>
+                                                                            <th>Due Date</th>
+                                                                            <th>Invoice Amount</th>
+                                                                            <th>Created By</th>
+                                                                            <th>Actions</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        {% for invoices in invoices %}
+                                                                        <tr>
+                                                                            <td><a href="#" class="table-link-text link-high-em">{{invoices.id}}</a></td>
+                                                                            <td>{{invoices.student.user.first_name|add:" " }}{{ invoices.student.user.last_name }}</td>
+                                                                            <td>{{invoices.created}}</td>
+                                                                            <td>{{invoices.created}}</td>
+                                                                            <td>Rs.{{invoices.invoice_amount}}</td>
+                                                                            <td>{{invoices.created_by}}</td>
+                                                                            {% if 'read_finance' in permissions %}
+										                                    <td>
+											                                    <a  href="{% url 'view_invoice' id=invoices.id %}" class="btn btn-primary"><i class="material-icons">visibility</i></a>
+										                                    </td>
+										                                    {% else %}
+                                                                            <td>---</td>
+										                                    {% endif %}
+                                                                        </tr>
+                                                                        {% endfor %}
+                                                                    </tbody>
+                                                                </table>
+                                                            
+                                                            </div>
+                                                        
+                                                        </div>
+                                                </div>
                                                 <div class="invoice-body mt-3">
                                                     <div class="container">
-                                                        <h5 class="h5g-title">Invoices</h5>
+                                                        <h5 class="h5g-title">Receipts</h5>
                                                         <div class="invoice-list-view">
                                                             <table class="table nowrap w-100 mb-5">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th>Invoice</th>
-                                                                        <th>Student</th>
-                                                                        <th>Issue Date</th>
-                                                                        <th>Due Date</th>
-                                                                        <th>Invoice Amount</th>
+                                                                        <th>Receipt</th>
+                                                                        <th>Student Name</th>
+                                                                        <th>Payment Method</th>
+                                                                        <th>Paid Amount</th>
                                                                         <th>Created By</th>
+                                                                        <th>Receipt Date</th>
                                                                         <th>Actions</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    {% for invoices in invoices %}
+                                                                    {% for receipts in receipts %}
                                                                     <tr>
-                                                                        <td><a href="#" class="table-link-text link-high-em">{{invoices.id}}</a></td>
-                                                                        <td>{{invoices.student.user.first_name|add:" " }}{{ invoices.student.user.last_name }}</td>
-                                                                        <td>{{invoices.created}}</td>
-                                                                        <td>{{invoices.created}}</td>
-                                                                        <td>Rs.{{invoices.invoice_amount}}</td>
-                                                                        <td>{{invoices.created_by}}</td>
-                                                                        
-                                                                        
+                                                                        <td><a href="#" class="table-link-text link-high-em">{{receipts.id}}</a></td>
+                                                                        <td>{{receipts.student.user.first_name|add:" " }}{{ invoices.student.user.last_name }}</td>
+                                                                        <td>{{receipts.payment_method}}</td>
+                                                                        <td>Rs.{{receipts.paid_amount}}</td>
+                                                                        <td>{{receipts.created_by}}</td>
+                                                                        <td>{{receipts.created}}</td>
+                                                                        {% if 'read_finance' in permissions %}
+                                                                        <td>
+                                                                            <a  href="{% url 'view_receipt' id=receipts.id %}" class="btn btn-primary"><i class="material-icons">visibility</i></a>
+                                                                        </td>
+                                                                        {% else %}
+                                                                        <td>---</td>
+                                                                        {% endif %}
                                                                     </tr>
                                                                     {% endfor %}
                                                                 </tbody>
@@ -88,7 +215,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-
+                                        </div>
 
 
 
