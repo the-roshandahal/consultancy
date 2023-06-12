@@ -1,127 +1,180 @@
-{% load static %}
 {% include 'header.html' %}
-<!-- Main Content -->
-<div class="hk-pg-wrapper">
-    <div class="container-xxl">
-        <!-- Page Header -->
-		<div class="hk-pg-header pg-header-wth-tab pt-7">
-			<div class="d-flex">
-				<div class="d-flex flex-wrap justify-content-between flex-1">
-					<div class="mb-lg-0 mb-2 me-8">
-						<h1 class="pg-title">Welcome back</h1>
-						<p>Welcome to SPELL CRM Dashboard.</p>
-					</div>
-				
-				</div>
-			</div>
-		</div>
-		<!-- /Page Header -->
-        <div class="card-body ">
-            <div class="row mt-2">
-                <div class="col-4">
-                    <div class="d-flex align-items-start">
-                        <div class="media align-items-center">
-                            <div class="media-head me-2">
-                                <div class="avatar avatar-xs avatar-rounded">
-                                    <i class="bi bi-person-circle"></i>
-                                </div>
-                            </div>
-                            <div class="media-body">
-                                <div class="text-high-em">Name</div> 
-                                <div class="fs-7"><a href="#" class="table-link-text link-medium-em">{{student.user.username}}</a></div> 
-                            </div>
-                        </div>
-                        
+<div class="app-content">
+    <div class="content-wrapper">
+        <div class="example-container">
+            <div class="example-content bg-light">
+                <div class="page-description d-flex align-items-center">
+                    <div class="page-description-content flex-grow-1">
+                        <h1>Company Details</h1>
+                        <span>These details are visible in invoice and receipts.</span>
                     </div>
+                    
                 </div>
                 
-                
-                <div class="col-4">
-                    <div class="d-flex align-items-start">
-                        <div class="media align-items-center">
-                            <div class="media-head me-2">
-                                <div class="avatar avatar-xs avatar-rounded">
-                                    <i class="bi bi-telephone"></i>
-                                </div>
-                            </div>
-                            <div class="media-body">
-                                <div class="text-high-em">Phone Number</div> 
-                                <div class="fs-7"><a href="#" class="table-link-text link-medium-em">{{student.address}}</a></div> 
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
-                
-                
-                
-                
-                <div class="col-4">
-                    <div class="d-flex align-items-start">
-                        <div class="media align-items-center">
-                            <div class="media-head me-2">
-                                <div class="avatar avatar-xs avatar-rounded">
-                                    <i class="bi bi-envelope"></i>
-                                </div>
-                            </div>
-                            <div class="media-body">
-                                <div class="text-high-em">Email</div> 
-                                <div class="fs-7"><a href="#" class="table-link-text link-medium-em">{{student.user.email}}</a></div> 
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
+                <!-- add other contents  -->
 
-            <div class="row mt-5">
-                <div class="col-4">
-                    <div class="d-flex align-items-start">
-                        <div class="media align-items-center">
-                            <div class="media-head me-2">
-                                <div class="avatar avatar-xs avatar-rounded">
-                                    <i class="bi bi-geo"></i>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title">Student Name<span class="badge "><div class="page-description-actions">
+                        
+                                    <div class="dropdown">
+                                        <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Dropdown link
+                                        </a>
+                                    
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <li><a class="dropdown-item" href="#">Action</a></li>
+                                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                        </ul>
+                                    </div>
+                                </div></span></h5>
+
+                            </div>
+                            <div class="card-body">
+                                <div class="example-container">
+                                    <div class="example-content">
+                                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">General</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Notes & Files</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Activity</button>
+                                            </li>
+                                        </ul>
+
+                                        <div class="tab-content" id="pills-tabContent">
+                                            <div class="tab-pane fade active show" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                                                <div class="row widget widget-list mt-5">
+                                                    <div class="col-4">
+                                                        <ul class="widget-list-content list-unstyled">
+                                                            <li class="widget-list-item widget-list-item-green">
+                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">article</i></span>
+                                                                <span class="widget-list-item-description">
+                                                                    <a href="#" class="widget-list-item-description-title">
+                                                                        Dashboard UI optimisations
+                                                                    </a>
+                                                                    <span class="widget-list-item-description-subtitle">
+                                                                        Oskar Hudson
+                                                                    </span>
+                                                                </span>
+                                                            </li>
+                                                            
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <ul class="widget-list-content list-unstyled">
+                                                            <li class="widget-list-item widget-list-item-green">
+                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">article</i></span>
+                                                                <span class="widget-list-item-description">
+                                                                    <a href="#" class="widget-list-item-description-title">
+                                                                        Dashboard UI optimisations
+                                                                    </a>
+                                                                    <span class="widget-list-item-description-subtitle">
+                                                                        Oskar Hudson
+                                                                    </span>
+                                                                </span>
+                                                            </li>
+                                                            
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <ul class="widget-list-content list-unstyled">
+                                                            <li class="widget-list-item widget-list-item-green">
+                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">article</i></span>
+                                                                <span class="widget-list-item-description">
+                                                                    <a href="#" class="widget-list-item-description-title">
+                                                                        Dashboard UI optimisations
+                                                                    </a>
+                                                                    <span class="widget-list-item-description-subtitle">
+                                                                        Oskar Hudson
+                                                                    </span>
+                                                                </span>
+                                                            </li>
+                                                            
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+
+
+
+
+
+
+
+                                            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+
+                                                <div class="row">
+                                                    <div class="col-xl-12 col-xxl-12">
+                                                        <div class="todo-list">
+                                                            <h4>Notes</h4>
+                                                            <ul class="list-unstyled">
+                                                                <li class="todo-item">
+                                                                    <div class="todo-item-content">
+                                                                        <span class="todo-item-title">Walk the dog</span>
+                                                                        <span class="todo-item-subtitle">Donec ultricies est vel tellus molestie volutpat. Duis at cursus risus.</span>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row widget widget-list">
+                                                    <div class="col-4">
+                                                        <h4>Files</h4>
+                                                        <ul class="widget-list-content list-unstyled">
+                                                            <li class="widget-list-item widget-list-item-green">
+                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">article</i></span>
+                                                                <span class="widget-list-item-description">
+                                                                    <a href="#" class="widget-list-item-description-title">
+                                                                        Dashboard UI optimisations
+                                                                    </a>
+                                                                    <span class="widget-list-item-description-subtitle">
+                                                                        Oskar Hudson
+                                                                    </span>
+                                                                </span>
+                                                            </li>
+                                                            
+                                                        </ul>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+
+
+
+
+
+
+
+
+                                            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                                                <p>Placeholder content for the tab panel. This one relates to the contact tab. Her love is like a drug. All my girls vintage Chanel baby. Got a motel and built a fort out of sheets. 'Cause she's the muse and the artist. (This is how we do) So you wanna play with magic. So just be sure before you give it all to me. I'm walking, I'm walking on air (tonight). Skip the talk, heard it all, time to walk the walk. Catch her if you can. Stinging like a bee I earned my stripes.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
                             </div>
-                            <div class="media-body">
-                                <div class="text-high-em">Address</div> 
-                                <div class="fs-7"><a href="#" class="table-link-text link-medium-em">{{student.contact}}</a></div> 
-                            </div>
                         </div>
-                        
-                    </div>
-                </div>
-                
-                
-                <div class="col-4">
-                    <div class="d-flex align-items-start">
-                        <div class="media align-items-center">
-                            <div class="media-head me-2">
-                                <div class="avatar avatar-xs avatar-rounded">
-                                    <i class="bi bi-calendar-month"></i>
-                                </div>
-                            </div>
-                            <div class="media-body">
-                                <div class="text-high-em">Date Joined</div> 
-                                <div class="fs-7"><a href="#" class="table-link-text link-medium-em">{{student.created}}</a></div> 
-                            </div>
-                        </div>
-                        
                     </div>
                 </div>
             </div>
         </div>
-
-       
-        
-
-
     </div>
 </div>
-
-
-{% comment %} delete  {% endcomment %}
-
 
 <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
