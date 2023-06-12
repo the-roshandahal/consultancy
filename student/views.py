@@ -327,6 +327,7 @@ def student_notes(request,id):
             }
         return render(request, 'student_notes.html', context)
     else:
+        pass
 
          
 
@@ -345,4 +346,3 @@ def student_notes(request,id):
             
 #             return redirect('document_list')  
 #     return render(request, 'students/upload_document.html')
-    
