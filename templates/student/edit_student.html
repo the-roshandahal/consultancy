@@ -1,120 +1,118 @@
 {% include 'header.html' %}
-
 <div class="app-content">
     <div class="content-wrapper">
-        <div class="invoice-body">
-                <div class="container">
-                    <div class="create-invoice-wrap mt-xxl-5 p-md-5 p-3">
-                        <div class="separator separator-light"></div>
-                        <form action="{% url 'edit_student' id=student_data.id %}" method="POST">
-                            {% csrf_token %}
-                            <div class="row">
-                                <div class="col-xxl-6">
-                                    <h6>First Name</h6>
-                                    <input type="text" class="form-control" value="{{student_data.user.first_name}}"  name = "first_name">
-                                </div>
-                                <div class="col-xxl-6">
-                                    <h6>Last Name</h6>
-                                    <input type="text" class="form-control" value="{{student_data.user.last_name}}"  name = "last_name">
-                                </div>
-                               
-                                
-                                <div class="col-xxl-6">
-                                    <h6>Client address</h6>
-                                    <input type="text" class="form-control" value="{{student_data.address}}"  name = "address">
-                                </div>
-                                
-                            </div>
-                            <div class="separator separator-light"></div>
-                            <div class="row">
-                                <div class="col-xxl-6">
-                                    <h6>Client Email</h6>
-                                    <input type="text" class="form-control" value="{{student_data.user.email}}"  name = "email">
-                                </div>
-                                <div class="col-xxl-6">
-                                    <h6>Client Name</h6>
-                                    <input type="text" class="form-control" value="{{student_data.user.username}}"  name = "username">
-                                </div>
-                                <div class="col-xxl-6">
-                                    <h6>Contact Number</h6>
-                                    <input type="text" class="form-control" value="{{student_data.contact}}"  name = "contact">
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <p>Enrollment Type</p>
-                                    <select class="js-states form-control" tabindex="-1" style="display: none; width: 100%" name="enrollment_type">
-                                        <optgroup label="Enrollment Type">
-                                            {% for enrollment_type in enrollment_type %}
-                                            <option value="{{enrollment_type.id}}">{{enrollment_type.enrollment_type}}</option>
-                                            {% endfor %}
-                                        </optgroup>
-                                    </select>
-                                </div>
-                            </div>
-                                <div class="row mt-3">
-                                    <div class="col-12 col-md-6">
-                                        <p>Source</p>
-                                        <select class="js-states form-control" tabindex="-1" style="display: none; width: 100%" name="source">
-                                            <optgroup label="Source">
-                                                {% for source in student_source %}
-                                                <option value="{{source.id}}">{{source.source}}</option>
-                                                {% endfor %}
-                                            </optgroup>
-                                        </select>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <p>Stage</p>
-                                        <select class="js-states form-control" tabindex="-1" style="display: none; width: 100%" name="stage">
-                                            <optgroup label="stage">
-                                                {% for stage in stage %}
-                                                sdad
-                                                <option value="{{stage.id}}">{{stage.stage}}</option>
-                                                {% endfor %}
-                                            </optgroup>
-                                        </select>
-                                    </div>
-                                </div>
-            
-                                <div class="row mt-3">
-                                    
-                                    <div class="col-12 col-md-6">
-                                        <p>Courses </p>
-                                        <select class="js-states form-control" tabindex="-1" style="display: none; width: 100%" multiple="multiple" name="course">
-                                            <optgroup label="Enrollment Type">
-                                                {% for course in course %}
-                                                <option value="{{course.id}}">{{course.course_title}}</option>
-                                                {% endfor %}
-                                            </optgroup>
-                                        </select>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <p>Assign to </p>
-                                        <select class="js-states form-control" tabindex="-1" style="display: none; width: 100%" multiple="multiple" name="assigned_to">
-                                            <optgroup label="Enrollment Type">
-                                                {% for assign in assign %}
-                                                <option value="{{assign.id}}">{{assign.user.first_name}}</option>
-                                                {% endfor %}
-                                            </optgroup>
-                                        </select>
-                                    </div>
-            
-                                    <div class="col-12 col-md-6">
-                                        <p>Enable Logs</p>
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="log">
-                                            <label class="form-check-label" for="flexSwitchCheckDefault">Enable Log Reports(Monitor file uploads and stages)</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                            <div class="separator separator-light"></div>
-                            <a href="#" ><button class="btn btn-primary ms-2 d-sm-inline-block d-none">save</button></a>
-                        </form>
+        <div class="example-container">
+            <div class="example-content bg-light">
+                <div class="page-description d-flex align-items-center">
+                    <div class="page-description-content flex-grow-1">
+                        <h1>Edit Student</h1>
                     </div>
                 </div>
                 
-            
+                <!-- add other contents  -->
+                <form action="{% url 'edit_student' id=student_data.id %}" method="POST">
+                    {% csrf_token %}
+                    <div class="row mt-3">
+                        <div class="col-12 col-md-6">
+                            <p>First Name</p>
+                            <div class="input-group">
+                                <input name="first_name" type="text" value="{{student_data.user.first_name}}"class="form-control" placeholder="First Name" aria-label="First Name" aria-describedby="basic-addon1">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <p>Last Name</p>
+                            <div class="input-group">
+                                <input name="last_name" type="text" class="form-control"value="{{student_data.user.last_name}}" placeholder="Last Name" aria-label="Last Name" aria-describedby="basic-addon1">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12 col-md-6">
+                            <p>Username</p>
+                            <div class="input-group">
+                                <span class="input-group-text" id="basic-addon1">@</span>
+                                <input name="username" type="text" class="form-control" value="{{student_data.user.username}}" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <p>Email</p>
+                            <div class="input-group">
+                                <input name="email" type="text" class="form-control"value="{{student_data.user.email}}" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
+                            </div>
+                        </div>
+                     
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12 col-md-6">
+                            <p>Address</p>
+                            <div class="input-group">
+                                <input name="address" type="text" class="form-control"value="{{student_data.address}}" placeholder="Address" aria-label="Address" aria-describedby="basic-addon1">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <p>Contact Number</p>
+                            <div class="input-group">
+                                <input name="contact" type="text" class="form-control" value="{{student_data.contact}}" placeholder="Contact Number" aria-label="Contact Number" aria-describedby="basic-addon1">
+                            </div>
+                        </div>
 
+                    </div>
+                    <div class="row mt-3">
+                        
+                        <div class="col-12 col-md-6">
+                            <p>Enrollment Type</p>
+                            <select class="js-states form-control" tabindex="-1" style="display: none; width: 100%" name="enrollment_type">
+                                <optgroup label="Enrollment Type">
+                                    {% for enrollment_type in enrollment_type %}
+                                    <option value="{{enrollment_type.id}}"{% if enrollment_type.id == student_data.enrollment_type.id %}selected{% endif %}>{{enrollment_type.enrollment_type}}</option>
+                                    {% endfor %}
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <p>Source</p>
+                            <select class="js-states form-control" tabindex="-1" style="display: none; width: 100%" name="source">
+                                <optgroup label="Source">
+                                    {% for source in student_source %}
+                                    <option value="{{source.id}}" {% if source.id == student_data.source.id %}selected{% endif %}>{{source.source}}</option>
+                                    {% endfor %}
+                                </optgroup>
+                            </select>
+                        </div>
+
+                    </div>
+
+                 
+
+                    <div class="row mt-3">
+                        
+                        <div class="col-12 col-md-6">
+                            <p>Courses </p>
+                            <select class="js-states form-control" tabindex="-1" style="display: none; width: 100%" multiple="multiple" name="course">
+                                <optgroup label="Enrollment Type">
+                                    {% for course in course %}
+                                    <option value="{{course.id}}">{{course.course_title}}</option>
+                                    {% endfor %}
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <p>Enable Logs</p>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="log">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Enable Log Reports(Monitor file uploads and stages)</label>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col-12 col-md-6">
+                            <div class="input-group">
+                                <button class="btn btn-primary" type="submit">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>       
+            </div>
         </div>
     </div>
 </div>
