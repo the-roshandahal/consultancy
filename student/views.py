@@ -294,11 +294,12 @@ def edit_student(request,id):
         return redirect('home')
     
 def delete_student(request,id):
-    print('hello')
     if 'delete_student' in custom_data_views(request):
         delete_student = Student.objects.get(id=id)
+        user = User.objects.get(username = delete_student.user)
         deleted_student = delete_student
         delete_student.delete()
+        user.delete()
         messages.info(request, f"{deleted_student} Deleted Successfully")
         return redirect('student')
     else:
@@ -311,41 +312,163 @@ def view_student(request,id):
         student = Student.objects.get(id=id)
         invoices = Invoice.objects.filter(student=id)
         receipts=Receipt.objects.filter(student=id)
-        # notes=StudentNotes.object.filter(student=id)
+        notes=StudentNotes.objects.filter(student=id)
+        logs=StudentLog.objects.filter(student=id)
+        files=StudentFiles.objects.filter(student=id)
+        stage=StudentStage.objects.all()
         context = {
             'student': student,
             'invoices':invoices,
             'receipts':receipts,
-            # 'notes':notes,
+            'notes':notes,
+            'stage':stage,
+            'logs':logs,
+            'files':files,
         }
         return render(request,'student/view_student.html', context)
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')
 
-def add_student_notes(request,id):
+
+
+
+
+    
+def update_student_stage(request,id):
+    if 'update_student' in custom_data_views(request):
+        if request.user.is_superuser:
+            if request.method =='POST':
+                print("here")
+                stage = request.POST['stage']
+                student_stage = StudentStage.objects.get(id=stage)
+
+                user = User.objects.get(username=request.user)
+                changed_by = user.username
+                student = Student.objects.get(id=id)
+                print(student)
+                student.stage = student_stage
+                student.save()
+                messages.info(request, "student stage updated")
+                activity = 'updated student stage to '+str(student_stage)
+                StudentLog.objects.create(student=student,changed_by=changed_by,activity=activity)
+                return redirect(view_student,id)
+            else:
+                return redirect(view_student,id)
+        else:
+            assigned_student = Student.objects.get(id=id)
+            assignedddd=assigned_student.assigned_to.all()
+            logged_in_user = User.objects.get(username=request.user)
+            employees = Employee.objects.get(user=logged_in_user)
+
+            assigned=False
+            for assignedddd in assignedddd:
+                if str(assignedddd) == str(employees):
+                    assigned=True
+            
+            if assigned == True:
+                if request.method =='POST':
+                    stage = request.POST['stage']
+                    student_stage = StudentStage.objects.get(id=stage)
+
+                    user = User.objects.get(username=request.user)
+                    changed_by = user.username
+
+                    student = Student.objects.filter(id=id)[0]
+                    student.stage = student_stage
+                    student.save()
+                    messages.info(request, "student stage updated")
+                    activity = 'updated student stage to '+str(student_stage)
+                    StudentLog.objects.create(student=student,changed_by=changed_by,activity=activity)
+                    return redirect(view_student,id)
+                else:
+                    return redirect(view_student,id)
+            else:
+                messages.info(request, "You are not assigned to this student.")
+                return redirect(view_student,id)
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
+    
+
+
+def add_student_note(request,id):
     if 'create_student' in custom_data_views(request):
         if request.method == 'POST':
-            student = request.POST["student"]
             student = Student.objects.get(id=id)
-            notes = request.POST['notes']
+            note_title = request.POST['note_title']
+            note = request.POST['note']
 
-            student_notes = StudentNotes.objects.create(student=student, notes=notes)
+            student_notes = StudentNotes.objects.create(student=student, note_title=note_title,note=note)
             student_notes.save()
-
-            return redirect('')
-
+            activity = 'added note'
+            user = User.objects.get(username=request.user)
+            changed_by = user.username
+            StudentLog.objects.create(student=student,changed_by=changed_by,activity=activity)
+            return redirect(view_student,id)
         else:
-            student = Student.objects.get(id=id)
-
-            context = {
-                'student': student
-            }
-            return render(request, '', context)
+            return redirect('view_student',id)
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')
 
+
+
+
+def add_student_file(request,id):
+    if 'update_student' in custom_data_views(request):
+        if request.user.is_superuser:
+            if request.method =='POST':
+                title = request.POST['title']
+                file = request.FILES['file']
+            
+                user = User.objects.get(username=request.user)
+                added_by = user.username
+
+                student = Student.objects.get(id=id)
+                StudentFiles.objects.create(student=student,title=title,file=file,added_by=added_by)
+                messages.info(request, "File Added Successfully")
+
+                StudentLog.objects.create(student=student,changed_by=added_by,activity='added file')
+                return redirect(view_student,id)
+            else:
+                return redirect(view_student,id)
+        else:
+            assigned_student = student.objects.get(id=id)
+            student_assigned_users=assigned_student.assigned_to.all()
+            logged_in_user = User.objects.get(username=request.user)
+            employees = Employee.objects.get(user=logged_in_user)
+
+            assigned=False
+            for student_assigned_users in student_assigned_users:
+                if str(student_assigned_users) == str(employees):
+                    assigned=True
+            
+            if (assigned == True):
+                if request.method =='POST':
+                    title = request.POST['title']
+                    file = request.FILES['file']
+                
+                    user = User.objects.get(username=request.user)
+                    added_by = user.username
+
+                    student = student.objects.get(id=id)
+                    StudentFiles.objects.create(student=student,title=title,file=file,added_by=added_by)
+                    messages.info(request, "File Added Successfully")
+
+                    StudentLog.objects.create(student=student,changed_by=added_by,activity='added file data')
+                    return redirect(view_student,id)
+                else:
+                    return redirect(view_student,id)
+            else:
+                messages.info(request, "You are not assigned to this student.")
+                return redirect(view_student,id)
+
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
+
+ 
 def edit_student_notes(request,id):
     if 'update_student' in custom_data_views(request):
         if request.method == 'POST':
@@ -366,22 +489,3 @@ def edit_student_notes(request,id):
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')
-
-
-
-    
-
-
-
-# def upload_document(request):
-#     if request.method == 'POST':
-#         file = request.FILES.get('file')
-#         file_name = request.POST('file_name')
-#         student=request.POST['student_id']
-#         if file:
-#             student=Student.objects.get(id=student)
-#             Document.objects.create(student=student, file=file, file_name=file_name)
-            
-#             return redirect('document_list')  
-#     return render(request, 'students/upload_document.html')
-    

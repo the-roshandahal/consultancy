@@ -5,10 +5,10 @@
             <div class="example-content bg-light">
                 <div class="page-description d-flex align-items-center">
                     <div class="page-description-content flex-grow-1">
-                        <h1>Company Details</h1>
+                        <h3>{{student.user.first_name|add:" " }}{{student.user.last_name }} <span class="badge badge-success">{{student.stage}}</span></h3>
                         <span>These details are visible in invoice and receipts.</span>
                     </div>
-                    <button type="button" class="btn btn-dark">{{student.stage}}</button>
+                    <a href="{% url 'single_statement' id=student.id %}"><button type="button" class="btn btn-dark">View Statement</button></a>
                 </div>
                 
                 <!-- add other contents  -->
@@ -18,23 +18,22 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="card-title">{{student.user.first_name|add:" " }}{{student.user.last_name }}
-                                    <span class="badge ">
-                                        <div class="page-description-actions">
-                                            <div class="dropdown">
-                                                <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Dropdown link
-                                                </a>
-                                            
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                                </ul>
-                                            </div>
+                                <span class="badge ">
+                                    <div class="page-description-actions">
+                                        <div class="dropdown">
+                                            <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Action
+                                            </a>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#addFile">Add Files</a></li>
+                                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#addNote">Add Note</a></li>
+                                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#updateStage">Update Stage</a></li>
+                                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#closeStudent">Close Student</a></li>
+                                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteStudent">Delete Student</a></li>
+                                            </ul>
                                         </div>
-                                    </span>
-                                </h5>
+                                    </div>
+                                </span>
                             </div>
                             <div class="card-body">
                                 <div class="example-container">
@@ -210,43 +209,49 @@
                                             </div>
 
                                             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-
-                                                <div class="row">
-                                                    <div class="col-xl-12 col-xxl-12">
-                                                        <div class="todo-list">
-                                                            <h4>Notes</h4>
-                                                            <ul class="list-unstyled">
-                                                                <li class="todo-item">
-                                                                    <div class="todo-item-content">
-                                                                        <span class="todo-item-title">Walk the dog</span>
-                                                                        <span class="todo-item-subtitle">Donec ultricies est vel tellus molestie volutpat. Duis at cursus risus.</span>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
                                                 <div class="row widget widget-list">
                                                     <div class="col-4">
                                                         <h4>Files</h4>
                                                         <ul class="widget-list-content list-unstyled">
+                                                            {% for file in files %}
                                                             <li class="widget-list-item widget-list-item-green">
-                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">article</i></span>
+                                                                <a href="{{ file.file.url }}">
+                                                                    <span class="widget-list-item-icon"><i class="material-icons-outlined">article</i></span>
+                                                                </a>
                                                                 <span class="widget-list-item-description">
                                                                     <a href="#" class="widget-list-item-description-title">
-                                                                        Dashboard UI optimisations
+                                                                        {{file.title}}
                                                                     </a>
                                                                     <span class="widget-list-item-description-subtitle">
-                                                                        Oskar Hudson
+                                                                        {{file.created}}
                                                                     </span>
                                                                 </span>
                                                             </li>
+                                                            {% endfor %}
                                                             
                                                         </ul>
                                                     </div>
                                                     
                                                 </div>
+                                                <div class="row">
+                                                    <div class="col-xl-12 col-xxl-12">
+                                                        <div class="todo-list">
+                                                            <h4>Notes</h4>
+                                                            <ul class="list-unstyled">
+                                                                {% for notes in notes %}
+                                                                <li class="todo-item">
+                                                                    <div class="todo-item-content">
+                                                                        <span class="todo-item-title">{{notes.note_title}}</span>
+                                                                        <span class="todo-item-subtitle">{{notes.note}}</span>
+                                                                    </div>
+                                                                </li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                
                                             </div>
 
 
@@ -257,7 +262,9 @@
 
 
                                             <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                                                <p>Placeholder content for the tab panel. This one relates to the contact tab. Her love is like a drug. All my girls vintage Chanel baby. Got a motel and built a fort out of sheets. 'Cause she's the muse and the artist. (This is how we do) So you wanna play with magic. So just be sure before you give it all to me. I'm walking, I'm walking on air (tonight). Skip the talk, heard it all, time to walk the walk. Catch her if you can. Stinging like a bee I earned my stripes.</p>
+                                                {% for logs in logs %}
+                                                <p>{{logs.changed_by}} {{logs.activity}} at {{logs.created}}</p>
+                                                {% endfor %}
                                             </div>
                                         </div>
                                     </div>
@@ -272,17 +279,17 @@
     </div>
 </div>
 
-<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteStudent" tabindex="-1" role="dialog" aria-labelledby="deleteStudent" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Delete Lead</h5>
+				<h5 class="modal-title" id="deleteStudent">Delete Student</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
-				<p>Are you sure you want to delete the Client.</p>
+				<p>Are you sure you want to delete the student.</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -291,4 +298,104 @@
 		</div>
 	</div>
 </div>
+
+<div class="modal fade" id="updateStage" tabindex="-1" role="dialog" aria-labelledby="updateStage" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<form action="{% url 'update_student_stage' id=student.id %}" method="POST">
+				{% csrf_token %}
+				<div class="modal-header">
+					<h5 class="modal-title" id="updateStage">Update Stage</h5>
+                    
+				</div>
+				<div class="modal-body">
+					<div class="col-md-12 mb-3">
+						<div class="row">
+                            <label for="">Stage</label>
+                            {% for stage in stage %}
+                            <div class="col-4 mt-2">
+                                <label for="">{{stage.stage}}</label>
+                                <input type="radio" class="form-check-input lead" id="customCheck1" name="stage" value='{{stage.id}}' {% if stage.id == student.stage.id %}checked{% endif %}>
+                            </div>
+                            {% endfor %}
+                            
+                        </div>
+                    </div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Save</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="addNote" tabindex="-1" role="dialog" aria-labelledby="addNote" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<form action="{% url 'add_student_note' id=student.id %}" method="POST">
+				{% csrf_token %}
+				<div class="modal-header">
+					<h5 class="modal-title" id="addNote">Add Note</h5>
+                    
+				</div>
+				<div class="modal-body">
+					<div class="col-md-12 mb-3">
+						<div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="">Note Title</label>
+                                <input type="text" class="form-control"  placeholder="Initial" name='note_title'>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label for="">note Description</label>
+                                <input type="text" class="form-control"  placeholder="Initial" name='note'>
+                            </div>
+                            
+                        </div>
+                    </div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Save</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="addFile" tabindex="-1" role="dialog" aria-labelledby="addFile" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<form action="{% url 'add_student_file' id=student.id %}" method="POST" enctype="multipart/form-data">
+				{% csrf_token %}
+				<div class="modal-header">
+					<h5 class="modal-title" id="addFile">Add File</h5>
+                    
+				</div>
+				<div class="modal-body">
+					<div class="col-md-12 mb-3">
+						<div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="">File Title</label>
+                                <input type="text" class="form-control"  placeholder="Document" name='title'>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label for="">File</label>
+                                <input type="file" class="form-control"  placeholder="Initial" name='file'>
+                            </div>
+                            
+                        </div>
+                    </div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Save</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
 {% include 'footer.html' %}

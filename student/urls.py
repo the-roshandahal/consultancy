@@ -28,4 +28,13 @@ urlpatterns = [
     path("view_student/<int:id>", views.view_student, name="view_student"),
     # path("upload_document/", views.upload_document, name="upload_document"),
 
+
+    path("update_student_stage/<int:id>", views.update_student_stage, name="update_student_stage"),
+    path("add_student_note/<int:id>", views.add_student_note, name="add_student_note"),
+    path("add_student_file/<int:id>", views.add_student_file, name="add_student_file"),
+    # path("update_users/<int:id>", views.update_users, name="update_users"),
+    # path("add_call/<int:id>", views.add_call, name="add_call"),
+    # path("edit_student/<int:id>", views.edit_student, name="edit_student"),
+    # path("close_student/<int:id>", views.close_student, name="close_student"),
+    # path("reopen_student/<int:id>", views.reopen_student, name="reopen_student"),
 ]

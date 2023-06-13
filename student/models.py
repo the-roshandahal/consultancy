@@ -81,7 +81,8 @@ class StudentCall(models.Model):
 
 class StudentNotes(models.Model):
     student = models.ForeignKey(Student,on_delete=models.CASCADE)
-    notes = models.TextField()
+    note_title = models.CharField(max_length = 255)
+    note = models.TextField()
     def __str__(self):
         return self.student.user.first_name
 
