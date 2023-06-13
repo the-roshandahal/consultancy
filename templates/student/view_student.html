@@ -8,7 +8,7 @@
                         <h1>Company Details</h1>
                         <span>These details are visible in invoice and receipts.</span>
                     </div>
-                    
+                    <button type="button" class="btn btn-dark">{{student.stage}}</button>
                 </div>
                 
                 <!-- add other contents  -->
@@ -18,21 +18,23 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="card-title">{{student.user.first_name|add:" " }}{{student.user.last_name }}<span class="badge "><div class="page-description-actions">
-                        
-                                    <div class="dropdown">
-                                        <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Dropdown link
-                                        </a>
-                                    
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <li><a class="dropdown-item" href="#">Action</a></li>
-                                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                        </ul>
-                                    </div>
-                                </div></span></h5>
-
+                                <h5 class="card-title">{{student.user.first_name|add:" " }}{{student.user.last_name }}
+                                    <span class="badge ">
+                                        <div class="page-description-actions">
+                                            <div class="dropdown">
+                                                <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Dropdown link
+                                                </a>
+                                            
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </span>
+                                </h5>
                             </div>
                             <div class="card-body">
                                 <div class="example-container">
@@ -132,90 +134,80 @@
                                                             
                                                         </ul>
                                                     </div>
-                                                    <div class="invoice-body mt-3">
-                                                        <div class="container">
-                                                            <h5 class="h5g-title">Invoice</h5>
-                                                            <div class="invoice-list-view">
-                                                                <table class="table nowrap w-100 mb-5">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Invoice</th>
-                                                                            <th>Student</th>
-                                                                            <th>Issue Date</th>
-                                                                            <th>Due Date</th>
-                                                                            <th>Invoice Amount</th>
-                                                                            <th>Created By</th>
-                                                                            <th>Actions</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        {% for invoices in invoices %}
-                                                                        <tr>
-                                                                            <td><a href="#" class="table-link-text link-high-em">{{invoices.id}}</a></td>
-                                                                            <td>{{invoices.student.user.first_name|add:" " }}{{ invoices.student.user.last_name }}</td>
-                                                                            <td>{{invoices.created}}</td>
-                                                                            <td>{{invoices.created}}</td>
-                                                                            <td>Rs.{{invoices.invoice_amount}}</td>
-                                                                            <td>{{invoices.created_by}}</td>
-                                                                            {% if 'read_finance' in permissions %}
-										                                    <td>
-											                                    <a  href="{% url 'view_invoice' id=invoices.id %}" class="btn btn-primary"><i class="material-icons">visibility</i></a>
-										                                    </td>
-										                                    {% else %}
-                                                                            <td>---</td>
-										                                    {% endif %}
-                                                                        </tr>
-                                                                        {% endfor %}
-                                                                    </tbody>
-                                                                </table>
-                                                            
-                                                            </div>
-                                                        
-                                                        </div>
-                                                </div>
-                                                <div class="invoice-body mt-3">
-                                                    <div class="container">
-                                                        <h5 class="h5g-title">Receipts</h5>
-                                                        <div class="invoice-list-view">
-                                                            <table class="table nowrap w-100 mb-5">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Receipt</th>
-                                                                        <th>Student Name</th>
-                                                                        <th>Payment Method</th>
-                                                                        <th>Paid Amount</th>
-                                                                        <th>Created By</th>
-                                                                        <th>Receipt Date</th>
-                                                                        <th>Actions</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    {% for receipts in receipts %}
-                                                                    <tr>
-                                                                        <td><a href="#" class="table-link-text link-high-em">{{receipts.id}}</a></td>
-                                                                        <td>{{receipts.student.user.first_name|add:" " }}{{ invoices.student.user.last_name }}</td>
-                                                                        <td>{{receipts.payment_method}}</td>
-                                                                        <td>Rs.{{receipts.paid_amount}}</td>
-                                                                        <td>{{receipts.created_by}}</td>
-                                                                        <td>{{receipts.created}}</td>
-                                                                        {% if 'read_finance' in permissions %}
-                                                                        <td>
-                                                                            <a  href="{% url 'view_receipt' id=receipts.id %}" class="btn btn-primary"><i class="material-icons">visibility</i></a>
-                                                                        </td>
-                                                                        {% else %}
-                                                                        <td>---</td>
-                                                                        {% endif %}
-                                                                    </tr>
-                                                                    {% endfor %}
-                                                                </tbody>
-                                                            </table>
-                                                        
-                                                        </div>
+                                                    <div class="invoice-list-view mt-5">
+                                                        <h4>Invoices</h4>
+                                                        <table class="table nowrap w-100 mb-5">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Invoice</th>
+                                                                    <th>Student</th>
+                                                                    <th>Issue Date</th>
+                                                                    <th>Due Date</th>
+                                                                    <th>Invoice Amount</th>
+                                                                    <th>Created By</th>
+                                                                    <th>Actions</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {% for invoices in invoices %}
+                                                                <tr>
+                                                                    <td><a href="#" class="table-link-text link-high-em">{{invoices.id}}</a></td>
+                                                                    <td>{{invoices.student.user.first_name|add:" " }}{{ invoices.student.user.last_name }}</td>
+                                                                    <td>{{invoices.created}}</td>
+                                                                    <td>{{invoices.created}}</td>
+                                                                    <td>Rs.{{invoices.invoice_amount}}</td>
+                                                                    <td>{{invoices.created_by}}</td>
+                                                                    {% if 'read_finance' in permissions %}
+                                                                    <td>
+                                                                        <a  href="{% url 'view_invoice' id=invoices.id %}" class="btn btn-primary"><i class="material-icons">visibility</i></a>
+                                                                    </td>
+                                                                    {% else %}
+                                                                    <td>---</td>
+                                                                    {% endif %}
+                                                                </tr>
+                                                                {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    
+                                                    </div>
+                                                    <div class="invoice-list-view mt-5">
+                                                        <h4>Receipts</h4>
+                                                        <table class="table nowrap w-100 mb-5">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Receipt</th>
+                                                                    <th>Student Name</th>
+                                                                    <th>Payment Method</th>
+                                                                    <th>Paid Amount</th>
+                                                                    <th>Created By</th>
+                                                                    <th>Receipt Date</th>
+                                                                    <th>Actions</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {% for receipts in receipts %}
+                                                                <tr>
+                                                                    <td><a href="#" class="table-link-text link-high-em">{{receipts.id}}</a></td>
+                                                                    <td>{{receipts.student.user.first_name|add:" " }}{{ invoices.student.user.last_name }}</td>
+                                                                    <td>{{receipts.payment_method}}</td>
+                                                                    <td>Rs.{{receipts.paid_amount}}</td>
+                                                                    <td>{{receipts.created_by}}</td>
+                                                                    <td>{{receipts.created}}</td>
+                                                                    {% if 'read_finance' in permissions %}
+                                                                    <td>
+                                                                        <a  href="{% url 'view_receipt' id=receipts.id %}" class="btn btn-primary"><i class="material-icons">visibility</i></a>
+                                                                    </td>
+                                                                    {% else %}
+                                                                    <td>---</td>
+                                                                    {% endif %}
+                                                                </tr>
+                                                                {% endfor %}
+                                                            </tbody>
+                                                        </table>
                                                     
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
 
 
 
