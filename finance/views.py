@@ -128,6 +128,8 @@ def view_invoice(request, id):
     if 'read_finance' in custom_data_views(request):
         invoice = Invoice.objects.get(id=id)
         course = InvoiceCourse.objects.filter(invoice_id=id)
+        print('hello')
+        print(course)
         context = {
             'course':course,
             'invoice': invoice,
