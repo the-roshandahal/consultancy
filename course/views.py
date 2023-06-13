@@ -68,7 +68,7 @@ def edit_course(request,id):
            
             course_obj.course_category=course_category
             course_obj.save()
-            return redirect(courses)
+            return redirect('courses')
         else:
             course = Course.objects.get(id=id)
             category = CourseCategory.objects.all()
@@ -88,7 +88,7 @@ def delete_course(request,id):
         course = Course.objects.get(id=id)
         course.delete()
         messages.info(request, "Course Deleted Successfully")
-        return redirect(courses)
+        return redirect('courses')
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')
@@ -161,5 +161,85 @@ def delete_course_category(request,id):
 
 
 
+ 
 def services(request):
-    return redirect('courses')
+    if 'read_course' in custom_data_views(request):
+        services = Service.objects.all()
+        category = CourseCategory.objects.all()
+        context={
+            'services':services,
+            'category':category,
+        }
+        return render (request,'courses/services.html',context)
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
+
+
+
+def add_service(request):
+    if 'create_course' in custom_data_views(request):
+        if request.method == "POST":
+          
+            service_title = request.POST["service_title"]
+            service_description = request.POST["service_description"]
+            service_price = request.POST["service_price"]
+            category = request.POST["service_category"]
+            service_category = CourseCategory.objects.get(id=category)
+            
+            Service.objects.create(service_title=service_title, service_description=service_description, 
+                                service_price=service_price, service_category=service_category)
+            return redirect('services')
+        else:
+            category = CourseCategory.objects.all()
+            context={
+                'category':category,
+            }
+            return render (request,'courses/add_service.html',context)
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
+
+
+def edit_service(request,id):
+    if 'update_course' in custom_data_views(request):
+        if request.method == "POST":
+            
+            service_title = request.POST["service_title"]
+            service_description = request.POST["service_description"]
+            service_price = request.POST["service_price"]
+            
+
+            category = request.POST["service_category"]
+            service_category = CourseCategory.objects.get(id=category)
+            service_obj = Service.objects.get(id=id)
+            service_obj.service_title=service_title
+            service_obj.service_description=service_description
+            service_obj.service_price=service_price
+           
+            service_obj.service_category=service_category
+            service_obj.save()
+            return redirect('services')
+        else:
+            service = Service.objects.get(id=id)
+            category = CourseCategory.objects.all()
+            context={
+                'service':service,
+                'category':category,
+               
+            }
+            return render (request,'courses/edit_service.html',context)
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
+
+
+def delete_service(request,id):
+    if 'delete_course' in custom_data_views(request):
+        service = Service.objects.get(id=id)
+        service.delete()
+        messages.info(request, "Course Deleted Successfully")
+        return redirect('services')
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')

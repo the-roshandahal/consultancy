@@ -49,6 +49,7 @@
                                         {% for course in course %}
                                         <p>{{course.course}}<span>Rs. {{course.course_price}}</span></p>
                                         {% endfor %}
+                                        
                                         {% if invoice.misc_name and invoice.misc_amount %}
                                         <p>{{invoice.misc_name}}<span>Rs. {{invoice.misc_amount}}</span></p>
                                         {% endif %}

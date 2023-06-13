@@ -73,16 +73,13 @@ def create_invoice(request):
                 course_id = selected_course_ids[i]
                 course_amount = Decimal(selected_course_amounts[i])
                 course_discount = Decimal(selected_course_discounts[i])
-               
-                course = Course.objects.get(id=course_id)
+
                 InvoiceCourse.objects.create(
                     invoice=invoice,
-                    course=course,
-                  
+                    course=course_id,
                     course_price=course_amount - course_discount,
                 )
                
-                course.save()
             details = invoice.id
             details = "INV_NO_"+str(details)
             if(Statement.objects.filter(student=student).exists()):
@@ -112,12 +109,15 @@ def create_invoice(request):
             return redirect(view_invoice, id=invoice.id)
         else:
             course = Course.objects.all()
+            service = Service.objects.all()
             student = Student.objects.all()
             tomorrow = datetime.now().date() + timedelta(days=2)
             default_due_date = tomorrow.strftime("%Y-%m-%d")
+
             context = {
                 'course': course,
                 'student': student,
+                'service':service,
                 'due_date':default_due_date,
 
             }

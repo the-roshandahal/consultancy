@@ -23,7 +23,7 @@ class Invoice(models.Model):
 
 class InvoiceCourse(models.Model):
     invoice = models.ForeignKey(Invoice, on_delete=models.SET_NULL, null = True)
-    course = models.ForeignKey(Course, on_delete=models.SET_NULL, null = True)
+    course = models.CharField(max_length=255, null = True, blank=True)
     course_price = models.FloatField()
     def __str__(self):
         return self.course.course_title

@@ -1,0 +1,81 @@
+{% include 'header.html' %}
+<div class="app-content">
+    <div class="content-wrapper">
+        <div class="example-container">
+            <div class="example-content bg-light">
+                <div class="page-description d-flex align-items-center">
+                    <div class="page-description-content flex-grow-1">
+                        <h1>Company Details</h1>
+                        <span>These details are visible in invoice and receipts.</span>
+                    </div>
+                    <div class="page-description-actions">
+                        
+                        
+                        <a href="{% url 'add_service' %}" class="btn btn-primary"><i class="material-icons">add</i>Add</a>
+                        
+                    </div>
+                </div>
+                
+                <!-- add other contents  -->
+                <div class="row">
+                    <table id="datable_1" class="table nowrap w-100 mb-5">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for service in services %}
+                            <tr>
+                                <td>{{service.service_title}}</td>
+                                <td>{{service.service_category}}</td>
+                                <td>{{service.service_price}}</td>
+                                
+                                <td>
+                                    {% if 'update_course' in permissions %}
+                                    <a href="{% url 'edit_service' id=service.id %}" class="btn btn-primary"><i class="material-icons">edit</i>Edit</a>
+                                    {% endif %}
+
+                                    {% if 'delete_course' in permissions %}                                    
+                                    <a data-bs-toggle="modal" data-bs-target="#exampleModalCenterserviceDelete{{service.id}}" class="btn btn-primary"><i class="material-icons">delete</i>Delete</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% for service in services %}
+<div class="modal fade" id="exampleModalCenterserviceDelete{{service.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterserviceDelete{{service.id}}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete service</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete {{service.service}}?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a href="{% url 'delete_service' id=service.id %}"><button type="button" class="btn btn-primary">Delete</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% include 'footer.html' %}
