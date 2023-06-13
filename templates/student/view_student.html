@@ -151,7 +151,7 @@
                                                             <tbody>
                                                                 {% for invoices in invoices %}
                                                                 <tr>
-                                                                    <td><a href="#" class="table-link-text link-high-em">{{invoices.id}}</a></td>
+                                                                    <td>{{invoices.id}}</td>
                                                                     <td>{{invoices.student.user.first_name|add:" " }}{{ invoices.student.user.last_name }}</td>
                                                                     <td>{{invoices.created}}</td>
                                                                     <td>{{invoices.created}}</td>
@@ -187,7 +187,7 @@
                                                             <tbody>
                                                                 {% for receipts in receipts %}
                                                                 <tr>
-                                                                    <td><a href="#" class="table-link-text link-high-em">{{receipts.id}}</a></td>
+                                                                    <td>{{receipts.id}}</td>
                                                                     <td>{{receipts.student.user.first_name|add:" " }}{{ invoices.student.user.last_name }}</td>
                                                                     <td>{{receipts.payment_method}}</td>
                                                                     <td>Rs.{{receipts.paid_amount}}</td>
@@ -208,15 +208,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-
-
-
-
-
-
-
-
 
                                             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
 
