@@ -20,6 +20,8 @@
                             <div class="card-header">
                                 <span class="badge ">
                                     <div class="page-description-actions">
+                                        {% if student.active == True %}
+                                          
                                         <div class="dropdown">
                                             <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Action
@@ -32,6 +34,9 @@
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteStudent">Delete Student</a></li>
                                             </ul>
                                         </div>
+                                        {% else %}
+                                        <a data-bs-toggle="modal" data-bs-target="#reopenStudent"><button type="button" class="btn btn-primary">Reopen Student</button></a>
+                                        {% endif %}
                                     </div>
                                 </span>
                             </div>
@@ -263,7 +268,11 @@
 
                                             <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
                                                 {% for logs in logs %}
-                                                <p>{{logs.changed_by}} {{logs.activity}} at {{logs.created}}</p>
+                                                <nav aria-label="breadcrumb">
+                                                    <ol class="breadcrumb breadcrumb-container breadcrumb-container-light bg-primary">
+                                                        <li class="breadcrumb-item">{{logs.created}} -- {{logs.changed_by}} {{logs.activity}}</li>
+                                                    </ol>
+                                                </nav>
                                                 {% endfor %}
                                             </div>
                                         </div>
@@ -284,9 +293,6 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="deleteStudent">Delete Student</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
 			</div>
 			<div class="modal-body">
 				<p>Are you sure you want to delete the student.</p>
@@ -294,6 +300,43 @@
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 				<a href="{% url 'delete_student' id=student.id %}"><button type="button" class="btn btn-primary">Delete</button></a>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="reopenStudent" tabindex="-1" role="dialog" aria-labelledby="reopenStudent" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="reopenStudent">Reopen Student</h5>
+			</div>
+			<div class="modal-body">
+				<p>Are you sure you want to reopen the student.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				<a href="{% url 'reopen_student' id=student.id %}"><button type="button" class="btn btn-primary">Save</button></a>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="modal fade" id="closeStudent" tabindex="-1" role="dialog" aria-labelledby="closeStudent" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="closeStudent">Close Student</h5>
+			</div>
+			<div class="modal-body">
+				<p>Are you sure you want to close the student.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				<a href="{% url 'close_student' id=student.id %}"><button type="button" class="btn btn-primary">Save</button></a>
 			</div>
 		</div>
 	</div>

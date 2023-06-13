@@ -286,18 +286,7 @@ def finance(request):
         messages.info(request, "Unauthorized access.")
         return redirect('home')
 
-    
-def statement(request):
-    if 'read_finance' in custom_data_views(request):
-        student = Student.objects.all()
-        context = {
-            'student': student
-        }
-        return render(request, 'finance/statement.html', context)
-    else:
-        messages.info(request, "Unauthorized access.")
-        return redirect('home')
-
+ 
 def single_statement(request, id):
     if 'read_finance' in custom_data_views(request):
         statements = Statement.objects.filter(student=id)

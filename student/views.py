@@ -157,9 +157,12 @@ def delete_enrollment(request,id):
 
 def student(request):
     if 'read_student' in custom_data_views(request):
-        student = Student.objects.all()
+        active_student = Student.objects.filter(active=True)
+        closed_student = Student.objects.filter(active=False)
+        print(active_student,closed_student)
         context = {
-            'student': student
+            'active_student': active_student,
+            'closed_student': closed_student
         }
         return render(request,'student/student.html', context)
     else:
@@ -312,9 +315,9 @@ def view_student(request,id):
         student = Student.objects.get(id=id)
         invoices = Invoice.objects.filter(student=id)
         receipts=Receipt.objects.filter(student=id)
-        notes=StudentNotes.objects.filter(student=id)
-        logs=StudentLog.objects.filter(student=id)
-        files=StudentFiles.objects.filter(student=id)
+        notes=StudentNotes.objects.filter(student=id).order_by('-created')
+        logs=StudentLog.objects.filter(student=id).order_by('-created')
+        files=StudentFiles.objects.filter(student=id).order_by('-created')
         stage=StudentStage.objects.all()
         context = {
             'student': student,
@@ -468,7 +471,96 @@ def add_student_file(request,id):
         messages.info(request, "Unauthorized access.")
         return redirect('home')
 
- 
+
+def close_student(request,id):
+    if 'update_student' in custom_data_views(request):
+        if request.user.is_superuser:
+            student = Student.objects.get(id=id)
+            student.active=False
+            student.save()
+            messages.info(request, "student closed.")
+
+            user = User.objects.get(username=request.user)
+            changed_by = user.username
+            activity = ' closed student '
+            StudentLog.objects.create(student=student,changed_by=changed_by,activity=activity)
+            return redirect('view_student',id)
+        else:
+            assigned_student = Student.objects.get(id=id)
+            assignedddd=assigned_student.assigned_to.all()
+            logged_in_user = User.objects.get(username=request.user)
+            employees = Employee.objects.get(user=logged_in_user)
+
+            assigned=False
+            for assignedddd in assignedddd:
+                if str(assignedddd) == str(employees):
+                    assigned=True
+            
+            if assigned == True:
+                student = Student.objects.get(id=id)
+                student.active=False
+                student.save()
+                messages.info(request, "student closed.")
+
+                user = User.objects.get(username=request.user)
+                changed_by = user.username
+                activity = ' closed student '
+                StudentLog.objects.create(student=student,changed_by=changed_by,activity=activity)
+                return redirect(view_student,id)
+            else:
+                messages.info(request, "You are not assigned to this student.")
+                return redirect(view_student,id)
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
+
+def reopen_student(request,id):
+    if 'update_student' in custom_data_views(request):
+        if request.user.is_superuser:
+            student = Student.objects.get(id=id)
+            student.active=True
+            student.save()
+            messages.info(request, "student reopened.")
+
+            user = User.objects.get(username=request.user)
+            changed_by = user.username
+            activity = ' reopened student '
+            StudentLog.objects.create(student=student,changed_by=changed_by,activity=activity)
+            return redirect('view_student',id)
+        else:
+            assigned_student = Student.objects.get(id=id)
+            assignedddd=assigned_student.assigned_to.all()
+            logged_in_user = User.objects.get(username=request.user)
+            employees = Employee.objects.get(user=logged_in_user)
+
+            assigned=False
+            for assignedddd in assignedddd:
+                if str(assignedddd) == str(employees):
+                    assigned=True
+            
+            if assigned == True:
+                student = Student.objects.get(id=id)
+                student.active=True
+                student.save()
+                messages.info(request, "student reopened.")
+
+                user = User.objects.get(username=request.user)
+                changed_by = user.username
+                activity = ' reopened student '
+                StudentLog.objects.create(student=student,changed_by=changed_by,activity=activity)
+                return redirect(view_student,id)
+            else:
+                messages.info(request, "You are not assigned to this student.")
+                return redirect(view_student,id)
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
+
+
+
+
+
+
 def edit_student_notes(request,id):
     if 'update_student' in custom_data_views(request):
         if request.method == 'POST':

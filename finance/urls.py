@@ -26,7 +26,6 @@ urlpatterns = [
     path("delete_expense_type/<int:id>", views.delete_expense_type, name="delete_expense_type"),
     path("edit_expense_type/<int:id>", views.edit_expense_type, name="edit_expense_type"),
 
-    path("statement/", views.statement, name="statement"),
     path("single_statement/<int:id>", views.single_statement, name="single_statement"),
     
 

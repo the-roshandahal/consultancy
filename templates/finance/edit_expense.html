@@ -1,86 +1,60 @@
-{% load static %}{% include 'header.html' %}
-<!-- Main Content -->
+{% include 'header.html' %}
 <div class="app-content">
     <div class="content-wrapper">
-		<!-- Page Header -->												
-		<div class="hk-pg-header">
-			<div class="d-flex">
-				<div class="d-flex flex-wrap justify-content-between flex-1">
-					<div class="mb-md-0 mb-2 me-8">
-						<div class="d-flex align-items-center">
-							<h1 class="pg-title">CRM Dashboard</h1>
-						</div>
-						<p id="greeting"></p>
-
-						<script>
-							const now = new Date();
-							const hour = now.getHours();
-					
-							let greeting;
-					
-							if (hour < 12) {
-								greeting = "Good Morning";
-							} else if (hour < 18) {
-								greeting = "Good Afternoon";
-							} else {
-								greeting = "Good Evening";
-							}
-					
-							document.getElementById("greeting").innerHTML = greeting + " {{request.user.first_name}}!";
-						</script>
-						
-					</div>
-					
-				</div>
-			</div>
-		</div>	
-		<div class="modal-content mt-5">
-            <form action="{% url 'edit_expense' id=expense.id %}" method="POST">
-                {% csrf_token %}
-                <div class="modal-header">
-                    <h5 class="modal-title" id="expenseModal">Edit Expense</h5>
+        <div class="example-container">
+            <div class="example-content bg-light">
+                <div class="page-description d-flex align-items-center">
+                    <div class="page-description-content flex-grow-1">
+                        <h1>Edit Expense</h1>
+                        <span>These details are visible in invoice and receipts.</span>
+                    </div>
                 </div>
-                <div class="modal-body">                                                                        
-                    <div class="row">
-                        <div class="col-xxl-12 mb-xxl-0 mb-4">
-                            <h6>Expense Title</h6>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name = "expense_title" value ="{{expense.expense_title}}" required>
+                
+                <!-- add other contents  -->
+                <div class="card">
+                    <form action="{% url 'edit_expense' id=expense.id %}" method="POST">
+                        {% csrf_token %}
+                        <div class="container">
+                            <div class="row mt-5">
+                                <div class="col-md-12 mb-3">
+                                    <label for="" class="mb-1">Expense Title</label>
+                                    <input type="text" class="form-control"  placeholder="Kitchen Expenses" name='expense_title' value ="{{expense.expense_title}}">
                                 </div>
-                        </div>
-                        <div class="col-xxl-6 mb-xxl-0 mb-4">
-                            <h6>Expense Type</h6>
-                                <div class="form-group">
-                                    <select class="form-select" name="expense_type" required="">
-                                        {% for expense_type in expense_type %}
-                                        <option value="{{expense_type.id}}" {% if expense.expense_type.id == expense_type.id %} selected {% endif %}>{{expense_type.expense_type}}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>  
-                        </div>
-                        <div class="col-xxl-6 mb-xxl-0 mb-4">
-                            <h6>Expense Amount</h6>
-                            <input type="number" class="form-control" name = "expense_amount" value ="{{expense.expense_amount}}" required>
-                        </div>
 
-                        <div class="col-xxl-12 mb-xxl-0 mb-4">
-                            <h6>Remarks</h6>
-                                <div class="form-group">
+                                <div class="col-md-6 mb-3">
+                                    <label for="" class="mb-1">Expense Type</label>
+                                    <select class="js-states form-control" tabindex="-1" style="display: none; width: 100%" name="expense_type">
+                                        <optgroup label="Expense Type">
+                                            {% for expense_type in expense_type %}
+                                            <option value="{{expense_type.id}}" {% if expense.expense_type.id == expense_type.id %} selected {% endif %}>{{expense_type.expense_type}}</option>
+                                            {% endfor %}
+                                        </optgroup>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="" class="mb-1">Amount</label>
+                                    <input type="text" class="form-control"  placeholder="Initial" name='expense_amount' value ="{{expense.expense_amount}}">
+                                </div>
+
+                                <div class="col-md-12 mb-3">
+                                    <label for="" class="mb-1">Remarks</label>
                                     <textarea class="form-control" rows="6" id="message" placeholder="Write an internal note" name="expense_remarks"  autocomplete="off"></textarea>
                                     <script>
                                         var messageTextarea = document.getElementById("message");
                                         messageTextarea.value = "{{expense.remarks}}";
-                                      </script>
+                                    </script>
                                 </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Update</button>
-                </div>
-            </form>
+            </div>
         </div>
-	
-	</div>
+    </div>
 </div>
+
 {% include 'footer.html' %}
