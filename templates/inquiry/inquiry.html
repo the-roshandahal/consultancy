@@ -17,41 +17,41 @@
                 </div>
                 
                 <!-- add other contents  -->
-				<div class="row">
-					<table id="datable_1" class="table nowrap w-100 mb-5">
-						<thead>
-							<tr>
-								<th>Name</th>
-								<th>Contact Number</th>
-								<th>Email</th>
-								<th>Address</th>
-								<th>Purpose </th>
-								<th>Source </th>
-								<th>Action</th>
-							</tr>
-						</thead>
-						<tbody>
-							{% for inquiry in active_inquiries %}
-							<tr>
-								<td>{{inquiry.first_name}} {{inquiry.last_name}}</td>
-								<td>{{inquiry.contact}}</td>
-								<td>{{inquiry.email}}</td>
-								<td>{{inquiry.address}}</td>
-								<td>{{inquiry.purpose}}</td>
-								<td>{{inquiry.source}}</td>
-								<td>
-									<div class="d-flex align-items-center">
-										<div class="d-flex">
-											{% if 'read_inquiry' in permissions %}
-											<a href="{% url 'view_inquiry' id=inquiry.id %}" class="btn btn-primary"><i class="material-icons">visibility</i></a>
-											{% endif %}
+				<div class="card">
+					<div class="card-body">
+						<table id="datatable1" class="display" style="width:100%">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Contact Number</th>
+									<th>Purpose </th>
+									<th>Consultation Date </th>
+									<th>Assigned To</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for inquiry in active_inquiries %}
+								<tr>
+									<td>{{inquiry.first_name}} {{inquiry.last_name}}</td>
+									<td>{{inquiry.contact}}</td>
+									<td>{{inquiry.purpose}}</td>
+									<td>{{inquiry.consultation_date}}</td>
+									<td>{{inquiry.assigned}}</td>
+									<td>
+										<div class="d-flex align-items-center">
+											<div class="d-flex">
+												{% if 'read_inquiry' in permissions %}
+												<a href="{% url 'view_inquiry' id=inquiry.id %}" class="btn btn-primary"><i class="material-icons">visibility</i></a>
+												{% endif %}
+											</div>
 										</div>
-									</div>
-								</td>
-							</tr>
-							{% endfor %}
-						</tbody>
-					</table>
+									</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
 				</div>
             </div>
         </div>

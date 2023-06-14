@@ -1,0 +1,108 @@
+{% include 'header.html' %}
+<div class="app-content">
+    <div class="content-wrapper">
+        <div class="example-container">
+            <div class="example-content bg-light">
+                <div class="page-description d-flex align-items-center">
+                    <div class="page-description-content flex-grow-1">
+                        <h1>Inquiries</h1>
+                        <span>Manage your inquiries</span>
+                    </div>
+                </div>
+                
+                <!-- add other contents  -->
+                <div class="card">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Active</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Inactive</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="card">
+                                <div class="card-body">
+                                    <table id="datatable1" class="display" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Contact Number</th>
+                                                <th>Purpose </th>
+                                                <th>Consultation Date </th>
+                                                <th>Assigned To</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for inquiry in my_inquiries %}
+                                            <tr>
+                                                <td>{{inquiry.first_name}} {{inquiry.last_name}}</td>
+                                                <td>{{inquiry.contact}}</td>
+                                                <td>{{inquiry.purpose}}</td>
+                                                <td>{{inquiry.consultation_date}}</td>
+                                                <td>{{inquiry.assigned}}</td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="d-flex">
+                                                            {% if 'read_inquiry' in permissions %}
+                                                            <a href="{% url 'view_inquiry' id=inquiry.id %}" class="btn btn-primary"><i class="material-icons">visibility</i></a>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="card">
+                                <div class="card-body">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Contact Number</th>
+                                                <th>Purpose </th>
+                                                <th>Consultation Date </th>
+                                                <th>Assigned To</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for inquiry in my_inactive_inquiries %}
+                                            <tr>
+                                                <td>{{inquiry.first_name}} {{inquiry.last_name}}</td>
+                                                <td>{{inquiry.contact}}</td>
+                                                <td>{{inquiry.purpose}}</td>
+                                                <td>{{inquiry.consultation_date}}</td>
+                                                <td>{{inquiry.assigned}}</td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="d-flex">
+                                                            {% if 'read_inquiry' in permissions %}
+                                                            <a href="{% url 'view_inquiry' id=inquiry.id %}" class="btn btn-primary"><i class="material-icons">visibility</i></a>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+				
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'footer.html' %}

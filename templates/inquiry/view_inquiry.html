@@ -8,7 +8,6 @@
                         <h3>{{inquiry_data.first_name|add:" " }}{{inquiry_data.last_name }} <span class="badge badge-success">{{inquiry_data.stage}}</span></h3>
                         <span>{{inquiry_data.description}}</span>
                     </div>
-                    <a href=""><button type="button" class="btn btn-dark">View Statement</button></a>
                 </div>
                 
                 <!-- add other contents  -->
@@ -30,15 +29,14 @@
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#addNote">Add Note</a></li>
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#updateStage">Update Stage</a></li>
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#closeStudent">Close Inquiry</a></li>
+                                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#assignConsultationDate">Update Consultation Date</a></li>
                                                 <li>
                                                     <hr class="dropdown-divider">
                                                 </li>
-                                                <li><a class="dropdown-item" href="#">Edit Inquiry</a></li>
+                                                <li><a class="dropdown-item" href="{% url 'edit_inquiry' id=inquiry_data.id %}">Edit Inquiry</a></li>
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteStudent">Delete Inquiry</a></li>
                                             </ul>
                                         </div>
-                                        {% else %}
-                                        <a data-bs-toggle="modal" data-bs-target="#reopenStudent"><button type="button" class="btn btn-primary">Reopen Inquiry</button></a>
                                         {% endif %}
                                     </div>
                                 </span>
@@ -58,6 +56,15 @@
                                         <div class="tab-content" id="pills-tabContent">
                                             <div class="tab-pane fade active show" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                                                 <div class="row widget widget-list mt-5">
+                                                    {% if inquiry_data.is_active == False %}
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                        <h5 class="card-title">Student Closed for following reason.</h5>
+                                                        <p class="card-text">"{{inquiry_data.closed_reason}}"</p>
+                                                        <a data-bs-toggle="modal" data-bs-target="#reopenStudent"><button type="button" class="btn btn-primary">Reopen Inquiry</button></a>
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
                                                     <div class="col-4">
                                                         <ul class="widget-list-content list-unstyled">
                                                             <li class="widget-list-item widget-list-item-green">
@@ -141,7 +148,7 @@
                                                     <div class="col-4">
                                                         <ul class="widget-list-content list-unstyled">
                                                             <li class="widget-list-item widget-list-item-green">
-                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">place</i></span>
+                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">help_center</i></span>
                                                                 <span class="widget-list-item-description">
                                                                     <a href="#" class="widget-list-item-description-title">
                                                                         Inquiry Purpose
@@ -157,7 +164,7 @@
                                                     <div class="col-4">
                                                         <ul class="widget-list-content list-unstyled">
                                                             <li class="widget-list-item widget-list-item-green">
-                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">place</i></span>
+                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">where_to_vote</i></span>
                                                                 <span class="widget-list-item-description">
                                                                     <a href="#" class="widget-list-item-description-title">
                                                                         Source
@@ -173,13 +180,29 @@
                                                     <div class="col-4">
                                                         <ul class="widget-list-content list-unstyled">
                                                             <li class="widget-list-item widget-list-item-green">
-                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">place</i></span>
+                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">school</i></span>
                                                                 <span class="widget-list-item-description">
                                                                     <a href="#" class="widget-list-item-description-title">
                                                                         Education Qualification
                                                                     </a>
                                                                     <span class="widget-list-item-description-subtitle">
                                                                         {{inquiry_data.education_qualification}}
+                                                                    </span>
+                                                                </span>
+                                                            </li>
+                                                            
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <ul class="widget-list-content list-unstyled">
+                                                            <li class="widget-list-item widget-list-item-green">
+                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">today</i></span>
+                                                                <span class="widget-list-item-description">
+                                                                    <a href="#" class="widget-list-item-description-title">
+                                                                        Consultation Date
+                                                                    </a>
+                                                                    <span class="widget-list-item-description-subtitle">
+                                                                        {{inquiry_data.consultation_date}}
                                                                     </span>
                                                                 </span>
                                                             </li>
@@ -231,14 +254,14 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="deleteStudent">Delete Student</h5>
+				<h5 class="modal-title" id="deleteStudent">Delete inquiry</h5>
 			</div>
 			<div class="modal-body">
-				<p>Are you sure you want to delete the student.</p>
+				<p>Are you sure you want to delete the inquiry?</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-				<a href=""><button type="button" class="btn btn-primary">Delete</button></a>
+				<a href="{% url 'delete_inquiry' id=inquiry_data.id %}"><button type="button" class="btn btn-primary">Delete</button></a>
 			</div>
 		</div>
 	</div>
@@ -256,7 +279,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-				<a href=""><button type="button" class="btn btn-primary">Save</button></a>
+				<a href="{% url 'reopen_inquiry' id=inquiry_data.id %}"><button type="button" class="btn btn-primary">Save</button></a>
 			</div>
 		</div>
 	</div>
@@ -268,15 +291,26 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="closeStudent">Close Student</h5>
+				<h5 class="modal-title" id="closeStudent">Close inquiry</h5>
 			</div>
-			<div class="modal-body">
-				<p>Are you sure you want to close the student.</p>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-				<a href=""><button type="button" class="btn btn-primary">Save</button></a>
-			</div>
+            <form action="{% url 'close_inquiry' id=inquiry_data.id %}" method="POST">
+				{% csrf_token %}
+                <div class="modal-body">
+                    <p>Are you sure you want to close the inquiry.</p>
+                    <div class="col-md-12 mb-3">
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="">Please specify the reason to close this inquiry.</label>
+                                <textarea class="form-control" rows="6" placeholder="Remarks" name="closed_reason" autocomplete="off" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-primary" type="submit">Save</button>
+                </div>
+            </form>
 		</div>
 	</div>
 </div>
@@ -333,6 +367,34 @@
                             <div class="col-md-12 mb-3">
                                 <label for="">Note Description</label>
                                 <textarea class="form-control" rows="6" placeholder="Remarks" name="note" autocomplete="off"></textarea>
+                            </div>
+                            
+                        </div>
+                    </div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Save</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="assignConsultationDate" tabindex="-1" role="dialog" aria-labelledby="assignConsultationDate" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<form action="{% url 'add_consultation_date' id=inquiry_data.id %}" method="POST">
+				{% csrf_token %}
+				<div class="modal-header">
+					<h5 class="modal-title" id="assignConsultationDate">Assign Consultation Date and Time</h5>
+                    
+				</div>
+				<div class="modal-body">
+					<div class="col-md-12 mb-3">
+						<div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="">Date</label>
+                                <input class="form-control flatpickr2" type="text" placeholder="Select Date.." name="consultation_date">
                             </div>
                             
                         </div>
