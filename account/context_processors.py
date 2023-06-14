@@ -17,6 +17,7 @@ def custom_data(request):
                            'create_hrm', 'read_hrm', 'update_hrm', 'delete_hrm', 'manage_hrm',
                            'create_course', 'read_course', 'update_course', 'delete_course','manage_course',
                            'create_student', 'read_student', 'update_student', 'delete_student', 'manage_student',
+                           'create_inquiry','read_inquiry','update_inquiry','delete_inquiry','manage_inquiry',
                            'manage_company']
 
             
@@ -39,6 +40,8 @@ def custom_data(request):
                 permissions.append('student')
             if permission.create_leads or permission.read_leads or permission.update_leads or permission.delete_leads or permission.manage_leads:
                 permissions.append('leads')
+            if permission.create_inquiry or permission.read_inquiry or permission.update_inquiry or permission.delete_inquiry or permission.manage_inquiry:
+                permissions.append('inquiry')
 
 
             if permission.create_account:
@@ -111,6 +114,18 @@ def custom_data(request):
             if permission.manage_leads:
                 permissions.append('manage_leads')
 
+
+            if permission.create_inquiry:
+                permissions.append('create_inquiry')
+            if permission.read_inquiry:
+                permissions.append('read_inquiry')
+            if permission.update_inquiry:
+                permissions.append('update_inquiry')
+            if permission.delete_inquiry:
+                permissions.append('delete_inquiry')
+            if permission.manage_inquiry:
+                permissions.append('manage_inquiry')
+
             if permission.manage_company:
                 permissions.append('manage_company')
 
@@ -131,6 +146,7 @@ def custom_data_views(request):
                            'create_hrm', 'read_hrm', 'update_hrm', 'delete_hrm', 'manage_hrm',
                            'create_course', 'read_course', 'update_course', 'delete_course','manage_course',
                            'create_student', 'read_student', 'update_student', 'delete_student', 'manage_student',
+                           'create_inquiry','read_inquiry','update_inquiry','delete_inquiry','manage_inquiry',
                            'manage_company']
             return views_permissions
             
@@ -151,6 +167,8 @@ def custom_data_views(request):
                 views_permissions.append('course')
             if permission.create_leads or permission.read_leads or permission.update_leads or permission.delete_leads or permission.manage_leads:
                 views_permissions.append('leads')
+            if permission.create_inquiry or permission.read_inquiry or permission.update_inquiry or permission.delete_inquiry or permission.manage_inquiry:
+                views_permissions.append('inquiry')
 
             if permission.create_account:
                 views_permissions.append('create_account')
@@ -218,6 +236,18 @@ def custom_data_views(request):
                 views_permissions.append('delete_leads')
             if permission.manage_leads:
                 views_permissions.append('manage_leads')
+            
+            
+            if permission.create_inquiry:
+                views_permissions.append('create_inquiry')
+            if permission.read_inquiry:
+                views_permissions.append('read_inquiry')
+            if permission.update_inquiry:
+                views_permissions.append('update_inquiry')
+            if permission.delete_inquiry:
+                views_permissions.append('delete_inquiry')
+            if permission.manage_inquiry:
+                views_permissions.append('manage_inquiry')
                 
             if permission.manage_company:
                 views_permissions.append('manage_company')

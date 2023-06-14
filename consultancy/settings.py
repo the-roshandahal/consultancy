@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'course',
     'finance',
     'leads',
+    'inquiry',
 ]
 
 MIDDLEWARE = [

@@ -43,6 +43,9 @@
 				$("#selectstudents").click(function() {
 					$("input.students[type=checkbox]").prop("checked", this.checked);
 				});
+				$("#selectinquiry").click(function() {
+					$("input.inquiry[type=checkbox]").prop("checked", this.checked);
+				});
 			});
 		</script>
 														
@@ -199,6 +202,27 @@
                                 </td>
                                 <td>
                                     <input type="checkbox" class="form-check-input lead" id="customCheck1" name="manage_leads" value=True>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    <input type="checkbox" class="form-check-input" id="selectinquiry">
+                                    Inquiry
+                                </th>
+                                <td>
+                                    <input type="checkbox" class="form-check-input inquiry" id="customCheck1" name="create_inquiry" value=True>
+                                </td>
+                                <td>
+                                    <input type="checkbox" class="form-check-input inquiry" id="customCheck1" name="read_inquiry" value=True>
+                                </td>
+                                <td>
+                                    <input type="checkbox" class="form-check-input inquiry" id="customCheck1" name="update_inquiry" value=True>
+                                </td>
+                                <td>
+                                    <input type="checkbox" class="form-check-input inquiry" id="customCheck1" name="delete_inquiry" value=True>
+                                </td>
+                                <td>
+                                    <input type="checkbox" class="form-check-input inquiry" id="customCheck1" name="manage_inquiry" value=True>
                                 </td>
                             </tr>
                             <tr>

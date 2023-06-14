@@ -91,6 +91,13 @@ def create_role(request):
             update_student = request.POST.get('update_student', 0)
             delete_student = request.POST.get('delete_student', 0)
             manage_student = request.POST.get('manage_student', 0)
+            
+            
+            create_inquiry = request.POST.get('create_inquiry', 0)
+            read_inquiry = request.POST.get('read_inquiry', 0)
+            update_inquiry = request.POST.get('update_inquiry', 0)
+            delete_inquiry = request.POST.get('delete_inquiry', 0)
+            manage_inquiry = request.POST.get('manage_inquiry', 0)
 
 
 
@@ -109,6 +116,7 @@ def create_role(request):
                                         create_leads =create_leads, read_leads =read_leads, update_leads =update_leads, delete_leads =delete_leads,manage_leads=manage_leads,
                                         manage_company=manage_company,
                                         create_student =create_student, read_student =read_student, update_student =update_student, delete_student =delete_student,manage_student=manage_student,
+                                        create_inquiry =create_inquiry, read_inquiry =read_inquiry, update_inquiry =update_inquiry, delete_inquiry =delete_inquiry,manage_inquiry=manage_inquiry,
                                         )
                 return redirect('role')
 
@@ -158,6 +166,13 @@ def edit_role(request, id):
             permission.update_student = request.POST.get('update_student', 0)
             permission.delete_student = request.POST.get('delete_student', 0)
             permission.manage_student = request.POST.get('manage_student', 0)
+            
+            
+            permission.create_inquiry = request.POST.get('create_inquiry', 0)
+            permission.read_inquiry = request.POST.get('read_inquiry', 0)
+            permission.update_inquiry = request.POST.get('update_inquiry', 0)
+            permission.delete_inquiry = request.POST.get('delete_inquiry', 0)
+            permission.manage_inquiry = request.POST.get('manage_inquiry', 0)
 
             permission.manage_company = request.POST.get('manage_company', 0)
             try:

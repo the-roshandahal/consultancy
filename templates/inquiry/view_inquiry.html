@@ -1,0 +1,383 @@
+{% include 'header.html' %}
+<div class="app-content">
+    <div class="content-wrapper">
+        <div class="example-container">
+            <div class="example-content bg-light">
+                <div class="page-description d-flex align-items-center">
+                    <div class="page-description-content flex-grow-1">
+                        <h3>{{inquiry_data.first_name|add:" " }}{{inquiry_data.last_name }} <span class="badge badge-success">{{inquiry_data.stage}}</span></h3>
+                        <span>{{inquiry_data.description}}</span>
+                    </div>
+                    <a href=""><button type="button" class="btn btn-dark">View Statement</button></a>
+                </div>
+                
+                <!-- add other contents  -->
+
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="badge ">
+                                    <div class="page-description-actions">
+                                        {% if inquiry_data.is_active == True %}
+                                          
+                                        <div class="dropdown">
+                                            <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Action
+                                            </a>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#addNote">Add Note</a></li>
+                                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#updateStage">Update Stage</a></li>
+                                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#closeStudent">Close Inquiry</a></li>
+                                                <li>
+                                                    <hr class="dropdown-divider">
+                                                </li>
+                                                <li><a class="dropdown-item" href="#">Edit Inquiry</a></li>
+                                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteStudent">Delete Inquiry</a></li>
+                                            </ul>
+                                        </div>
+                                        {% else %}
+                                        <a data-bs-toggle="modal" data-bs-target="#reopenStudent"><button type="button" class="btn btn-primary">Reopen Inquiry</button></a>
+                                        {% endif %}
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="card-body">
+                                <div class="example-container">
+                                    <div class="example-content">
+                                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link active"  id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">General</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Activity</button>
+                                            </li>
+                                        </ul>
+
+                                        <div class="tab-content" id="pills-tabContent">
+                                            <div class="tab-pane fade active show" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                                                <div class="row widget widget-list mt-5">
+                                                    <div class="col-4">
+                                                        <ul class="widget-list-content list-unstyled">
+                                                            <li class="widget-list-item widget-list-item-green">
+                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">person</i></span>
+                                                                <span class="widget-list-item-description">
+                                                                    <a href="#" class="widget-list-item-description-title">
+                                                                       Student Name
+                                                                    </a>
+                                                                    <span class="widget-list-item-description-subtitle">
+                                                                        {{inquiry_data.first_name|add:" " }}{{inquiry_data.last_name }}
+                                                                    </span>
+                                                                </span>
+                                                            </li>
+                                                            
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <ul class="widget-list-content list-unstyled">
+                                                            <li class="widget-list-item widget-list-item-green">
+                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">place</i></span>
+                                                                <span class="widget-list-item-description">
+                                                                    <a href="#" class="widget-list-item-description-title">
+                                                                        Address
+                                                                    </a>
+                                                                    <span class="widget-list-item-description-subtitle">
+                                                                        {{inquiry_data.address}}
+                                                                    </span>
+                                                                </span>
+                                                            </li>
+                                                            
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <ul class="widget-list-content list-unstyled">
+                                                            <li class="widget-list-item widget-list-item-green">
+                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">email</i></span>
+                                                                <span class="widget-list-item-description">
+                                                                    <a href="#" class="widget-list-item-description-title">
+                                                                        Email
+                                                                    </a>
+                                                                    <span class="widget-list-item-description-subtitle">
+                                                                        {{inquiry_data.email}}
+                                                                    </span>
+                                                                </span>
+                                                            </li>
+                                                            
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <ul class="widget-list-content list-unstyled">
+                                                            <li class="widget-list-item widget-list-item-green">
+                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">call</i></span>
+                                                                <span class="widget-list-item-description">
+                                                                    <a href="#" class="widget-list-item-description-title">
+                                                                        Contact Number
+                                                                    </a>
+                                                                    <span class="widget-list-item-description-subtitle">
+                                                                        {{inquiry_data.contact}}
+                                                                    </span>
+                                                                </span>
+                                                            </li>
+                                                            
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <ul class="widget-list-content list-unstyled">
+                                                            <li class="widget-list-item widget-list-item-green">
+                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">create</i></span>
+                                                                <span class="widget-list-item-description">
+                                                                    <a href="#" class="widget-list-item-description-title">
+                                                                        Date Joined
+                                                                    </a>
+                                                                    <span class="widget-list-item-description-subtitle">
+                                                                        {{inquiry_data.created}}
+                                                                    </span>
+                                                                </span>
+                                                            </li>
+                                                            
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <ul class="widget-list-content list-unstyled">
+                                                            <li class="widget-list-item widget-list-item-green">
+                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">place</i></span>
+                                                                <span class="widget-list-item-description">
+                                                                    <a href="#" class="widget-list-item-description-title">
+                                                                        Inquiry Purpose
+                                                                    </a>
+                                                                    <span class="widget-list-item-description-subtitle">
+                                                                        {{inquiry_data.purpose}}
+                                                                    </span>
+                                                                </span>
+                                                            </li>
+                                                            
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <ul class="widget-list-content list-unstyled">
+                                                            <li class="widget-list-item widget-list-item-green">
+                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">place</i></span>
+                                                                <span class="widget-list-item-description">
+                                                                    <a href="#" class="widget-list-item-description-title">
+                                                                        Source
+                                                                    </a>
+                                                                    <span class="widget-list-item-description-subtitle">
+                                                                        {{inquiry_data.source}}
+                                                                    </span>
+                                                                </span>
+                                                            </li>
+                                                            
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <ul class="widget-list-content list-unstyled">
+                                                            <li class="widget-list-item widget-list-item-green">
+                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">place</i></span>
+                                                                <span class="widget-list-item-description">
+                                                                    <a href="#" class="widget-list-item-description-title">
+                                                                        Education Qualification
+                                                                    </a>
+                                                                    <span class="widget-list-item-description-subtitle">
+                                                                        {{inquiry_data.education_qualification}}
+                                                                    </span>
+                                                                </span>
+                                                            </li>
+                                                            
+                                                        </ul>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mt-5">
+                                                    <h5 class="mt-2">Notes</h5>
+                                                    <div class="row">
+                                                        {% for note in notes %}
+                                                        <div class="col-6">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">{{note.note_title}}</h5>
+                                                                    <p class="card-text">{{note.note}}</p>
+                                                                    <p class="card-text"><small class="text-muted">{{note.created}}</small></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                                                {% for logs in logs %}
+                                                <nav aria-label="breadcrumb">
+                                                    <ol class="breadcrumb breadcrumb-container breadcrumb-container-light bg-primary">
+                                                        <li class="breadcrumb-item">{{logs.created}} -- {{logs.changed_by}} {{logs.activity}}</li>
+                                                    </ol>
+                                                </nav>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteStudent" tabindex="-1" role="dialog" aria-labelledby="deleteStudent" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="deleteStudent">Delete Student</h5>
+			</div>
+			<div class="modal-body">
+				<p>Are you sure you want to delete the student.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				<a href=""><button type="button" class="btn btn-primary">Delete</button></a>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="reopenStudent" tabindex="-1" role="dialog" aria-labelledby="reopenStudent" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="reopenStudent">Reopen Student</h5>
+			</div>
+			<div class="modal-body">
+				<p>Are you sure you want to reopen the student.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				<a href=""><button type="button" class="btn btn-primary">Save</button></a>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="modal fade" id="closeStudent" tabindex="-1" role="dialog" aria-labelledby="closeStudent" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="closeStudent">Close Student</h5>
+			</div>
+			<div class="modal-body">
+				<p>Are you sure you want to close the student.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				<a href=""><button type="button" class="btn btn-primary">Save</button></a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="updateStage" tabindex="-1" role="dialog" aria-labelledby="updateStage" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<form action="{% url 'update_inquiry_stage' id=inquiry_data.id %}" method="POST">
+				{% csrf_token %}
+				<div class="modal-header">
+					<h5 class="modal-title" id="updateStage">Update Stage</h5>
+                    
+				</div>
+				<div class="modal-body">
+					<div class="col-md-12 mb-3">
+						<div class="row">
+                            <label for="">Stage</label>
+                            {% for stage in stage %}
+                            <div class="col-4 mt-2">
+                                <label for="">{{stage.stage}}</label>
+                                <input type="radio" class="form-check-input lead" id="customCheck1" name="stage" value='{{stage.stage}}' {% if stage.stage == student.stage %}checked{% endif %}>
+                            </div>
+                            {% endfor %}
+                            
+                        </div>
+                    </div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Save</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="addNote" tabindex="-1" role="dialog" aria-labelledby="addNote" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<form action="{% url 'add_inquiry_note' id=inquiry_data.id %}" method="POST">
+				{% csrf_token %}
+				<div class="modal-header">
+					<h5 class="modal-title" id="addNote">Add Note</h5>
+                    
+				</div>
+				<div class="modal-body">
+					<div class="col-md-12 mb-3">
+						<div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="">Note Title</label>
+                                <input type="text" class="form-control"  placeholder="Initial" name='note_title'>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label for="">Note Description</label>
+                                <textarea class="form-control" rows="6" placeholder="Remarks" name="note" autocomplete="off"></textarea>
+                            </div>
+                            
+                        </div>
+                    </div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Save</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="addFile" tabindex="-1" role="dialog" aria-labelledby="addFile" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<form action="" method="POST" enctype="multipart/form-data">
+				{% csrf_token %}
+				<div class="modal-header">
+					<h5 class="modal-title" id="addFile">Add File</h5>
+                    
+				</div>
+				<div class="modal-body">
+					<div class="col-md-12 mb-3">
+						<div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="">File Title</label>
+                                <input type="text" class="form-control"  placeholder="Document" name='title'>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label for="">File</label>
+                                <input type="file" class="form-control"  placeholder="Initial" name='file'>
+                            </div>
+                            
+                        </div>
+                    </div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Save</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% include 'footer.html' %}

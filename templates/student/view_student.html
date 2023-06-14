@@ -31,6 +31,10 @@
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#addNote">Add Note</a></li>
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#updateStage">Update Stage</a></li>
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#closeStudent">Close Student</a></li>
+                                                <li>
+                                                    <hr class="dropdown-divider">
+                                                </li>
+                                                <li><a class="dropdown-item" href="{% url 'edit_student' id=student.id %}">Edit Student</a></li>
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteStudent">Delete Student</a></li>
                                             </ul>
                                         </div>

@@ -1,0 +1,61 @@
+{% include 'header.html' %}
+<div class="app-content">
+    <div class="content-wrapper">
+        <div class="example-container">
+            <div class="example-content bg-light">
+                <div class="page-description d-flex align-items-center">
+                    <div class="page-description-content flex-grow-1">
+                        <h1>Inquiries</h1>
+                        <span>Manage your inquiries</span>
+                    </div>
+                    <div class="page-description-actions">
+                        
+                        
+                        <a href="{% url 'add_inquiry' %}" class="btn btn-primary"><i class="material-icons">add</i>Add</a>
+                        
+                    </div>
+                </div>
+                
+                <!-- add other contents  -->
+				<div class="row">
+					<table id="datable_1" class="table nowrap w-100 mb-5">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Contact Number</th>
+								<th>Email</th>
+								<th>Address</th>
+								<th>Purpose </th>
+								<th>Source </th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for inquiry in active_inquiries %}
+							<tr>
+								<td>{{inquiry.first_name}} {{inquiry.last_name}}</td>
+								<td>{{inquiry.contact}}</td>
+								<td>{{inquiry.email}}</td>
+								<td>{{inquiry.address}}</td>
+								<td>{{inquiry.purpose}}</td>
+								<td>{{inquiry.source}}</td>
+								<td>
+									<div class="d-flex align-items-center">
+										<div class="d-flex">
+											{% if 'read_inquiry' in permissions %}
+											<a href="{% url 'view_inquiry' id=inquiry.id %}" class="btn btn-primary"><i class="material-icons">visibility</i></a>
+											{% endif %}
+										</div>
+									</div>
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'footer.html' %}

@@ -53,6 +53,13 @@ class Permission(models.Model):
     delete_student = models.BooleanField(default=0)
     manage_student = models.BooleanField(default=0)
     
+    
+    create_inquiry = models.BooleanField(default=0)
+    read_inquiry = models.BooleanField(default=0)
+    update_inquiry = models.BooleanField(default=0)
+    delete_inquiry = models.BooleanField(default=0)
+    manage_inquiry = models.BooleanField(default=0)
+    
     def __str__(self):
         return self.role.role
     

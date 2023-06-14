@@ -198,6 +198,39 @@
                         </td>
                     </tr>
                     <tr>
+                        <th scope="row">Inquiry</th>
+                        <td>{% if role_data.create_inquiry == True %}
+                            <span class="badge badge-primary  badge-outline"><i class="material-icons">check_circle</i></span>
+                            {% else %}
+                            <span class="badge badge-danger badge-outline"><i class="material-icons">cancel</i></span>
+                            {% endif %}
+                        </td>
+                        <td>{% if role_data.read_inquiry == True %}
+                            <span class="badge badge-primary  badge-outline"><i class="material-icons">check_circle</i></span>
+                            {% else %}
+                            <span class="badge badge-danger badge-outline"><i class="material-icons">cancel</i></span>
+                            {% endif %}
+                        </td>
+                        <td>{% if role_data.update_inquiry == True %}
+                            <span class="badge badge-primary  badge-outline"><i class="material-icons">check_circle</i></span>
+                            {% else %}
+                            <span class="badge badge-danger badge-outline"><i class="material-icons">cancel</i></span>
+                            {% endif %}
+                        </td>
+                        <td>{% if role_data.delete_inquiry == True %}
+                            <span class="badge badge-primary  badge-outline"><i class="material-icons">check_circle</i></span>
+                            {% else %}
+                            <span class="badge badge-danger badge-outline"><i class="material-icons">cancel</i></span>
+                            {% endif %}
+                        </td>
+                        <td>{% if role_data.manage_inquiry == True %}
+                            <span class="badge badge-primary  badge-outline"><i class="material-icons">check_circle</i></span>
+                            {% else %}
+                            <span class="badge badge-danger badge-outline"><i class="material-icons">cancel</i></span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
                         <th scope="row">Company</th>
                         <td>-</td>
                         <td>-</td>

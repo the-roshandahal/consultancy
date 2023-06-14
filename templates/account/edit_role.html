@@ -137,6 +137,24 @@
                                 </td>
                             </tr>
                             <tr>
+                                <th scope="row">Inquiry</th>
+                                <td>
+                                    <input type="checkbox" class="form-check-input" id="customCheck1" {% if role_data.create_inquiry == True %}checked{% endif %} name="create_inquiry" value=True>
+                                </td>
+                                <td>
+                                    <input type="checkbox" class="form-check-input" id="customCheck1" {% if role_data.read_inquiry == True %}checked{% endif %} name="read_inquiry" value=True>
+                                </td>
+                                <td>
+                                    <input type="checkbox" class="form-check-input" id="customCheck1" {% if role_data.update_inquiry == True %}checked{% endif %} name="update_inquiry" value=True>
+                                </td>
+                                <td>
+                                    <input type="checkbox" class="form-check-input" id="customCheck1" {% if role_data.delete_inquiry == True %}checked{% endif %} name="delete_inquiry" value=True>
+                                </td>
+                                <td>
+                                    <input type="checkbox" class="form-check-input" id="customCheck1" {% if role_data.manage_inquiry == True %}checked{% endif %} name="manage_inquiry" value=True>
+                                </td>
+                            </tr>
+                            <tr>
                                 <th scope="row">Company</th>
                                 <td>-</td>
                                 <td>-</td>

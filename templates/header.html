@@ -61,6 +61,18 @@
                         Features
                     </li>
                     <li>
+                        <a href=""><i class="material-icons-two-tone">live_help</i>Inquiry<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a href="{% url 'inquiry' %}">Inquiries</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'inactive_inquiry' %}">Inactive Inquiries</a>
+                            </li>
+                            
+                        </ul>
+                    </li>
+                    {% comment %} <li>
                         <a href=""><i class="material-icons-two-tone">add_link</i>Crm system<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                         <ul class="sub-menu">
                             <li>
@@ -68,7 +80,7 @@
                             </li>
                             
                         </ul>
-                    </li>
+                    </li> {% endcomment %}
                     <li>
                         <a href=""><i class="material-icons-two-tone">person_add</i>Hrm system<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                         <ul class="sub-menu">
@@ -79,16 +91,10 @@
                                 <a href="{% url 'manage_attendance' %}">Employee attendance</a>
                             </li>
                             <li>
-                                <a href="{}">Leave requests</a>
+                                <a href="#">Leave requests</a>
                             </li>
                             <li>
-                                <a href="{}">Employee log report</a>
-                            </li>
-                            <li>
-                                <a href="{}">Device attendance</a>
-                            </li>
-                            <li>
-                                <a href="">Payroll</a>
+                                <a href="#">Payroll</a>
                             </li>
                            
                             

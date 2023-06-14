@@ -1,0 +1,113 @@
+{% include 'header.html' %}
+<div class="app-content">
+    <div class="content-wrapper">
+        <div class="example-container">
+            <div class="example-content bg-light">
+                <div class="page-description d-flex align-items-center">
+                    <div class="page-description-content flex-grow-1">
+                        <h1>Add Student</h1>
+                    </div>
+                </div>
+                
+                <!-- add other contents  -->
+                <form action="{% url 'add_inquiry' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="row mt-3">
+                        <div class="col-12 col-md-6">
+                            <p>First Name</p>
+                            <div class="input-group">
+                                <input name="first_name" type="text" class="form-control" placeholder="First Name" aria-label="First Name" aria-describedby="basic-addon1" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <p>Last Name</p>
+                            <div class="input-group">
+                                <input name="last_name" type="text" class="form-control" placeholder="Last Name" aria-label="Last Name" aria-describedby="basic-addon1" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12 col-md-6">
+                            <p>Desired Consultation Date</p>
+                            <div class="input-group">
+                                <input class="form-control flatpickr2" type="text" placeholder="Select Date.." name="consultation_date">
+                                <script>
+                                    $(".flatpickr2").flatpickr({
+                                        enableTime: true,
+                                        dateFormat: "Y-m-d H:i",
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12 col-md-6">
+                            <p>Address</p>
+                            <div class="input-group">
+                                <input name="address" type="text" class="form-control" placeholder="Address" aria-label="Address" aria-describedby="basic-addon1" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12 col-md-6">
+                            <p>Contact Number</p>
+                            <div class="input-group">
+                                <input name="contact" type="text" class="form-control" placeholder="Contact Number" aria-label="Contact Number" aria-describedby="basic-addon1" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <p>Inquiry Purpose</p>
+                            <select class="js-states form-control" tabindex="-1" style="display: none; width: 100%" name="purpose">
+                                <optgroup label="Purpose">
+                                    {% for purpose in purpose %}
+                                    <option value="{{purpose.purpose}}">{{purpose.purpose}}</option>
+                                    {% endfor %}
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12 col-md-6">
+                            <p>Education Qualification</p>
+                            <div class="input-group">
+                                <input name="education_qualification" type="text" class="form-control" placeholder="Education Qualification" aria-label="Education Qualification" aria-describedby="basic-addon1">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            
+                            <p>Email</p>
+                            <div class="input-group">
+                                <input name="email" type="text" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1" required>
+                            </div>
+                        </div>
+
+
+
+
+
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-12 col-md-6">
+                            <p>Remarks</p>
+                            <div class="input-group">
+                                <textarea class="form-control" rows="6" placeholder="Remarks" name="description" autocomplete="off"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+
+                    
+                    <div class="row mt-5">
+                        <div class="col-12 col-md-6">
+                            <div class="input-group">
+                                <button class="btn btn-primary" type="submit">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>       
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
