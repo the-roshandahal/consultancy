@@ -33,6 +33,7 @@ class Inquiry(models.Model):
 
     consultation_date = models.DateTimeField(blank=True, null=True)
     assigned = models.ForeignKey(Employee,on_delete=models.SET_NULL,null=True,blank=True)
+
     is_verified = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)

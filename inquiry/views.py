@@ -226,7 +226,7 @@ def update_inquiry_stage(request,id):
 
 
 def delete_inquiry(request,id):
-    if 'manage_inquiry' in custom_data_views(request):
+    if 'delete_inquiry' in custom_data_views(request):
         inquiry = Inquiry.objects.get(id=id)
         inquiry.delete()
         return redirect('inquiry')
@@ -278,3 +278,13 @@ def inquiry_setup(request):
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')
+    
+
+
+
+def external_inquiry(request):
+    purpose = Purpose.objects.all()
+    context = {
+        'purpose':purpose
+    }
+    return render(request,'inquiry/external_inquiry.html',context)
