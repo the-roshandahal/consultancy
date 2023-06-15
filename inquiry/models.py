@@ -38,7 +38,7 @@ class Inquiry(models.Model):
     contact = models.CharField(max_length=255)
     temporary_address = models.CharField(max_length=255)
     permanent_address=models.CharField(max_length=255)
-    purpose = models.ForeignKey(Purpose,on_delete=models.CASCADE)
+    # purpose = models.ForeignKey(Purpose,on_delete=models.CASCADE)
 
     
     institution = models.CharField(max_length=100,default=True)
