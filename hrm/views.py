@@ -506,3 +506,9 @@ def manage_attendance(request):
             'attendance_object':attendance_object,
         }
         return render(request, 'hrm/attendance.html',context)
+
+
+def emplo(request):
+   return render(request, 'hrm/dashboard.html')
+
+

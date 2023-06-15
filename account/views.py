@@ -27,6 +27,11 @@ def login(request):
                 return redirect('home')
                 # return redirect("admin:index")
 
+            if user is not None and user.is_employee:
+                auth.login(request, user)
+                messages.info(request, "Logged in as employee successfully.")
+                return redirect('employee_dashboard')
+
             if user is not None:
                 auth.login(request, user)
                 messages.info(request, "Logged in successfully.")
