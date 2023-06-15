@@ -16,7 +16,66 @@ def inquiry(request):
         messages.info(request, "Unauthorized access.")
         return redirect('home')
     
+def add_inquiry(request):
+    if 'create_inquiry' in custom_data_views(request):
+        if request.method == "POST":
+            first_name = request.POST["first_name"]
+            last_name=request.POST["last_name"]
+            dob=request.POST["dob"]
+            email = request.POST["email"]
+            guardian_name = request.POST["guardian_name"]
+            marital_status = request.POST["marital_status"]
+            contact = request.POST["contact"]
+            temporary_address = request.POST["temporary_address"]
+            permanent_address = request.POST["permanent_address"]
+            purpose = request.POST["purpose"]
+            date=request.POST["consultation_date"]
+            remarks=request.POST["remarks"]
+            
+            
+            institution = request.POST["instution1"]
+            passed_year = request.POST["passed_year1"]
+            percentage = request.POST["percentage1"]
+            other = request.POST["other"]
 
+              
+            course = request.POST["course"]
+            college = request.POST["college"]
+            country = request.POST["country"]
+            city =request.POST["city"]
+            intake = request.POST["intake"]
+            applied_before = request.POST["applied_before"]
+            applied_country = request.POST["country"]
+            applied_date = request.POST["date"]
+          
+
+            assigned_user = request.POST['assigned_user']
+            assigned = Employee.objects.get(id=assigned_user)
+            
+            inquiry = Inquiry.objects.create(first_name=first_name,last_name=last_name, dob=dob, temporary_address=temporary_address,permanent_address=permanent_address,contact=contact,email=email,guardian_name=guardian_name,marital_status=marital_status,purpose=purpose,date=date,remarks=remarks,course=course,college=college,country=country,city=city,intake=intake,applied_before=applied_before,applied_date=applied_date,applied_country=applied_country,assigned=assigned,
+                                             other=other, institution=institution, passed_year=passed_year,percentage=percentage,is_taken=is_taken)
+            
+            inquiry.save()
+            user = User.objects.get(username=request.user)
+            changed_by = user.username
+            activity = 'created inquiry'
+            InquiryLogs.objects.create(inquiry=inquiry,changed_by=changed_by,activity=activity)
+            return redirect('inquiry')
+          
+            
+        else:
+            inquiry=Inquiry.objects.all()
+            user = Employee.objects.all()
+            context = {
+                'inquiry':inquiry,
+                'user':user,
+        
+            }
+            return render(request,'inquiry/add_inquiry.html',context)
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
+    
 def active_inquiries(request):
     if 'read_inquiry' in custom_data_views(request):
         active_inquiries = Inquiry.objects.filter(is_active = True, is_verified= True).order_by('-created')
@@ -76,46 +135,6 @@ def view_inquiry(request,id):
             'stage':stage,
         }
         return render(request,'inquiry/view_inquiry.html',context)
-    else:
-        messages.info(request, "Unauthorized access.")
-        return redirect('home')
-
-def add_inquiry(request):
-    if 'create_inquiry' in custom_data_views(request):
-        if request.method == "POST":
-            first_name = request.POST['first_name']
-            last_name = request.POST['last_name']
-            email = request.POST['email']
-            contact = request.POST['contact']
-            address = request.POST['address']
-            purpose = request.POST['purpose']
-            assigned_user = request.POST['assigned_user']
-            assigned = Employee.objects.get(id=assigned_user)
-            education_qualification = request.POST['education_qualification']
-            description = request.POST.get('description', '')
-            consultation_date = request.POST.get('consultation_date', '')
-            stage = "initial"
-            source = "reception-inquiry"
-            inquiry = Inquiry.objects.create(first_name =first_name, last_name =last_name, email =email, contact=contact,
-                                         address =address, purpose =purpose, stage =stage, education_qualification=education_qualification,
-                                         description =description, consultation_date =consultation_date,source=source,assigned=assigned)
-            inquiry.save()
-            user = User.objects.get(username=request.user)
-            changed_by = user.username
-            activity = 'created inquiry'
-            InquiryLogs.objects.create(inquiry=inquiry,changed_by=changed_by,activity=activity)
-            return redirect('inquiry')
-        
-        else:
-            stage = InquiryStage.objects.all()
-            purpose = Purpose.objects.all()
-            user = Employee.objects.all()
-            context = {
-                'stage':stage,
-                'purpose':purpose,
-                'user':user,
-            }
-        return render (request,'inquiry/add_inquiry.html',context)
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')
@@ -226,7 +245,7 @@ def update_inquiry_stage(request,id):
 
 
 def delete_inquiry(request,id):
-    if 'manage_inquiry' in custom_data_views(request):
+    if 'delete_inquiry' in custom_data_views(request):
         inquiry = Inquiry.objects.get(id=id)
         inquiry.delete()
         return redirect('inquiry')
@@ -278,3 +297,13 @@ def inquiry_setup(request):
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')
+    
+
+
+
+def external_inquiry(request):
+    purpose = Purpose.objects.all()
+    context = {
+        'purpose':purpose
+    }
+    return render(request,'inquiry/external_inquiry.html',context)

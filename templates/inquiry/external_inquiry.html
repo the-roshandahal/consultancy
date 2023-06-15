@@ -1,0 +1,373 @@
+{% include 'nav_links.html' %}
+<div class="container">
+    <div class="p-5 card">
+        <div class="card widget widget-list">
+            <div class="card-header">
+                <h5 class="card-title">Inquiry Form<span class="badge badge-info badge-style-light">externam</span></h5>
+            </div>
+            <div class="card-body">
+                <ul class="widget-list-content list-unstyled">
+                    <li class="widget-list-item widget-list-item-blog-post">
+                        <span class="widget-list-item-icon widget-list-item-icon-large">
+                            <div class="widget-list-item-icon-image" style="background: url('{{company.company_logo.url}}');"></div>
+                        </span>
+                        <span class="widget-list-item-description">
+                            <a href="#" class="widget-list-item-description-title">
+                                {{company.company_name}}
+                            </a>
+                            <span class="widget-list-item-description-content">
+                                {{company.company_contact_number}}
+                            </span>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <form action="{% url 'add_inquiry' %}" method="POST">
+            {% csrf_token %}
+            <div class="row mt-3">
+                <h2>Personal Details</h2>
+                <div class="col-12 col-md-6">
+                    <p>First Name</p>
+                    <div class="input-group">
+                        <input name="first_name" type="text" class="form-control" placeholder="First Name" aria-label="First Name" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <p>Last Name</p>
+                    <div class="input-group">
+                        <input name="last_name" type="text" class="form-control" placeholder="Last Name" aria-label="Last Name" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 col-md-6">
+                    <p>Guardian Name</p>
+                    <div class="input-group">
+                        <input name="first_name" type="text" class="form-control" placeholder="Guardian Name" aria-label="Guardian Name" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <p>Date of Birth</p>
+                    <div class="input-group">
+                        <input name="dob" type="text" class="form-control" placeholder="Date of Birth" aria-label="Date of Birth" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 col-md-6">
+                    <p>Gender</p>
+                    <select class="js-states form-control" tabindex="-1" style="display: none; width: 100%" name="gender">
+                        <optgroup label="Purpose">
+                            <option value="male">male</option>
+                            <option value="female">female</option>
+                            <option value="others">others</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="col-12 col-md-6">
+                    <p>Marital Status</p>
+                    <select class="js-states form-control" tabindex="-1" style="display: none; width: 100%" name="marital_status">
+                        <optgroup label="Marital Status">
+                            <option value="married">married</option>
+                            <option value="unmarried">unmarried</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 col-md-6">
+                    <p>Parmanent Address</p>
+                    <div class="input-group">
+                        <input name="parmanent_address" type="text" class="form-control" placeholder="Parmanent Address" aria-label="Parmanent Address" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <p>Temporary Address</p>
+                    <div class="input-group">
+                        <input name="temporary_address" type="text" class="form-control" placeholder="Temporary Address" aria-label="Temporary Address" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 col-md-6">
+                    <p>Contact Number</p>
+                    <div class="input-group">
+                        <input name="contact" type="text" class="form-control" placeholder="Contact Number" aria-label="Contact Number" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <p>Email</p>
+                    <div class="input-group">
+                        <input name="email" type="text" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="row mt-5">
+                <h2>Education Details</h2>
+                <h5>SEE/SLC</h5>
+                <div class="col-6">
+                    <p>Institution</p>
+                    <div class="input-group">
+                        <input name="institution1" type="text" class="form-control" placeholder="Institution" aria-label="Institution" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <p>Percentage</p>
+                    <div class="input-group">
+                        <input name="percentage1" type="text" class="form-control" placeholder="Percentage" aria-label="Percentage" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <p>Passed Year</p>
+                    <div class="input-group">
+                        <input name="passed_year1" type="text" class="form-control" placeholder="Passed Year" aria-label="Passed Year" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <h5>High School</h5>
+                <div class="col-6">
+                    <p>Institution</p>
+                    <div class="input-group">
+                        <input name="institution2" type="text" class="form-control" placeholder="Institution" aria-label="Institution" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <p>Percentage</p>
+                    <div class="input-group">
+                        <input name="percentage2" type="text" class="form-control" placeholder="Percentage" aria-label="Percentage" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <p>Passed Year</p>
+                    <div class="input-group">
+                        <input name="passed_year2" type="text" class="form-control" placeholder="Passed Year" aria-label="Passed Year" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <h5>Bachelor</h5>
+                <div class="col-6">
+                    <p>Institution</p>
+                    <div class="input-group">
+                        <input name="institution3" type="text" class="form-control" placeholder="Institution" aria-label="Institution" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <p>Percentage</p>
+                    <div class="input-group">
+                        <input name="percentage3" type="text" class="form-control" placeholder="Percentage" aria-label="Percentage" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <p>Passed Year</p>
+                    <div class="input-group">
+                        <input name="passed_year3" type="text" class="form-control" placeholder="Passed Year" aria-label="Passed Year" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-3">
+                <h5>Master</h5>
+                <div class="col-6">
+                    <p>Institution</p>
+                    <div class="input-group">
+                        <input name="institution4" type="text" class="form-control" placeholder="Institution" aria-label="Institution" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <p>Percentage</p>
+                    <div class="input-group">
+                        <input name="percentage4" type="text" class="form-control" placeholder="Percentage" aria-label="Percentage" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <p>Passed Year</p>
+                    <div class="input-group">
+                        <input name="passed_year4" type="text" class="form-control" placeholder="Passed Year" aria-label="Passed Year" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-3">
+                <div class="col-6">
+                    <p>Have you taken?</p>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="IELTS">
+                        <label class="form-check-label" for="inlineCheckbox1">IELTS</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="PTE">
+                        <label class="form-check-label" for="inlineCheckbox2">PTE</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="TOFEL">
+                        <label class="form-check-label" for="inlineCheckbox2">TOFEL</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="SAT">
+                        <label class="form-check-label" for="inlineCheckbox2">SAT</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="NAT">
+                        <label class="form-check-label" for="inlineCheckbox2">NAT</label>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <p>Others</p>
+                    <div class="input-group">
+                        <input name="other" type="text" class="form-control" placeholder="Others" aria-label="Others" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <h2>Course Details</h2>
+                <h5>I wish to apply for</h5>
+                <div class="col-2">
+                    <p>Country</p>
+                    <div class="input-group">
+                        <input name="country" type="text" class="form-control" placeholder="Country" aria-label="Country" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <p>City</p>
+                    <div class="input-group">
+                        <input name="city" type="text" class="form-control" placeholder="City" aria-label="City" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <p>Course</p>
+                    <div class="input-group">
+                        <input name="course" type="text" class="form-control" placeholder="Course" aria-label="Course" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <p>College/University</p>
+                    <div class="input-group">
+                        <input name="college" type="text" class="form-control" placeholder="College/University" aria-label="College/University" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <p>Intake</p>
+                    <div class="input-group">
+                        <input name="intake" type="text" class="form-control" placeholder="Intake" aria-label="Intake" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+            </div>
+            
+            
+            
+            <div class="row mt-5">
+                <h5>Have you ever applied for abroad study?</h5>
+                <div class="col-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="applied_before" value="yes" id="flexRadioDefault1">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Yes
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="applied_before" value="no" id="flexRadioDefault2" checked>
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            No
+                        </label>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <p>Country</p>
+                    <div class="input-group">
+                        <input name="country" type="text" class="form-control" placeholder="Country" aria-label="Country" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <p>Date</p>
+                    <div class="input-group">
+                        <input name="date" type="text" class="form-control" placeholder="Date" aria-label="Date" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <h5>How did you know about us?</h5>
+                <div class="col-12">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Facebook">
+                        <label class="form-check-label" for="inlineCheckbox2">Facebook</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Instagram">
+                        <label class="form-check-label" for="inlineCheckbox2">Instagram</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Seminar">
+                        <label class="form-check-label" for="inlineCheckbox2">Seminar</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Newspaper">
+                        <label class="form-check-label" for="inlineCheckbox2">newspaper</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Friends/Relatives">
+                        <label class="form-check-label" for="inlineCheckbox2">Friends/Relatives</label>
+                    </div>
+                </div>
+            </div>
+            
+
+
+
+
+
+
+
+
+
+
+
+            <div class="row mt-5">
+                <h5>Consultation Details</h5>
+                <div class="col-12 col-md-6">
+                    <p>Desired Consultation Date</p>
+                    <div class="input-group">
+                        <input class="form-control flatpickr2" type="text" placeholder="Select Date.." name="consultation_date" Value="today"required>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <p>Inquiry Purpose</p>
+                    <select class="js-states form-control" tabindex="-1" style="display: none; width: 100%" name="purpose">
+                        <optgroup label="Purpose">
+                            {% for purpose in purpose %}
+                            <option value="{{purpose.purpose}}">{{purpose.purpose}}</option>
+                            {% endfor %}
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 col-md-12">
+                    <p>Remarks</p>
+                    <div class="input-group">
+                        <textarea class="form-control" rows="6" placeholder="Remarks" name="description" autocomplete="off"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            
+
+            
+            <div class="row mt-5">
+                <div class="col-12 col-md-6">
+                    <div class="input-group">
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </form> 
+    </div>
+</div>
+{% include 'footer.html' %}

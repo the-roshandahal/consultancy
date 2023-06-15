@@ -23,4 +23,5 @@ urlpatterns = [
     path("delete_inquiry/<int:id>", views.delete_inquiry, name="delete_inquiry"),
     path("close_inquiry/<int:id>", views.close_inquiry, name="close_inquiry"),
     path("reopen_inquiry/<int:id>", views.reopen_inquiry, name="reopen_inquiry"),
+    path("external_inquiry", views.external_inquiry, name="external_inquiry"),
 ]

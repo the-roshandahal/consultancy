@@ -17,22 +17,49 @@ class InquiryStage(models.Model):
     class Meta:
         verbose_name_plural = "02.  Stage"
 
+
+class EducationalDetails(models.Model):
+    
+
+    def __str__(self):
+        return f"Educational Details: {self.institution}"
+    
+    class Meta:
+        verbose_name_plural = "03.  Educational Details"
+
+
+
 class Inquiry(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
+    guardian_name=models.CharField(max_length=255)
+    marital_status=models.CharField(max_length=255,default="Single")
     email = models.CharField(max_length=255)
     contact = models.CharField(max_length=255)
-    address = models.CharField(max_length=255)
+    temporary_address = models.CharField(max_length=255)
+    permanent_address=models.CharField(max_length=255)
+    purpose = models.ForeignKey(Purpose,on_delete=models.CASCADE)
 
-    purpose = models.CharField(max_length=255)
-    stage = models.CharField(max_length=255)
-    source = models.CharField(max_length=255)
-    education_qualification = models.CharField(max_length=255)
-    description = models.TextField(null=True, blank=True)
-    closed_reason = models.TextField(null=True, blank=True)
-
+    
+    institution = models.CharField(max_length=100,default=True)
+    passed_year = models.PositiveIntegerField(default=True)
+    percentage = models.DecimalField(max_digits=5, decimal_places=2,default=True)
+ 
+    
+    course = models.CharField(max_length=100,default=True)
+    college = models.CharField(max_length=100,default=True)
+    country = models.CharField(max_length=100,default=True)
+    city = models.CharField(max_length=100,default=True)
+    intake = models.CharField(max_length=100,default=True)
+    applied_before = models.BooleanField(default=True)
+    applied_country = models.CharField(max_length=100, blank=True, null=True)
+    applied_date = models.DateField(blank=True, null=True)
+   
+    
     consultation_date = models.DateTimeField(blank=True, null=True)
+    remarks= models.CharField(max_length=255,null=True,blank=True)
     assigned = models.ForeignKey(Employee,on_delete=models.SET_NULL,null=True,blank=True)
+
     is_verified = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
