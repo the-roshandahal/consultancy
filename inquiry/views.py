@@ -28,7 +28,7 @@ def add_inquiry(request):
             contact = request.POST["contact"]
             temporary_address = request.POST["temporary_address"]
             permanent_address = request.POST["permanent_address"]
-            purpose = request.POST["purpose"]
+            # purpose = request.POST["purpose"]
             date=request.POST["consultation_date"]
             remarks=request.POST["remarks"]
             
