@@ -44,7 +44,7 @@ urlpatterns = [
     path("delete_month/<int:id>", views.delete_month, name="delete_month"),
     path("edit_month/<int:id>", views.edit_month, name="edit_month"),
 
-    path("emplo/",views.emplo,name="emplo"),
+    path("employee_dashboard/",views.employee_dashboard,name="employee_dashboard"),
 
 
 ]

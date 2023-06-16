@@ -17,33 +17,30 @@ class InquiryStage(models.Model):
     class Meta:
         verbose_name_plural = "02.  Stage"
 
-
-class EducationalDetails(models.Model):
-    
-
-    def __str__(self):
-        return f"Educational Details: {self.institution}"
-    
-    class Meta:
-        verbose_name_plural = "03.  Educational Details"
-
-
-
 class Inquiry(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    guardian_name=models.CharField(max_length=255)
+    dob = models.DateField(auto_now=True)
+    guardian_name = models.CharField(max_length=255)
     marital_status=models.CharField(max_length=255,default="Single")
     email = models.CharField(max_length=255)
     contact = models.CharField(max_length=255)
     temporary_address = models.CharField(max_length=255)
-    permanent_address=models.CharField(max_length=255)
-    # purpose = models.ForeignKey(Purpose,on_delete=models.CASCADE)
-
+    permanent_address = models.CharField(max_length=255)
+    purpose = models.ForeignKey(Purpose,on_delete=models.CASCADE,null=True,blank=True)
     
-    institution = models.CharField(max_length=100,default=True)
-    passed_year = models.PositiveIntegerField(default=True)
-    percentage = models.DecimalField(max_digits=5, decimal_places=2,default=True)
+    
+    institution1 = models.CharField(max_length=100,null=True,blank=True)
+    passed_year1 = models.PositiveIntegerField(null=True,blank=True)
+    percentage1 = models.DecimalField(max_digits=5, decimal_places=2,null=True,blank=True)
+
+    institution2 = models.CharField(max_length=100,null=True,blank=True)
+    passed_year2 = models.PositiveIntegerField(null=True,blank=True)
+    percentage2 = models.DecimalField(max_digits=5, decimal_places=2,null=True,blank=True)
+
+    institution3 = models.CharField(max_length=100,null=True,blank=True)
+    passed_year3 = models.PositiveIntegerField(null=True,blank=True)
+    percentage3 = models.DecimalField(max_digits=5, decimal_places=2,null=True,blank=True)
  
     
     course = models.CharField(max_length=100,default=True)
@@ -51,12 +48,11 @@ class Inquiry(models.Model):
     country = models.CharField(max_length=100,default=True)
     city = models.CharField(max_length=100,default=True)
     intake = models.CharField(max_length=100,default=True)
-    applied_before = models.BooleanField(default=True)
     applied_country = models.CharField(max_length=100, blank=True, null=True)
     applied_date = models.DateField(blank=True, null=True)
-   
+    other=models.CharField(max_length=255,blank=True, null=True)
     
-    consultation_date = models.DateTimeField(blank=True, null=True)
+    date = models.DateTimeField(blank=True, null=True)
     remarks= models.CharField(max_length=255,null=True,blank=True)
     assigned = models.ForeignKey(Employee,on_delete=models.SET_NULL,null=True,blank=True)
 

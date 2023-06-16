@@ -292,11 +292,13 @@ def delete_designation(request,id):
         messages.info(request, "Unauthorized access.")
         return redirect('home')
 
-
-
-
-
-
+def employee_dashboard(request):
+    employees = Employee.objects.all()
+    context = {
+        'employees':employees,
+    }
+    return render (request,'hrm/dashboard.html',context)
+    
 
 def employees(request):
     if 'read_hrm' in custom_data_views(request):
@@ -508,7 +510,5 @@ def manage_attendance(request):
         return render(request, 'hrm/attendance.html',context)
 
 
-def emplo(request):
-   return render(request, 'hrm/dashboard.html')
 
 

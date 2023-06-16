@@ -16,65 +16,7 @@ def inquiry(request):
         messages.info(request, "Unauthorized access.")
         return redirect('home')
     
-def add_inquiry(request):
-    if 'create_inquiry' in custom_data_views(request):
-        if request.method == "POST":
-            first_name = request.POST["first_name"]
-            last_name=request.POST["last_name"]
-            dob=request.POST["dob"]
-            email = request.POST["email"]
-            guardian_name = request.POST["guardian_name"]
-            marital_status = request.POST["marital_status"]
-            contact = request.POST["contact"]
-            temporary_address = request.POST["temporary_address"]
-            permanent_address = request.POST["permanent_address"]
-            # purpose = request.POST["purpose"]
-            date=request.POST["consultation_date"]
-            remarks=request.POST["remarks"]
-            
-            
-            institution = request.POST["instution1"]
-            passed_year = request.POST["passed_year1"]
-            percentage = request.POST["percentage1"]
-            other = request.POST["other"]
 
-              
-            course = request.POST["course"]
-            college = request.POST["college"]
-            country = request.POST["country"]
-            city =request.POST["city"]
-            intake = request.POST["intake"]
-            applied_before = request.POST["applied_before"]
-            applied_country = request.POST["country"]
-            applied_date = request.POST["date"]
-          
-
-            assigned_user = request.POST['assigned_user']
-            assigned = Employee.objects.get(id=assigned_user)
-            
-            inquiry = Inquiry.objects.create(first_name=first_name,last_name=last_name, dob=dob, temporary_address=temporary_address,permanent_address=permanent_address,contact=contact,email=email,guardian_name=guardian_name,marital_status=marital_status,purpose=purpose,date=date,remarks=remarks,course=course,college=college,country=country,city=city,intake=intake,applied_before=applied_before,applied_date=applied_date,applied_country=applied_country,assigned=assigned,
-                                             other=other, institution=institution, passed_year=passed_year,percentage=percentage,is_taken=is_taken)
-            
-            inquiry.save()
-            user = User.objects.get(username=request.user)
-            changed_by = user.username
-            activity = 'created inquiry'
-            InquiryLogs.objects.create(inquiry=inquiry,changed_by=changed_by,activity=activity)
-            return redirect('inquiry')
-          
-            
-        else:
-            inquiry=Inquiry.objects.all()
-            user = Employee.objects.all()
-            context = {
-                'inquiry':inquiry,
-                'user':user,
-        
-            }
-            return render(request,'inquiry/add_inquiry.html',context)
-    else:
-        messages.info(request, "Unauthorized access.")
-        return redirect('home')
     
 def active_inquiries(request):
     if 'read_inquiry' in custom_data_views(request):
@@ -138,20 +80,125 @@ def view_inquiry(request,id):
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')
+    
+def add_inquiry(request):
+    if 'create_inquiry' in custom_data_views(request):
+        if request.method == "POST":
+            first_name = request.POST["first_name"]
+            last_name=request.POST["last_name"]
+            dob=request.POST["dob"]
+            email = request.POST["email"]
+            guardian_name = request.POST["guardian_name"]
+            marital_status = request.POST["marital_status"]
+            contact = request.POST["contact"]
+            temporary_address = request.POST["temporary_address"]
+            permanent_address = request.POST["permanent_address"]
+            date=request.POST["consultation_date"]
+            remarks=request.POST["remarks"]
+            
+            purpose=request.POST["purpose"]
+            purpose= Purpose.objects.get(id=purpose)
+            
+            
+            institution1 = request.POST["institution1"]
+            passed_year1 = request.POST["passed_year1"]
+            percentage1 = request.POST["percentage1"]
 
+            institution2 = request.POST["institution2"]
+            passed_year2 = request.POST["passed_year2"]
+            percentage2 = request.POST["percentage2"]
+
+            institution3 = request.POST["institution3"]
+            passed_year3 = request.POST["passed_year3"]
+            percentage3 = request.POST["percentage3"]
+
+            other = request.POST["other"]
+
+            course = request.POST["course"]
+            college = request.POST["college"]
+            country = request.POST["country"]
+            city =request.POST["city"]
+            intake = request.POST["intake"]
+            applied_country = request.POST["country"]
+            applied_date = request.POST["date"]
+          
+
+            assigned_user = request.POST['assigned_user']
+            assigned = Employee.objects.get(id=assigned_user)
+            
+            inquiry = Inquiry.objects.create(first_name=first_name,last_name=last_name, dob=dob, temporary_address=temporary_address,permanent_address=permanent_address,contact=contact,email=email,guardian_name=guardian_name,marital_status=marital_status,purpose=purpose,date=date,remarks=remarks,course=course,college=college,country=country,city=city,intake=intake,applied_date=applied_date,applied_country=applied_country,assigned=assigned,
+                                             other=other, institution1=institution1, passed_year1=passed_year1,percentage1=percentage1, institution2=institution2, passed_year2=passed_year2,percentage2=percentage2, institution3=institution3, passed_year3=passed_year3,percentage3=percentage3)
+            
+            inquiry.save()
+            user = User.objects.get(username=request.user)
+            changed_by = user.username
+            activity = 'created inquiry'
+            InquiryLogs.objects.create(inquiry=inquiry,changed_by=changed_by,activity=activity)
+            return redirect('inquiry')
+          
+            
+        else:
+            inquiry=Inquiry.objects.all()
+            user = Employee.objects.all()
+            purpose=Purpose.objects.all()
+            context = {
+                'inquiry':inquiry,
+                'user':user,
+                'purpose':purpose,
+        
+            }
+            return render(request,'inquiry/add_inquiry.html',context)
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
 
 def edit_inquiry(request,id):
     from account.context_processors import custom_data_views
     if 'update_inquiry' in custom_data_views(request):
         if request.method == "POST":
-            first_name = request.POST['first_name']
-            last_name = request.POST['last_name']
-            email = request.POST['email']
-            contact = request.POST['contact']
-            address = request.POST['address']
-            purpose = request.POST['purpose']
-            education_qualification = request.POST['education_qualification']
-            description = request.POST.get('description', '')
+            first_name = request.POST["first_name"]
+            last_name=request.POST["last_name"]
+            dob=request.POST["dob"]
+            email = request.POST["email"]
+            guardian_name = request.POST["guardian_name"]
+            marital_status = request.POST["marital_status"]
+            contact = request.POST["contact"]
+            temporary_address = request.POST["temporary_address"]
+            permanent_address = request.POST["permanent_address"]
+            date=request.POST["consultation_date"]
+            remarks=request.POST["remarks"]
+            
+            purpose=request.POST["purpose"]
+            purposes= Purpose.objects.get(id=purpose)
+            
+            
+            institution1 = request.POST["institution1"]
+            passed_year1 = request.POST["passed_year1"]
+            percentage1 = request.POST["percentage1"]
+
+            institution2 = request.POST["institution2"]
+            passed_year2 = request.POST["passed_year2"]
+            percentage2 = request.POST["percentage2"]
+
+            institution3 = request.POST["institution3"]
+            passed_year3 = request.POST["passed_year3"]
+            percentage3 = request.POST["percentage3"]
+
+
+            other = request.POST["other"]
+             
+            course = request.POST["course"]
+            college = request.POST["college"]
+            country = request.POST["country"]
+            city =request.POST["city"]
+            intake = request.POST["intake"]
+            applied_country = request.POST["country"]
+            applied_date = request.POST["date"]
+          
+
+            assigned_user = request.POST['assigned_user']
+            assigned = Employee.objects.get(id=assigned_user)
+     
 
             inquiry = Inquiry.objects.get(id=id)
 
@@ -159,10 +206,36 @@ def edit_inquiry(request,id):
             inquiry.last_name=last_name
             inquiry.email=email
             inquiry.contact=contact
-            inquiry.address=address
-            inquiry.purpose=purpose
-            inquiry.education_qualification=education_qualification
-            inquiry.description=description
+            inquiry.temporary_address=temporary_address
+            inquiry.permanent_address=permanent_address
+            inquiry.purpose=purposes
+            inquiry.dob=dob
+            inquiry.guardian_name=guardian_name
+            inquiry.marital_status=marital_status
+            inquiry.remarks=remarks
+            inquiry.date=date
+            
+            inquiry.institution1 = institution1
+            inquiry.passed_year1 = passed_year1
+            inquiry.percentage1 = percentage1
+
+            inquiry.institution2 = institution2
+            inquiry.passed_year2 = passed_year2
+            inquiry.percentage2 = percentage2
+
+            inquiry.institution3 = institution3
+            inquiry.passed_year3 = passed_year3
+            inquiry.percentage3 = percentage3
+
+            inquiry.course = course
+            inquiry. college = college
+            inquiry.country = country
+            inquiry.city = city
+            inquiry.intake = intake
+            inquiry.applied_country = applied_country
+            inquiry.applied_date = applied_date 
+            inquiry.assigned=assigned
+            inquiry.other=other
             inquiry.save()
 
             user = User.objects.get(username=request.user)
@@ -173,10 +246,12 @@ def edit_inquiry(request,id):
         
         else:
            inquiry = Inquiry.objects.get(id=id)
+           user = Employee.objects.all()
            purpose = Purpose.objects.all()
            context = {
                 'inquiry':inquiry,
                 'purpose':purpose,
+                'user':user,
             }
         return render (request,'inquiry/edit_inquiry.html',context)
     else:

@@ -31,7 +31,7 @@
                         <div class="col-12 col-md-6">
                             <p>Guardian Name</p>
                             <div class="input-group">
-                                <input name="first_name" type="text" class="form-control" placeholder="Guardian Name" aria-label="Guardian Name" aria-describedby="basic-addon1" required>
+                                <input name="guardian_name" type="text" class="form-control" placeholder="Guardian Name" aria-label="Guardian Name" aria-describedby="basic-addon1" required>
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
@@ -66,7 +66,7 @@
                         <div class="col-12 col-md-6">
                             <p>Parmanent Address</p>
                             <div class="input-group">
-                                <input name="parmanent_address" type="text" class="form-control" placeholder="Parmanent Address" aria-label="Parmanent Address" aria-describedby="basic-addon1" required>
+                                <input name="permanent_address" type="text" class="form-control" placeholder="Parmanent Address" aria-label="Parmanent Address" aria-describedby="basic-addon1" required>
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
@@ -329,7 +329,7 @@
                             <select class="js-states form-control" tabindex="-1" style="display: none; width: 100%" name="purpose">
                                 <optgroup label="Purpose">
                                     {% for purpose in purpose %}
-                                    <option value="{{purpose.purpose}}">{{purpose.purpose}}</option>
+                                    <option value="{{purpose.id}}">{{purpose.purpose}}</option>
                                     {% endfor %}
                                 </optgroup>
                             </select>
@@ -349,7 +349,7 @@
                         <div class="col-12 col-md-6">
                             <p>Remarks</p>
                             <div class="input-group">
-                                <textarea class="form-control" rows="6" placeholder="Remarks" name="description" autocomplete="off"></textarea>
+                                <textarea class="form-control" rows="6" placeholder="Remarks" name="remarks" autocomplete="off"></textarea>
                             </div>
                         </div>
                     </div>
