@@ -78,6 +78,7 @@ class InquiryLogs(models.Model):
     class Meta:
         verbose_name_plural = "04. Inquiry Logs"
 
+
 class InquiryNote(models.Model):
     inquiry = models.ForeignKey(StudentInquiry,on_delete=models.CASCADE)
     note_title = models.CharField(max_length = 255)
