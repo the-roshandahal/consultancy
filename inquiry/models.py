@@ -1,13 +1,7 @@
 from django.db import models
 from hrm.models import *
 # Create your models here.
-class Purpose(models.Model):
-    purpose = models.CharField(max_length=255)
-    def __str__(self):
-        return self.purpose
-    
-    class Meta:
-        verbose_name_plural = "01. Inquiry Purpose"
+
 
 class InquiryStage(models.Model):
     stage = models.CharField(max_length=200)
@@ -27,7 +21,7 @@ class StudentInquiry(models.Model):
     contact = models.CharField(max_length=255)
     temporary_address = models.CharField(max_length=255)
     permanent_address = models.CharField(max_length=255)
-    purpose = models.ForeignKey(Purpose,on_delete=models.CASCADE,null=True,blank=True)
+    # purpose = models.ForeignKey(Purpose,on_delete=models.CASCADE,null=True,blank=True)
     
     
     institution1 = models.CharField(max_length=100,null=True,blank=True)

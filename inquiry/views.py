@@ -7,7 +7,7 @@ from account.context_processors import custom_data_views
 # Create your views here.
 def inquiry(request):
     if 'read_inquiry' in custom_data_views(request):
-        new_inquiries = Inquiry.objects.filter(is_active = True, is_verified = False).order_by('created')
+        new_inquiries = StudentInquiry.objects.filter(is_active = True, is_verified = False).order_by('created')
         context={
             'new_inquiries':new_inquiries,
         }
@@ -20,7 +20,7 @@ def inquiry(request):
     
 def active_inquiries(request):
     if 'read_inquiry' in custom_data_views(request):
-        active_inquiries = Inquiry.objects.filter(is_active = True, is_verified= True).order_by('-created')
+        active_inquiries = StudentInquiry.objects.filter(is_active = True, is_verified= True).order_by('-created')
         context={
                 'active_inquiries':active_inquiries,
         }
@@ -37,8 +37,8 @@ def my_inquiries(request):
         print(logged_in_user)
         try:
             employee = Employee.objects.get(user=logged_in_user)
-            my_inquiries = Inquiry.objects.filter(is_active = True, is_verified= True,assigned=employee).order_by('-created')
-            my_inactive_inquiries = Inquiry.objects.filter(is_active = False, is_verified= True,assigned=employee).order_by('-created')
+            my_inquiries = StudentInquiry.objects.filter(is_active = True, is_verified= True,assigned=employee).order_by('-created')
+            my_inactive_inquiries = StudentInquiry.objects.filter(is_active = False, is_verified= True,assigned=employee).order_by('-created')
         except:
             my_inquiries= None
             my_inactive_inquiries= None
@@ -55,7 +55,7 @@ def my_inquiries(request):
 
 def inactive_inquiry(request):
     if 'read_inquiry' in custom_data_views(request):
-        inactive_inquiries = Inquiry.objects.filter(is_active = False)
+        inactive_inquiries = StudentInquiry.objects.filter(is_active = False)
         context={
             'inactive_inquiries':inactive_inquiries
         }
@@ -66,9 +66,9 @@ def inactive_inquiry(request):
 
 def view_inquiry(request,id):
     if 'read_inquiry' in custom_data_views(request):
-        inquiry_data = Inquiry.objects.get(id=id)
+        inquiry_data = StudentInquiry.objects.get(id=id)
         logs = InquiryLogs.objects.filter(inquiry=id).order_by('-created')
-        notes = InquiryNotes.objects.filter(inquiry=id)
+        notes = InquiryNote.objects.filter(inquiry=id)
         stage = InquiryStage.objects.all()
         context={
             'inquiry_data':inquiry_data,
@@ -126,7 +126,7 @@ def add_inquiry(request):
             assigned_user = request.POST['assigned_user']
             assigned = Employee.objects.get(id=assigned_user)
             
-            inquiry = Inquiry.objects.create(first_name=first_name,last_name=last_name, dob=dob, temporary_address=temporary_address,permanent_address=permanent_address,contact=contact,email=email,guardian_name=guardian_name,marital_status=marital_status,purpose=purpose,date=date,remarks=remarks,course=course,college=college,country=country,city=city,intake=intake,applied_date=applied_date,applied_country=applied_country,assigned=assigned,
+            inquiry = StudentInquiry.objects.create(first_name=first_name,last_name=last_name, dob=dob, temporary_address=temporary_address,permanent_address=permanent_address,contact=contact,email=email,guardian_name=guardian_name,marital_status=marital_status,purpose=purpose,date=date,remarks=remarks,course=course,college=college,country=country,city=city,intake=intake,applied_date=applied_date,applied_country=applied_country,assigned=assigned,
                                              other=other, institution1=institution1, passed_year1=passed_year1,percentage1=percentage1, institution2=institution2, passed_year2=passed_year2,percentage2=percentage2, institution3=institution3, passed_year3=passed_year3,percentage3=percentage3)
             
             inquiry.save()
@@ -138,7 +138,7 @@ def add_inquiry(request):
           
             
         else:
-            inquiry=Inquiry.objects.all()
+            inquiry=StudentInquiry.objects.all()
             user = Employee.objects.all()
             purpose=Purpose.objects.all()
             context = {
@@ -200,7 +200,7 @@ def edit_inquiry(request,id):
             assigned = Employee.objects.get(id=assigned_user)
      
 
-            inquiry = Inquiry.objects.get(id=id)
+            inquiry = StudentInquiry.objects.get(id=id)
 
             inquiry.first_name=first_name
             inquiry.last_name=last_name
@@ -245,7 +245,7 @@ def edit_inquiry(request,id):
             return redirect('view_inquiry',id)
         
         else:
-           inquiry = Inquiry.objects.get(id=id)
+           inquiry = StudentInquiry.objects.get(id=id)
            user = Employee.objects.all()
            purpose = Purpose.objects.all()
            context = {
@@ -264,8 +264,8 @@ def add_inquiry_note(request,id):
         if request.method == "POST":
             note_title = request.POST['note_title']
             note = request.POST['note']
-            inquiry = Inquiry.objects.get(id=id)
-            InquiryNotes.objects.create(inquiry=inquiry,note=note,note_title=note_title)
+            inquiry = StudentInquiry.objects.get(id=id)
+            InquiryNote.objects.create(inquiry=inquiry,note=note,note_title=note_title)
 
             user = User.objects.get(username=request.user)
             changed_by = user.username
@@ -282,7 +282,7 @@ def add_consultation_date(request,id):
     if 'create_inquiry' in custom_data_views(request):
         if request.method == "POST":
             consultation_date = request.POST['consultation_date']
-            inquiry = Inquiry.objects.get(id=id)
+            inquiry = StudentInquiry.objects.get(id=id)
             inquiry.consultation_date=consultation_date
             inquiry.save()
             user = User.objects.get(username=request.user)
@@ -302,7 +302,7 @@ def update_inquiry_stage(request,id):
     if 'manage_inquiry' in custom_data_views(request):
         if request.method == "POST":
             stage = request.POST['stage']
-            inquiry = Inquiry.objects.get(id=id)
+            inquiry = StudentInquiry.objects.get(id=id)
             inquiry.stage=stage
             inquiry.save()
 
@@ -321,7 +321,7 @@ def update_inquiry_stage(request,id):
 
 def delete_inquiry(request,id):
     if 'delete_inquiry' in custom_data_views(request):
-        inquiry = Inquiry.objects.get(id=id)
+        inquiry = StudentInquiry.objects.get(id=id)
         inquiry.delete()
         return redirect('inquiry')
     else:
@@ -332,7 +332,7 @@ def close_inquiry(request,id):
     if 'manage_inquiry' in custom_data_views(request):
         if request.method =="POST":
             closed_reason = request.POST['closed_reason']
-            inquiry = Inquiry.objects.get(id=id)
+            inquiry = StudentInquiry.objects.get(id=id)
             inquiry.is_active=False
             inquiry.closed_reason=closed_reason
             inquiry.save()
@@ -350,7 +350,7 @@ def close_inquiry(request,id):
 def reopen_inquiry(request,id):
     if 'manage_inquiry' in custom_data_views(request):
         print("reopen")
-        inquiry = Inquiry.objects.get(id=id)
+        inquiry = StudentInquiry.objects.get(id=id)
         inquiry.is_active=True
         inquiry.closed_reason=None
         inquiry.save()
