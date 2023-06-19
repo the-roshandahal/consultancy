@@ -377,8 +377,59 @@ def inquiry_setup(request):
 
 
 def external_inquiry(request):
-    purpose = InquiryPurpose.objects.all()
-    context = {
-        'purpose':purpose
-    }
-    return render(request,'inquiry/external_inquiry.html',context)
+    if request.method =="POST":
+        first_name = request.POST["first_name"]
+        last_name=request.POST["last_name"]
+        dob=request.POST["dob"]
+        email = request.POST["email"]
+        guardian_name = request.POST["guardian_name"]
+        marital_status = request.POST["marital_status"]
+        contact = request.POST["contact"]
+        temporary_address = request.POST["temporary_address"]
+        permanent_address = request.POST["permanent_address"]
+        date=request.POST["consultation_date"]
+        remarks=request.POST["remarks"]
+        
+        purpose=request.POST["purpose"]
+        purpose= InquiryPurpose.objects.get(id=purpose)
+        
+        
+        institution1 = request.POST["institution1"]
+        passed_year1 = request.POST["passed_year1"]
+        percentage1 = request.POST["percentage1"]
+
+        institution2 = request.POST["institution2"]
+        passed_year2 = request.POST["passed_year2"]
+        percentage2 = request.POST["percentage2"]
+
+        institution3 = request.POST["institution3"]
+        passed_year3 = request.POST["passed_year3"]
+        percentage3 = request.POST["percentage3"]
+
+        other = request.POST["other"]
+
+        course = request.POST["course"]
+        college = request.POST["college"]
+        country = request.POST["country"]
+        city =request.POST["city"]
+        intake = request.POST["intake"]
+        applied_country = request.POST["country"]
+        applied_date = request.POST["date"]
+        
+
+        
+        inquiry = StudentInquiry.objects.create(first_name=first_name,last_name=last_name, dob=dob, temporary_address=temporary_address,permanent_address=permanent_address,contact=contact,email=email,guardian_name=guardian_name,marital_status=marital_status,purpose=purpose,date=date,remarks=remarks,course=course,college=college,country=country,city=city,intake=intake,applied_date=applied_date,applied_country=applied_country,
+                                            other=other, institution1=institution1, passed_year1=passed_year1,percentage1=percentage1, institution2=institution2, passed_year2=passed_year2,percentage2=percentage2, institution3=institution3, passed_year3=passed_year3,percentage3=percentage3)
+        
+        inquiry.save()
+        user = User.objects.get(username=request.user)
+        changed_by = user.username
+        activity = 'created inquiry'
+        InquiryLogs.objects.create(inquiry=inquiry,changed_by=changed_by,activity=activity)
+        return redirect('inquiry')
+    else:
+        purpose = InquiryPurpose.objects.all()
+        context = {
+            'purpose':purpose
+        }
+        return render(request,'inquiry/external_inquiry.html',context)

@@ -13,17 +13,17 @@ class InquiryStage(models.Model):
 
 
 class InquiryPurpose(models.Model):
-    stage = models.CharField(max_length=200)
+    purpose = models.CharField(max_length=200)
     def __str__(self):
-        return self.stage
+        return self.purpose
 
     class Meta:
-        verbose_name_plural = "02.  Stage"
+        verbose_name_plural = "02.  purpose"
 
 class StudentInquiry(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    dob=models.DateField(auto_now=True)
+    dob=models.CharField(max_length=255)
     guardian_name = models.CharField(max_length=255)
     marital_status=models.CharField(max_length=255,default="Single")
     email = models.CharField(max_length=255)
@@ -52,7 +52,7 @@ class StudentInquiry(models.Model):
     city = models.CharField(max_length=100,default=True)
     intake = models.CharField(max_length=100,default=True)
     applied_country = models.CharField(max_length=100, blank=True, null=True)
-    applied_date = models.DateField(blank=True, null=True)
+    applied_date = models.CharField(max_length=100,blank=True, null=True)
     other=models.CharField(max_length=255,blank=True, null=True)
     
     date = models.DateTimeField(blank=True, null=True)
