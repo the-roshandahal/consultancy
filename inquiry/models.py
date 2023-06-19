@@ -17,10 +17,10 @@ class InquiryStage(models.Model):
     class Meta:
         verbose_name_plural = "02.  Stage"
 
-class Inquiry(models.Model):
+class StudentInquiry(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    dob = models.DateField(auto_now=True)
+    dob=models.DateField(auto_now=True)
     guardian_name = models.CharField(max_length=255)
     marital_status=models.CharField(max_length=255,default="Single")
     email = models.CharField(max_length=255)
@@ -63,12 +63,12 @@ class Inquiry(models.Model):
         return f"{self.first_name} - {self.last_name}"
     
     class Meta:
-        verbose_name_plural = "03. Inquiries"
+        verbose_name_plural = "03. Inquiries"                                          
 
 
 
 class InquiryLogs(models.Model):
-    inquiry = models.ForeignKey(Inquiry, on_delete=models.CASCADE)
+    inquiry = models.ForeignKey(StudentInquiry, on_delete=models.CASCADE)
     changed_by = models.CharField(max_length=200)
     activity = models.CharField(max_length=200)
     created = models.DateTimeField(auto_now_add=True)
@@ -78,8 +78,8 @@ class InquiryLogs(models.Model):
     class Meta:
         verbose_name_plural = "04. Inquiry Logs"
 
-class InquiryNotes(models.Model):
-    inquiry = models.ForeignKey(Inquiry,on_delete=models.CASCADE)
+class InquiryNote(models.Model):
+    inquiry = models.ForeignKey(StudentInquiry,on_delete=models.CASCADE)
     note_title = models.CharField(max_length = 255)
     note = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
@@ -88,4 +88,4 @@ class InquiryNotes(models.Model):
         return self.inquiry.first_name
 
     class Meta:
-        verbose_name_plural = "05. Inquiry Notes"
+        verbose_name_plural = "05. Inquiry Note"
