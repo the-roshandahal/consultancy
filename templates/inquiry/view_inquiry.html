@@ -27,6 +27,9 @@
                                             </a>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#addNote">Add Note</a></li>
+                                                {% if inquiry_data.is_verified == False %}
+                                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#verifyStudent">Verify Inquiry</a></li>
+                                                {% endif %}
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#updateStage">Update Stage</a></li>
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#closeStudent">Close Inquiry</a></li>
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#assignConsultationDate">Update Consultation Date</a></li>
@@ -59,8 +62,8 @@
                                                     {% if inquiry_data.is_active == False %}
                                                     <div class="card">
                                                         <div class="card-body">
-                                                        <h5 class="card-title">Student Closed for following reason.</h5>
-                                                        <p class="card-text">"{{inquiry_data.closed_reason}}"</p>
+                                                        <h5 class="card-title">Student Closed for following reason:</h5>
+                                                        <p class="card-text">{{inquiry_data.closed_reason}}</p>
                                                         <a data-bs-toggle="modal" data-bs-target="#reopenStudent"><button type="button" class="btn btn-primary">Reopen Inquiry</button></a>
                                                         </div>
                                                     </div>
@@ -84,13 +87,29 @@
                                                     <div class="col-4">
                                                         <ul class="widget-list-content list-unstyled">
                                                             <li class="widget-list-item widget-list-item-green">
+                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">schedule</i></span>
+                                                                <span class="widget-list-item-description">
+                                                                    <a href="#" class="widget-list-item-description-title">
+                                                                     Date of Birth
+                                                                    </a>
+                                                                    <span class="widget-list-item-description-subtitle">
+                                                                        {{inquiry_data.dob}}
+                                                                    </span>
+                                                                </span>
+                                                            </li>
+                                                            
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <ul class="widget-list-content list-unstyled">
+                                                            <li class="widget-list-item widget-list-item-green">
                                                                 <span class="widget-list-item-icon"><i class="material-icons-outlined">place</i></span>
                                                                 <span class="widget-list-item-description">
                                                                     <a href="#" class="widget-list-item-description-title">
-                                                                        Address
+                                                                       Permanent Address
                                                                     </a>
                                                                     <span class="widget-list-item-description-subtitle">
-                                                                        {{inquiry_data.address}}
+                                                                        {{inquiry_data.permanent_address}}
                                                                     </span>
                                                                 </span>
                                                             </li>
@@ -129,22 +148,7 @@
                                                             
                                                         </ul>
                                                     </div>
-                                                    <div class="col-4">
-                                                        <ul class="widget-list-content list-unstyled">
-                                                            <li class="widget-list-item widget-list-item-green">
-                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">create</i></span>
-                                                                <span class="widget-list-item-description">
-                                                                    <a href="#" class="widget-list-item-description-title">
-                                                                        Date Joined
-                                                                    </a>
-                                                                    <span class="widget-list-item-description-subtitle">
-                                                                        {{inquiry_data.created}}
-                                                                    </span>
-                                                                </span>
-                                                            </li>
-                                                            
-                                                        </ul>
-                                                    </div>
+                                                   
                                                     <div class="col-4">
                                                         <ul class="widget-list-content list-unstyled">
                                                             <li class="widget-list-item widget-list-item-green">
@@ -164,29 +168,13 @@
                                                     <div class="col-4">
                                                         <ul class="widget-list-content list-unstyled">
                                                             <li class="widget-list-item widget-list-item-green">
-                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">where_to_vote</i></span>
-                                                                <span class="widget-list-item-description">
-                                                                    <a href="#" class="widget-list-item-description-title">
-                                                                        Source
-                                                                    </a>
-                                                                    <span class="widget-list-item-description-subtitle">
-                                                                        {{inquiry_data.source}}
-                                                                    </span>
-                                                                </span>
-                                                            </li>
-                                                            
-                                                        </ul>
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <ul class="widget-list-content list-unstyled">
-                                                            <li class="widget-list-item widget-list-item-green">
                                                                 <span class="widget-list-item-icon"><i class="material-icons-outlined">school</i></span>
                                                                 <span class="widget-list-item-description">
                                                                     <a href="#" class="widget-list-item-description-title">
                                                                         Education Qualification
                                                                     </a>
                                                                     <span class="widget-list-item-description-subtitle">
-                                                                        {{inquiry_data.education_qualification}}
+                                                                        {{inquiry_data.institution1}}
                                                                     </span>
                                                                 </span>
                                                             </li>
@@ -202,7 +190,7 @@
                                                                         Consultation Date
                                                                     </a>
                                                                     <span class="widget-list-item-description-subtitle">
-                                                                        {{inquiry_data.consultation_date}}
+                                                                        {{inquiry_data.date}}
                                                                     </span>
                                                                 </span>
                                                             </li>
@@ -285,7 +273,29 @@
 	</div>
 </div>
 
-
+<div class="modal fade" id="VerifyStudent" tabindex="-1" role="dialog" aria-labelledby="VerifyStudent" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="verifyStudent">Verify inquiry</h5>
+			</div>
+            <form action="{% url 'verify_inquiry' id=inquiry_data.id %}" method="POST">
+				{% csrf_token %}
+                <div class="modal-body">
+                    <p>Are you sure you want to verify the inquiry.</p>
+                    <div class="col-md-12 mb-3">
+                        <div class="row">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-primary" type="submit">Save</button>
+                </div>
+            </form>
+		</div>
+	</div>
+</div>
 
 <div class="modal fade" id="closeStudent" tabindex="-1" role="dialog" aria-labelledby="closeStudent" aria-hidden="true">
 	<div class="modal-dialog" role="document">

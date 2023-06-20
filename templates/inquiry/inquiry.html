@@ -31,12 +31,12 @@
 								</tr>
 							</thead>
 							<tbody>
-								{% for inquiry in active_inquiries %}
+								{% for inquiry in new_inquiries %}
 								<tr>
 									<td>{{inquiry.first_name}} {{inquiry.last_name}}</td>
 									<td>{{inquiry.contact}}</td>
 									<td>{{inquiry.purpose}}</td>
-									<td>{{inquiry.consultation_date}}</td>
+									<td>{{inquiry.date}}</td>
 									<td>{{inquiry.assigned}}</td>
 									<td>
 										<div class="d-flex align-items-center">

@@ -62,6 +62,8 @@ class StudentInquiry(models.Model):
     is_verified = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
+
+    closed_reason=models.CharField(max_length=255,null=True)
     def __str__(self):
         return f"{self.first_name} - {self.last_name}"
     

@@ -18,7 +18,7 @@
                         </div>
                         <div class="page-description-actions">  
                             {% if 'manage_inquiry' in permissions %}                              
-                            <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenterAddStage"><i class="material-icons">add</i>Add</a>
+                            <a href="{% url 'create_stages' %}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenterAddStage"><i class="material-icons">add</i>Add</a>
                             {% endif %}                         
                         </div>
                     </div>
@@ -31,19 +31,19 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for Stage in Stage %}
+                            {% for stage in stage %}
                             <tr>
-                                <td>{{Stage.Stage}}</td>
+                                <td>{{stage.stage}}</td>
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="d-flex">
                                             <div class="d-flex">
-                                                {% if 'manage_hrm' in permissions %}
+                                                {% if 'manage_inquiry' in permissions %}
                                                     <a href="#" class="btn btn-dark"><i class="material-icons">edit</i></a>
                                                 {% endif %}
 
-                                                {% if 'delete_hrm' in permissions %}
-                                                    <a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenterStage{{Stage.id}}"><i class="material-icons">delete</i></a>
+                                                {% if 'delete_inquiry' in permissions %}
+                                                    <a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenterStage{{stage.id}}"><i class="material-icons">delete</i></a>
                                                 {% endif %}
                                             </div>
                                         </div>
@@ -54,7 +54,49 @@
                         </tbody>
                     </table>
                 </div>
-                
+                <div class="row mt-3">
+                    <div class="page-description d-flex align-items-center">
+                        <div class="page-description-content flex-grow-1">
+                            <h2>Purpose</h2>
+                        </div>
+                        <div class="page-description-actions">  
+                            {% if 'manage_inquiry' in permissions %}                              
+                            <a href="{% url 'create_stage' %}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenterAddPurpose"><i class="material-icons">add</i>Add</a>
+                            {% endif %}                         
+                        </div>
+                    </div>
+
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th>Purpose</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for purpose in purpose %}
+                            <tr>
+                                <td>{{purpose.purpose}}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="d-flex">
+                                            <div class="d-flex">
+                                                {% if 'manage_inquiry' in permissions %}
+                                                    <a href="#" class="btn btn-dark"><i class="material-icons">edit</i></a>
+                                                {% endif %}
+
+                                                {% if 'delete_inquiry' in permissions %}
+                                                    <a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenterPurpose{{purpose.id}}"><i class="material-icons">delete</i></a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
 
                 
                 
@@ -65,10 +107,58 @@
         </div>
     </div>
 </div>
-
-
-{% for Stage in Stage %}
-<div class="modal fade" id="exampleModalCenterStage{{Stage.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterStage{{Stage.id}}" aria-hidden="true">
+<div class="modal fade" id="exampleModalCenterAddStage" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterAddStage" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<form action="{% url 'create_stages' %}" method="POST">
+				{% csrf_token %}
+				<div class="modal-header">
+					<h5 class="modal-title" id="createUserModal">Create Stage</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="col-md-12 mb-3">
+						<label for="">Stage Name</label>
+						<input type="text" class="form-control"  placeholder="Initial" name='stage'>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Add</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="exampleModalCenterAddPurpose" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterAddPurpose" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<form action="{% url 'create_purpose' %}" method="POST">
+				{% csrf_token %}
+				<div class="modal-header">
+					<h5 class="modal-title" id="createUserModal">Create Purpose</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="col-md-12 mb-3">
+						<label for="">Purpose Name</label>
+						<input type="text" class="form-control"  placeholder="Initial" name='purpose'>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Add</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% for stage in stage %}
+<div class="modal fade" id="exampleModalCenterStage{{stage.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterStage{{stage.id}}" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -78,11 +168,34 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to delete {{Stage.Stage}}?</p>
+                <p>Are you sure you want to delete {{stage.stage}}?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <a href="{% url 'delete_Stage' id=Stage.id %}"><button type="button" class="btn btn-primary">Delete</button></a>
+                <a href="{% url 'delete_stages' id=stage.id %}"><button type="button" class="btn btn-primary">Delete</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+{% for purpose in purpose %}
+<div class="modal fade" id="exampleModalCenterPurpose{{purpose.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterPurpose{{purpose.id}}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete purpose</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete {{purpose.purpose}}?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a href="{% url 'delete_purpose' id=purpose.id %}"><button type="button" class="btn btn-primary">Delete</button></a>
             </div>
         </div>
     </div>

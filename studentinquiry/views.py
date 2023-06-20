@@ -24,7 +24,7 @@ def active_inquiries(request):
         context={
                 'active_inquiries':active_inquiries,
         }
-        return render(request,'inquiry/my_inquiries.html',context)
+        return render(request,'inquiry/active_inquiries.html',context)
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')
@@ -328,6 +328,23 @@ def delete_inquiry(request,id):
         messages.info(request, "Unauthorized access.")
         return redirect('home')
     
+def verify_inquiry(request,id):
+    if 'manage_inquiry' in custom_data_views(request):
+        if request.method =="POST":
+            inquiry = StudentInquiry.objects.get(id=id)
+            inquiry.is_verified=True
+            inquiry.save()
+            messages.info(request, "inquiry verified.")
+    
+            user = User.objects.get(username=request.user)
+            changed_by = user.username
+            activity = 'inquiry is verified'
+            InquiryLogs.objects.create(inquiry=inquiry,changed_by=changed_by,activity=activity)
+            return redirect('view_inquiry',id)
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')  
+         
 def close_inquiry(request,id):
     if 'manage_inquiry' in custom_data_views(request):
         if request.method =="POST":
@@ -336,7 +353,7 @@ def close_inquiry(request,id):
             inquiry.is_active=False
             inquiry.closed_reason=closed_reason
             inquiry.save()
-            messages.info(request, "inquiry closed.")
+            messages.info(request,"inquiry closed.")
     
             user = User.objects.get(username=request.user)
             changed_by = user.username
@@ -349,7 +366,7 @@ def close_inquiry(request,id):
 
 def reopen_inquiry(request,id):
     if 'manage_inquiry' in custom_data_views(request):
-        print("reopen")
+      
         inquiry = StudentInquiry.objects.get(id=id)
         inquiry.is_active=True
         inquiry.closed_reason=None
@@ -368,13 +385,64 @@ def reopen_inquiry(request,id):
 
 def inquiry_setup(request):
     if 'manage_inquiry' in custom_data_views(request):
-        return render(request,'inquiry/inquiry_setup.html')
+        stage=InquiryStage.objects.all()
+        purpose=InquiryPurpose.objects.all()
+        context = {
+            'stage':stage,
+            'purpose':purpose,
+        }
+        return render(request,'inquiry/inquiry_setup.html',context)
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')
     
+def create_stages(request):
+    if 'create_inquiry' in custom_data_views(request):
+        if request.method =="POST":
+            stage = request.POST['stage']
+            InquiryStage.objects.create(stage=stage)
+            messages.info(request, "Stage Created Successfully.")
+            return redirect('inquiry_setup')
+        else:
+            return redirect('inquiry_setup')
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
+    
+def delete_stages(request,id):
+    if 'delete_inquiry' in custom_data_views(request):
+        stage = InquiryStage.objects.get(id=id)
+        deleted_role = stage.stage
+        stage.delete()
+        messages.info(request, f"{deleted_role} Deleted Successfully")
+        return redirect('inquiry_setup')
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')    
 
+def create_purpose(request):
+    if 'create_inquiry' in custom_data_views(request):
+        if request.method =="POST":
+            purpose = request.POST['purpose']
+            InquiryPurpose.objects.create(purpose=purpose)
+            messages.info(request, "Purpose Created Successfully.")
+            return redirect('inquiry_setup')
+        else:
+            return redirect('inquiry_setup')
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')    
 
+def delete_purpose(request,id):
+    if 'delete_inquiry' in custom_data_views(request):
+        purpose = InquiryPurpose.objects.get(id=id)
+        deleted_role = purpose.purpose
+        purpose.delete()
+        messages.info(request, f"{deleted_role} Deleted Successfully")
+        return redirect('inquiry_setup')
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
 
 def external_inquiry(request):
     if request.method =="POST":
