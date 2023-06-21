@@ -13,7 +13,9 @@ urlpatterns = [
     path("active_inquiries/", views.active_inquiries, name="active_inquiries"),
     
     path("create_stages/", views.create_stages, name="create_stages"),
+    path("edit_stages/<int:id>", views.edit_stages, name="edit_stages"),
     path("create_purpose/", views.create_purpose, name="create_purpose"),
+    path("edit_purpose/<int:id>", views.edit_purpose, name="edit_purpose"),
     path("delete_stages/<int:id>", views.delete_stages, name="delete_stages"),
     path("delete_purpose/<int:id>", views.delete_purpose, name="delete_purpose"),
 
@@ -30,4 +32,5 @@ urlpatterns = [
     path("close_inquiry/<int:id>", views.close_inquiry, name="close_inquiry"),
     path("reopen_inquiry/<int:id>", views.reopen_inquiry, name="reopen_inquiry"),
     path("external_inquiry", views.external_inquiry, name="external_inquiry"),
+    path("assign_employee/<int:id>", views.assign_employee, name="assign_employee"),
 ]

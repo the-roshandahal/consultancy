@@ -30,6 +30,9 @@
                                                 {% if inquiry_data.is_verified == False %}
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#verifyStudent">Verify Inquiry</a></li>
                                                 {% endif %}
+                                                {% if  inquiry_data.assigned is None %}
+                                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#assignStudent">Assign Employee</a></li>
+                                                {% endif %}
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#updateStage">Update Stage</a></li>
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#closeStudent">Close Inquiry</a></li>
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#assignConsultationDate">Update Consultation Date</a></li>
@@ -296,7 +299,35 @@
 		</div>
 	</div>
 </div>
-
+<div class="modal fade" id="assignStudent" tabindex="-1" role="dialog" aria-labelledby="assignStudent" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<form action="{% url 'assign_employee' id=inquiry_data.id %}" method="POST">
+				{% csrf_token %}
+				<div class="modal-header">
+					<h5 class="modal-title" id="assignStudent">Assign Employee</h5>
+                    
+                </div>
+            <div class="modal-body">
+                <div class="col-md-12 mb-3">
+                    <p>Assigned Users</p>
+                    <select class="js-states form-control" tabindex="-1" style="display: none; width: 100%" name="assigned_user">
+                        <optgroup label="Assigned User">
+                            {% for employee in employee %}
+                            <option value="{{employee.id}}">{{employee.user.first_name}}</option>
+                            {% endfor %}
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Save</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 <div class="modal fade" id="closeStudent" tabindex="-1" role="dialog" aria-labelledby="closeStudent" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">

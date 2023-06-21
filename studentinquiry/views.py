@@ -3,7 +3,9 @@ from django.contrib.auth.models import User
 from django.shortcuts import render,redirect
 from .models import *
 from hrm.models import *
+from account.models import*
 from account.context_processors import custom_data_views
+import logging
 # Create your views here.
 def inquiry(request):
     if 'read_inquiry' in custom_data_views(request):
@@ -195,11 +197,7 @@ def edit_inquiry(request,id):
             applied_country = request.POST["country"]
             applied_date = request.POST["date"]
           
-
-            assigned_user = request.POST['assigned_user']
-            assigned = Employee.objects.get(id=assigned_user)
      
-
             inquiry = StudentInquiry.objects.get(id=id)
 
             inquiry.first_name=first_name
@@ -234,7 +232,6 @@ def edit_inquiry(request,id):
             inquiry.intake = intake
             inquiry.applied_country = applied_country
             inquiry.applied_date = applied_date 
-            inquiry.assigned=assigned
             inquiry.other=other
             inquiry.save()
 
@@ -293,6 +290,32 @@ def add_consultation_date(request,id):
             return redirect('view_inquiry',id)
         else:
             return redirect('view_inquiry',id)
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
+    
+def assign_employee(request,id):
+    if 'manage_inquiry' in custom_data_views(request):
+        if request.method == "POST":
+            assigned_user = request.POST['assigned_user']
+            assigned = Employee.objects.get(id=assigned_user)
+            inquiry = StudentInquiry.objects.get(id=id)
+            inquiry.assigned=assigned
+            inquiry.save()
+            
+            user = User.objects.get(username=request.user)
+            changed_by = user.username
+            activity = 'Employee Assigned.'
+            InquiryLogs.objects.create(inquiry=inquiry,changed_by=changed_by,activity=activity)
+
+            return redirect('view_inquiry',id)
+        else:
+            employee = Employee.objects.all()
+            print(employee)
+            context = {
+            'employee':employee,
+            }
+            return render (request,'inquiry/view_inquiry.html',context)  
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')
@@ -409,6 +432,25 @@ def create_stages(request):
         messages.info(request, "Unauthorized access.")
         return redirect('home')
     
+def edit_stages(request,id):
+    if 'update_inquiry' in custom_data_views(request):
+        if request.method =="POST":
+            inquiry_stage = request.POST['stage']
+            Inquiry=InquiryStage.objects.get(id=id)   
+            Inquiry.stage=inquiry_stage  
+            Inquiry.save()  
+            messages.info(request, "Stage Edited Successfully.")
+            return redirect('inquiry_setup')
+        else:
+            stage=InquiryStage.objects.get(id=id)
+            context = {
+                'stage':stage,
+            }
+            return render(request, 'inquiry/edit_stage.html',context )
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
+    
 def delete_stages(request,id):
     if 'delete_inquiry' in custom_data_views(request):
         stage = InquiryStage.objects.get(id=id)
@@ -432,6 +474,25 @@ def create_purpose(request):
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')    
+    
+def edit_purpose(request,id):
+    if 'update_inquiry' in custom_data_views(request):
+        if request.method =="POST":
+            inquiry_purpose= request.POST['purpose']
+            Inquiry=InquiryPurpose.objects.get(id=id)   
+            Inquiry.purpose=inquiry_purpose
+            Inquiry.save()  
+            messages.info(request, "Stage Edited Successfully.")
+            return redirect('inquiry_setup')
+        else:
+            purpose=InquiryPurpose.objects.get(id=id)
+            context = {
+                'purpose':purpose,
+            }
+            return render(request, 'inquiry/edit_purpose.html',context )
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
 
 def delete_purpose(request,id):
     if 'delete_inquiry' in custom_data_views(request):

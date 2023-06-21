@@ -39,7 +39,7 @@
                                         <div class="d-flex">
                                             <div class="d-flex">
                                                 {% if 'manage_inquiry' in permissions %}
-                                                    <a href="#" class="btn btn-dark"><i class="material-icons">edit</i></a>
+                                                    <a href="{% url 'edit_stages' id=stage.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
                                                 {% endif %}
 
                                                 {% if 'delete_inquiry' in permissions %}
@@ -82,7 +82,7 @@
                                         <div class="d-flex">
                                             <div class="d-flex">
                                                 {% if 'manage_inquiry' in permissions %}
-                                                    <a href="#" class="btn btn-dark"><i class="material-icons">edit</i></a>
+                                                    <a href="{% url 'edit_purpose' id=purpose.id  %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
                                                 {% endif %}
 
                                                 {% if 'delete_inquiry' in permissions %}
