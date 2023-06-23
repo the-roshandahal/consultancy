@@ -5,7 +5,7 @@ from .models import *
 from hrm.models import *
 from account.models import*
 from account.context_processors import custom_data_views
-import logging
+
 # Create your views here.
 def inquiry(request):
     if 'read_inquiry' in custom_data_views(request):
