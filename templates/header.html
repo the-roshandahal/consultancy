@@ -125,12 +125,12 @@
                             {% endif %}
                             {% if 'manage_hrm' in permissions %}
                             <li>
-                                <a href="#">Leave requests</a>
+                                <a href="{% url 'emp_leaves' %}">Leave requests</a>
                             </li>
                             {% endif %}
                             {% if 'manage_hrm' in permissions %}
                             <li>
-                                <a href="#">Payroll</a>
+                                <a href="{% url 'payroll' %}">Payroll</a>
                             </li>
                             {% endif %}
                             

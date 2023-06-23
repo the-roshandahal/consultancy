@@ -23,12 +23,16 @@ urlpatterns = [
     path("view_employee/<int:id>", views.view_employee, name="view_employee"),
 
     path("manage_attendance/",views.manage_attendance,name="manage_attendance"),
+    path("payroll/", views.payroll, name="payroll"),
+    path("pay_salary/", views.pay_salary, name="pay_salary"),
+    path("salary_payment/", views.salary_payment, name="salary_payment"),
+    path("advance_salary/", views.advance_salary, name="advance_salary"),
     
     
-    # path("leave/", views.leave, name="leave"),
-    # path("apply_leave/", views.apply_leave, name="apply_leave"),
-    # path("add_emp_leave/", views.add_emp_leave, name="add_emp_leave"),
-    # path("emp_leaves/", views.emp_leaves, name="emp_leaves"),
+    path("leave/", views.leave, name="leave"),
+    path("apply_leave/", views.apply_leave, name="apply_leave"),
+    path("add_emp_leave/", views.add_emp_leave, name="add_emp_leave"),
+    path("emp_leaves/", views.emp_leaves, name="emp_leaves"),
     
     
     # path("accept_leave/<int:id>", views.accept_leave, name="accept_leave"),

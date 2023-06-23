@@ -23,7 +23,7 @@
                         <div class="col-12 col-md-6">
                             <p>Last Name</p>
                             <div class="input-group">
-                                <input name="last_name" type="text" class="form-control" placeholder="Last Name" aria-label="Last Name" aria-describedby="basic-addon1" required>
+                                <input name="last_name" type="text" value={{inquiry.last_name}} class="form-control" placeholder="Last Name" aria-label="Last Name" aria-describedby="basic-addon1" required>
                             </div>
                         </div>
                     </div>
@@ -31,13 +31,13 @@
                         <div class="col-12 col-md-6">
                             <p>Guardian Name</p>
                             <div class="input-group">
-                                <input name="guardian_name" type="text" class="form-control" placeholder="Guardian Name" aria-label="Guardian Name" aria-describedby="basic-addon1" required>
+                                <input name="guardian_name" type="text"value={{inquiry.guardian_name}} class="form-control" placeholder="Guardian Name" aria-label="Guardian Name" aria-describedby="basic-addon1" required>
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
                             <p>Date of Birth</p>
                             <div class="input-group">
-                                <input name="dob" type="text" class="form-control" placeholder="Date of Birth" aria-label="Date of Birth" aria-describedby="basic-addon1" required>
+                                <input name="dob" type="text"value={{inquiry.dob}} class="form-control" placeholder="Date of Birth" aria-label="Date of Birth" aria-describedby="basic-addon1" required>
                             </div>
                         </div>
                     </div>
@@ -66,13 +66,13 @@
                         <div class="col-12 col-md-6">
                             <p>Parmanent Address</p>
                             <div class="input-group">
-                                <input name="permanent_address" type="text" class="form-control" placeholder="Parmanent Address" aria-label="Parmanent Address" aria-describedby="basic-addon1" required>
+                                <input name="permanent_address" type="text" value={{inquiry.permanent_address}} class="form-control" placeholder="Parmanent Address" aria-label="Parmanent Address" aria-describedby="basic-addon1" required>
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
                             <p>Temporary Address</p>
                             <div class="input-group">
-                                <input name="temporary_address" type="text" class="form-control" placeholder="Temporary Address" aria-label="Temporary Address" aria-describedby="basic-addon1" required>
+                                <input name="temporary_address" type="text"value={{inquiry.temporary_address}} class="form-control" placeholder="Temporary Address" aria-label="Temporary Address" aria-describedby="basic-addon1" required>
                             </div>
                         </div>
                     </div>
@@ -80,13 +80,13 @@
                         <div class="col-12 col-md-6">
                             <p>Contact Number</p>
                             <div class="input-group">
-                                <input name="contact" type="text" class="form-control" placeholder="Contact Number" aria-label="Contact Number" aria-describedby="basic-addon1" required>
+                                <input name="contact" type="text" value={{inquiry.contact}}class="form-control" placeholder="Contact Number" aria-label="Contact Number" aria-describedby="basic-addon1" required>
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
                             <p>Email</p>
                             <div class="input-group">
-                                <input name="email" type="text" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1" required>
+                                <input name="email" type="text" value={{inquiry.email}} class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1" required>
                             </div>
                         </div>
                     </div>
@@ -100,19 +100,19 @@
                         <div class="col-6">
                             <p>Institution</p>
                             <div class="input-group">
-                                <input name="institution1" type="text" class="form-control" placeholder="Institution" aria-label="Institution" aria-describedby="basic-addon1" required>
+                                <input name="institution1" type="text" value={{inquiry.institution1}} class="form-control" placeholder="Institution" aria-label="Institution" aria-describedby="basic-addon1" required>
                             </div>
                         </div>
                         <div class="col-3">
                             <p>Percentage</p>
                             <div class="input-group">
-                                <input name="percentage1" type="number" class="form-control" placeholder="Percentage" aria-label="Percentage" aria-describedby="basic-addon1" required>
+                                <input name="percentage1" type="number" value={{inquiry.percentage1}}class="form-control" placeholder="Percentage" aria-label="Percentage" aria-describedby="basic-addon1" required>
                             </div>
                         </div>
                         <div class="col-3">
                             <p>Passed Year</p>
                             <div class="input-group">
-                                <input name="passed_year1" type="number" class="form-control" placeholder="Passed Year" aria-label="Passed Year" aria-describedby="basic-addon1" required>
+                                <input name="passed_year1" type="number"value={{inquiry.passed_year1}} class="form-control" placeholder="Passed Year" aria-label="Passed Year" aria-describedby="basic-addon1" required>
                             </div>
                         </div>
                     </div>
@@ -121,62 +121,62 @@
                         <div class="col-6">
                             <p>Institution</p>
                             <div class="input-group">
-                                <input name="institution2" type="text" class="form-control" placeholder="Institution" aria-label="Institution" aria-describedby="basic-addon1" required>
+                                <input name="institution2" type="text" value={{inquiry.institution2}} class="form-control" placeholder="Institution" aria-label="Institution" aria-describedby="basic-addon1" required>
                             </div>
                         </div>
                         <div class="col-3">
                             <p>Percentage</p>
                             <div class="input-group">
-                                <input name="percentage2" type="number" class="form-control" placeholder="Percentage" aria-label="Percentage" aria-describedby="basic-addon1" required>
+                                <input name="percentage2" type="number" value={{inquiry.percentage2}} class="form-control" placeholder="Percentage" aria-label="Percentage" aria-describedby="basic-addon1" required>
                             </div>
                         </div>
                         <div class="col-3">
                             <p>Passed Year</p>
                             <div class="input-group">
-                                <input name="passed_year2" type="number" class="form-control" placeholder="Passed Year" aria-label="Passed Year" aria-describedby="basic-addon1" required>
+                                <input name="passed_year2" type="number" value={{inquiry.passed_year2}} class="form-control" placeholder="Passed Year" aria-label="Passed Year" aria-describedby="basic-addon1" required>
                             </div>
                         </div>
                     </div>
-                    <div class="row mt-3">
-                        <h5>Bachelor</h5>
-                        <div class="col-6">
-                            <p>Institution</p>
-                            <div class="input-group">
-                                <input name="institution3" type="text" class="form-control" placeholder="Institution" aria-label="Institution" aria-describedby="basic-addon1" required>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <p>Percentage</p>
-                            <div class="input-group">
-                                <input name="percentage3" type="number" class="form-control" placeholder="Percentage" aria-label="Percentage" aria-describedby="basic-addon1" required>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <p>Passed Year</p>
-                            <div class="input-group">
-                                <input name="passed_year3" type="number" class="form-control" placeholder="Passed Year" aria-label="Passed Year" aria-describedby="basic-addon1" required>
-                            </div>
-                        </div>
-                    </div>
-                    
                     <div class="row mt-3">
                         <h5>Master</h5>
                         <div class="col-6">
                             <p>Institution</p>
                             <div class="input-group">
-                                <input name="institution4" type="text" class="form-control" placeholder="Institution" aria-label="Institution" aria-describedby="basic-addon1" required>
+                                <input name="institution3" type="text" value={{inquiry.institution1}} class="form-control" placeholder="Institution" aria-label="Institution" aria-describedby="basic-addon1" required>
                             </div>
                         </div>
                         <div class="col-3">
                             <p>Percentage</p>
                             <div class="input-group">
-                                <input name="percentage4" type="number" class="form-control" placeholder="Percentage" aria-label="Percentage" aria-describedby="basic-addon1" required>
+                                <input name="percentage3" type="number" value={{inquiry.percentage3}} class="form-control" placeholder="Percentage" aria-label="Percentage" aria-describedby="basic-addon1" required>
                             </div>
                         </div>
                         <div class="col-3">
                             <p>Passed Year</p>
                             <div class="input-group">
-                                <input name="passed_year4" type="number" class="form-control" placeholder="Passed Year" aria-label="Passed Year" aria-describedby="basic-addon1" required>
+                                <input name="passed_year3" type="number"  value={{inquiry.passed_year3}} class="form-control" placeholder="Passed Year" aria-label="Passed Year" aria-describedby="basic-addon1" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-3">
+                        <h5>Bachelor</h5>
+                        <div class="col-6">
+                            <p>Institution</p>
+                            <div class="input-group">
+                                <input name="institution3" type="text" value={{inquiry.institution3}} class="form-control" placeholder="Institution" aria-label="Institution" aria-describedby="basic-addon1" required>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <p>Percentage</p>
+                            <div class="input-group">
+                                <input name="percentage3" type="number" value={{inquiry.percentage3}} class="form-control" placeholder="Percentage" aria-label="Percentage" aria-describedby="basic-addon1" required>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <p>Passed Year</p>
+                            <div class="input-group">
+                                <input name="passed_year3" type="number"  value={{inquiry.passed_year3}} class="form-control" placeholder="Passed Year" aria-label="Passed Year" aria-describedby="basic-addon1" required>
                             </div>
                         </div>
                     </div>
@@ -208,7 +208,7 @@
                         <div class="col-6">
                             <p>Others</p>
                             <div class="input-group">
-                                <input name="other" type="text" class="form-control" placeholder="Others" aria-label="Others" aria-describedby="basic-addon1" required>
+                                <input name="other" type="text" value={{inquiry.other}}class="form-control" placeholder="Others" aria-label="Others" aria-describedby="basic-addon1" required>
                             </div>
                         </div>
                     </div>

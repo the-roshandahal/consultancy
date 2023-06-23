@@ -1,0 +1,192 @@
+{% load static %}{% include 'header.html' %}
+<!-- Main Content -->
+<div class="app-content">
+    <div class="content-wrapper">
+        <div class="example-container">
+            <div class="example-content bg-light">
+                <div class="page-description d-flex align-items-center">
+                    <div class="page-description-content flex-grow-1">
+                        <h1>HRM PAYROLL</h1>
+                        <span></span>
+                    </div>
+                </div>
+                        <div class="pg-content-action-wrap ">
+                            {% if 'create_hrm' in permissions %}
+                            <button class="btn btn-outline-secondary me-3" data-bs-toggle="modal" data-bs-target="#exampleModalCenterAdvance"><i class="material-icons">add</i>Advance Payment</button>
+                            {% endif %}
+                            {% if 'create_hrm' in permissions %}
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><i class="material-icons">add</i>Salary Payment</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Page Body -->
+            <div class="hk-pg-body">
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="tab_block_1">
+                        <div class="row">
+                            <h2>Recent Payments</h2>
+                            <table class="table nowrap w-100 mb-5">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Month</th>
+                                        <th>Leave Deduction</th>
+                                        <th>Tax/Leave Deduction</th>
+                                        <th>Type</th>
+                                        <th>Paid Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% if recent_salary %}
+                                    {% for recent_salary in recent_salary %}
+                                    <tr>
+                                        <td>{{recent_salary.employee.user.first_name}} {{recent_salary.employee.user.last_name}}</td>
+                                        <td>{{recent_salary.month}}</td>
+                                        <td>{{recent_salary.leave_deduction|floatformat:2}}</td>
+                                        <td>{{recent_salary.tax_deduction|floatformat:2}}</td>
+                                        <td>{{recent_salary.type}}</td>
+                                        <td>{{recent_salary.paid_salary|floatformat:2}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    {% else %}
+                                    <tr>
+                                        <td style="text-align: center" colspan="7">No Recent Payments</td>
+                                    </tr>
+                                    {% endif %}
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>       
+    </div>
+    <!-- /Main Content -->
+</div>
+<!-- /Wrapper -->
+
+
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Select Source, Month and Employees</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{% url 'salary_payment' %}" method="POST">
+                {% csrf_token %}
+                <div class="modal-body">                                                                        
+                    <div class="row">
+                        <div class="col-xxl-12 mb-xxl-0 mb-4">
+                            <h6>Select Source</h6>
+                            <div class="form-group">
+                                <select class="form-select" name="source" required>
+                                    <option value = 'attendance_device'>Device Attendance</option>
+                                    <option value = 'leaves'>Leaves</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xxl-12 mb-xxl-0 mb-4">
+                            <h6>Select Month</h6>
+                            <div class="form-group">
+                                <select class="form-select" name="month">
+                                    {% for months in months %}
+                                    <option value = '{{months.id}}'>{{months.month}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xxl-12 mb-xxl-0 mb-4">
+                            <h6>Select Employee</h6>
+                            <div class="form-group">
+                                <select class="form-select" name="employee">
+                                    <option value = 'all'>All Employees</option>
+                                    {% for all_employees in all_employees %}
+                                    <option value = '{{all_employees.id}}'>{{all_employees.user.first_name}} {{all_employees.user.last_name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="#" ><button class="btn btn-primary ms-2 d-sm-inline-block d-none">Save</button></a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="modal fade" id="exampleModalCenterAdvance" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterAdvance" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Select Employee, Month and Advance Amount</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{% url 'advance_salary' %}" method="POST">
+                {% csrf_token %}
+                <div class="modal-body">                                                                        
+                    <div class="row">
+                        <div class="col-xxl-12 mb-xxl-0 mb-4">
+                            <h6>Select Month</h6>
+                            <div class="form-group">
+                                <select class="form-select" name="month">
+                                    {% for months in months %}
+                                    <option value = '{{months.month}}'>{{months.month}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xxl-12 mb-xxl-0 mb-4">
+                            <h6>Select Employee</h6>
+                            <div class="form-group">
+                                <select class="form-select" name="employee">
+                                    {% for all_employees in all_employees %}
+                                    <option value = '{{all_employees.id}}'>{{all_employees.user.first_name}} {{all_employees.user.last_name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xxl-12 mb-xxl-0 mb-4">
+                            <h6>Advance Amount</h6>
+                            <div class="form-group">
+                                <input type="number" class="form-control" name="amount" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="#" ><button class="btn btn-primary ms-2 d-sm-inline-block d-none">Save</button></a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>												
+{% include 'footer.html' %}
