@@ -39,6 +39,12 @@ urlpatterns = [
     # path("deny_leave/<int:id>", views.deny_leave, name="deny_leave"),
     
     
+    path("edit_device_data/<int:id>", views.edit_device_data, name="edit_device_data"),
+    path("delete_device_data/<int:id>", views.delete_device_data, name="delete_device_data"),
+    
+    path("add_device_data/", views.add_device_data, name="add_device_data"),
+    path("device_attendance/", views.device_attendance, name="device_attendance"),
+ 
     
     path("add_year/", views.add_year, name="add_year"),
     path("delete_year/<int:id>", views.delete_year, name="delete_year"),

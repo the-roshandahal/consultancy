@@ -3,74 +3,181 @@
 <!-- Main Content -->
 <div class="app-content">
     <div class="content-wrapper">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <div class="page-description">
-                        <h1>Employee Dashboard</h1>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xl-4">
-                    <div class="card widget widget-stats">
-                        <div class="card-body">
-                            <div class="widget-stats-container d-flex">
-                                <div class="widget-stats-icon widget-stats-icon-warning">
-                                    <i class="material-icons-outlined">Employees</i>
-                                </div>
-                                <div class="widget-stats-content flex-fill">
-                                    <span class="widget-stats-title">Active Employees</span>
-                                    <span class="widget-stats-amount">{{employees.first_name}}</span>
-                                    <span class="widget-stats-info"></span>
-                                </div>
-                                <div class="widget-stats-indicator widget-stats-indicator-positive align-self-start">
-                                    <i class="material-icons">keyboard_arrow_up</i> 12%
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4">
-                    <div class="card widget widget-stats">
-                        <div class="card-body">
-                            <div class="widget-stats-container d-flex">
-                                <div class="widget-stats-icon widget-stats-icon-danger">
-                                    <i class="material-icons-outlined">file_download</i>
-                                </div>
-                                <div class="widget-stats-content flex-fill">
-                                    <span class="widget-stats-title">Downloads</span>
-                                    <span class="widget-stats-amount">140,390</span>
-                                    <span class="widget-stats-info">87 items downloaded</span>
-                                </div>
-                                <div class="widget-stats-indicator widget-stats-indicator-positive align-self-start">
-                                    <i class="material-icons">keyboard_arrow_up</i> 7%
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+		<!-- Page Header -->												
+		<div class="hk-pg-header">
+			<div class="d-flex">
+				<div class="d-flex flex-wrap justify-content-between flex-1">
+					<div class="mb-md-0 mb-2 me-8">
+						<div class="d-flex align-items-center">
+							<h1 class="pg-title">Employee Dashboard</h1>
+							
+						</div>
+						<p id="greeting"></p>
 
-            <div class="row">
-                <div class="col-xl-10">
-                    <div class="card widget widget-stats-large">
-                        <div class="widget-stats-large-chart-container">
-                            <div class="card-header">
-                                <h5 class="card-title">Earnings<span class="badge badge-light badge-style-light">Last Year</span></h5>
-                            </div>
-                            <div class="card-body">
-                                <div id="apex-earnings"></div>
-                            </div>
-                        </div>                        
-                    </div>
-                </div>
-            </div>
-          
-           
-        </div>
-    </div>
+						<script>
+							const now = new Date();
+							const hour = now.getHours();
+					
+							let greeting;
+					
+							if (hour < 12) {
+								greeting = "Good Morning";
+							} else if (hour < 18) {
+								greeting = "Good Afternoon";
+							} else {
+								greeting = "Good Evening";
+							}
+					
+							document.getElementById("greeting").innerHTML = greeting + " {{request.user.first_name}}!";
+						</script>
+						
+					</div>
+					
+				</div>
+			</div>
+		</div>	
+
+		
+		<div class="row mt-3">
+			<div class="col-xxl-6 col-lg-6 col-md-12 mb-md-4 mb-3">
+				<div class="card card-border mb-0 h-100">
+					<div class="card-header card-header-action">
+						<h6>Employee Overview</h6>
+					</div>
+					<div class="card-body">
+						<canvas id="myChart"></canvas>
+						<div class="separator-full mt-5"></div>
+						<div class="flex-grow-1 ms-lg-3">
+							<div class="row">
+								<div class="col-xxl-4 col-sm-6 mb-xxl-0 mb-3">
+									<span class="d-block fw-medium fs-7">Employee Summary</span>
+									<div class="d-flex align-items-center">
+										<span class="d-block fs-4 fw-medium text-dark mb-0">{{employee.user.salary}}</span>
+									</div>
+								</div>
+								<div class="col-xxl-4 col-sm-6 mb-xxl-0 mb-3">
+									<span class="d-block fw-medium fs-7">Expenses Summary</span>
+									<div class="d-flex align-items-center">
+										<span class="d-block fs-4 fw-medium text-dark mb-0">Rs. {{employee.user.}}</span>
+									</div>
+								</div>
+								<div class="col-xxl-4 col-sm-6 mb-xxl-0 mb-3">
+									<span class="d-block fw-medium fs-7">Receipt summary</span>
+									<div class="d-flex align-items-center">
+										<span class="d-block fs-4 fw-medium text-dark mb-0">Rs. {{employee.user.}}</span>
+									</div>
+								</div>
+								
+							</div>	
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xxl-6 col-lg-6 col-md-12 mb-md-4 mb-3">
+				<div class="card card-border mb-0 h-100">
+					<div class="card-header card-header-action">
+						<h6>Employees</h6>
+					</div>
+					<div class="card-body">
+						<input class="form-control mb-2 table-search" id="" type="text" placeholder="Search...">
+						<div class="table-responsive">
+							<table class="table table-filter mb-0">
+								<thead>
+									<tr>
+										<th>Employee Name</th>
+										<th>Department</th>
+										<th>Actions</th>
+									</tr>
+								</thead>
+								<tbody class="nicescroll-bar">
+									{% for employee in employee %}
+									<tr>
+										<td>{{ employee.user.first_name }}</td>
+										<td>{{ employee.department }}</td>
+
+										<td>
+											<div class="d-flex align-items-center">
+												<div class="d-flex">
+													{% if 'read_finance' in permissions %}
+													<a class="btn btn-icon btn-flush-dark btn-rounded flush-soft-hover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="View" href="{% url 'view_employee' id=employee.id %}"><span class="btn-icon-wrap"><span class="feather-icon"><i class="material-icons">visibility</i></span></span></a>
+													{% else %}
+													<p>---</p>
+													{% endif %}
+												</div>
+											</div>
+										</td>
+									</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
 </div>
 
 
-{% include 'footer.html' %}                            
+
+
+<script>
+  // Define the data for Invoice, expense, and receipt
+  const invoiceData = [{% for totals in totals_by_day %}{{ totals.invoice_total|default_if_none:0 }}{% if not forloop.last %}, {% endif %}{% endfor %}];
+  const expenseData = [{% for totals in totals_by_day %}{{ totals.expense_total|default_if_none:0 }}{% if not forloop.last %}, {% endif %}{% endfor %}];
+  const receiptData = [{% for totals in totals_by_day %}{{ totals.receipt_total|default_if_none:0 }}{% if not forloop.last %}, {% endif %}{% endfor %}];
+
+  // Define the labels for the last 7 days
+  const labels = [{% for totals in totals_by_day %}"{{ totals.date }}"{% if not forloop.last %}, {% endif %}{% endfor %}];
+  // Create the chart
+  const ctx = document.getElementById('myChart').getContext('2d');
+  const chart = new Chart(ctx, {
+	type: 'line',
+	data: {
+	  labels: labels,
+	  datasets: [{
+		label: 'Invoice',
+		data: invoiceData,
+		borderColor: '#585858',
+		fill: false
+	  }, {
+		label: 'Expense',
+		data: expenseData,
+		borderColor: '#007D88',
+		fill: false
+	  }, {
+		label: 'Receipt',
+		data: receiptData,
+		borderColor: '#25cba1',
+		fill: false
+	  }]
+	},
+	options: {
+		legend: {
+			show:true,
+			fill: true
+		},
+		responsive: true,
+		scales: {
+		  xAxes: [{
+			display: true,
+			scaleLabel: {
+			  display: true,
+			  labelString: 'Date'
+			}
+		  }],
+		  yAxes: [{
+			display: true,
+			scaleLabel: {
+			  display: true,
+			  labelString: 'Amount'
+			}
+		  }]
+		}
+	  }
+	});
+</script>
+
+{% include 'footer.html' %}
