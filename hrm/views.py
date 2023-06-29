@@ -460,337 +460,366 @@ def advance_salary(request):
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')
-    
+
 def salary_payment(request):
-    if 'read_hrm' in custom_data_views(request):
-        if request.method =="POST":
+    if 'create_hrm' in custom_data_views(request):
+        if request.method == "POST":
             month = request.POST['month']
             employee = request.POST['employee']
-            source = request.POST['source']
-
-            selected_month = MonthSetup.objects.get(id=month)
+            type = 'salary'
+            leave_deduction = 0
+            tax_deduction = 0
+            employee = Employee.objects.get(id=employee)
+            sel_month = MonthSetup.objects.get(month=month)
+            salary_obj = Salary.objects.filter(employee=employee, month=sel_month, type='salary')
+            if salary_obj:
+                messages.info(request, "You have already paid the salary of this employee for this month. Please select another month.")
+            else:
+                Salary.objects.create(employee=employee, month=sel_month, type=type, leave_deduction=leave_deduction, tax_deduction=tax_deduction)
+                messages.info(request, "Salary paid successfully.")
+            return redirect('payroll')
+        else:
             all_employees = Employee.objects.all()
             months = MonthSetup.objects.all()
-            start_date = selected_month.start_date
-            end_date = selected_month.end_date
-            print(start_date,end_date)
-            data_list=[]
-
-
-
-            if source  == 'leaves':
-                if employee == 'all':
-                    all_emp = Employee.objects.all()
-                    for emp_to_pay in all_emp:
-                        logs = LogSheet.objects.filter(user=emp_to_pay.id, created__range=(start_date, end_date))
-                        present_days = logs.count()
-                        leaves = Leave.objects.filter(employee = emp_to_pay,status='accepted')
-                        absent_days = 0
-                        leave_days =[]
-                        for leave in leaves:
-                            leave_dates = LeaveDate.objects.filter(leave=leave)
-                            for leave_date in leave_dates:
-                                if start_date <= leave_date.date <= end_date:
-                                    absent_days += 1
-                                    leave_days.append(leave_date.date)
-                        holiday_dates = []
-                        holidays = Holidays.objects.filter(month=selected_month)
-                        for holidays in holidays:
-                            holiday_dates.append(holidays.holiday)
-                        unpayable_holidays = [x for x in leave_days if x in holiday_dates]
-                        total_month_dates = end_date-start_date
-                        diff = total_month_dates.days+1
-                        payable_days = diff-len(unpayable_holidays)-len(leave_days)
-
-                        # payable_days = present_days+len(holiday_dates)-len(leave_days)
-                        salary=emp_to_pay.emp_salary
-                        emp_daily_salary = int(salary)/diff
-                        salary_to_pay = emp_daily_salary*payable_days
-
-
-                        
-                        if salary_to_pay <= 41666.66:
-                            tax_deduction = salary_to_pay * 0.01
-                        elif salary_to_pay <= 58333.33:
-                            tax_deduction = 500 + (salary_to_pay - 41666.66) * 0.1
-                        elif salary_to_pay <= 83333.33:
-                            tax_deduction = 2500 + (salary_to_pay - 58333.33) * 0.2
-                        elif salary_to_pay <= 166666.67:
-                            tax_deduction = 6500 + (salary_to_pay - 83333.33) * 0.3
-                        else:
-                            tax_deduction = 24166.67 + (salary_to_pay - 166666.67) * 0.36
-
-
-
-                        leave_deduction = len(leave_days) * emp_daily_salary
-                        advance_this_month =0
-                        advance_obj = Salary.objects.filter(employee = emp_to_pay,type='advance',month=selected_month)
-                        for adv in advance_obj:
-                            print(adv.paid_salary)
-                            advance_this_month = advance_this_month + adv.paid_salary
-                        final_salary = salary_to_pay-tax_deduction-leave_deduction-advance_this_month
-                        salary_status = Salary.objects.filter(employee = emp_to_pay,month=selected_month,type='salary')
-                        if salary_status:
-                            status='paid'
-                        else:
-                            status='unpaid'
-                        
-                        data_list.append({
-                            'emp_id':emp_to_pay,
-                            'month':selected_month.month,
-                            'employee':str(emp_to_pay.user.first_name +' '+ emp_to_pay.user.last_name),
-                            'present_days': present_days,
-                            'absent_days':absent_days,
-                            'payable_days':payable_days,
-                            'salary':salary,
-                            'final_salary':final_salary,
-                            'tax_deduction':tax_deduction,
-                            'leave_deduction':leave_deduction,
-                            'status':status,
-                            'advance_this_month':advance_this_month
-                        })
-                    context = {
-                        'data_list':data_list,
+            context = {
                         'months':months,
-                        'month':selected_month.month,
                         'all_employees':all_employees,
                     }
-                
-                
-                
-                else:
-                    emp_to_pay = Employee.objects.get(id = employee)
-                    logs = LogSheet.objects.filter(user=emp_to_pay.id, created__range=(start_date, end_date))
-                    present_days = logs.count()
-                    leaves = Leave.objects.filter(employee = emp_to_pay,status='accepted')
-                    absent_days = 0
-                    leave_days =[]
-                    for leave in leaves:
-                        leave_dates = LeaveDate.objects.filter(leave=leave)
-                        for leave_date in leave_dates:
-                            if start_date <= leave_date.date <= end_date:
-                                absent_days += 1
-                                leave_days.append(leave_date.date)
-                    holiday_dates = []
-                    holidays = Holidays.objects.filter(month=selected_month)
-                    for holidays in holidays:
-                        holiday_dates.append(holidays.holiday)
-                    unpayable_holidays = [x for x in leave_days if x in holiday_dates]
-                    total_month_dates = end_date-start_date
-                    diff = total_month_dates.days+1
-                    payable_days = diff-len(unpayable_holidays)-len(leave_days)
-
-                    # payable_days = present_days+len(holiday_dates)-len(leave_days)
-                    salary=emp_to_pay.emp_salary
-                    emp_daily_salary = int(salary)/diff
-                    salary_to_pay = emp_daily_salary*payable_days
-
-
-
-                    if salary_to_pay <= 41666.66:
-                        tax_deduction = salary_to_pay * 0.01
-                    elif salary_to_pay <= 58333.33:
-                        tax_deduction = 500 + (salary_to_pay - 41666.66) * 0.1
-                    elif salary_to_pay <= 83333.33:
-                        tax_deduction = 2500 + (salary_to_pay - 58333.33) * 0.2
-                    elif salary_to_pay <= 166666.67:
-                        tax_deduction = 6500 + (salary_to_pay - 83333.33) * 0.3
-                    else:
-                        tax_deduction = 24166.67 + (salary_to_pay - 166666.67) * 0.36
-
-
-                    leave_deduction = len(leave_days) * emp_daily_salary
-
-                    advance_this_month = 0
-                    advance_obj = Salary.objects.filter(employee = emp_to_pay,type='advance',month=selected_month)
-                    print(advance_obj)
-                    for adv in advance_obj:
-                        advance_this_month = advance_this_month + adv.paid_salary
-                    final_salary = salary_to_pay-tax_deduction-leave_deduction-advance_this_month
-                    salary_status = Salary.objects.filter(employee = employee,month=selected_month,type='salary')
-                    if salary_status:
-                        status='paid'
-                    else:
-                        status='unpaid'
-
-                    all_employees = Employee.objects.all()
-                    months = MonthSetup.objects.all()
-                    data_list.append({
-                        'emp_id':emp_to_pay,
-                        'month':selected_month.month,
-                        'employee':str(emp_to_pay.user.first_name +' '+ emp_to_pay.user.last_name),
-                        'present_days': present_days,
-                        'absent_days':absent_days,
-                        'payable_days':payable_days,
-                        'salary':salary,
-                        'final_salary':final_salary,
-                        'tax_deduction':tax_deduction,
-                        'leave_deduction':leave_deduction,
-                        'status':status,
-                        'advance_this_month':advance_this_month
-                    })
-                    context = {
-                        'data_list':data_list,
-                        'months':months,
-                        'month':selected_month.month,
-                        'all_employees':all_employees,
-                    }
-            elif source  == 'attendance_device':
-                if employee == 'all':
-                    all_emp = Employee.objects.all()
-                    for emp_to_pay in all_emp:
-                        attendance_employee = Employee.objects.get(id = emp_to_pay.id)
-
-                        device_obj = DeviceAttendanceUser.objects.get(employee = attendance_employee)
-                        attendance_record = DeviceAttendance.objects.filter(att_user=device_obj, date__range=(start_date, end_date))
-                        present_days = attendance_record.count()
-                        holiday_dates = []
-                        holidays = Holidays.objects.filter(month=selected_month)
-                        for holidays in holidays:
-                            holiday_dates.append(holidays.holiday)
-
-                        holiday_count  = Holidays.objects.filter(month=selected_month).count()
-                        total_month_dates = end_date-start_date
-                        diff = total_month_dates.days+1
-                        payable_days = present_days +holiday_count
-
-                        absent_days = diff - payable_days
-                        salary=emp_to_pay.emp_salary
-                        emp_daily_salary = int(salary)/diff
-                        salary_to_pay = emp_daily_salary*diff
-                        taxable_salary = emp_daily_salary*payable_days
-
-
-
-                        if taxable_salary <= 41666.66:
-                            tax_deduction = taxable_salary * 0.01
-                        elif taxable_salary <= 58333.33:
-                            tax_deduction = 500 + (taxable_salary - 41666.66) * 0.1
-                        elif taxable_salary <= 83333.33:
-                            tax_deduction = 2500 + (taxable_salary - 58333.33) * 0.2
-                        elif taxable_salary <= 166666.67:
-                            tax_deduction = 6500 + (taxable_salary - 83333.33) * 0.3
-                        else:
-                            tax_deduction = 24166.67 + (taxable_salary - 166666.67) * 0.36
-
-
-
-                        leave_days = diff - payable_days
-                        leave_deduction = leave_days * emp_daily_salary
-                        advance_this_month =0
-                        advance_obj = Salary.objects.filter(employee = emp_to_pay,type='advance',month=selected_month)
-                        for adv in advance_obj:
-                            advance_this_month = advance_this_month + adv.paid_salary
-                        final_salary = salary_to_pay-tax_deduction-leave_deduction-advance_this_month
-                        salary_status = Salary.objects.filter(employee = emp_to_pay,month=selected_month,type='salary')
-                        if salary_status:
-                            status='paid'
-                        else:
-                            status='unpaid'
-                        
-                        data_list.append({
-                            'emp_id':emp_to_pay,
-                            'month':selected_month.month,
-                            'employee':str(emp_to_pay.user.first_name +' '+ emp_to_pay.user.last_name),
-                            'present_days': present_days,
-                            'absent_days':absent_days,
-                            'payable_days':payable_days,
-                            'salary':salary,
-                            'final_salary':final_salary,
-                            'tax_deduction':tax_deduction,
-                            'leave_deduction':leave_deduction,
-                            'status':status,
-                            'advance_this_month':advance_this_month
-                        })
-                    context = {
-                        'data_list':data_list,
-                        'months':months,
-                        'month':selected_month.month,
-                        'all_employees':all_employees,
-                    }
-                else:
-                    attendance_employee = Employee.objects.get(id = employee)
-
-                    device_obj = DeviceAttendanceUser.objects.get(employee = attendance_employee)
-                    attendance_record = DeviceAttendance.objects.filter(att_user=device_obj, date__range=(start_date, end_date))
-                    present_days = attendance_record.count()
-                    holiday_dates = []
-                    holidays = Holidays.objects.filter(month=selected_month)
-                    for holidays in holidays:
-                        holiday_dates.append(holidays.holiday)
-
-                    holiday_count  = Holidays.objects.filter(month=selected_month).count()
-                    total_month_dates = end_date-start_date
-                    diff = total_month_dates.days+1
-                    payable_days = present_days + holiday_count
-
-                    absent_days = diff - payable_days
-                    salary=attendance_employee.emp_salary
-                    emp_daily_salary = int(salary)/diff
-                    salary_to_pay = emp_daily_salary*diff
-                    taxable_salary = emp_daily_salary*payable_days
-
-
-
-                    if taxable_salary <= 41666.66:
-                        tax_deduction = taxable_salary * 0.01
-                    elif taxable_salary <= 58333.33:
-                        tax_deduction = 500 + (taxable_salary - 41666.66) * 0.1
-                    elif taxable_salary <= 83333.33:
-                        tax_deduction = 2500 + (taxable_salary - 58333.33) * 0.2
-                    elif taxable_salary <= 166666.67:
-                        tax_deduction = 6500 + (taxable_salary - 83333.33) * 0.3
-                    else:
-                        tax_deduction = 24166.67 + (taxable_salary - 166666.67) * 0.36
-
-
-
-
-                    leave_days = diff - payable_days
-                    leave_deduction = leave_days * emp_daily_salary
-                    advance_this_month =0
-                    advance_obj = Salary.objects.filter(employee = attendance_employee,type='advance',month=selected_month)
-                    for adv in advance_obj:
-                        advance_this_month = advance_this_month + adv.paid_salary
-
-                    print(salary_to_pay,leave_deduction,advance_this_month,tax_deduction)
-                    final_salary = salary_to_pay-tax_deduction-leave_deduction-advance_this_month
-                    salary_status = Salary.objects.filter(employee = attendance_employee,month=selected_month,type='salary')
-                    if salary_status:
-                        status='paid'
-                    else:
-                        status='unpaid'
-
-                    all_employees = Employee.objects.all()
-                    months = MonthSetup.objects.all()
-                    
-                    data_list.append({
-                        'emp_id':attendance_employee,
-                        'month':selected_month.month,
-                        'employee':str(attendance_employee.user.first_name +' '+ attendance_employee.user.last_name),
-                        'present_days': present_days,
-                        'absent_days':absent_days,
-                        'payable_days':payable_days,
-                        'salary':salary,
-                        'final_salary':final_salary,
-                        'tax_deduction':tax_deduction,
-                        'leave_deduction':leave_deduction,
-                        'status':status,
-                        'advance_this_month':advance_this_month
-                    })
-                    context = {
-                        'data_list':data_list,
-                        'months':months,
-                        'month':selected_month.month,
-                        'all_employees':all_employees,
-                    }
-            else:
-                context=None
-                return redirect('payroll')
-        return render(request,'hrm/salary_payment.html',context)
+            return render(request,'hrm/payroll.html',context)
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')
+
+# def salary_payment(request):
+#     if 'read_hrm' in custom_data_views(request):
+#         if request.method =="POST":
+#             month = request.POST['month']
+#             employee = request.POST['employee']
+#             source = request.POST['source']
+
+#             selected_month = MonthSetup.objects.get(id=month)
+#             all_employees = Employee.objects.all()
+#             months = MonthSetup.objects.all()
+#             start_date = selected_month.start_date
+#             end_date = selected_month.end_date
+#             print(start_date,end_date)
+#             data_list=[]
+
+
+
+#             if source  == 'leaves':
+#                 if employee == 'all':
+#                     all_emp = Employee.objects.all()
+#                     for emp_to_pay in all_emp:
+#                         logs = LogSheet.objects.filter(user=emp_to_pay.id, created__range=(start_date, end_date))
+#                         present_days = logs.count()
+#                         leaves = Leave.objects.filter(employee = emp_to_pay,status='accepted')
+#                         absent_days = 0
+#                         leave_days =[]
+#                         for leave in leaves:
+#                             leave_dates = LeaveDate.objects.filter(leave=leave)
+#                             for leave_date in leave_dates:
+#                                 if start_date <= leave_date.date <= end_date:
+#                                     absent_days += 1
+#                                     leave_days.append(leave_date.date)
+#                         holiday_dates = []
+#                         holidays = Holidays.objects.filter(month=selected_month)
+#                         for holidays in holidays:
+#                             holiday_dates.append(holidays.holiday)
+#                         unpayable_holidays = [x for x in leave_days if x in holiday_dates]
+#                         total_month_dates = end_date-start_date
+#                         diff = total_month_dates.days+1
+#                         payable_days = diff-len(unpayable_holidays)-len(leave_days)
+
+#                         # payable_days = present_days+len(holiday_dates)-len(leave_days)
+#                         salary=emp_to_pay.emp_salary
+#                         emp_daily_salary = int(salary)/diff
+#                         salary_to_pay = emp_daily_salary*payable_days
+
+
+                        
+#                         if salary_to_pay <= 41666.66:
+#                             tax_deduction = salary_to_pay * 0.01
+#                         elif salary_to_pay <= 58333.33:
+#                             tax_deduction = 500 + (salary_to_pay - 41666.66) * 0.1
+#                         elif salary_to_pay <= 83333.33:
+#                             tax_deduction = 2500 + (salary_to_pay - 58333.33) * 0.2
+#                         elif salary_to_pay <= 166666.67:
+#                             tax_deduction = 6500 + (salary_to_pay - 83333.33) * 0.3
+#                         else:
+#                             tax_deduction = 24166.67 + (salary_to_pay - 166666.67) * 0.36
+
+
+
+#                         leave_deduction = len(leave_days) * emp_daily_salary
+#                         advance_this_month =0
+#                         advance_obj = Salary.objects.filter(employee = emp_to_pay,type='advance',month=selected_month)
+#                         for adv in advance_obj:
+#                             print(adv.paid_salary)
+#                             advance_this_month = advance_this_month + adv.paid_salary
+#                         final_salary = salary_to_pay-tax_deduction-leave_deduction-advance_this_month
+#                         salary_status = Salary.objects.filter(employee = emp_to_pay,month=selected_month,type='salary')
+#                         if salary_status:
+#                             status='paid'
+#                         else:
+#                             status='unpaid'
+                        
+#                         data_list.append({
+#                             'emp_id':emp_to_pay,
+#                             'month':selected_month.month,
+#                             'employee':str(emp_to_pay.user.first_name +' '+ emp_to_pay.user.last_name),
+#                             'present_days': present_days,
+#                             'absent_days':absent_days,
+#                             'payable_days':payable_days,
+#                             'salary':salary,
+#                             'final_salary':final_salary,
+#                             'tax_deduction':tax_deduction,
+#                             'leave_deduction':leave_deduction,
+#                             'status':status,
+#                             'advance_this_month':advance_this_month
+#                         })
+#                     context = {
+#                         'data_list':data_list,
+#                         'months':months,
+#                         'month':selected_month.month,
+#                         'all_employees':all_employees,
+#                     }
+                
+                
+                
+#                 else:
+#                     emp_to_pay = Employee.objects.get(id = employee)
+#                     logs = LogSheet.objects.filter(user=emp_to_pay.id, created__range=(start_date, end_date))
+#                     present_days = logs.count()
+#                     leaves = Leave.objects.filter(employee = emp_to_pay,status='accepted')
+#                     absent_days = 0
+#                     leave_days =[]
+#                     for leave in leaves:
+#                         leave_dates = LeaveDate.objects.filter(leave=leave)
+#                         for leave_date in leave_dates:
+#                             if start_date <= leave_date.date <= end_date:
+#                                 absent_days += 1
+#                                 leave_days.append(leave_date.date)
+#                     holiday_dates = []
+#                     holidays = Holidays.objects.filter(month=selected_month)
+#                     for holidays in holidays:
+#                         holiday_dates.append(holidays.holiday)
+#                     unpayable_holidays = [x for x in leave_days if x in holiday_dates]
+#                     total_month_dates = end_date-start_date
+#                     diff = total_month_dates.days+1
+#                     payable_days = diff-len(unpayable_holidays)-len(leave_days)
+
+#                     # payable_days = present_days+len(holiday_dates)-len(leave_days)
+#                     salary=emp_to_pay.emp_salary
+#                     emp_daily_salary = int(salary)/diff
+#                     salary_to_pay = emp_daily_salary*payable_days
+
+
+
+#                     if salary_to_pay <= 41666.66:
+#                         tax_deduction = salary_to_pay * 0.01
+#                     elif salary_to_pay <= 58333.33:
+#                         tax_deduction = 500 + (salary_to_pay - 41666.66) * 0.1
+#                     elif salary_to_pay <= 83333.33:
+#                         tax_deduction = 2500 + (salary_to_pay - 58333.33) * 0.2
+#                     elif salary_to_pay <= 166666.67:
+#                         tax_deduction = 6500 + (salary_to_pay - 83333.33) * 0.3
+#                     else:
+#                         tax_deduction = 24166.67 + (salary_to_pay - 166666.67) * 0.36
+
+
+#                     leave_deduction = len(leave_days) * emp_daily_salary
+
+#                     advance_this_month = 0
+#                     advance_obj = Salary.objects.filter(employee = emp_to_pay,type='advance',month=selected_month)
+#                     print(advance_obj)
+#                     for adv in advance_obj:
+#                         advance_this_month = advance_this_month + adv.paid_salary
+#                     final_salary = salary_to_pay-tax_deduction-leave_deduction-advance_this_month
+#                     salary_status = Salary.objects.filter(employee = employee,month=selected_month,type='salary')
+#                     if salary_status:
+#                         status='paid'
+#                     else:
+#                         status='unpaid'
+
+#                     all_employees = Employee.objects.all()
+#                     months = MonthSetup.objects.all()
+#                     data_list.append({
+#                         'emp_id':emp_to_pay,
+#                         'month':selected_month.month,
+#                         'employee':str(emp_to_pay.user.first_name +' '+ emp_to_pay.user.last_name),
+#                         'present_days': present_days,
+#                         'absent_days':absent_days,
+#                         'payable_days':payable_days,
+#                         'salary':salary,
+#                         'final_salary':final_salary,
+#                         'tax_deduction':tax_deduction,
+#                         'leave_deduction':leave_deduction,
+#                         'status':status,
+#                         'advance_this_month':advance_this_month
+#                     })
+#                     context = {
+#                         'data_list':data_list,
+#                         'months':months,
+#                         'month':selected_month.month,
+#                         'all_employees':all_employees,
+#                     }
+#             elif source  == 'attendance_device':
+#                 if employee == 'all':
+#                     all_emp = Employee.objects.all()
+#                     for emp_to_pay in all_emp:
+#                         attendance_employee = Employee.objects.get(id = emp_to_pay.id)
+
+#                         device_obj = DeviceAttendanceUser.objects.get(employee = attendance_employee)
+#                         attendance_record = DeviceAttendance.objects.filter(att_user=device_obj, date__range=(start_date, end_date))
+#                         present_days = attendance_record.count()
+#                         holiday_dates = []
+#                         holidays = Holidays.objects.filter(month=selected_month)
+#                         for holidays in holidays:
+#                             holiday_dates.append(holidays.holiday)
+
+#                         holiday_count  = Holidays.objects.filter(month=selected_month).count()
+#                         total_month_dates = end_date-start_date
+#                         diff = total_month_dates.days+1
+#                         payable_days = present_days +holiday_count
+
+#                         absent_days = diff - payable_days
+#                         salary=emp_to_pay.emp_salary
+#                         emp_daily_salary = int(salary)/diff
+#                         salary_to_pay = emp_daily_salary*diff
+#                         taxable_salary = emp_daily_salary*payable_days
+
+
+
+#                         if taxable_salary <= 41666.66:
+#                             tax_deduction = taxable_salary * 0.01
+#                         elif taxable_salary <= 58333.33:
+#                             tax_deduction = 500 + (taxable_salary - 41666.66) * 0.1
+#                         elif taxable_salary <= 83333.33:
+#                             tax_deduction = 2500 + (taxable_salary - 58333.33) * 0.2
+#                         elif taxable_salary <= 166666.67:
+#                             tax_deduction = 6500 + (taxable_salary - 83333.33) * 0.3
+#                         else:
+#                             tax_deduction = 24166.67 + (taxable_salary - 166666.67) * 0.36
+
+
+
+#                         leave_days = diff - payable_days
+#                         leave_deduction = leave_days * emp_daily_salary
+#                         advance_this_month =0
+#                         advance_obj = Salary.objects.filter(employee = emp_to_pay,type='advance',month=selected_month)
+#                         for adv in advance_obj:
+#                             advance_this_month = advance_this_month + adv.paid_salary
+#                         final_salary = salary_to_pay-tax_deduction-leave_deduction-advance_this_month
+#                         salary_status = Salary.objects.filter(employee = emp_to_pay,month=selected_month,type='salary')
+#                         if salary_status:
+#                             status='paid'
+#                         else:
+#                             status='unpaid'
+                        
+#                         data_list.append({
+#                             'emp_id':emp_to_pay,
+#                             'month':selected_month.month,
+#                             'employee':str(emp_to_pay.user.first_name +' '+ emp_to_pay.user.last_name),
+#                             'present_days': present_days,
+#                             'absent_days':absent_days,
+#                             'payable_days':payable_days,
+#                             'salary':salary,
+#                             'final_salary':final_salary,
+#                             'tax_deduction':tax_deduction,
+#                             'leave_deduction':leave_deduction,
+#                             'status':status,
+#                             'advance_this_month':advance_this_month
+#                         })
+#                     context = {
+#                         'data_list':data_list,
+#                         'months':months,
+#                         'month':selected_month.month,
+#                         'all_employees':all_employees,
+#                     }
+#                 else:
+#                     attendance_employee = Employee.objects.get(id = employee)
+
+#                     device_obj = DeviceAttendanceUser.objects.get(employee = attendance_employee)
+#                     attendance_record = DeviceAttendance.objects.filter(att_user=device_obj, date__range=(start_date, end_date))
+#                     present_days = attendance_record.count()
+#                     holiday_dates = []
+#                     holidays = Holidays.objects.filter(month=selected_month)
+#                     for holidays in holidays:
+#                         holiday_dates.append(holidays.holiday)
+
+#                     holiday_count  = Holidays.objects.filter(month=selected_month).count()
+#                     total_month_dates = end_date-start_date
+#                     diff = total_month_dates.days+1
+#                     payable_days = present_days + holiday_count
+
+#                     absent_days = diff - payable_days
+#                     salary=attendance_employee.emp_salary
+#                     emp_daily_salary = int(salary)/diff
+#                     salary_to_pay = emp_daily_salary*diff
+#                     taxable_salary = emp_daily_salary*payable_days
+
+
+
+#                     if taxable_salary <= 41666.66:
+#                         tax_deduction = taxable_salary * 0.01
+#                     elif taxable_salary <= 58333.33:
+#                         tax_deduction = 500 + (taxable_salary - 41666.66) * 0.1
+#                     elif taxable_salary <= 83333.33:
+#                         tax_deduction = 2500 + (taxable_salary - 58333.33) * 0.2
+#                     elif taxable_salary <= 166666.67:
+#                         tax_deduction = 6500 + (taxable_salary - 83333.33) * 0.3
+#                     else:
+#                         tax_deduction = 24166.67 + (taxable_salary - 166666.67) * 0.36
+
+
+
+
+#                     leave_days = diff - payable_days
+#                     leave_deduction = leave_days * emp_daily_salary
+#                     advance_this_month =0
+#                     advance_obj = Salary.objects.filter(employee = attendance_employee,type='advance',month=selected_month)
+#                     for adv in advance_obj:
+#                         advance_this_month = advance_this_month + adv.paid_salary
+
+#                     print(salary_to_pay,leave_deduction,advance_this_month,tax_deduction)
+#                     final_salary = salary_to_pay-tax_deduction-leave_deduction-advance_this_month
+#                     salary_status = Salary.objects.filter(employee = attendance_employee,month=selected_month,type='salary')
+#                     if salary_status:
+#                         status='paid'
+#                     else:
+#                         status='unpaid'
+
+#                     all_employees = Employee.objects.all()
+#                     months = MonthSetup.objects.all()
+                    
+#                     data_list.append({
+#                         'emp_id':attendance_employee,
+#                         'month':selected_month.month,
+#                         'employee':str(attendance_employee.user.first_name +' '+ attendance_employee.user.last_name),
+#                         'present_days': present_days,
+#                         'absent_days':absent_days,
+#                         'payable_days':payable_days,
+#                         'salary':salary,
+#                         'final_salary':final_salary,
+#                         'tax_deduction':tax_deduction,
+#                         'leave_deduction':leave_deduction,
+#                         'status':status,
+#                         'advance_this_month':advance_this_month
+#                     })
+#                     context = {
+#                         'data_list':data_list,
+#                         'months':months,
+#                         'month':selected_month.month,
+#                         'all_employees':all_employees,
+#                     }
+#             else:
+#                 context=None
+#                 return redirect('payroll')
+#         return render(request,'hrm/salary_payment.html',context)
+#     else:
+#         messages.info(request, "Unauthorized access.")
+#         return redirect('home')
 
 
 

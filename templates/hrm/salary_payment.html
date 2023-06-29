@@ -1,0 +1,175 @@
+{% load static %}{% include 'header.html' %}
+<!-- Main Content -->
+    <div class="hk-pg-wrapper">
+        <div class="container-xxl">
+            <div class="hk-pg-header">
+                <div class="d-flex">
+                    <div class="d-flex flex-wrap justify-content-between flex-1">
+                        <div class="mb-md-0 mb-2 me-8">
+                            <div class="d-flex align-items-center">
+                                <h1 class="pg-title">Salary Payment</h1>
+                            </div>
+                            <p id="greeting"></p>
+    
+                            <script>
+                                const now = new Date();
+                                const hour = now.getHours();
+                        
+                                let greeting;
+                        
+                                if (hour < 12) {
+                                    greeting = "Good Morning";
+                                } else if (hour < 18) {
+                                    greeting = "Good Afternoon";
+                                } else {
+                                    greeting = "Good Evening";
+                                }
+                        
+                                document.getElementById("greeting").innerHTML = greeting + " {{request.user.first_name}}!";
+                            </script>
+                            
+                        </div>
+                        {% comment %} <div class="pg-header-action-wrap">
+                            {% if 'create_hrm' in permissions %}
+                            <button class="btn btn-outline-secondary me-3" data-bs-toggle="modal" data-bs-target="#exampleModalCenterAdvance">Advance Payment</button>
+                            {% endif %}
+                            {% if 'create_hrm' in permissions %}
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">Generate Salary</button>
+                            {% endif %}
+                        </div> {% endcomment %}
+                    </div>
+                </div>
+            </div>
+            <!-- Page Body -->
+            <div class="hk-pg-body">
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="tab_block_1">
+                        <p>Month : {{month}}</p>
+                        <form action="{% url 'pay_salary' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+                                <table id="datable_1" class="table nowrap w-100 mb-5">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"><input type="checkbox" id="check-all"></th>
+                                            <th>Emp Name</th>
+                                            <th>Salary</th>
+                                            <th>Absent Days</th>
+                                            <th>Advance</th>
+                                            <th>Leave Deduction</th>
+                                            <th>Tax Deduction</th>
+                                            <th>Company Deduction</th>
+                                            <th>Final Salary</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for data_list in data_list %}
+                                        <input type="text" name='month' value="{{data_list.month}}" style="display:none;">
+                                        <tr>
+                                            {% if data_list.status == 'paid' %} 
+                                            <td><input type="checkbox" class="check" name="selected_employees" value="{{data_list.emp_id.id}}" disabled></td>
+                                            {% else %}
+                                            <td><input type="checkbox" class="check" name="selected_employees" value="{{data_list.emp_id.id}}"></td>
+                                            {% endif %}
+                                            <td>{{data_list.employee}}</td>
+                                            <td name="salary">{{data_list.salary}}</td>
+                                            <td>{{data_list.absent_days}}</td>
+                                            <td name="advance_this_month">{{data_list.advance_this_month}}</td>
+                                            <td><input type="text" class="form-control form-control-sm"  id="row-57-age" value="{{data_list.leave_deduction|floatformat:2}}" name="leave_deduction"></td>
+                                            <td><input type="text" class="form-control form-control-sm"  id="row-57-age" value="{{data_list.tax_deduction|floatformat:2}}" name="tax_deduction"></td>
+                                            <td><input type="text" class="form-control form-control-sm"  id="row-57-age" value="0.00" name="company_deduction"></td>
+                                            <td><input type="text" class="form-control form-control-sm"  id="row-57-age" value="{{data_list.final_salary|floatformat:2}}" name="final_salary"></td>
+                                            <td>
+                                                {% if data_list.status == 'paid' %}                                                           
+                                                <span class="badge badge-primary badge-outline">Paid</span>
+                                                {% else %}
+                                                <span class="badge badge-danger badge-outline">Unpaid</span>
+                                                {% endif %} 
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        
+                            <div class="row">
+                                <div class="col-xxl-12 col-lg-8 col-md-7 mb-md-4 mb-3  mt-5">
+                                    <div class="card-action-wrap">
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenterrrr">
+                                            Pay Salary
+                                        </button>
+                                        <div class="modal fade" id="exampleModalCenterrrr" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterrrr" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Are you sure you want to mark selected employees salary as paid?</h5>
+                                                    </div>
+                                                    <form action="{% url 'payroll' %}" method="POST">
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <a href="#" ><button class="btn btn-primary ms-2 d-sm-inline-block d-none">Yes</button></a>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                $("#check-all").change(function() {
+                  $(".check").prop('checked', $(this).prop("checked"));
+                });
+              
+                $(".check").change(function() {
+                  if(false == $(this).prop("checked")) {
+                    $("#check-all").prop('checked', false);
+                  }
+                  if ($('.check:checked').length == $('.check').length ){
+                      $("#check-all").prop('checked', true);
+                  }
+                });
+              });
+              
+
+
+              $(document).ready(function() {
+                // Listen for changes to any input field in the table body
+                $('tbody').on('input', 'input', function() {
+                  // Find the parent row of the changed input field
+                  var row = $(this).closest('tr');
+                  
+                  // Get the values of all the relevant input fields in that row
+                  var salary = parseFloat(row.find('[name="salary"]').text());
+                  var advance = parseFloat(row.find('[name="advance_this_month"]').text());
+                  var tax = parseFloat(row.find('[name="tax_deduction"]').val());
+                  var leave = parseFloat(row.find('[name="leave_deduction"]').val());
+                  var company = parseFloat(row.find('[name="company_deduction"]').val());
+                  
+                  // Calculate the final salary
+                  var finalSalary = salary - advance - tax - leave - company;
+                  
+                  // Update the final salary input field in the same row
+                  row.find('[name="final_salary"]').val(finalSalary.toFixed(2));
+                });
+              });
+              
+              
+              
+              
+        </script>    
+              
+    </div>
+    <!-- /Main Content -->
+</div>
+<!-- /Wrapper -->
+{% include 'footer.html' %}

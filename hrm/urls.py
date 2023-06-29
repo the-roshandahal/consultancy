@@ -30,6 +30,7 @@ urlpatterns = [
     
     
     path("leave/", views.leave, name="leave"),
+
     path("apply_leave/", views.apply_leave, name="apply_leave"),
     path("add_emp_leave/", views.add_emp_leave, name="add_emp_leave"),
     path("emp_leaves/", views.emp_leaves, name="emp_leaves"),
@@ -37,14 +38,6 @@ urlpatterns = [
     
     # path("accept_leave/<int:id>", views.accept_leave, name="accept_leave"),
     # path("deny_leave/<int:id>", views.deny_leave, name="deny_leave"),
-    
-    
-    path("edit_device_data/<int:id>", views.edit_device_data, name="edit_device_data"),
-    path("delete_device_data/<int:id>", views.delete_device_data, name="delete_device_data"),
-    
-    path("add_device_data/", views.add_device_data, name="add_device_data"),
-    path("device_attendance/", views.device_attendance, name="device_attendance"),
- 
     
     path("add_year/", views.add_year, name="add_year"),
     path("delete_year/<int:id>", views.delete_year, name="delete_year"),

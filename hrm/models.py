@@ -119,21 +119,7 @@ class DeviceData(models.Model):
 
     def __str__(self):
         return self.ip_address
-
-class LogSheet(models.Model):
-    user = models.ForeignKey(Employee, on_delete=models.CASCADE)
-    punch_in_time = models.TimeField()
-    punch_out_time = models.TimeField(null = True, blank = True)
-    tasks = models.TextField(null = True, blank = True)
-    meetings = models.TextField(null = True, blank = True)
-    remarks = models.TextField(null = True, blank = True)
-    created = models.DateField(auto_now_add=True)
-
-    def __str__(self):
-        return self.user.user.username
-
-    class Meta:
-        verbose_name_plural = "01. Log Sheet"    
+ 
     
 class DeviceAttendanceUser(models.Model):
     uid = models.IntegerField()
@@ -161,14 +147,3 @@ class Attendance(models.Model):
     class Meta:
         verbose_name_plural = "02. Attendance"
 
-
-class DeviceAttendance(models.Model):
-    att_user = models.ForeignKey(DeviceAttendanceUser, on_delete=models.CASCADE)
-    date = models.DateField()
-    punchin_timestamp = models.TimeField()
-    punchout_timestamp = models.TimeField(null=True, blank=True)
-    def __str__(self):
-        return f"{self.att_user.uid} -{self.date}- {self.punchin_timestamp} - {self.punchout_timestamp}"
-
-    class Meta:
-        verbose_name_plural = "02. Attendance"
