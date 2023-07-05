@@ -47,9 +47,6 @@ urlpatterns = [
     path("delete_month/<int:id>", views.delete_month, name="delete_month"),
     path("edit_month/<int:id>", views.edit_month, name="edit_month"),
 
-    path("employee_dashboard/",views.employee_dashboard,name="employee_dashboard"),
-
-
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

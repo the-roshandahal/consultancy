@@ -9,6 +9,10 @@ from account.context_processors import custom_data_views
 
 # Create your views here.
 
+def student_dashboard(request):
+    return render (request,'student/dashboard.html')
+
+
 def student_setup(request):
     if 'read_student' in custom_data_views(request):
         student_stage = StudentStage.objects.all()

@@ -28,7 +28,7 @@
                     
                     
                     
-                    
+                   
                     <li>
                         <a href=""><i class="material-icons-two-tone">settings</i>Settings<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                         <ul class="sub-menu">
@@ -71,6 +71,7 @@
                            
                         </ul>    
                     </li>
+            
                     <li class="sidebar-title">
                         Features
                     </li>
@@ -112,17 +113,15 @@
                     </li> {% endcomment %}
                     <li>
                         <a href=""><i class="material-icons-two-tone">person_add</i>Hrm system<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
-                        <ul class="sub-menu">
-                            {% if 'read_hrm' in permissions %}
+                        <ul class="sub-menu">    
                             <li>
                                 <a href="{% url 'employees' %}">Employees</a>
-                            </li>
-                            {% endif %}
-                            {% if 'manage_hrm' in permissions %}
+                            </li>                        
+                            
                             <li>
                                 <a href="{% url 'manage_attendance' %}">Employee attendance</a>
                             </li>
-                            {% endif %}
+                            
                             {% if 'manage_hrm' in permissions %}
                             <li>
                                 <a href="{% url 'emp_leaves' %}">Leave requests</a>
@@ -138,20 +137,23 @@
                         </ul>
                     </li>
                     <li>
+                        {% if 'read_course' in permissions %}
                         <a href=""><i class="material-icons-two-tone">golf_course</i>Courses<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                         <ul class="sub-menu">
                             {% if 'read_course' in permissions %}
                             <li>
                                 <a href="{% url 'courses' %}">Courses</a>
                             </li>
-                            {% endif %}
+                           
                             <li>
                                 <a href="{% url 'services' %}">Services</a>
                             </li>
-                            
+                            {% endif %}    
                         </ul>
+                        {% endif %}
                     </li>
                     <li>
+                        {% if 'read_student' in permissions %}
                         <a href="#"><i class="material-icons-two-tone">emoji_people</i>Students<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                         <ul class="sub-menu">
                             {% if 'read_student' in permissions %}
@@ -160,8 +162,10 @@
                             {% endif %}
                             </li>
                         </ul>
+                        {% endif %}
                     </li>
                     <li>
+                        {% if 'read_finance' in permissions %}
                         <a href="#"><i class="material-icons-two-tone">account_balance</i>Accounting<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                         <ul class="sub-menu">
                             {% if 'read_finance' in permissions %}
@@ -180,6 +184,7 @@
                             </li>
                             {% endif %}
                         </ul>
+                        {% endif %}
                     </li>
                     <li>
                         <a href="{% url 'todo' %}"><i class="material-icons-two-tone">done</i>Todo</a>

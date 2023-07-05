@@ -72,10 +72,12 @@ def view_inquiry(request,id):
         logs = InquiryLogs.objects.filter(inquiry=id).order_by('-created')
         notes = InquiryNote.objects.filter(inquiry=id)
         stage = InquiryStage.objects.all()
+        employee = Employee.objects.all()
         context={
             'inquiry_data':inquiry_data,
             'logs':logs,
             'notes':notes,
+            'employee':employee,
             'stage':stage,
         }
         return render(request,'inquiry/view_inquiry.html',context)

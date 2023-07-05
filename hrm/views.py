@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from .models import *
 from features.models import *
+from finance.models import *
 import pandas as pd
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
@@ -291,13 +292,6 @@ def delete_designation(request,id):
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')
-
-def employee_dashboard(request):
-    employee = Employee.objects.all()
-    context = {
-        'employee':employee,
-    }
-    return render (request,'hrm/dashboard.html',context)
 
 def leave(request):
     if request.user.is_authenticated:

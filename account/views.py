@@ -2,6 +2,7 @@ from django.contrib.auth import logout as django_logout
 from django.shortcuts import render, redirect
 from .models import *
 from hrm.models import *
+from student.models import *
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
 from django.conf import settings
@@ -27,15 +28,22 @@ def login(request):
                 return redirect('home')
                 # return redirect("admin:index")
 
-            if user is not None and user.is_employee:
-                auth.login(request, user)
-                messages.info(request, "Logged in as employee successfully.")
-                return redirect('employee_dashboard')
+            if user is not None:
+                if Employee.objects.filter(user=user).exists():
+                    auth.login(request, user)
+                    messages.info(request, "Logged in as employee successfully.")
+                    return redirect('home')
+
+                
+                if Student.objects.filter(user=user).exists():
+                    auth.login(request, user)
+                    messages.info(request, "Logged in as student successfully.")
+                    return redirect('student_dashboard')
 
             if user is not None:
                 auth.login(request, user)
                 messages.info(request, "Logged in successfully.")
-                return redirect('home')
+                return redirect('home')  
         else:
             return render (request,'account/login.html')
 
