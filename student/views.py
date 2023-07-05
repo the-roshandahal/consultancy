@@ -10,19 +10,23 @@ from account.context_processors import custom_data_views
 # Create your views here.
 
 def student_dashboard(request):
-    # student = Student.objects.get(id=id)
-    # invoices = Invoice.objects.filter(student=id)
-    # receipts = Receipt.objects.filter(student=id)
-    # notes = StudentNotes.objects.filter(student=id).order_by('-created')
-    # files = StudentFiles.objects.filter(student=id).order_by('-created')
-    # context = {
-    #     'student': student,
-    #     'invoices':invoices,
-    #     'receipts':receipts,
-    #     'notes':notes,
-    #     'files':files,
-    # }
-    return render (request,'student/dashboard.html')
+    logged_in_user= User.objects.get(username=request.user)
+    student = Student.objects.get(user=logged_in_user)
+    invoices = Invoice.objects.filter(student=student)
+    receipts = Receipt.objects.filter(student=student)
+    notes = StudentNotes.objects.filter(student=student).order_by('-created')
+    files = StudentFiles.objects.filter(student=student).order_by('-created')
+    context = {
+        'student': student,
+        'invoices':invoices,
+        'receipts':receipts,
+        'notes':notes,
+        'files':files,
+    }
+    return render (request,'student/dashboard.html',context)
+
+def student_receipts(request):
+    pass
 
 
 def student_setup(request):

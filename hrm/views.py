@@ -686,7 +686,7 @@ def add_employee(request):
             role = request.POST['role']
 
             pass_obj= password
-            user=User.objects.create_user(first_name=first_name,last_name=last_name,email=email,password=password,username=username)
+            user=User.objects.create_user(first_name=first_name,last_name=last_name,email=email,password=password,username=username,is_staff=True)
             permission=Permission.objects.get(role=role)
             designation = Designation.objects.get(id=designation)
             department = designation.department

@@ -13,52 +13,56 @@ import requests
 
 def home(request):
     if request.user.is_authenticated:
-        active_student_count = Student.objects.filter(active=True).count()
-        student_count = Student.objects.all().count()
-        invoice_count = Invoice.objects.all().count()
-        receipt_count = Receipt.objects.all().count()
-        invoice_amount = Invoice.objects.aggregate(sum_amount=models.Sum('invoice_amount'))['sum_amount']
-        receipt_amount = Receipt.objects.aggregate(sum_amount=models.Sum('paid_amount'))['sum_amount']
+        if request.user.is_staff or request.user.is_superuser:
+            active_student_count = Student.objects.filter(active=True).count()
+            student_count = Student.objects.all().count()
+            invoice_count = Invoice.objects.all().count()
+            receipt_count = Receipt.objects.all().count()
+            invoice_amount = Invoice.objects.aggregate(sum_amount=models.Sum('invoice_amount'))['sum_amount']
+            receipt_amount = Receipt.objects.aggregate(sum_amount=models.Sum('paid_amount'))['sum_amount']
 
-        logged_in_user = User.objects.get(username=request.user)
-        try:
-            company_user = Employee.objects.get(user=logged_in_user)
-        except:
-            company_user=None
-        incomplete_todo = ToDo.objects.filter(task_to = company_user, status = 'incomplete')[:5]
-        incomplete_todo_count = ToDo.objects.filter(task_to = company_user, status = 'incomplete').count()
+            logged_in_user = User.objects.get(username=request.user)
+            try:
+                company_user = Employee.objects.get(user=logged_in_user)
+            except:
+                company_user=None
+            incomplete_todo = ToDo.objects.filter(task_to = company_user, status = 'incomplete')[:5]
+            incomplete_todo_count = ToDo.objects.filter(task_to = company_user, status = 'incomplete').count()
 
 
 
-        random_number = random.randint(0, 1642)
-        response = requests.get("https://type.fit/api/quotes")
-        data = response.json()
-        random_quote = data[random_number]['text']
-        author = data[random_number]['author'] if data[random_number]['author'] else 'Unknown'
-        today = date.today()
-        last_7_days = today - timedelta(days=6)
-        day_format = '%B %d'
-        context = {
-            'totals_by_day': [
-                {
-                    'date': (last_7_days + timedelta(days=i)).strftime(day_format),
-                    'invoice_total': Invoice.objects.filter(created=last_7_days + timedelta(days=i)).aggregate(total=models.Sum('invoice_amount'))['total'] or 0,
-                    'receipt_total': Receipt.objects.filter(created=last_7_days + timedelta(days=i)).aggregate(total=models.Sum('paid_amount'))['total'] or 0,
-                    'expense_total': Expense.objects.filter(created=last_7_days + timedelta(days=i)).aggregate(total=models.Sum('expense_amount'))['total'] or 0,
-                }
-                for i in range(7)
-            ],
-            'active_student_count':active_student_count,
-            'student_count':student_count,
-            'invoice_amount':invoice_amount,
-            'receipt_amount':receipt_amount,
-            'receipt_count':receipt_count,
-            'invoice_count':invoice_count,
-            "incomplete_todo":incomplete_todo,
-            "incomplete_todo_count":incomplete_todo_count,
-            'random_quote':random_quote,
-            'author':author,
-        }
+            random_number = random.randint(0, 1642)
+            response = requests.get("https://type.fit/api/quotes")
+            data = response.json()
+            random_quote = data[random_number]['text']
+            author = data[random_number]['author'] if data[random_number]['author'] else 'Unknown'
+            today = date.today()
+            last_7_days = today - timedelta(days=6)
+            day_format = '%B %d'
+            context = {
+                'totals_by_day': [
+                    {
+                        'date': (last_7_days + timedelta(days=i)).strftime(day_format),
+                        'invoice_total': Invoice.objects.filter(created=last_7_days + timedelta(days=i)).aggregate(total=models.Sum('invoice_amount'))['total'] or 0,
+                        'receipt_total': Receipt.objects.filter(created=last_7_days + timedelta(days=i)).aggregate(total=models.Sum('paid_amount'))['total'] or 0,
+                        'expense_total': Expense.objects.filter(created=last_7_days + timedelta(days=i)).aggregate(total=models.Sum('expense_amount'))['total'] or 0,
+                    }
+                    for i in range(7)
+                ],
+                'active_student_count':active_student_count,
+                'student_count':student_count,
+                'invoice_amount':invoice_amount,
+                'receipt_amount':receipt_amount,
+                'receipt_count':receipt_count,
+                'invoice_count':invoice_count,
+                "incomplete_todo":incomplete_todo,
+                "incomplete_todo_count":incomplete_todo_count,
+                'random_quote':random_quote,
+                'author':author,
+            }
+        else:
+            return redirect('student_dashboard')
+
         return render (request,'index.html',context) 
     else:
         return redirect('login')
