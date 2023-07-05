@@ -12,9 +12,9 @@ from account.context_processors import custom_data_views
 def student_dashboard(request):
     # student = Student.objects.get(id=id)
     # invoices = Invoice.objects.filter(student=id)
-    # receipts=Receipt.objects.filter(student=id)
-    # notes=StudentNotes.objects.filter(student=id).order_by('-created')
-    # files=StudentFiles.objects.filter(student=id).order_by('-created')
+    # receipts = Receipt.objects.filter(student=id)
+    # notes = StudentNotes.objects.filter(student=id).order_by('-created')
+    # files = StudentFiles.objects.filter(student=id).order_by('-created')
     # context = {
     #     'student': student,
     #     'invoices':invoices,

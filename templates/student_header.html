@@ -22,10 +22,9 @@
                     <li class="sidebar-title">
                         Apps
                     </li>
-                    <li class="active-page">
-                        <a href="{% url 'home' %}" class="active"><i class="material-icons-two-tone">dashboard</i>Dashboard</a>
+                    <li>
+                        <a href="{% url 'student_dashboard' %}"><i class="material-icons-two-tone">emoji_people</i>Profile</a>
                     </li>
-                    
                     
                     
                    
@@ -34,42 +33,19 @@
                         Features
                     </li>
                     <li>
-                        {% if 'read_student' in permissions %}
-                        <a href="#"><i class="material-icons-two-tone">emoji_people</i>Students<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
-                        <ul class="sub-menu">
-                            {% if 'read_student' in permissions %}
-                            <li>
-                                <a href="{% url 'student' %}">Student</a>
-                            {% endif %}
-                            </li>
-                        </ul>
-                        {% endif %}
-                    </li>
-                    <li>
-                        {% if 'read_finance' in permissions %}
+                       
                         <a href="#"><i class="material-icons-two-tone">account_balance</i>Accounting<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                         <ul class="sub-menu">
-                            {% if 'read_finance' in permissions %}
                             <li>
                                 <a href="{% url 'invoice' %}">Invoice</a>
                             </li>
-                            {% endif %}
-                            {% if 'read_finance' in permissions %}
                             <li>
                                 <a href="{% url 'receipt' %}">Receipt</a>
                             </li>
-                            {% endif %}
-                            {% if 'read_finance' in permissions %}
-                            <li>
-                                <a href="{% url 'expenses' %}">Expense</a>
-                            </li>
-                            {% endif %}
                         </ul>
-                        {% endif %}
+                       
                     </li>
-                    <li>
-                        <a href="{% url 'todo' %}"><i class="material-icons-two-tone">done</i>Todo</a>
-                    </li>
+                   
                    
                     
                     
