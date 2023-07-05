@@ -1,4 +1,4 @@
-{% include 'header.html' %}
+{% include 'student_header.html' %}
 <div class="app-content">
     <div class="content-wrapper">
         <div class="example-container">
@@ -7,7 +7,9 @@
                     <div class="page-description-content flex-grow-1">
 						<h1>Student Dashboard</h1>
                         <h3>{{student.user.first_name|add:" " }}{{student.user.last_name }} <span class="badge badge-success">{{student.stage}}</span></h3>
-                       
+						{% comment %} <a href="{% url 'single_statement' id=student.id %}"><button type="button" class="btn btn-dark">View Statement</button></a>
+						<a href="{% url 'invoice' id=student.id %}"><button type="button" class="btn btn-dark">View Invoice</button></a>
+						<a href="{% url 'receipt' id=receipt.id %}"><button type="button" class="btn btn-dark">View Receipt</button></a> {% endcomment %}
                     </div>
                     
                 </div>
