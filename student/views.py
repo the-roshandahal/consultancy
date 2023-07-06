@@ -222,8 +222,8 @@ def add_student(request):
             source = request.POST["source"]
             stage = request.POST["stage"]
             assigned_to = request.POST.getlist("assigned_to")
-            log = request.POST["log"]
-            
+            log = request.POST.get("log","")
+    
             if not username:
                 messages.error(request, "The username must be provided.")
                 return redirect('add_student')
@@ -504,7 +504,6 @@ def add_student_file(request,id):
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')
-
 
 def close_student(request,id):
     if 'update_student' in custom_data_views(request):
