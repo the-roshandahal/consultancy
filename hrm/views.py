@@ -27,17 +27,12 @@ def hrm_setup(request):
     # Create a list of dictionaries with month details and holiday count
         month_list = []
         for month in months:
-            holidays = month.holidays.all()
-            holiday_count = holidays.count()
             month_dict = {
                 'month': month,
-                'holidays': holidays,
-                'holiday_count': holiday_count,
             }
             month_list.append(month_dict)
 
             
-        holidays = Holidays.objects.all()
         year = YearSetup.objects.all()
         department = Department.objects.all()
         designation = Designation.objects.all()
@@ -52,7 +47,6 @@ def hrm_setup(request):
         
         context = {
             'month_list':month_list, 
-            'holidays':holidays, 
             'year':year,
             'department':department, 
             'designation':designation,
@@ -118,14 +112,10 @@ def add_month(request):
             month = request.POST['month']
             start_date = request.POST['start_date']
             end_date = request.POST['end_date']
-            holidays = request.POST['holidays']
 
             year = YearSetup.objects.get(id=year)
             month = MonthSetup.objects.create(year=year,month=month,start_date=start_date,end_date=end_date)
             month.save()
-            date_list = [date.strip() for date in holidays.split(",")]
-            for holiday in date_list:
-                Holidays.objects.create(month = month, holiday = holiday)
 
             messages.info(request, "Year Added Successfully")
             return redirect(hrm_setup)
@@ -141,7 +131,6 @@ def edit_month(request,id):
             month = request.POST['month']
             start_date = request.POST['start_date']
             end_date = request.POST['end_date']
-            holidays = request.POST['holidays']
             is_active = request.POST.get('is_active', 0)
             year = YearSetup.objects.get(id=year)
 
@@ -153,23 +142,15 @@ def edit_month(request,id):
             month_obj.is_active=is_active
             month_obj.save()
 
-            prev_holidays = Holidays.objects.filter(month=id)
-            prev_holidays.delete()
-            date_list = [date.strip() for date in holidays.split(",")]
-            for holiday in date_list:
-                Holidays.objects.create(month = month_obj, holiday = holiday)
-
             messages.info(request, "Year Edited Successfully")
             return redirect(hrm_setup)
         else:
             year = YearSetup.objects.all()
             month_data = MonthSetup.objects.get(id=id)
             print(month_data.is_active)
-            month_holidays = Holidays.objects.filter(month = month_data.id)
             context= {
                 'year':year,
                 'month_data':month_data,
-                'month_holidays':month_holidays,
             }
             return render(request,'hrm/edit_month.html',context)
     else:

@@ -79,7 +79,6 @@
                                             <th>Year</th>
                                             <th>Start Date</th>
                                             <th>End Date</th>
-                                            <th>Holidays</th>
                                             <th>Is Active</th>
                                             <th>Action</th>
                                         </tr>
@@ -91,7 +90,6 @@
                                             <th>{{month_dict.month.year}}</th>
                                             <td>{{month_dict.month.start_date}}</td>
                                             <td>{{month_dict.month.end_date}}</td>
-                                            <td>{{ month_dict.holiday_count }}</td>
                                             <td>{{ month_dict.month.is_active }}</td>
                                             <td>
                                                 <div class="d-flex">
@@ -251,15 +249,6 @@
                         <p>{{month_dict.month.end_date}}</p>
                     </div>
                 </div>
-                
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h5 class="modal-title">Holidays </h5>
-                        {% for holiday in holidays %}
-                        {% if holiday.month.id == month_dict.month.id %}{{holiday.holiday}}, {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
@@ -338,14 +327,6 @@
                             <input type="date" class="form-control" name="end_date" required>
                         </div>
                     </div>
-                    <div class="col-xxl-12 mb-xxl-0 mb-4">
-                        <h6>Select Holidays </h6>
-                        <p>Including Saturdays and Paid holidays</p>
-                        <div class="form-group">
-                            <input type="text" name="holidays" class="form-control datepicker" placeholder="Select dates...">
-                        </div>
-                    </div>
-                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

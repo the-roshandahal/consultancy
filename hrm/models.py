@@ -27,14 +27,14 @@ class MonthSetup(models.Model):
     class Meta:
         verbose_name_plural = "05. Month"
 
-class Holidays(models.Model):
-    month = models.ForeignKey(MonthSetup,on_delete=models.CASCADE, related_name='holidays')
-    holiday = models.DateField(blank=True)
+# class Holidays(models.Model):
+#     month = models.ForeignKey(MonthSetup,on_delete=models.CASCADE, related_name='holidays')
+#     holiday = models.DateField(blank=True)
 
-    def __str__(self):
-        return self.month.month
-    class Meta:
-        verbose_name_plural = "05. Holiday"
+#     def __str__(self):
+#         return self.month.month
+#     class Meta:
+#         verbose_name_plural = "05. Holiday"
 
 
 class Department(models.Model):
