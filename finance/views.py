@@ -351,71 +351,92 @@ def create_expense(request):
         return redirect('home')
     
 def edit_expense(request,id):
-    if request.method =="POST":
-        expense_type = request.POST['expense_type']
-        expense_title = request.POST['expense_title']
-        expense_amount = request.POST['expense_amount']
-        expense_remarks = request.POST['expense_remarks']
+    if 'update_finance' in custom_data_views(request):
+        if request.method =="POST":
+            expense_type = request.POST['expense_type']
+            expense_title = request.POST['expense_title']
+            expense_amount = request.POST['expense_amount']
+            expense_remarks = request.POST['expense_remarks']
 
-        expense_obj = Expense.objects.get(id=id)
-        exp_type = ExpenseType.objects.get(id=expense_type)
-        expense_obj.expense_type = exp_type
-        expense_obj.expense_title = expense_title
-        expense_obj.expense_amount = expense_amount
-        expense_obj.remarks = expense_remarks
-        expense_obj.save()
+            expense_obj = Expense.objects.get(id=id)
+            exp_type = ExpenseType.objects.get(id=expense_type)
+            expense_obj.expense_type = exp_type
+            expense_obj.expense_title = expense_title
+            expense_obj.expense_amount = expense_amount
+            expense_obj.remarks = expense_remarks
+            expense_obj.save()
 
-        return redirect('expenses')
+            return redirect('expenses')
+        else:
+            expense = Expense.objects.get(id=id)
+            expense_type = ExpenseType.objects.all()
+            context = {
+                'expense_type':expense_type,
+                'expense':expense
+            }
+            return render(request,'finance/edit_expense.html',context)
     else:
-        expense = Expense.objects.get(id=id)
-        expense_type = ExpenseType.objects.all()
-        context = {
-            'expense_type':expense_type,
-            'expense':expense
-        }
-        return render(request,'finance/edit_expense.html',context)
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
+            
     
 def delete_expense(request,id):
-    expense = Expense.objects.get(id=id)
-    expense.delete()
-    return redirect('expenses')
-
+    if 'update_finance' in custom_data_views(request):
+        expense = Expense.objects.get(id=id)
+        expense.delete()
+        return redirect('expenses')
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
 
 
 def finance_setup(request):
-    expense_type  = ExpenseType.objects.all()
-    context = {
-        'expense_type':expense_type
-    }
-    return render (request,'finance/finance_setup.html',context)
-
-
+    if 'manage_finance' in custom_data_views(request):
+        expense_type  = ExpenseType.objects.all()
+        context = {
+            'expense_type':expense_type
+        }
+        return render (request,'finance/finance_setup.html',context)
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
 
 def create_expense_type(request):
-    if request.method =="POST":
-        expense_type = request.POST['expense_type']
-        ExpenseType.objects.create(expense_type =expense_type)
-        return redirect('finance_setup')
+    if 'create_finance' in custom_data_views(request):
+        if request.method =="POST":
+            expense_type = request.POST['expense_type']
+            ExpenseType.objects.create(expense_type =expense_type)
+            return redirect('finance_setup')
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')   
 
 
 def delete_expense_type(request,id):
-    expense_type = ExpenseType.objects.get(id=id)
-    expense_type.delete()
-    return redirect('finance_setup')
+    if 'create_finance' in custom_data_views(request):
+        expense_type = ExpenseType.objects.get(id=id)
+        expense_type.delete()
+        return redirect('finance_setup')
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')   
 
 
 
 def edit_expense_type(request,id):
-    if request.method =="POST":
-        expense_type = request.POST['expense_type']
-        expense_obj = ExpenseType.objects.get(id=id)
-        expense_obj.expense_type = expense_type
-        expense_obj.save()
-        return redirect('finance_setup')
+    if 'update_finance' in custom_data_views(request):
+        if request.method =="POST":
+            expense_type = request.POST['expense_type']
+            expense_obj = ExpenseType.objects.get(id=id)
+            expense_obj.expense_type = expense_type
+            expense_obj.save()
+            return redirect('finance_setup')
+        else:
+            expense_type = ExpenseType.objects.get(id=id)
+            context = {
+                'expense_type':expense_type
+            }
+            return render(request,'finance/edit_expense_type.html',context)
     else:
-        expense_type = ExpenseType.objects.get(id=id)
-        context = {
-            'expense_type':expense_type
-        }
-        return render(request,'finance/edit_expense_type.html',context)
-
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')  

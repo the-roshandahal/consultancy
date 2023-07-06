@@ -12,23 +12,37 @@ from account.context_processors import custom_data_views
 def student_dashboard(request):
     logged_in_user= User.objects.get(username=request.user)
     student = Student.objects.get(user=logged_in_user)
-    invoices = Invoice.objects.filter(student=student)
-    receipts = Receipt.objects.filter(student=student)
     notes = StudentNotes.objects.filter(student=student).order_by('-created')
     files = StudentFiles.objects.filter(student=student).order_by('-created')
     context = {
         'student': student,
-        'invoices':invoices,
-        'receipts':receipts,
         'notes':notes,
         'files':files,
     }
     return render (request,'student/dashboard.html',context)
 
-def student_receipts(request):
-    pass
+def student_accounting(request):
+    logged_in_user= User.objects.get(username=request.user)
+    student = Student.objects.get(user=logged_in_user)
+    invoices = Invoice.objects.filter(student=student)  
+    receipts = Receipt.objects.filter(student=student)  
+    context={
+        'student':student,
+        'invoices':invoices,
+        'receipts':receipts,
+    }
+    return render (request,'student/accounting_detail.html',context)
 
-
+def student_statement(request):
+    logged_in_user= User.objects.get(username=request.user)
+    student = Student.objects.get(user=logged_in_user)
+    statements = Statement.objects.filter(student=student)
+    context = {
+        'student': student,
+        'statements': statements,
+    }
+    return render(request, 'student/student_statement.html', context)
+    
 def student_setup(request):
     if 'read_student' in custom_data_views(request):
         student_stage = StudentStage.objects.all()

@@ -37,10 +37,7 @@
                         <a href="#"><i class="material-icons-two-tone">account_balance</i>Accounting<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                         <ul class="sub-menu">
                             <li>
-                                <a href="{% url 'invoice' %}">Invoice</a>
-                            </li>
-                            <li>
-                                <a href="{% url 'receipt' %}">Receipt</a>
+                                <a href="{% url 'student_accounting' %}">Details</a>
                             </li>
                         </ul>
                        
@@ -67,12 +64,6 @@
                         </div>
                         <div class="d-flex">
                             <ul class="navbar-nav">
-                                <li class="nav-item hidden-on-mobile">
-                                    <a class="nav-link active" href="{% url 'todo' %}">Todo</a>
-                                </li>
-                                <li class="nav-item hidden-on-mobile">
-                                    <a class="nav-link" href="{% url 'student' %}">Student</a>
-                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{% url 'logout' %}"><i class="material-icons">logout</i></a>
                                 </li>

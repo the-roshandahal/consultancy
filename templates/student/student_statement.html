@@ -1,0 +1,76 @@
+{% include 'student_header.html' %}
+<div class="app-content">
+    <div class="content-wrapper">
+        <div class="example-container">
+            <div class="example-content bg-light">
+                <div class="page-description d-flex align-items-center">
+                    <div class="page-description-content flex-grow-1">
+                        <h1>{{student.user.first_name}} {{student.user.last_name}}</h1>
+                        <span>Statement</span>
+                    </div>
+                </div>
+                
+                <!-- add other contents  -->
+                <div class="container html-content">
+                  <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Date</th>
+                      <th scope="col">Transactions</th>
+                      <th scope="col">Details</th>
+                      <th scope="col">Amount</th>
+                      <th scope="col">Payments</th>
+                      <th scope="col">Balance</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      {% for statement in statements %}
+                    <tr>
+                      <th scope="row">{{statement.created}}</th>
+                      <td>{{statement.transaction}}</td>
+                      <td>{{statement.details}}</td>
+              
+                      {% if statement.amount %}
+                      <td>Rs.{{statement.amount}}</td>
+                      {% else %}
+                      <td>-</td>
+                      {% endif %}
+                      
+              
+                      {% if statement.payment %}
+                      <td>Rs.{{statement.payment}}</td>
+                      {% else %}
+                      <td>-</td>
+                      {% endif %}
+              
+              
+                      {% if statement.balance %}
+                      <td>Rs.{{statement.balance}}</td>
+                      {% else %}
+                      <td>-</td>
+                      {% endif %}
+                    </tr>
+                   
+                    {% endfor %}
+                    <tr>
+                      <th ></th>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td>Balance Due</td>
+                      <td>Rs.{{balance_due}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+                
+                
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -609,63 +609,6 @@ def employees(request):
         messages.info(request, "Unauthorized access.")
         return redirect('home')
 
-
-def add_device_data(request):
-    if 'create_hrm' in custom_data_views(request):
-        if request.method=="POST":
-            ip_address = request.POST['ip_address']
-            port = request.POST['port']
-            data = DeviceData.objects.create(ip_address=ip_address, port=port)
-            data.save()
-            return redirect('hrm_setup')
-    else:
-        messages.info(request, "Unauthorized access.")
-        return redirect('home')
-
-
-def edit_device_data(request,id):
-    if 'manage_hrm' in custom_data_views(request):
-        if request.method=="POST":
-            ip_address = request.POST['ip_address']
-            port = request.POST['port']
-            data = DeviceData.objects.get(id=id)
-            data.ip_address = ip_address
-            data.port = port
-            data.save()
-            return redirect('hrm_setup')
-        else:
-            device_data = DeviceData.objects.get(id=id)
-            return render (request, 'hrm/edit_device_data.html', {'device_data':device_data})
-    else:
-        messages.info(request, "Unauthorized access.")
-        return redirect('home')
-
-def delete_device_data(request,id):
-    if 'delete_hrm' in custom_data_views(request):
-        device_data = DeviceData.objects.get(id=id)
-    
-        device_data.delete()
-        messages.info(request, "Device Data Deleted")
-        return redirect('hrm_setup')
-    else:
-        messages.info(request, "Unauthorized access.")
-        return redirect('home')
-
-def device_attendance(request):
-    today = datetime.today().strftime('%Y-%m-%d')
-    
-    att_user_data = DeviceAttendanceUser.objects.all().order_by('uid')
-    att_user_att_data = DeviceAttendance.objects.filter(date = today).order_by('-punchin_timestamp')
-    all_attendance = DeviceAttendance.objects.all().order_by('-date', '-punchin_timestamp')[:30]
-    employee = Employee.objects.all()
-    context = {
-        'att_user_att_data':att_user_att_data,
-        'att_user_data':att_user_data,
-        'all_attendance':all_attendance,
-        'employee':employee,
-    }
-    return render (request, 'hrm/device_attendance.html',context)
-
 def add_employee(request):
     if 'create_hrm' in custom_data_views(request):
         if request.method=="POST":

@@ -23,6 +23,7 @@ def inquiry(request):
 def active_inquiries(request):
     if 'read_inquiry' in custom_data_views(request):
         active_inquiries = StudentInquiry.objects.filter(is_active = True, is_verified= True).order_by('-created')
+        
         context={
                 'active_inquiries':active_inquiries,
         }
@@ -39,10 +40,17 @@ def my_inquiries(request):
         print(logged_in_user)
         try:
             employee = Employee.objects.get(user=logged_in_user)
+        except:
+            employee= None
+        try:
             my_inquiries = StudentInquiry.objects.filter(is_active = True, is_verified= True,assigned=employee).order_by('-created')
-            my_inactive_inquiries = StudentInquiry.objects.filter(is_active = False, is_verified= True,assigned=employee).order_by('-created')
         except:
             my_inquiries= None
+
+
+        try:
+            my_inactive_inquiries = StudentInquiry.objects.filter(is_active = False, is_verified= True,assigned=employee).order_by('-created')
+        except:
             my_inactive_inquiries= None
 
         context={

@@ -9,6 +9,8 @@ from django.conf.urls.static import static
 urlpatterns = [
 
     path("student_dashboard/", views.student_dashboard, name="student_dashboard"),
+    path("student_accounting/", views.student_accounting, name="student_accounting"),
+    path("student_statement/", views.student_statement, name="student_statement"),
 
     path("student/", views.student, name="student"),
     path("student_setup/", views.student_setup, name="student_setup"),
@@ -21,9 +23,7 @@ urlpatterns = [
     path("delete_stage/<int:id>", views.delete_stage, name="delete_stage"),
     path("delete_source/<int:id>", views.delete_source, name="delete_source"),
     path("delete_enrollment/<int:id>", views.delete_enrollment, name="delete_enrollment"),
-  
-  
-
+   
     path("add_student/", views.add_student, name="add_student"),
     path("edit_student/<int:id>", views.edit_student, name="edit_student"),
     path("delete_student/<int:id>", views.delete_student, name="delete_student"),
