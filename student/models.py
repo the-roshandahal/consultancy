@@ -39,7 +39,6 @@ class Student(models.Model):
     stage = models.ForeignKey(StudentStage, on_delete=models.SET_NULL, null=True, blank=True)
     assigned_to = models.ManyToManyField(Employee)
     course = models.ManyToManyField(Course)
-    log_status = models.BooleanField(default=True)
     active = models.BooleanField(default=True)
     date_modified = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)

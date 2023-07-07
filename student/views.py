@@ -222,7 +222,6 @@ def add_student(request):
             source = request.POST["source"]
             stage = request.POST["stage"]
             assigned_to = request.POST.getlist("assigned_to")
-            log = request.POST.get("log","")
     
             if not username:
                 messages.error(request, "The username must be provided.")
@@ -239,13 +238,9 @@ def add_student(request):
                 source = StudentSource.objects.get(id=source)
                 stage = StudentStage.objects.get(id=stage)
 
-                if log == "on":
-                    log_status = True
-                else:
-                    log_status= False
-
+                
                 user.save()
-                student = Student.objects.create(user=user, address=address, contact=contact,enrollment_type=enrollment_type,source=source,stage=stage,log_status = log_status)
+                student = Student.objects.create(user=user, address=address, contact=contact,enrollment_type=enrollment_type,source=source,stage=stage)
                 student.assigned_to.set(assigned_to)
                 student.course.set(course)
                 student.save()
@@ -346,7 +341,7 @@ def delete_student(request,id):
 
 def view_student(request,id):
     if 'read_student' in custom_data_views(request):
-        student = Student.objects.get(id=id)
+        student = Student.objects.get(id=id)             
         invoices = Invoice.objects.filter(student=id)
         receipts=Receipt.objects.filter(student=id)
         notes=StudentNotes.objects.filter(student=id).order_by('-created')
