@@ -1,3 +1,5 @@
+from django.utils import timezone
+
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
 from django.shortcuts import render,redirect
@@ -5,11 +7,13 @@ from .models import *
 from hrm.models import *
 from account.models import*
 from account.context_processors import custom_data_views
+from django.db.models import Q
 
 # Create your views here.
 def inquiry(request):
     if 'read_inquiry' in custom_data_views(request):
-        new_inquiries = StudentInquiry.objects.filter(is_active = True, is_verified = False).order_by('created')
+
+        new_inquiries = StudentInquiry.objects.filter(Q(is_verified=False) | Q(assigned__isnull=True))
         context={
             'new_inquiries':new_inquiries,
         }
@@ -22,7 +26,10 @@ def inquiry(request):
     
 def active_inquiries(request):
     if 'read_inquiry' in custom_data_views(request):
-        active_inquiries = StudentInquiry.objects.filter(is_active = True, is_verified= True).order_by('-created')
+        # active_inquiries = StudentInquiry.objects.filter(Q(is_verified=True) | Q(is_active = True) | Q(assigned__isnull=False))
+        active_inquiries = StudentInquiry.objects.filter(is_verified=True, is_active=True, assigned__isnull=False)
+
+        # active_inquiries = StudentInquiry.objects.filter(is_active = True, is_verified= True).order_by('-created')
         
         context={
                 'active_inquiries':active_inquiries,
@@ -385,6 +392,7 @@ def close_inquiry(request,id):
             inquiry = StudentInquiry.objects.get(id=id)
             inquiry.is_active=False
             inquiry.closed_reason=closed_reason
+            inquiry.closed_date=timezone.now()
             inquiry.save()
             messages.info(request,"inquiry closed.")
     

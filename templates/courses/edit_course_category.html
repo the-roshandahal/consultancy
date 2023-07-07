@@ -1,0 +1,40 @@
+{% include 'header.html' %}
+<div class="app-content">
+    <div class="content-wrapper">
+        <div class="example-container">
+            <div class="example-content bg-light">
+                <div class="page-description d-flex align-items-center">
+                    <div class="page-description-content flex-grow-1">
+                        <h1>Company Details</h1>
+                        <span>These details are visible in invoice and receipts.</span>
+                    </div>
+                    <div class="page-description-actions">
+                        
+                        <a href="" class="btn btn-primary"><i class="material-icons">edit</i>Edit</a>
+                        
+                        <a href="" class="btn btn-dark"><i class="material-icons">add</i>Add</a>
+                        
+                    </div>
+                </div>
+                
+                <!-- add other contents  -->
+                <div class="modal-body">
+                    <form action="{% url 'edit_course_category' id=course_category.id %}" method="POST">
+                        {% csrf_token %}
+                        <div class="modal-body">
+                            <div class="col-md-12 mb-3">
+                                <label for="">Category</label>
+                                <input type="text" class="form-control"  placeholder="" name='course_category' value="{{course_category.course_category}}">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Edit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'footer.html' %}

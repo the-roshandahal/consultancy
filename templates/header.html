@@ -47,11 +47,13 @@
                                 <a href="{% url 'inquiry_setup' %}">Inquiry setup</a>
                             </li>
                             {% endif %}
+
                             {% if 'manage_hrm' in permissions %}
                             <li>
                                 <a href="{%url 'hrm_setup' %}">Hrm setup</a>
                             </li>
                             {% endif %}
+                            
                             {% if 'manage_course' in permissions %}
                             <li>
                                 <a href="{% url 'add_course_category' %}">Course setup</a>
@@ -111,9 +113,11 @@
                             
                         </ul>
                     </li> {% endcomment %}
+                    {% if 'hrm' in permissions %}
                     <li>
                         <a href=""><i class="material-icons-two-tone">person_add</i>Hrm system<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                         <ul class="sub-menu">    
+                            {% if 'read_hrm' in permissions %}
                             <li>
                                 <a href="{% url 'employees' %}">Employees</a>
                             </li>                        
@@ -122,12 +126,10 @@
                                 <a href="{% url 'manage_attendance' %}">Employee attendance</a>
                             </li>
                             
-                            {% if 'manage_hrm' in permissions %}
                             <li>
                                 <a href="{% url 'emp_leaves' %}">Leave requests</a>
                             </li>
-                            {% endif %}
-                            {% if 'manage_hrm' in permissions %}
+                            
                             <li>
                                 <a href="{% url 'payroll' %}">Payroll</a>
                             </li>
@@ -136,6 +138,7 @@
                             
                         </ul>
                     </li>
+                    {% endif %}
                     <li>
                         {% if 'read_course' in permissions %}
                         <a href=""><i class="material-icons-two-tone">golf_course</i>Courses<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
@@ -159,8 +162,11 @@
                             {% if 'read_student' in permissions %}
                             <li>
                                 <a href="{% url 'student' %}">Student</a>
-                            {% endif %}
                             </li>
+                            <li>
+                                <a href="{% url 'inactive_student' %}">Closed Student</a>
+                            </li>
+                            {% endif %}
                         </ul>
                         {% endif %}
                     </li>
@@ -211,11 +217,24 @@
                         <div class="d-flex">
                             <ul class="navbar-nav">
                                 <li class="nav-item hidden-on-mobile">
-                                    <a class="nav-link active" href="{% url 'todo' %}">Todo</a>
+                                    <a class="nav-link" href="{% url 'todo' %}">
+                                        <button type="button" class="btn btn-secondary btn-sm">Todo</button>
+                                    </a>
                                 </li>
+                                {% if 'student' in permissions %}
                                 <li class="nav-item hidden-on-mobile">
-                                    <a class="nav-link" href="{% url 'student' %}">Student</a>
+                                    <a class="nav-link" href="{% url 'student' %}">
+                                        <button type="button" class="btn btn-secondary btn-sm">Student</button>
+                                    </a>
                                 </li>
+                                {% endif %}
+                                {% if 'inquiry' in permissions %}
+                                <li class="nav-item hidden-on-mobile">
+                                    <a class="nav-link" href="{% url 'inquiry' %}">
+                                        <button type="button" class="btn btn-secondary btn-sm">Inquiry</button>
+                                    </a>
+                                </li>
+                                {% endif %}
                                 <li class="nav-item">
                                     <a class="nav-link" href="{% url 'logout' %}"><i class="material-icons">logout</i></a>
                                 </li>

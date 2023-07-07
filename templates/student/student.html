@@ -18,95 +18,39 @@
                 
                 <!-- add other contents  -->
 
-				<div class="example-container">
-					<div class="example-content">
-						<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-							<li class="nav-item" role="presentation">
-								<button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Active Students</button>
-							</li>
-							<li class="nav-item" role="presentation">
-								<button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Inactice Students</button>
-							</li>
-						</ul>
-						<div class="tab-content" id="pills-tabContent">
-							<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-								<div class="row">
-									<table id="datable_1" class="table nowrap w-100 mb-5">
-										<thead>
-											<tr>
-												<th>Student Name</th>
-												<th>Contact Number</th>
-												<th>Email</th>
-												<th>Address</th>
-												<th>Course</th>
-												<th>Action</th>
-											</tr>
-										</thead>
-										<tbody>
-											{% for student in active_student %}
-											<tr>
-												<td>{{student.user}}</td>
-												<td>{{student.contact}}</td>
-												<td>{{student.user.email}}</td>
-												<td>{{student.user.email}}</td>
-												<td>{{student.address}}</td>
-												<td>
-													<div class="d-flex align-items-center">
-														<div class="d-flex">
-															{% if 'read_student' in permissions %}
-															<a href="{% url 'view_student' id=student.id %}" class="btn btn-primary"><i class="material-icons">visibility</i></a>
-															{% endif %}
-														</div>
-													</div>
-												</td>
-											</tr>
-											{% endfor %}
-										</tbody>
-									</table>
-								</div>
-							</div>
-							<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-
-								<div class="row">
-									<table id="datable_1" class="table nowrap w-100 mb-5">
-										<thead>
-											<tr>
-												<th>Student Name</th>
-												<th>Contact Number</th>
-												<th>Email</th>
-												<th>Address</th>
-												<th>Course</th>
-												<th>Action</th>
-											</tr>
-										</thead>
-										<tbody>
-											{% for student in closed_student %}
-											<tr>
-												<td>{{student.user}}</td>
-												<td>{{student.contact}}</td>
-												<td>{{student.user.email}}</td>
-												<td>{{student.user.email}}</td>
-												<td>{{student.address}}</td>
-												<td>
-													<div class="d-flex align-items-center">
-														<div class="d-flex">
-															{% if 'update_student' in permissions %}
-															<a href="{% url 'edit_student' id=student.id %}" class="btn btn-primary"><i class="material-icons">edit</i></a>
-															{% endif %}
-															{% if 'read_student' in permissions %}
-															<a href="{% url 'view_student' id=student.id %}" class="btn btn-primary"><i class="material-icons">visibility</i></a>
-															{% endif %}
-														</div>
-													</div>
-												</td>
-											</tr>
-											{% endfor %}
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-					</div>
+				<div class="row">
+					<table id="datable_1" class="table nowrap w-100 mb-5">
+						<thead>
+							<tr>
+								<th>Student Name</th>
+								<th>Contact Number</th>
+								<th>Email</th>
+								<th>Address</th>
+								<th>Course</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for student in active_student %}
+							<tr>
+								<td>{{student.user}}</td>
+								<td>{{student.contact}}</td>
+								<td>{{student.user.email}}</td>
+								<td>{{student.user.email}}</td>
+								<td>{{student.address}}</td>
+								<td>
+									<div class="d-flex align-items-center">
+										<div class="d-flex">
+											{% if 'read_student' in permissions %}
+											<a href="{% url 'view_student' id=student.id %}" class="btn btn-primary"><i class="material-icons">visibility</i></a>
+											{% endif %}
+										</div>
+									</div>
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
 				</div>
             </div>
         </div>

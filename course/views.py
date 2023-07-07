@@ -140,7 +140,7 @@ def edit_course_category(request,id):
             context = {
                 'course_category': course_category
                 }
-            return render(request, 'courses/delete_course.html', context)
+            return render(request, 'courses/edit_course_category.html', context)
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('course_setup')

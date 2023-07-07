@@ -1,0 +1,119 @@
+{% include 'student_header.html' %}
+<div class="app-content">
+    <div class="content-wrapper">
+        <div class="example-container">
+            <div class="example-content bg-light">
+                <div class="page-description d-flex align-items-center">
+                    <div class="page-description-content flex-grow-1">
+                        <h1>Company Details</h1>
+                        <span>These details are visible in invoice and receipts.</span>
+                    </div>
+                </div>
+                
+                <!-- add other contents  -->
+
+                <div class="container mt-5">
+                    <div class="container card html-content" id='printMe'>
+                        <div class="template-invoice-wrap mt-xxl-5 p-md-5 p-3">
+                            <div class="row logorow headrow">
+                                <div class="col-lg-3 col-md-5 order-md-0 order-1 logo">
+                                    <img src="{{company.company_logo.url}}" alt="{{company.company_name}}" height="80">
+                                </div>
+                                <div class="col-lg-4 offset-lg-5 offset-md-3 col-md-4 mb-md-0 mb-2 invoiceidcol">
+                                    <h2 class="d-flex justify-content-md-end mb-0 invoiceid">Receipt #{{receipt.id}}</h2>
+                                    <p class="d-flex justify-content-md-end mt-3 ">Receipt Date: {{receipt.created}}</p>
+                                    <p class="d-flex justify-content-md-end">Created by: {{receipt.created_by}}</p>
+                                </div>	
+                            </div>
+                            <div class="row invoice-summary">
+                                <div class="col-lg-4">
+                                    <div class="invoice-info">
+                                        <p class="bold">Billed From </p>
+                                        <p>{{company.company_name}}</p>
+                                        <p>{{company.company_address}}</p>
+                                        <p>{{company.company_email}}</p>
+                                        <p>{{company.company_contact_number}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6"></div>
+                                <div class="col-lg-2">
+                                    <div class="invoice-info">
+                                        <p class="bold">Billed To </p>
+                                        <p>{{receipt.student.user.first_name}} {{receipt.student.user.last_name}}</p>
+                                        <p>{{receipt.student.address}}</p>
+                                        <p>{{receipt.student.contact}}</p>
+                                        <p>{{receipt.student.user.email}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-wrap mt-6" >
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead class="thead-primary">
+                                            <tr>
+                                                <th colspan="4" >Description</th>
+                                                <th class="text-center">Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                            <tr>
+                                                <td class="w-70" colspan="4">
+                                                    Paid Amount
+                                                </td>
+                                                <td class="w-20 text-center ">Rs. {{receipt.paid_amount}}</td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td colspan="4" class=" border">Payment Method</td>
+                                                <td class="text-center  border">{{receipt.payment_method}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>	
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6">
+                                    <h6>Thank you for the purchase.</h6>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                  {% if receipt.payment_receipt %}
+                                  <h6>Payment Evidence</h6>
+                                    <img src="{{receipt.payment_receipt.url}}" alt="payment_receipt" width=" 600">
+                                    {% endif %}
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="container btns">
+                        <button class="btn btn-primary me-3"  onclick="printDiv('printMe')">Print</button>
+                    </div>
+                </div>
+                
+                
+                
+                <script>
+                    function printDiv(divName){
+                        var printContents = document.getElementById(divName).innerHTML;
+                        var originalContents = document.body.innerHTML;
+                
+                        document.body.innerHTML = printContents;
+                
+                        window.print();
+                
+                        document.body.innerHTML = originalContents;
+                
+                    }
+                </script>
+                
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'footer.html' %}

@@ -142,6 +142,28 @@
                                                             
                                                         </ul>
                                                     </div>
+                                                    <div class="col-4">
+                                                        <ul class="widget-list-content list-unstyled">
+                                                            <li class="widget-list-item widget-list-item-green">
+                                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">create</i></span>
+                                                                <span class="widget-list-item-description">
+                                                                    <a href="#" class="widget-list-item-description-title">
+                                                                        Assigned Employees
+                                                                    </a>
+                                                                    {% for employee in student.assigned_to.all %}
+                                                                    <span class="widget-list-item-description-subtitle">
+                                                                        {{ employee }}
+                                                                    </span>
+                                                                    {% empty %}
+                                                                    <span class="widget-list-item-description-subtitle">
+                                                                        No assigned employees
+                                                                    </span>
+                                                                    {% endfor %}
+                                                                </span>
+                                                            </li>
+                                                            
+                                                        </ul>
+                                                    </div>
                                                     <div class="invoice-list-view mt-5">
                                                         <h4>Invoices</h4>
                                                         <table class="table nowrap w-100 mb-5">

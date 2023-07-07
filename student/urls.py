@@ -9,10 +9,10 @@ from django.conf.urls.static import static
 urlpatterns = [
 
     path("student_dashboard/", views.student_dashboard, name="student_dashboard"),
-    path("student_accounting/", views.student_accounting, name="student_accounting"),
     path("student_statement/", views.student_statement, name="student_statement"),
 
     path("student/", views.student, name="student"),
+    path("inactive_student/", views.inactive_student, name="inactive_student"),
     path("student_setup/", views.student_setup, name="student_setup"),
     path("create_stage/", views.create_stage, name="create_stage"),
     path("edit_stage/<int:id>", views.edit_stage, name="edit_stage"),
@@ -36,4 +36,9 @@ urlpatterns = [
     path("close_student/<int:id>", views.close_student, name="close_student"),
     # path("update_users/<int:id>", views.update_users, name="update_users"),
     path("reopen_student/<int:id>", views.reopen_student, name="reopen_student"),
+
+
+    path("student_view_invoice/<int:id>", views.student_view_invoice, name="student_view_invoice"),
+    path("student_view_receipt/<int:id>", views.student_view_receipt, name="student_view_receipt"),
+
 ]

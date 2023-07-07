@@ -12,34 +12,57 @@ from account.context_processors import custom_data_views
 def student_dashboard(request):
     logged_in_user= User.objects.get(username=request.user)
     student = Student.objects.get(user=logged_in_user)
-    notes = StudentNotes.objects.filter(student=student).order_by('-created')
     files = StudentFiles.objects.filter(student=student).order_by('-created')
+    invoices = Invoice.objects.filter(student=student)  
+    receipts = Receipt.objects.filter(student=student)
     context = {
         'student': student,
-        'notes':notes,
         'files':files,
-    }
-    return render (request,'student/dashboard.html',context)
-
-def student_accounting(request):
-    logged_in_user= User.objects.get(username=request.user)
-    student = Student.objects.get(user=logged_in_user)
-    invoices = Invoice.objects.filter(student=student)  
-    receipts = Receipt.objects.filter(student=student)  
-    context={
-        'student':student,
         'invoices':invoices,
         'receipts':receipts,
     }
-    return render (request,'student/accounting_detail.html',context)
+    return render (request,'student/dashboard.html',context)
 
+def student_view_receipt(request, id):
+    receipt = Receipt.objects.get(id=id)
+    context = {
+        'receipt': receipt,
+    }
+    return render(request, 'student/student_receipt.html', context)
+    
+
+def student_view_invoice(request, id):
+    invoice = Invoice.objects.get(id=id)
+    course = InvoiceCourse.objects.filter(invoice_id=id)
+    context = {
+        'course':course,
+        'invoice': invoice,
+    }
+    return render(request, 'student/student_invoice.html', context)
+    
 def student_statement(request):
     logged_in_user= User.objects.get(username=request.user)
     student = Student.objects.get(user=logged_in_user)
     statements = Statement.objects.filter(student=student)
+    calc_statements = Statement.objects.filter(student=student)
+
+
+    amt_total = 0.0
+    for calc_statements in calc_statements:
+        if type(calc_statements.amount) is float:
+            amt_total = amt_total+calc_statements.amount
+
+    calc_statements_2 = Statement.objects.filter(student=student)
+    total_payment = 0.0
+    for calc_statements_2 in calc_statements_2:
+        if type(calc_statements_2.payment) is float:
+            total_payment = total_payment+calc_statements_2.payment
+
+    balance_due = amt_total-total_payment
     context = {
         'student': student,
         'statements': statements,
+        'balance_due':balance_due
     }
     return render(request, 'student/student_statement.html', context)
     
@@ -192,13 +215,21 @@ def delete_enrollment(request,id):
 def student(request):
     if 'read_student' in custom_data_views(request):
         active_student = Student.objects.filter(active=True)
-        closed_student = Student.objects.filter(active=False)
-        print(active_student,closed_student)
         context = {
             'active_student': active_student,
-            'closed_student': closed_student
         }
         return render(request,'student/student.html', context)
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
+    
+def inactive_student(request):
+    if 'read_student' in custom_data_views(request):
+        closed_student = Student.objects.filter(active=False)
+        context = {
+            'closed_student': closed_student
+        }
+        return render(request,'student/inactive_students.html', context)
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')

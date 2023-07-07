@@ -10,7 +10,7 @@ def custom_data(request):
         logged_in_user = User.objects.get(username=request.user)
         # Check if the logged in user is a superuser
         if logged_in_user.is_superuser:
-            permissions = ['account', 'finance', 'hrm', 'course', 'leads', 'student',
+            permissions = ['account', 'finance', 'hrm', 'course', 'leads', 'student','inquiry',
                            'create_account', 'read_account', 'update_account', 'delete_account', 'manage_account',
                            'create_finance', 'read_finance', 'update_finance', 'delete_finance', 'manage_finance',
                            'create_leads', 'read_leads', 'update_leads', 'delete_leads', 'manage_leads', 
@@ -144,7 +144,7 @@ def custom_data_views(request):
     if request.user.is_authenticated:
         logged_in_user = User.objects.get(username=request.user)
         if logged_in_user.is_superuser:
-            views_permissions = ['account', 'finance', 'hrm', 'course', 'leads', 'student',
+            views_permissions = ['account', 'finance', 'hrm', 'course', 'leads', 'student','inquiry',
                            'create_account', 'read_account', 'update_account', 'delete_account', 'manage_account',
                            'create_finance', 'read_finance', 'update_finance', 'delete_finance', 'manage_finance',
                            'create_leads', 'read_leads', 'update_leads', 'delete_leads', 'manage_leads', 
