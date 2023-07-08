@@ -1,0 +1,77 @@
+
+{% include 'header.html' %}
+<div class="app-content">
+    <div class="content-wrapper">
+        <div class="example-container">
+            <div class="example-content bg-light">
+                <div class="page-description d-flex align-items-center">
+                    <div class="page-description-content flex-grow-1">
+                        <h1>Company Details</h1>
+                        <span>These details are visible in invoice and receipts.</span>
+                    </div>
+                </div>
+
+                <div class="container mt-4">                                                          
+                    <form class="row g-3" method = "POST" action = "{% url 'edit_company_setup' id=setup.id %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="col-md-6">
+                            <label class="form-label">Company Name</label>
+                            <input type="text" name="company_name" class="form-control" placeholder="Spell Innovation" value = "{{setup.company_name}}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Company Email</label>
+                            <input type="email" name="company_email" class="form-control" placeholder="companyemail@gmail.com" value = "{{setup.company_email}}" required>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Company Contact Number</label>
+                            <input type="text" name="company_contact_number" class="form-control" placeholder="9854145455" value = "{{setup.company_contact_number}}" required>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Company Address</label>
+                            <input type="text" name="company_address" class="form-control" placeholder="Kapan Kathmandu" value = "{{setup.company_address}}" required>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Payment Terms and Details</label>
+                            <textarea id="summernote" name="payment_terms" placeholder="Payment Terms" >{{setup.payment_terms}}</textarea>
+                        </div>
+            
+                        <div class="col-12">
+                            <label class="form-label">Company Logo</label>
+                            <input type="file" name="company_logo" class="form-control" onchange="previewImage(this);">
+                          </div>
+                          
+                          <div class="col-lg-6" id="previewDiv">
+                            <img id="preview" src="{{setup.company_logo.url}}" class="img-fluid img-thumbnail p-5">
+                          </div>
+                          
+                          <script>
+                            function previewImage(input) {
+                                var preview = document.getElementById('preview');
+                                if (input.files && input.files[0]) {
+                                var reader = new FileReader();
+                                reader.onload = function(e) {
+                                    preview.src = e.target.result;
+                                }
+                                reader.readAsDataURL(input.files[0]);
+                                } else {
+                                preview.src = "{{setup.company_logo.url}}";
+                                }
+                            }
+                          </script>
+                          
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'footer.html' %}
+
+
+
+
+

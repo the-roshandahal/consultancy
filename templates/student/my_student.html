@@ -8,12 +8,6 @@
                         <h1>Students</h1>
                         <span>Manage your students</span>
                     </div>
-                    <div class="page-description-actions">
-                        
-                        
-                        <a href="{% url 'add_student' %}" class="btn btn-primary"><i class="material-icons">add</i>Add</a>
-                        
-                    </div>
                 </div>
                 
                 <!-- add other contents  -->
@@ -31,7 +25,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for student in closed_student %}
+                            {% for student in my_student %}
                             <tr>
                                 <td>{{student.user}}</td>
                                 <td>{{student.contact}}</td>

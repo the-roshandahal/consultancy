@@ -6,18 +6,13 @@
             <div class="example-content bg-light">
                 <div class="page-description d-flex align-items-center">
                     <div class="page-description-content flex-grow-1">
-                        <span>Your Details</span>
+                        <h5>Your Details</h5>
                     </div>
                     <div class="page-description-actions">                        
                         <div class="dropdown">
-                            <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                Dropdown link
+                            <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenteraction">
+                                Change Password
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
                         </div>                        
                     </div>
                 </div>
@@ -206,6 +201,20 @@
     </div>
 </div>
 
-
+<div class="modal fade" id="exampleModalCenteraction" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteraction" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Actions</h5>
+			</div>
+			<div class="modal-body">
+                <p>asdad</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>	
 
 {% include 'footer.html' %}

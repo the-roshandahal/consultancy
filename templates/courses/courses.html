@@ -18,35 +18,38 @@
                 
                 <!-- add other contents  -->
                 <div class="row">
-                    <table id="datable_1" class="table nowrap w-100 mb-5">
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Category</th>
-                                <th>Price</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for course in courses %}
-                            <tr>
-                                <td>{{course.course_title}}</td>
-                                <td>{{course.course_category}}</td>
-                                <td>{{course.course_price}}</td>
-                                
-                                <td>
-                                    {% if 'update_course' in permissions %}
-                                    <a href="{% url 'edit_course' id=course.id %}" class="btn btn-primary"><i class="material-icons">edit</i>Edit</a>
-                                    {% endif %}
+                    <div class="table-responsive"> 
 
-                                    {% if 'delete_course' in permissions %}                                    
-                                    <a data-bs-toggle="modal" data-bs-target="#exampleModalCenterCourseDelete{{course.id}}" class="btn btn-primary"><i class="material-icons">delete</i>Delete</a>
-                                    {% endif %}
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                        <table id="datable_1" class="table nowrap w-100 mb-5">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for course in courses %}
+                                <tr>
+                                    <td>{{course.course_title}}</td>
+                                    <td>{{course.course_category}}</td>
+                                    <td>{{course.course_price}}</td>
+                                    
+                                    <td>
+                                        {% if 'update_course' in permissions %}
+                                        <a href="{% url 'edit_course' id=course.id %}" class="btn btn-primary"><i class="material-icons">edit</i>Edit</a>
+                                        {% endif %}
+
+                                        {% if 'delete_course' in permissions %}                                    
+                                        <a data-bs-toggle="modal" data-bs-target="#exampleModalCenterCourseDelete{{course.id}}" class="btn btn-primary"><i class="material-icons">delete</i>Delete</a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
 

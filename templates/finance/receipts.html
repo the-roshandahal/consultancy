@@ -16,42 +16,44 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <table id="datatable1" class="display" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Receipt #</th>
-                                    <th>Client Name</th>
-                                    <th>Payment Method</th>
-                                    <th>Paid Amount</th>
-                                    <th>Created By</th>
-                                    <th>Receipt Date</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for receipts in receipts %}
-                                <tr>
-                                    <td><a href="#" class="table-link-text link-high-em">{{receipts.id}}</a></td>
-                                    <td>{{ receipts.student.user.first_name|add:" " }}{{ receipts.student.user.last_name }}</td>
-                                    <td>{{receipts.payment_method}}</td>
-                                    <td>Rs.{{receipts.paid_amount}}</td>
-                                    <td>{{receipts.created_by}}</td>
-                                    <td>{{receipts.created}}</td>
-                                    {% if 'read_finance' in permissions %}
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="d-flex">
-                                                <a href="{% url 'view_receipt' id=receipts.id %}"class="btn btn-primary"><i class="material-icons">visibility</i></a>
+                        <div class="table-responsive">
+                            <table id="datatable1" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Receipt #</th>
+                                        <th>Client Name</th>
+                                        <th>Payment Method</th>
+                                        <th>Paid Amount</th>
+                                        <th>Created By</th>
+                                        <th>Receipt Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for receipts in receipts %}
+                                    <tr>
+                                        <td><a href="#" class="table-link-text link-high-em">{{receipts.id}}</a></td>
+                                        <td>{{ receipts.student.user.first_name|add:" " }}{{ receipts.student.user.last_name }}</td>
+                                        <td>{{receipts.payment_method}}</td>
+                                        <td>Rs.{{receipts.paid_amount}}</td>
+                                        <td>{{receipts.created_by}}</td>
+                                        <td>{{receipts.created}}</td>
+                                        {% if 'read_finance' in permissions %}
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="d-flex">
+                                                    <a href="{% url 'view_receipt' id=receipts.id %}"class="btn btn-primary"><i class="material-icons">visibility</i></a>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    {% else %}
-                                    <td>----</td>
-                                    {% endif %}
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+                                        </td>
+                                        {% else %}
+                                        <td>----</td>
+                                        {% endif %}
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 

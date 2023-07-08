@@ -235,7 +235,21 @@ def inactive_student(request):
         return redirect('home')
     
 
-
+def my_student(request):
+    if 'read_student' in custom_data_views(request):
+        try:
+            employee = request.user.employee
+            my_student = Student.objects.filter(assigned_to=employee)
+        except:
+            my_student=None
+        context = {
+            'my_student': my_student
+        }
+        return render(request,'student/my_student.html', context)
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
+    
 def add_student(request):
     if 'create_student' in custom_data_views(request):
         if request.method == "POST":

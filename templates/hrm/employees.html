@@ -19,48 +19,50 @@
                 
                 <!-- add other contents  -->
 				<div class="row">
-					<table id="datable_1" class="table nowrap w-100 mb-5">
-						<thead>
-							<tr>
-								<th>ID</th>
-								<th>Name</th>
-								<th>Role</th>
-								<th>Email Address</th>
-								<th>Department</th>
-								<th>Designation</th>
-								<th>Date Joined</th>
-								<th>Action</th>
-							</tr>
-						</thead>
-						<tbody>
-							{% for employees in employees %}
-							<tr>
-								<td><a href="#" class="table-link-text link-high-em">{{employees.id}}</a></td>
-								<td>{{employees.user.first_name}} {{employees.user.last_name}}</td>
-								<td>{{employees.permission}}</td>
-								<td>{{employees.email}}</td>
-								<td>{{employees.department}}</td>
-								<td>{{employees.designation}}</td>
-								<td>{{employees.date_joined.date}}</td>
-								<td>
-									<div class="d-flex align-items-center">
-										<div class="d-flex">
-											{% if 'read_hrm' in permissions %}
-											<a href="{% url 'view_employee' id=employees.id %}" class="btn btn-dark"><i class="material-icons">visibility</i></a>
-											{% endif %}
-											{% if 'update_hrm' in permissions %}
-											<a href="{% url 'edit_employee' id=employees.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
-											{% endif %}
-											{% if 'delete_hrm' in permissions %}
-											<a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{{employees.id}}"><i class="material-icons">delete</i></a>
-											{% endif %}
+					<div class="table-responsive">
+						<table id="datable_1" class="table nowrap w-100 mb-5">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Name</th>
+									<th>Role</th>
+									<th>Email Address</th>
+									<th>Department</th>
+									<th>Designation</th>
+									<th>Date Joined</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for employees in employees %}
+								<tr>
+									<td><a href="#" class="table-link-text link-high-em">{{employees.id}}</a></td>
+									<td>{{employees.user.first_name}} {{employees.user.last_name}}</td>
+									<td>{{employees.permission}}</td>
+									<td>{{employees.email}}</td>
+									<td>{{employees.department}}</td>
+									<td>{{employees.designation}}</td>
+									<td>{{employees.date_joined.date}}</td>
+									<td>
+										<div class="d-flex align-items-center">
+											<div class="d-flex">
+												{% if 'read_hrm' in permissions %}
+												<a href="{% url 'view_employee' id=employees.id %}" class="btn btn-dark"><i class="material-icons">visibility</i></a>
+												{% endif %}
+												{% if 'update_hrm' in permissions %}
+												<a href="{% url 'edit_employee' id=employees.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
+												{% endif %}
+												{% if 'delete_hrm' in permissions %}
+												<a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{{employees.id}}"><i class="material-icons">delete</i></a>
+												{% endif %}
+											</div>
 										</div>
-									</div>
-								</td>
-							</tr>
-							{% endfor %}
-						</tbody>
-					</table>
+									</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
 				</div>
                 
                 

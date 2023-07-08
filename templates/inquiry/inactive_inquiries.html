@@ -13,38 +13,40 @@
                 <!-- add other contents  -->
                 <div class="card">
                     <div class="card-body">
-                        <table id="datatable1" class="display" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Contact Number</th>
-                                    <th>Purpose </th>
-                                    <th>Closed Date </th>
-                                    <th>Reason</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for inquiry in inactive_inquiries %}
-                                <tr>
-                                    <td>{{inquiry.first_name}} {{inquiry.last_name}}</td>
-                                    <td>{{inquiry.contact}}</td>
-                                    <td>{{inquiry.purpose}}</td>
-                                    <td>{{inquiry.closed_date}}</td>
-                                    <td>{{inquiry.closed_reason}}</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="d-flex">
-                                                {% if 'read_inquiry' in permissions %}
-                                                <a href="{% url 'view_inquiry' id=inquiry.id %}" class="btn btn-primary"><i class="material-icons">visibility</i></a>
-                                                {% endif %}
+                        <div class="table-responsive">
+                            <table id="datatable1" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Contact Number</th>
+                                        <th>Purpose </th>
+                                        <th>Closed Date </th>
+                                        <th>Reason</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for inquiry in inactive_inquiries %}
+                                    <tr>
+                                        <td>{{inquiry.first_name}} {{inquiry.last_name}}</td>
+                                        <td>{{inquiry.contact}}</td>
+                                        <td>{{inquiry.purpose}}</td>
+                                        <td>{{inquiry.closed_date}}</td>
+                                        <td>{{inquiry.closed_reason}}</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="d-flex">
+                                                    {% if 'read_inquiry' in permissions %}
+                                                    <a href="{% url 'view_inquiry' id=inquiry.id %}" class="btn btn-primary"><i class="material-icons">visibility</i></a>
+                                                    {% endif %}
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -168,39 +168,40 @@
                                 {% endif %}                         
                             </div>
                         </div>
-
-                        <table class="table mb-0">
-                            <thead>
-                                <tr>
-                                    <th>Designation</th>
-                                    <th>Department</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for designation in designation %}
-                                <tr>
-                                    <td>{{designation.designation}}</td>
-                                    <td>{{designation.department}}</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="d-flex">
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Designation</th>
+                                        <th>Department</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for designation in designation %}
+                                    <tr>
+                                        <td>{{designation.designation}}</td>
+                                        <td>{{designation.department}}</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
                                                 <div class="d-flex">
-                                                    {% if 'manage_hrm' in permissions %}
-                                                        <a href="{% url 'edit_designation' id=designation.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
-                                                    {% endif %}
+                                                    <div class="d-flex">
+                                                        {% if 'manage_hrm' in permissions %}
+                                                            <a href="{% url 'edit_designation' id=designation.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
+                                                        {% endif %}
 
-                                                    {% if 'delete_hrm' in permissions %}
-                                                        <a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenterDesignation{{designation.id}}"><i class="material-icons">delete</i></a>
-                                                    {% endif %}
+                                                        {% if 'delete_hrm' in permissions %}
+                                                            <a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenterDesignation{{designation.id}}"><i class="material-icons">delete</i></a>
+                                                        {% endif %}
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 

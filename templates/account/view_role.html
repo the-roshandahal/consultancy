@@ -19,7 +19,7 @@
 
                <!-- add other contents  -->
                <div class="container">
-            														
+            	<h4>Role - {{role_data.role}}</h4>										
                 <div class="table-responsive">
                 <table class="table">
                     <thead>
@@ -165,32 +165,32 @@
                             {% endif %}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Leads</th>
-                        <td>{% if role_data.create_leads == True %}
+                        <th scope="row">Student</th>
+                        <td>{% if role_data.create_student == True %}
                             <span class="badge badge-primary  badge-outline"><i class="material-icons">check_circle</i></span>
                             {% else %}
                             <span class="badge badge-danger badge-outline"><i class="material-icons">cancel</i></span>
                             {% endif %}
                         </td>
-                        <td>{% if role_data.read_leads == True %}
+                        <td>{% if role_data.read_student == True %}
                             <span class="badge badge-primary  badge-outline"><i class="material-icons">check_circle</i></span>
                             {% else %}
                             <span class="badge badge-danger badge-outline"><i class="material-icons">cancel</i></span>
                             {% endif %}
                         </td>
-                        <td>{% if role_data.update_leads == True %}
+                        <td>{% if role_data.update_student == True %}
                             <span class="badge badge-primary  badge-outline"><i class="material-icons">check_circle</i></span>
                             {% else %}
                             <span class="badge badge-danger badge-outline"><i class="material-icons">cancel</i></span>
                             {% endif %}
                         </td>
-                        <td>{% if role_data.delete_leads == True %}
+                        <td>{% if role_data.delete_student == True %}
                             <span class="badge badge-primary  badge-outline"><i class="material-icons">check_circle</i></span>
                             {% else %}
                             <span class="badge badge-danger badge-outline"><i class="material-icons">cancel</i></span>
                             {% endif %}
                         </td>
-                        <td>{% if role_data.manage_leads == True %}
+                        <td>{% if role_data.manage_student == True %}
                             <span class="badge badge-primary  badge-outline"><i class="material-icons">check_circle</i></span>
                             {% else %}
                             <span class="badge badge-danger badge-outline"><i class="material-icons">cancel</i></span>

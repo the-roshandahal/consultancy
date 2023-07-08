@@ -155,21 +155,24 @@
                         </ul>
                         {% endif %}
                     </li>
+                    {% if 'student' in permissions %}
                     <li>
-                        {% if 'read_student' in permissions %}
                         <a href="#"><i class="material-icons-two-tone">emoji_people</i>Students<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                         <ul class="sub-menu">
                             {% if 'read_student' in permissions %}
                             <li>
-                                <a href="{% url 'student' %}">Student</a>
+                                <a href="{% url 'my_student' %}">My Students</a>
                             </li>
                             <li>
-                                <a href="{% url 'inactive_student' %}">Closed Student</a>
+                                <a href="{% url 'student' %}">Active Students</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'inactive_student' %}">Closed Students</a>
                             </li>
                             {% endif %}
                         </ul>
-                        {% endif %}
                     </li>
+                    {% endif %}
                     <li>
                         {% if 'read_finance' in permissions %}
                         <a href="#"><i class="material-icons-two-tone">account_balance</i>Accounting<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>

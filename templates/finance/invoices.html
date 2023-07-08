@@ -20,38 +20,40 @@
 				<div class="row">
 					<div class="card">
 						<div class="card-body">
-							<table id="datatable1" class="display" style="width:100%">
-								<thead>
-									<tr>
-										<th>Invoice</th>
-										<th>Customer</th>
-										<th>Issue Date</th>
-										<th>Due Date</th>
-										<th>Invoice Amount</th>
-										<th>Created By</th>
-										<th>Actions</th>
-									</tr>
-								</thead>
-								<tbody>
-									{% for invoices in invoices %}
-									<tr>
-										<td><a href="#" class="table-link-text link-high-em">{{invoices.id}}</a></td>
-										<td>{{ invoices.student.user.first_name|add:" " }}{{ invoices.student.user.last_name }}</td>
-										<td>{{invoices.created}}</td>
-										<td>{{invoices.created}}</td>
-										<td>Rs. {{invoices.invoice_amount}}</td>
-										<td>{{invoices.created_by}}</td>
-										{% if 'read_finance' in permissions %}
-										<td>
-											<a  href="{% url 'view_invoice' id=invoices.id %}" class="btn btn-primary"><i class="material-icons">visibility</i></a>
-										</td>
-										{% else %}
-										<td>---</td>
-										{% endif %}
-									</tr>
-									{% endfor %}
-								</tbody>
-							</table>
+							<div class="table-responsive">
+								<table id="datatable1" class="display" style="width:100%">
+									<thead>
+										<tr>
+											<th>Invoice</th>
+											<th>Customer</th>
+											<th>Issue Date</th>
+											<th>Due Date</th>
+											<th>Invoice Amount</th>
+											<th>Created By</th>
+											<th>Actions</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for invoices in invoices %}
+										<tr>
+											<td><a href="#" class="table-link-text link-high-em">{{invoices.id}}</a></td>
+											<td>{{ invoices.student.user.first_name|add:" " }}{{ invoices.student.user.last_name }}</td>
+											<td>{{invoices.created}}</td>
+											<td>{{invoices.created}}</td>
+											<td>Rs. {{invoices.invoice_amount}}</td>
+											<td>{{invoices.created_by}}</td>
+											{% if 'read_finance' in permissions %}
+											<td>
+												<a  href="{% url 'view_invoice' id=invoices.id %}" class="btn btn-primary"><i class="material-icons">visibility</i></a>
+											</td>
+											{% else %}
+											<td>---</td>
+											{% endif %}
+										</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>

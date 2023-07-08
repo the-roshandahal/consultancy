@@ -122,7 +122,6 @@ def edit_company_setup(request,id):
             setup.company_email = request.POST['company_email']
             setup.company_contact_number = request.POST['company_contact_number']
             setup.payment_terms = request.POST['payment_terms']
-            setup.payment_details = request.POST['payment_details']
 
             if request.FILES and request.FILES['company_logo']:
                 setup.company_logo = request.FILES['company_logo']

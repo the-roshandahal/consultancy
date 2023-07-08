@@ -1,50 +1,24 @@
-{% load static %}{% include 'header.html' %}
-<!-- Main Content -->
-    <div class="hk-pg-wrapper">
-        <div class="container-xxl">
-            <div class="hk-pg-header">
-                <div class="d-flex">
-                    <div class="d-flex flex-wrap justify-content-between flex-1">
-                        <div class="mb-md-0 mb-2 me-8">
-                            <div class="d-flex align-items-center">
-                                <h1 class="pg-title">Salary Payment</h1>
-                            </div>
-                            <p id="greeting"></p>
-    
-                            <script>
-                                const now = new Date();
-                                const hour = now.getHours();
+{% include 'header.html' %}
+<div class="app-content">
+    <div class="content-wrapper">
+        <div class="example-container">
+            <div class="example-content bg-light">
+                <div class="page-description d-flex align-items-center">
+                    <div class="page-description-content flex-grow-1">
+                        <h1>Company Details</h1>
+                        <span>These details are visible in invoice and receipts.</span>
+                    </div>
+                    <div class="page-description-actions">
                         
-                                let greeting;
+                        <a href="" class="btn btn-primary"><i class="material-icons">edit</i>Edit</a>
                         
-                                if (hour < 12) {
-                                    greeting = "Good Morning";
-                                } else if (hour < 18) {
-                                    greeting = "Good Afternoon";
-                                } else {
-                                    greeting = "Good Evening";
-                                }
+                        <a href="" class="btn btn-dark"><i class="material-icons">add</i>Add</a>
                         
-                                document.getElementById("greeting").innerHTML = greeting + " {{request.user.first_name}}!";
-                            </script>
-                            
-                        </div>
-                        {% comment %} <div class="pg-header-action-wrap">
-                            {% if 'create_hrm' in permissions %}
-                            <button class="btn btn-outline-secondary me-3" data-bs-toggle="modal" data-bs-target="#exampleModalCenterAdvance">Advance Payment</button>
-                            {% endif %}
-                            {% if 'create_hrm' in permissions %}
-                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">Generate Salary</button>
-                            {% endif %}
-                        </div> {% endcomment %}
                     </div>
                 </div>
-            </div>
-            <!-- Page Body -->
-            <div class="hk-pg-body">
-                <div class="tab-content">
-                    <div class="tab-pane fade show active" id="tab_block_1">
-                        <p>Month : {{month}}</p>
+                
+                <!-- add other contents  -->
+                <p>Month : {{month}}</p>
                         <form action="{% url 'pay_salary' %}" method="POST">
                             {% csrf_token %}
                             <div class="row">
@@ -118,58 +92,58 @@
                                 </div>
                             </div>
                         </form>
-                    </div>
-                </div>
+                
+
+                
+                
+
+
+
             </div>
         </div>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-        <script>
-            $(document).ready(function() {
-                $("#check-all").change(function() {
-                  $(".check").prop('checked', $(this).prop("checked"));
-                });
-              
-                $(".check").change(function() {
-                  if(false == $(this).prop("checked")) {
-                    $("#check-all").prop('checked', false);
-                  }
-                  if ($('.check:checked').length == $('.check').length ){
-                      $("#check-all").prop('checked', true);
-                  }
-                });
-              });
-              
-
-
-              $(document).ready(function() {
-                // Listen for changes to any input field in the table body
-                $('tbody').on('input', 'input', function() {
-                  // Find the parent row of the changed input field
-                  var row = $(this).closest('tr');
-                  
-                  // Get the values of all the relevant input fields in that row
-                  var salary = parseFloat(row.find('[name="salary"]').text());
-                  var advance = parseFloat(row.find('[name="advance_this_month"]').text());
-                  var tax = parseFloat(row.find('[name="tax_deduction"]').val());
-                  var leave = parseFloat(row.find('[name="leave_deduction"]').val());
-                  var company = parseFloat(row.find('[name="company_deduction"]').val());
-                  
-                  // Calculate the final salary
-                  var finalSalary = salary - advance - tax - leave - company;
-                  
-                  // Update the final salary input field in the same row
-                  row.find('[name="final_salary"]').val(finalSalary.toFixed(2));
-                });
-              });
-              
-              
-              
-              
-        </script>    
-              
     </div>
-    <!-- /Main Content -->
 </div>
-<!-- /Wrapper -->
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $("#check-all").change(function() {
+            $(".check").prop('checked', $(this).prop("checked"));
+        });
+        
+        $(".check").change(function() {
+            if(false == $(this).prop("checked")) {
+            $("#check-all").prop('checked', false);
+            }
+            if ($('.check:checked').length == $('.check').length ){
+                $("#check-all").prop('checked', true);
+            }
+        });
+        });
+        
+
+
+        $(document).ready(function() {
+        // Listen for changes to any input field in the table body
+        $('tbody').on('input', 'input', function() {
+            // Find the parent row of the changed input field
+            var row = $(this).closest('tr');
+            
+            // Get the values of all the relevant input fields in that row
+            var salary = parseFloat(row.find('[name="salary"]').text());
+            var advance = parseFloat(row.find('[name="advance_this_month"]').text());
+            var tax = parseFloat(row.find('[name="tax_deduction"]').val());
+            var leave = parseFloat(row.find('[name="leave_deduction"]').val());
+            var company = parseFloat(row.find('[name="company_deduction"]').val());
+            
+            // Calculate the final salary
+            var finalSalary = salary - advance - tax - leave - company;
+            
+            // Update the final salary input field in the same row
+            row.find('[name="final_salary"]').val(finalSalary.toFixed(2));
+        });
+        });
+        
+</script>    
 {% include 'footer.html' %}

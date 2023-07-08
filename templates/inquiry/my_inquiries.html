@@ -27,36 +27,38 @@
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <div class="card">
                                 <div class="card-body">
-                                    <table id="datatable1" class="display" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Contact Number</th>
-                                                <th>Purpose </th>
-                                                <th>Consultation Date </th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for inquiry in my_inquiries %}
-                                            <tr>
-                                                <td>{{inquiry.first_name}} {{inquiry.last_name}}</td>
-                                                <td>{{inquiry.contact}}</td>
-                                                <td>{{inquiry.purpose}}</td>
-                                                <td>{{inquiry.date}}</td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="d-flex">
-                                                            {% if 'read_inquiry' in permissions %}
-                                                            <a href="{% url 'view_inquiry' id=inquiry.id %}" class="btn btn-primary"><i class="material-icons">visibility</i></a>
-                                                            {% endif %}
+                                    <div class="table-responsive">
+                                        <table id="datatable1" class="display" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Contact Number</th>
+                                                    <th>Purpose </th>
+                                                    <th>Consultation Date </th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for inquiry in my_inquiries %}
+                                                <tr>
+                                                    <td>{{inquiry.first_name}} {{inquiry.last_name}}</td>
+                                                    <td>{{inquiry.contact}}</td>
+                                                    <td>{{inquiry.purpose}}</td>
+                                                    <td>{{inquiry.date}}</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="d-flex">
+                                                                {% if 'read_inquiry' in permissions %}
+                                                                <a href="{% url 'view_inquiry' id=inquiry.id %}" class="btn btn-primary"><i class="material-icons">visibility</i></a>
+                                                                {% endif %}
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

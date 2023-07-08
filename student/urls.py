@@ -12,6 +12,7 @@ urlpatterns = [
     path("student_statement/", views.student_statement, name="student_statement"),
 
     path("student/", views.student, name="student"),
+    path("my_student/", views.my_student, name="my_student"),
     path("inactive_student/", views.inactive_student, name="inactive_student"),
     path("student_setup/", views.student_setup, name="student_setup"),
     path("create_stage/", views.create_stage, name="create_stage"),
