@@ -34,6 +34,7 @@ urlpatterns = [
     path("apply_leave/", views.apply_leave, name="apply_leave"),
     path("add_emp_leave/", views.add_emp_leave, name="add_emp_leave"),
     path("emp_leaves/", views.emp_leaves, name="emp_leaves"),
+    path("attendance_history/", views.attendance_history, name="attendance_history"),
     
     
     # path("accept_leave/<int:id>", views.accept_leave, name="accept_leave"),

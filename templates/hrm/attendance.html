@@ -5,16 +5,9 @@
             <div class="example-content bg-light">
                 <div class="page-description d-flex align-items-center">
                     <div class="page-description-content flex-grow-1">
-                        <h1>Company Details</h1>
-                        <span></span>
+                        <h1>Employee Attendance</h1>
                     </div>
-                    <div class="page-description-actions">
-                        
-                        <a href="" class="btn btn-primary"><i class="material-icons">edit</i>Edit</a>
-                        
-                        <a href="" class="btn btn-dark"><i class="material-icons">add</i>Add</a>
-                        
-                    </div>
+                    <a href="{% url 'attendance_history' %}"><button type="button" class="btn btn-dark">Attendance History</button></a>
                 </div>
                 <div class="card-body">
                   <h1>Attendance Form</h1>
@@ -37,8 +30,7 @@
                         {% if attendance_object.employee == employee %}
                         <tr>
                           <td >
-                            <input type="hidden" value="{{employee.id}}" name="employee">{{employee.user.first_name}}
-                          </td>
+                            <input type="hidden" value="{{employee.id}}" name="employee">{{employee.user.first_name}} {{employee.user.last_name}}</td>
                           <td colspan=3>
                             <select class="js-states form-control" tabindex="-1" style="display: none; width: 100%" name="status">
                               <optgroup label="Attendance Status">

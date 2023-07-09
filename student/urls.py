@@ -25,6 +25,7 @@ urlpatterns = [
     path("delete_stage/<int:id>", views.delete_stage, name="delete_stage"),
     path("delete_source/<int:id>", views.delete_source, name="delete_source"),
     path("delete_enrollment/<int:id>", views.delete_enrollment, name="delete_enrollment"),
+    path("assign_employee_student/<int:id>", views.assign_employee_student, name="assign_employee_student"),
    
     path("add_student/", views.add_student, name="add_student"),
     path("edit_student/<int:id>", views.edit_student, name="edit_student"),

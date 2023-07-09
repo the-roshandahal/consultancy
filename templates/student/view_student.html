@@ -6,7 +6,6 @@
                 <div class="page-description d-flex align-items-center">
                     <div class="page-description-content flex-grow-1">
                         <h3>{{student.user.first_name|add:" " }}{{student.user.last_name }} <span class="badge badge-success">{{student.stage}}</span></h3>
-                        <span>These details are visible in invoice and receipts.</span>
                     </div>
                     <a href="{% url 'single_statement' id=student.id %}"><button type="button" class="btn btn-dark">View Statement</button></a>
                 </div>
@@ -30,6 +29,7 @@
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#addFile">Add Files</a></li>
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#addNote">Add Note</a></li>
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#updateStage">Update Stage</a></li>
+                                                <li><a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#assignStudent">Assign Employee</a></li>
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#closeStudent">Close Student</a></li>
                                                 <li>
                                                     <hr class="dropdown-divider">
@@ -152,7 +152,7 @@
                                                                     </a>
                                                                     {% for employee in student.assigned_to.all %}
                                                                     <span class="widget-list-item-description-subtitle">
-                                                                        {{ employee }}
+                                                                        {{ employee }},
                                                                     </span>
                                                                     {% empty %}
                                                                     <span class="widget-list-item-description-subtitle">
@@ -169,8 +169,7 @@
                                                         <table class="table nowrap w-100 mb-5">
                                                             <thead>
                                                                 <tr>
-                                                                    <th>Invoice</th>
-                                                                    <th>Student</th>
+                                                                    <th>ID</th>
                                                                     <th>Issue Date</th>
                                                                     <th>Due Date</th>
                                                                     <th>Invoice Amount</th>
@@ -182,7 +181,6 @@
                                                                 {% for invoices in invoices %}
                                                                 <tr>
                                                                     <td>{{invoices.id}}</td>
-                                                                    <td>{{invoices.student.user.first_name|add:" " }}{{ invoices.student.user.last_name }}</td>
                                                                     <td>{{invoices.created}}</td>
                                                                     <td>{{invoices.created}}</td>
                                                                     <td>Rs.{{invoices.invoice_amount}}</td>
@@ -206,11 +204,10 @@
                                                             <thead>
                                                                 <tr>
                                                                     <th>Receipt</th>
-                                                                    <th>Student Name</th>
+                                                                    <th>Receipt Date</th>
                                                                     <th>Payment Method</th>
                                                                     <th>Paid Amount</th>
                                                                     <th>Created By</th>
-                                                                    <th>Receipt Date</th>
                                                                     <th>Actions</th>
                                                                 </tr>
                                                             </thead>
@@ -218,11 +215,10 @@
                                                                 {% for receipts in receipts %}
                                                                 <tr>
                                                                     <td>{{receipts.id}}</td>
-                                                                    <td>{{receipts.student.user.first_name|add:" " }}{{ invoices.student.user.last_name }}</td>
+                                                                    <td>{{receipts.created}}</td>
                                                                     <td>{{receipts.payment_method}}</td>
                                                                     <td>Rs.{{receipts.paid_amount}}</td>
                                                                     <td>{{receipts.created_by}}</td>
-                                                                    <td>{{receipts.created}}</td>
                                                                     {% if 'read_finance' in permissions %}
                                                                     <td>
                                                                         <a  href="{% url 'view_receipt' id=receipts.id %}" class="btn btn-primary"><i class="material-icons">visibility</i></a>
@@ -467,4 +463,36 @@
 	</div>
 </div>
 
+
+<div class="modal fade" id="assignStudent" tabindex="-1" role="dialog" aria-labelledby="assignStudent" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<form action="{% url 'assign_employee_student' id=student.id %}" method="POST">
+				{% csrf_token %}
+				<div class="modal-header">
+					<h5 class="modal-title" id="assignStudent">Assign Employee</h5>
+                </div>
+            <div class="modal-body">
+                <div class="col-md-12 mb-3">
+                    <p>Assigned Users</p>
+                    <div class="row">
+                        {% for employee in employee %}
+                        <div class="col-6">
+                            <input type="checkbox" name="assigned_user" value="{{ employee.id }}"
+                                {% if employee in student.assigned_to.all %} checked {% endif %}>
+                            <label for="{{ employee.id }}">{{ employee.user.first_name }}</label>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+                <div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Save</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 {% include 'footer.html' %}

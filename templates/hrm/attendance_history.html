@@ -1,0 +1,81 @@
+{% include 'header.html' %}
+<div class="app-content">
+    <div class="content-wrapper">
+        <div class="example-container">
+            <div class="example-content bg-light">
+                <div class="page-description d-flex align-items-center">
+                    <div class="page-description-content flex-grow-1">
+                        <h1>Attendance History</h1>
+                    </div>
+                </div>
+                
+                <!-- add other contents  -->
+                <form action="{% url 'attendance_history' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="inputState" class="form-label">Choose Employee</label>
+                            <select id="inputState" class="form-select" name="employees">
+                                <option value="all">All</option>
+                                {% for employee in employees %}
+                                <option value="{{employee.id}}">{{employee.user.first_name}} {{employee.user.last_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <label for="inputPassword4" class="form-label">From Date</label>
+                            <input type="date" class="form-control" id="inputPassword4" name="from_date" required>
+                        </div>
+                        <div class="col-4">
+                            <label for="inputPassword4" class="form-label">To Date</label>
+                            <input type="date" class="form-control" id="inputPassword4" name="to_date" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3 mt-4">
+                            <a href="#"><button type="submit" class="btn btn-primary">Submit</button></a>
+                        </div>
+                    </div>
+                </form>
+
+
+
+                <div class="row">
+					<div class="table-responsive">
+						<table id="datable_1" class="table nowrap w-100 mb-5">
+							<thead>
+								<tr>
+									<th>Date</th>
+									<th>Employee Name</th>
+									<th>Employee Role</th>
+									<th>Status</th>
+									<th>Remarks</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for attendance in attendance %}
+								<tr>
+									<td>{{attendance.date}}</td>
+									<td>{{attendance.employee.user.first_name}} {{attendance.employee.user.last_name}}</td>
+									<td>{{attendance.employee.permission}}</td>
+									<td>{{attendance.status}}</td>
+									<td>{{attendance.reason}}</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+                
+
+                
+                
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'footer.html' %}

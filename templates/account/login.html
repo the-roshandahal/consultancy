@@ -1,4 +1,5 @@
 {% include 'nav_links.html' %}
+{% load static %}
 <body>
     <div class="app app-auth-sign-in align-content-stretch d-flex flex-wrap justify-content-end">
         <div class="app-auth-background">
@@ -6,7 +7,14 @@
         </div>
         <div class="app-auth-container">
             <div class="logo">
-                <a href="index.html">Neptune</a>
+                <div class="row">
+                    <div class="col-3">
+                        <img src="{{company.company_logo.url}}" height='100'>
+                    </div>
+                    <div class="col-9">
+                        <a>{{company.company_name}}</a>
+                    </div>
+                </div>
             </div>
             <p class="auth-description">Please sign-in to your account and continue to the dashboard.</p>
 

@@ -5,14 +5,13 @@
             <div class="example-content bg-light">
                 <div class="page-description d-flex align-items-center">
                     <div class="page-description-content flex-grow-1">
-                        <h1>Inquiries</h1>
-                        <span>Manage your inquiries</span>
+                        <h1>Your Inquiries</h1>
                     </div>
                 </div>
                 
                 <!-- add other contents  -->
                 {% if request.user.is_superuser %}
-                <p>No inquiries</p>
+                <p>No inquiries assigned to you.</p>
                 {%else%}
                 <div class="card">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">

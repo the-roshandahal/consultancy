@@ -7,6 +7,7 @@ from finance.models import *
 from account.context_processors import custom_data_views
 
 from django.http import HttpResponse
+from django.contrib.auth.hashers import make_password
 
 # Create your views here.
 
@@ -393,6 +394,7 @@ def view_student(request,id):
         notes=StudentNotes.objects.filter(student=id).order_by('-created')
         logs=StudentLog.objects.filter(student=id).order_by('-created')
         files=StudentFiles.objects.filter(student=id).order_by('-created')
+        employee = Employee.objects.all()
         stage=StudentStage.objects.all()
         context = {
             'student': student,
@@ -402,29 +404,50 @@ def view_student(request,id):
             'stage':stage,
             'logs':logs,
             'files':files,
+            'employee':employee,
         }
         return render(request,'student/view_student.html', context)
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')
 
+def assign_employee_student(request,id):
+    if 'manage_student' in custom_data_views(request):
+        if request.method == "POST":
+            assigned_user = request.POST.getlist('assigned_user')
+            print(assigned_user)
+            employees = Employee.objects.filter(id__in=assigned_user)
+            student = Student.objects.get(id=id)
+            student.assigned_to.set(employees)
+            student.save()
 
+            
+            user = User.objects.get(username=request.user)
+            changed_by = user.username
+            activity = 'Employee Assigned.'
+            StudentLog.objects.create(student=student,changed_by=changed_by,activity=activity)
 
-
-
-    
+            return redirect('view_student',id)
+        else:
+            employee = Employee.objects.all()
+            print(employee)
+            context = {
+            'employee':employee,
+            }
+            return render (request,'inquiry/view_inquiry.html',context)  
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')
+ 
 def update_student_stage(request,id):
     if 'update_student' in custom_data_views(request):
         if request.user.is_superuser:
             if request.method =='POST':
-                print("here")
                 stage = request.POST['stage']
                 student_stage = StudentStage.objects.get(id=stage)
-
                 user = User.objects.get(username=request.user)
                 changed_by = user.username
                 student = Student.objects.get(id=id)
-                print(student)
                 student.stage = student_stage
                 student.save()
                 messages.info(request, "student stage updated")
@@ -434,35 +457,21 @@ def update_student_stage(request,id):
             else:
                 return redirect(view_student,id)
         else:
-            assigned_student = Student.objects.get(id=id)
-            assignedddd=assigned_student.assigned_to.all()
-            logged_in_user = User.objects.get(username=request.user)
-            employees = Employee.objects.get(user=logged_in_user)
+            if request.method =='POST':
+                stage = request.POST['stage']
+                student_stage = StudentStage.objects.get(id=stage)
 
-            assigned=False
-            for assignedddd in assignedddd:
-                if str(assignedddd) == str(employees):
-                    assigned=True
-            
-            if assigned == True:
-                if request.method =='POST':
-                    stage = request.POST['stage']
-                    student_stage = StudentStage.objects.get(id=stage)
+                user = User.objects.get(username=request.user)
+                changed_by = user.username
 
-                    user = User.objects.get(username=request.user)
-                    changed_by = user.username
-
-                    student = Student.objects.filter(id=id)[0]
-                    student.stage = student_stage
-                    student.save()
-                    messages.info(request, "student stage updated")
-                    activity = 'updated student stage to '+str(student_stage)
-                    StudentLog.objects.create(student=student,changed_by=changed_by,activity=activity)
-                    return redirect(view_student,id)
-                else:
-                    return redirect(view_student,id)
+                student = Student.objects.filter(id=id)[0]
+                student.stage = student_stage
+                student.save()
+                messages.info(request, "student stage updated")
+                activity = 'updated student stage to '+str(student_stage)
+                StudentLog.objects.create(student=student,changed_by=changed_by,activity=activity)
+                return redirect(view_student,id)
             else:
-                messages.info(request, "You are not assigned to this student.")
                 return redirect(view_student,id)
     else:
         messages.info(request, "Unauthorized access.")
@@ -512,34 +521,20 @@ def add_student_file(request,id):
             else:
                 return redirect(view_student,id)
         else:
-            assigned_student = student.objects.get(id=id)
-            student_assigned_users=assigned_student.assigned_to.all()
-            logged_in_user = User.objects.get(username=request.user)
-            employees = Employee.objects.get(user=logged_in_user)
-
-            assigned=False
-            for student_assigned_users in student_assigned_users:
-                if str(student_assigned_users) == str(employees):
-                    assigned=True
+            if request.method =='POST':
+                title = request.POST['title']
+                file = request.FILES['file']
             
-            if (assigned == True):
-                if request.method =='POST':
-                    title = request.POST['title']
-                    file = request.FILES['file']
-                
-                    user = User.objects.get(username=request.user)
-                    added_by = user.username
+                user = User.objects.get(username=request.user)
+                added_by = user.username
 
-                    student = student.objects.get(id=id)
-                    StudentFiles.objects.create(student=student,title=title,file=file,added_by=added_by)
-                    messages.info(request, "File Added Successfully")
+                student = student.objects.get(id=id)
+                StudentFiles.objects.create(student=student,title=title,file=file,added_by=added_by)
+                messages.info(request, "File Added Successfully")
 
-                    StudentLog.objects.create(student=student,changed_by=added_by,activity='added file data')
-                    return redirect(view_student,id)
-                else:
-                    return redirect(view_student,id)
+                StudentLog.objects.create(student=student,changed_by=added_by,activity='added file data')
+                return redirect(view_student,id)
             else:
-                messages.info(request, "You are not assigned to this student.")
                 return redirect(view_student,id)
 
     else:
@@ -560,30 +555,16 @@ def close_student(request,id):
             StudentLog.objects.create(student=student,changed_by=changed_by,activity=activity)
             return redirect('view_student',id)
         else:
-            assigned_student = Student.objects.get(id=id)
-            assignedddd=assigned_student.assigned_to.all()
-            logged_in_user = User.objects.get(username=request.user)
-            employees = Employee.objects.get(user=logged_in_user)
+            student = Student.objects.get(id=id)
+            student.active=False
+            student.save()
+            messages.info(request, "student closed.")
 
-            assigned=False
-            for assignedddd in assignedddd:
-                if str(assignedddd) == str(employees):
-                    assigned=True
-            
-            if assigned == True:
-                student = Student.objects.get(id=id)
-                student.active=False
-                student.save()
-                messages.info(request, "student closed.")
-
-                user = User.objects.get(username=request.user)
-                changed_by = user.username
-                activity = ' closed student '
-                StudentLog.objects.create(student=student,changed_by=changed_by,activity=activity)
-                return redirect(view_student,id)
-            else:
-                messages.info(request, "You are not assigned to this student.")
-                return redirect(view_student,id)
+            user = User.objects.get(username=request.user)
+            changed_by = user.username
+            activity = ' closed student '
+            StudentLog.objects.create(student=student,changed_by=changed_by,activity=activity)
+            return redirect(view_student,id)
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')
@@ -602,30 +583,16 @@ def reopen_student(request,id):
             StudentLog.objects.create(student=student,changed_by=changed_by,activity=activity)
             return redirect('view_student',id)
         else:
-            assigned_student = Student.objects.get(id=id)
-            assignedddd=assigned_student.assigned_to.all()
-            logged_in_user = User.objects.get(username=request.user)
-            employees = Employee.objects.get(user=logged_in_user)
+            student = Student.objects.get(id=id)
+            student.active=True
+            student.save()
+            messages.info(request, "student reopened.")
 
-            assigned=False
-            for assignedddd in assignedddd:
-                if str(assignedddd) == str(employees):
-                    assigned=True
-            
-            if assigned == True:
-                student = Student.objects.get(id=id)
-                student.active=True
-                student.save()
-                messages.info(request, "student reopened.")
-
-                user = User.objects.get(username=request.user)
-                changed_by = user.username
-                activity = ' reopened student '
-                StudentLog.objects.create(student=student,changed_by=changed_by,activity=activity)
-                return redirect(view_student,id)
-            else:
-                messages.info(request, "You are not assigned to this student.")
-                return redirect(view_student,id)
+            user = User.objects.get(username=request.user)
+            changed_by = user.username
+            activity = ' reopened student '
+            StudentLog.objects.create(student=student,changed_by=changed_by,activity=activity)
+            return redirect(view_student,id)
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')
@@ -659,22 +626,25 @@ def edit_student_notes(request,id):
 
 
 
-from django.contrib.auth.hashers import make_password
 
 def change_student_password(request):
-    if request.method == "POST":
-        old_password = request.POST['old_password']
-        new_password = request.POST['new_password']
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            old_password = request.POST['old_password']
+            new_password = request.POST['new_password']
 
-        logged_in_user = request.user
+            logged_in_user = request.user
 
-        if logged_in_user.check_password(old_password):
-            logged_in_user.password = make_password(new_password)
-            logged_in_user.save()
-            auth.login(request, logged_in_user)            
-            messages.info(request, "Password Changed Successfully.")
-            return redirect('student_dashboard')
-        else:
-            messages.info(request, "Incorrect old password.")
-    
-    return HttpResponse("Invalid request.")
+            if logged_in_user.check_password(old_password):
+                logged_in_user.password = make_password(new_password)
+                logged_in_user.save()
+                auth.login(request, logged_in_user)            
+                messages.info(request, "Password Changed Successfully.")
+                return redirect('student_dashboard')
+            else:
+                messages.info(request, "Incorrect old password.")
+        
+        return HttpResponse("Invalid request.")
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('login')

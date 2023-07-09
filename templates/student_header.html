@@ -36,7 +36,7 @@
                         <div class="d-flex">
                             <ul class="navbar-nav">
                                 <li>
-                                    <a class="nav-link" href="{% url 'logout' %}"><i class="material-icons">logout</i></a>
+                                    <a class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModalCenterAddYear"><i class="material-icons">logout</i></a>
                                 </li>
                             </ul>
                         </div>
@@ -64,24 +64,94 @@
                             {% csrf_token %}
                             <div class="modal-body">
                                 <div class="col-md-12 mb-3">
-                                    <label for="">Current Password</label>
-                                    <input type="text" class="form-control"  placeholder="********" name='old_password'>
+                                    <label for="old_password">Current Password</label>
+                                    <input type="password" class="form-control" placeholder="********" required id="old_password" name="old_password">
                                 </div>
                                 <div class="col-md-12 mb-3">
-                                    <label for="">New Password</label>
-                                    <input type="text" class="form-control"  placeholder="********" name='new_password'>
+                                    <label for="new_password">New Password</label>
+                                    <input type="password" class="form-control" placeholder="********" required id="new_password" name="new_password">
                                 </div>
                                 <div class="col-md-12 mb-3">
-                                    <label for="">Re-enter New Password</label>
-                                    <input type="text" class="form-control"  placeholder="********" name='new_password_1'>
+                                    <label for="new_password_1">Re-enter New Password</label>
+                                    <input type="password" class="form-control" placeholder="********" required id="new_password_1" name="new_password_1">
                                 </div>
+                                <div id="error_message" style="color: red;"></div>
                                 <a href="#" class="auth-forgot-password float-end">Forgot password?</a>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary" id="submit_button">Submit</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             </div>
+                            <script>
+                                // Function to validate the password fields
+                                function validatePassword() {
+                                    var oldPassword = document.getElementById("old_password").value;
+                                    var newPassword = document.getElementById("new_password").value;
+                                    var newPassword1 = document.getElementById("new_password_1").value;
+                                    var errorElement = document.getElementById("error_message");
+                                    var submitButton = document.getElementById("submit_button");
+                            
+                                    // Reset error message
+                                    errorElement.innerHTML = "";
+                            
+                                    // Check if new password is the same as the old password
+                                    if (newPassword === oldPassword) {
+                                        errorElement.innerHTML = "New password cannot be the same as the old password.";
+                                        submitButton.disabled = true; // Disable the submit button
+                                        return false;
+                                    }
+                            
+                                    // Check if new password and re-entered password match
+                                    if (newPassword !== newPassword1) {
+                                        errorElement.innerHTML = "Passwords do not match.";
+                                        submitButton.disabled = true; // Disable the submit button
+                                        return false;
+                                    }
+                            
+                                    // Check if new password is at least 8 characters long
+                                    if (newPassword.length < 8) {
+                                        errorElement.innerHTML = "Password should be at least 8 characters long.";
+                                        submitButton.disabled = true; // Disable the submit button
+                                        return false;
+                                    }
+                            
+                                    submitButton.disabled = false; // Enable the submit button
+                                    return true;
+                                }
+                            
+                                // Event listeners for password fields
+                                var oldPasswordInput = document.getElementById("old_password");
+                                var newPasswordInput = document.getElementById("new_password");
+                                var newPassword1Input = document.getElementById("new_password_1");
+                            
+                                oldPasswordInput.addEventListener("input", validatePassword);
+                                newPasswordInput.addEventListener("input", validatePassword);
+                                newPassword1Input.addEventListener("input", validatePassword);
+                            </script>
+                                
+                                
+                                
                         </form>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal fade" id="exampleModalCenterAddYear" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterAddYear" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Hold on!</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to logout?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <a href="{% url 'logout' %}"><button type="button" class="btn btn-primary">Yes</button></a>
+                        </div>
                     </div>
                 </div>
             </div>

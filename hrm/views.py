@@ -789,4 +789,31 @@ def manage_attendance(request):
 
 
 
+def attendance_history(request):
+    if 'manage_hrm' in custom_data_views(request):
+        if request.method =="POST":
+            to_date = request.POST['to_date']
+            from_date = request.POST['from_date']
+            employee_ids = request.POST['employees']
+            if employee_ids == "all":
+                attendance = Attendance.objects.filter(
+                    date__range=[from_date, to_date])
+            else:
+                attendance = Attendance.objects.filter(
+                    date__range=[from_date, to_date],
+                    employee__id__in=employee_ids
+                )
 
+            employees = Employee.objects.all()
+            context={
+                'attendance':attendance,
+                'employees':employees,
+            }
+        else:
+            employees = Employee.objects.all()
+            attendance= Attendance.objects.all()
+            context={
+                'attendance':attendance,
+                'employees':employees,
+            }
+        return render(request,'hrm/attendance_history.html',context)
