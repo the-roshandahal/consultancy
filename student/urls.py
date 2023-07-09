@@ -10,6 +10,7 @@ urlpatterns = [
 
     path("student_dashboard/", views.student_dashboard, name="student_dashboard"),
     path("student_statement/", views.student_statement, name="student_statement"),
+    path("change_student_password/", views.change_student_password, name="change_student_password"),
 
     path("student/", views.student, name="student"),
     path("my_student/", views.my_student, name="my_student"),

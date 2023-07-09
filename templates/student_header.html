@@ -28,7 +28,10 @@
                 <nav class="navbar navbar-light navbar-expand-lg">
                     <div class="container-fluid">
                         <div class="navbar-nav" id="navbarNav">
-            
+                            
+                            <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenteraction">
+                                Change Password
+                            </a>
                         </div>
                         <div class="d-flex">
                             <ul class="navbar-nav">
@@ -40,4 +43,45 @@
                     </div>
                 </nav>
             </div>
-            
+
+
+
+
+
+
+
+
+
+
+
+            <div class="modal fade" id="exampleModalCenteraction" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteraction" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Change Password</h5>
+                        </div>
+                        <form action="{% url 'change_student_password' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="modal-body">
+                                <div class="col-md-12 mb-3">
+                                    <label for="">Current Password</label>
+                                    <input type="text" class="form-control"  placeholder="********" name='old_password'>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <label for="">New Password</label>
+                                    <input type="text" class="form-control"  placeholder="********" name='new_password'>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <label for="">Re-enter New Password</label>
+                                    <input type="text" class="form-control"  placeholder="********" name='new_password_1'>
+                                </div>
+                                <a href="#" class="auth-forgot-password float-end">Forgot password?</a>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>

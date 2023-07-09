@@ -6,6 +6,7 @@ from account.models import *
 from finance.models import *
 from account.context_processors import custom_data_views
 
+from django.http import HttpResponse
 
 # Create your views here.
 
@@ -654,3 +655,26 @@ def edit_student_notes(request,id):
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')
+    
+
+
+
+from django.contrib.auth.hashers import make_password
+
+def change_student_password(request):
+    if request.method == "POST":
+        old_password = request.POST['old_password']
+        new_password = request.POST['new_password']
+
+        logged_in_user = request.user
+
+        if logged_in_user.check_password(old_password):
+            logged_in_user.password = make_password(new_password)
+            logged_in_user.save()
+            auth.login(request, logged_in_user)            
+            messages.info(request, "Password Changed Successfully.")
+            return redirect('student_dashboard')
+        else:
+            messages.info(request, "Incorrect old password.")
+    
+    return HttpResponse("Invalid request.")
