@@ -91,28 +91,28 @@ WSGI_APPLICATION = 'consultancy.wsgi.application'
 # }
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'roshandahal_roshandahal',
-#         'USER': 'roshandahal_db',
-#         'PASSWORD': ')Z=3dDxgjN+N',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#     }
-# }
-
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'erp',
-        'USER': 'root',
-        'PASSWORD': '',
+        'NAME': 'roshandahal_roshandahal',
+        'USER': 'roshandahal_db',
+        'PASSWORD': ')Z=3dDxgjN+N',
         'HOST': 'localhost',
         'PORT': '3306',
     }
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'erp',
+#         'USER': 'root',
+#         'PASSWORD': '',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 
 
 # Password validation
