@@ -141,13 +141,18 @@ def add_inquiry(request):
             applied_country = request.POST["country"]
             applied_date = request.POST["date"]
           
+            test = request.POST.getlist('test')
+            source = request.POST.getlist('source')
+            source_string = ','.join(source)
+            test_string = ','.join(test)
 
             assigned_user = request.POST['assigned_user']
             assigned = Employee.objects.get(id=assigned_user)
             
             inquiry = StudentInquiry.objects.create(first_name=first_name,last_name=last_name, dob=dob, temporary_address=temporary_address,permanent_address=permanent_address,contact=contact,email=email,guardian_name=guardian_name,marital_status=marital_status,purpose=purpose,date=date,remarks=remarks,course=course,college=college,country=country,city=city,intake=intake,applied_date=applied_date,applied_country=applied_country,assigned=assigned,
                                              other=other, institution1=institution1, passed_year1=passed_year1,percentage1=percentage1, institution2=institution2, passed_year2=passed_year2,percentage2=percentage2, institution3=institution3, passed_year3=passed_year3,percentage3=percentage3)
-            
+            inquiry.source=source_string
+            inquiry.test=test_string
             inquiry.save()
             user = User.objects.get(username=request.user)
             changed_by = user.username

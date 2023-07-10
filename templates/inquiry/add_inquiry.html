@@ -10,6 +10,7 @@
                 </div>
                 
                 <!-- add other contents  -->
+                {% if purpose and user %}
                 <form action="{% url 'add_inquiry' %}" method="POST">
                     {% csrf_token %}
                     <div class="row mt-3">
@@ -185,23 +186,23 @@
                         <div class="col-6">
                             <p>Have you taken?</p>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="IELTS">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="test" value="IELTS">
                                 <label class="form-check-label" for="inlineCheckbox1">IELTS</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="PTE">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="test" value="PTE">
                                 <label class="form-check-label" for="inlineCheckbox2">PTE</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="TOFEL">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="test" value="TOFEL">
                                 <label class="form-check-label" for="inlineCheckbox2">TOFEL</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="SAT">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="test" value="SAT">
                                 <label class="form-check-label" for="inlineCheckbox2">SAT</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="NAT">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="test" value="NAT">
                                 <label class="form-check-label" for="inlineCheckbox2">NAT</label>
                             </div>
                         </div>
@@ -279,27 +280,28 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row mt-5">
                         <h5>How did you know about us?</h5>
                         <div class="col-12">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Facebook">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Facebook" name="source">
                                 <label class="form-check-label" for="inlineCheckbox2">Facebook</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Instagram">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="source" value="Instagram">
                                 <label class="form-check-label" for="inlineCheckbox2">Instagram</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Seminar">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="source" value="Seminar">
                                 <label class="form-check-label" for="inlineCheckbox2">Seminar</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Newspaper">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="source" value="Newspaper">
                                 <label class="form-check-label" for="inlineCheckbox2">newspaper</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Friends/Relatives">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="source" value="Friends/Relatives">
                                 <label class="form-check-label" for="inlineCheckbox2">Friends/Relatives</label>
                             </div>
                         </div>
@@ -367,6 +369,9 @@
 
                     </div>
                 </form>      
+                {% else %}
+                <p>You havent added purpose or employee.</p>
+                {% endif %}
             </div>
         </div>
     </div>

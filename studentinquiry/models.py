@@ -24,13 +24,13 @@ class StudentInquiry(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     dob=models.CharField(max_length=255)
-    guardian_name = models.CharField(max_length=255)
-    marital_status=models.CharField(max_length=255,default="Single")
-    email = models.CharField(max_length=255)
-    contact = models.CharField(max_length=255)
     temporary_address = models.CharField(max_length=255)
     permanent_address = models.CharField(max_length=255)
+    email = models.CharField(max_length=255)
+    contact = models.CharField(max_length=255)
     purpose = models.ForeignKey(InquiryPurpose,on_delete=models.CASCADE,null=True,blank=True)
+    guardian_name = models.CharField(max_length=255)
+    marital_status=models.CharField(max_length=255,default="Single")
     
     
     institution1 = models.CharField(max_length=100,null=True,blank=True)
@@ -45,19 +45,22 @@ class StudentInquiry(models.Model):
     passed_year3 = models.PositiveIntegerField(null=True,blank=True)
     percentage3 = models.DecimalField(max_digits=5, decimal_places=2,null=True,blank=True)
  
+    assigned = models.ForeignKey(Employee,on_delete=models.SET_NULL,null=True,blank=True)
     
     course = models.CharField(max_length=100,default=True)
     college = models.CharField(max_length=100,default=True)
     country = models.CharField(max_length=100,default=True)
     city = models.CharField(max_length=100,default=True)
     intake = models.CharField(max_length=100,default=True)
+
     applied_country = models.CharField(max_length=100, blank=True, null=True)
     applied_date = models.CharField(max_length=100,blank=True, null=True)
     other=models.CharField(max_length=255,blank=True, null=True)
+    remarks= models.CharField(max_length=255,null=True,blank=True)
+    source=models.CharField(max_length=255,blank=True, null=True)
+    test= models.CharField(max_length=255,null=True,blank=True)
     
     date = models.DateTimeField(blank=True, null=True)
-    remarks= models.CharField(max_length=255,null=True,blank=True)
-    assigned = models.ForeignKey(Employee,on_delete=models.SET_NULL,null=True,blank=True)
 
     is_verified = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
