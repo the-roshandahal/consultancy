@@ -678,6 +678,7 @@ def edit_employee(request,id):
             if date_joined:
                 user_data.date_joined = date_joined
             user_data.save()
+
             messages.info(request, "Employee Edited Successfully.")
             return redirect('employees')
         else:
@@ -773,8 +774,11 @@ def manage_attendance(request):
         else:
             attendance_object=None
             status = "Not taken"
-        latest = Attendance.objects.latest('last_updated')
-        last_updated=latest.last_updated
+        try:
+            latest = Attendance.objects.latest('last_updated')
+            last_updated=latest.last_updated
+        except:
+            last_updated=None
         employee=Employee.objects.all()
 
         context={

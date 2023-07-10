@@ -9,6 +9,7 @@
                     </div>
                     <a href="{% url 'attendance_history' %}"><button type="button" class="btn btn-dark">Attendance History</button></a>
                 </div>
+                {% if employee %}
                 <div class="section-description">
                   <div class="row">
                     <div class="col-4"><h5>Attendance For: {{today_date}}</h5></div>
@@ -76,6 +77,9 @@
                     <button class="btn btn-primary" type="submit"><i class="material-icons"></i>Save</button>
                 </form>
             </div>
+            {% else %}
+            <p>no active employees at the moment</p>
+            {% endif %}
         </div>
     </div>
   </div>   

@@ -5,10 +5,10 @@
             <div class="example-content bg-light">
                 <div class="page-description d-flex align-items-center">
                     <div class="page-description-content flex-grow-1">
-                        <h1>Add Student</h1>
+                        <h1>Add Employee</h1>
                     </div>
                 </div>
-                
+                {% if permissions and designation %}
                 <!-- add other contents  -->
                 <form action="{% url 'add_employee' %}" method="POST">
                     {% csrf_token %}
@@ -120,7 +120,13 @@
                             </div>
                         </div>
                     </div>
-                </form>       
+                </form> 
+                {% else %}
+                <p>
+                    please add permission or designation before adding employees
+                </p>
+                {% endif %}
+      
             </div>
         </div>
     </div>
