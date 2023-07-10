@@ -37,8 +37,9 @@ urlpatterns = [
     path("attendance_history/", views.attendance_history, name="attendance_history"),
     
     
-    # path("accept_leave/<int:id>", views.accept_leave, name="accept_leave"),
-    # path("deny_leave/<int:id>", views.deny_leave, name="deny_leave"),
+    path("accept_leave/<int:id>", views.accept_leave, name="accept_leave"),
+    path("deny_leave/<int:id>", views.deny_leave, name="deny_leave"),
+    path("payslip/", views.payslip, name="payslip"),
     
     path("add_year/", views.add_year, name="add_year"),
     path("delete_year/<int:id>", views.delete_year, name="delete_year"),

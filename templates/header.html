@@ -77,6 +77,7 @@
                     <li class="sidebar-title">
                         Features
                     </li>
+                    {% if 'inquiry' in permissions %}
                     <li>
                         <a href=""><i class="material-icons-two-tone">live_help</i>Inquiry<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                         <ul class="sub-menu">
@@ -104,15 +105,8 @@
                             
                         </ul>
                     </li>
-                    {% comment %} <li>
-                        <a href=""><i class="material-icons-two-tone">add_link</i>Crm system<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
-                        <ul class="sub-menu">
-                            <li>
-                                <a href="">Leads</a>
-                            </li>
-                            
-                        </ul>
-                    </li> {% endcomment %}
+                    {% endif %}
+
                     {% if 'hrm' in permissions %}
                     <li>
                         <a href=""><i class="material-icons-two-tone">person_add</i>Hrm system<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
@@ -195,8 +189,21 @@
                         </ul>
                         {% endif %}
                     </li>
+
+
                     <li>
-                        <a href="{% url 'todo' %}"><i class="material-icons-two-tone">done</i>Todo</a>
+                        <a href="#"><i class="material-icons-two-tone">done</i>Work Profile<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a href="{% url 'todo' %}">Todo</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'leave' %}">Leaves</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'payslip' %}">Payslip</a>
+                            </li>
+                        </ul>
                     </li>
                    
                     

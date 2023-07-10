@@ -9,49 +9,56 @@
                     </div>
                     <a href="{% url 'attendance_history' %}"><button type="button" class="btn btn-dark">Attendance History</button></a>
                 </div>
+                <div class="section-description">
+                  <div class="row">
+                    <div class="col-4"><h5>Attendance For: {{today_date}}</h5></div>
+                    <div class="col-4"><h5>Status: {{status}} for today</h5></div>
+                    <div class="col-4"><h5>Last Updated = {{last_updated}}</h5></div>
+                  </div>
+                </div>
+
                 <div class="card-body">
-                  <h1>Attendance Form</h1>
-                  <p>{{today_date}}</p>
-                  <p>status = {{status}}</p>
+                  
                   <form method="POST" action="{% url 'manage_attendance' %}">
                     {% csrf_token %}
-                    <table id="datatable1" class="display" style="width:100%">
-                      <thead>
-                        <tr>
-                          <th>Employee</th>
-                          <th colspan=3>Status</th>
-                          <th>Reason</th>
-                        </tr>
-                      </thead>
-                    <tbody>
-                        {% for employee in employee %}
-                        {% if attendance_object %}
+                    
+                    
+
+                    <div class="row">
+                      <div class="col-4"><h5>Employee</h5></div>
+                      <div class="col-4"><h5>Status</h5></div>
+                      <div class="col-4"><h5>Reason</h5></div>
+                    </div>
+                    
+                    {% for employee in employee %}
+                      {% if attendance_object %}
                         {% for attendance_object in attendance_object %}
-                        {% if attendance_object.employee == employee %}
-                        <tr>
-                          <td >
-                            <input type="hidden" value="{{employee.id}}" name="employee">{{employee.user.first_name}} {{employee.user.last_name}}</td>
-                          <td colspan=3>
-                            <select class="js-states form-control" tabindex="-1" style="display: none; width: 100%" name="status">
-                              <optgroup label="Attendance Status">
-                                <option value="present" {% if attendance_object.status == 'present' %}selected{% endif %}>Present</option>
-                                <option value="half_day" {% if attendance_object.status == 'half_day' %}selected{% endif %}>Half Day</option>
-                                <option value="absent" {% if attendance_object.status == 'absent' %}selected{% endif %}>Absent</option>
-                              </optgroup>
-                            </select>
-                          </td>
-                          <td>                                
-                            <input type="text" class="form-control" name = "reason" {% if attendance_object.reason %} value="{{attendance_object.reason}}" value="none" {% endif %} >
-                          </td>
-                        </tr>
-                        {% endif %}
+                          {% if attendance_object.employee == employee %}
+                            <div class="row mt-3">
+                              <div class="col-4">
+                                <input type="hidden" value="{{employee.id}}" name="employee">{{employee.user.first_name}} {{employee.user.last_name}}
+                              </div>
+                              <div class="col-4">
+                                <select class="js-states form-control" tabindex="-1" style="display: none; width: 100%" name="status" >
+                                  <optgroup label="Attendance Status">
+                                    <option value="present" {% if attendance_object.status == 'present' %}selected{% endif %}>Present</option>
+                                    <option value="half_day" {% if attendance_object.status == 'half_day' %}selected{% endif %}>Half Day</option>
+                                    <option value="absent" {% if attendance_object.status == 'absent' %}selected{% endif %}>Absent</option>
+                                  </optgroup>
+                                </select>
+                              </div>
+                              <div class="col-4">
+                                <input type="text" class="form-control" name="reason" {% if attendance_object.reason %}value="{{attendance_object.reason}}" value="None" {% endif %} id="reason_field">
+                              </div>
+                            </div>
+                          {% endif %}
                         {% endfor %}
-                        {% else %}
-                        <tr>
-                          <td >
+                      {% else %}
+                        <div class="row mt-3">
+                          <div class="col-4">
                             <input type="hidden" value="{{employee.id}}" name="employee">{{employee.user.first_name}}
-                          </td>
-                          <td colspan=3>
+                          </div>
+                          <div class="col-4">
                             <select class="js-states form-control" tabindex="-1" style="display: none; width: 100%" name="status">
                               <optgroup label="Attendance Status">
                                 <option value="present">Present</option>
@@ -59,23 +66,22 @@
                                 <option value="absent">Absent</option>
                               </optgroup>
                             </select>
-                          </td>
-                          <td>                                
-                            <input type="text" class="form-control" name = "reason" value="none">
-                          </td>
-                        </tr>
-                        
-                        {% endif %}
-                        {% endfor %}
-                      </tbody>
-                    </table>
+                          </div>
+                          <div class="col-4">
+                            <input type="text" class="form-control" name="reason" value="None">
+                          </div>
+                        </div>
+                      {% endif %}
+                    {% endfor %}
                     <button class="btn btn-primary" type="submit"><i class="material-icons"></i>Save</button>
                 </form>
             </div>
         </div>
     </div>
   </div>   
-                                                
+    
+  
+
 {% include 'footer.html' %}
                                           
                       

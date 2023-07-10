@@ -294,31 +294,19 @@ def apply_leave(request):
     if request.user.is_authenticated:
         if request.method == "POST":
             reason = request.POST['reason']
-            dates = request.POST['daterange']
+            dates = request.POST['dates']
             employee = Employee.objects.get(user=request.user)
             leave = Leave.objects.create(reason=reason,status='pending',employee=employee)
             leave.save()
-
-
-            start_date_str, end_date_str = dates.split(" - ")
-            start_date = datetime.strptime(start_date_str, "%m/%d/%Y").date()
-            end_date = datetime.strptime(end_date_str, "%m/%d/%Y").date()
-            date_list = []
-            current_date = start_date
-            while current_date <= end_date:
-                date_list.append(current_date)
-                current_date += timedelta(days=1)
-
+            date_list= [date.strip() for date in dates.split(",")]
             for date in date_list:
                 LeaveDate.objects.create(leave=leave,date=date)
 
             return redirect('leave')
         else:
-            return redirect('leave')
-
+            return render (request,'hrm/apply_leave.html')
 def emp_leaves(request):
     if 'read_hrm' in custom_data_views(request):
-        employees =Employee.objects.all()
         pending_leaves = Leave.objects.filter(status='pending')
         pending_leaves_dates = LeaveDate.objects.filter(leave__in=pending_leaves)
 
@@ -329,7 +317,6 @@ def emp_leaves(request):
         denied_leaves_dates = LeaveDate.objects.filter(leave__in=denied_leaves)
 
         context = {
-            'employees':employees,
             'pending_leaves':pending_leaves,
             'pending_leaves_dates':pending_leaves_dates,
 
@@ -359,7 +346,13 @@ def add_emp_leave(request):
                 LeaveDate.objects.create(leave=leave,date=date)
             return redirect('emp_leaves')
         else:
-            return redirect('emp_leaves')
+            employees =Employee.objects.all()
+
+            context={
+            'employees':employees,
+
+            }
+            return render (request,'hrm/add_emp_leave.html',context)
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')
@@ -385,7 +378,11 @@ def deny_leave(request,id):
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')
-    
+
+
+
+
+
 def payroll(request):
     if 'read_hrm' in custom_data_views(request):
         months = MonthSetup.objects.filter(is_active = True)      
@@ -772,17 +769,19 @@ def manage_attendance(request):
         today_attendance = Attendance.objects.filter(date=today_date)
         if today_attendance.exists():
             attendance_object = Attendance.objects.filter(date=today_date)
-            status = "taken"
+            status = "Taken"
         else:
             attendance_object=None
-            status = "not-taken"
-
+            status = "Not taken"
+        latest = Attendance.objects.latest('last_updated')
+        last_updated=latest.last_updated
         employee=Employee.objects.all()
 
         context={
             'today_date':today_date,
             'employee':employee,
             'status':status,
+            'last_updated':last_updated,
             'attendance_object':attendance_object,
         }
         return render(request, 'hrm/attendance.html',context)
@@ -817,3 +816,17 @@ def attendance_history(request):
                 'employees':employees,
             }
         return render(request,'hrm/attendance_history.html',context)
+    
+
+def payslip(request):
+    if request.user.is_superuser:
+        context = {
+        }
+        return render(request,'hrm/payslip.html',context)
+    else:
+        employee = Employee.objects.get(user=request.user)
+        payments_made = Salary.objects.filter(employee=employee )
+        context = {
+            'payments_made':payments_made,
+            }
+        return render(request,'hrm/payslip.html',context)

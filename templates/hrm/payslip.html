@@ -1,0 +1,62 @@
+{% include 'header.html' %}
+<div class="app-content">
+    <div class="content-wrapper">
+        <div class="example-container">
+            <div class="example-content bg-light">
+                <div class="page-description d-flex align-items-center">
+                    <div class="page-description-content flex-grow-1">
+                        <h1>Company Details</h1>
+                        <span>These details are visible in invoice and receipts.</span>
+                    </div>
+                    <div class="page-description-actions">
+                        
+                        <a href="" class="btn btn-primary"><i class="material-icons">edit</i>Edit</a>
+                        
+                        <a href="" class="btn btn-dark"><i class="material-icons">add</i>Add</a>
+                        
+                    </div>
+                </div>
+                
+                <!-- add other contents  -->
+                <table class="table nowrap w-100 mb-5">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Month</th>
+                            <th>Leave Deduction</th>
+                            <th>Tax Deduction</th>
+                            <th>Paid Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if payments_made %}
+                        {% for payments_made in payments_made %}
+                        <tr>
+                            <td>{{payments_made.employee.user.first_name}} {{payments_made.employee.user.last_name}}</td>
+                            <td>{{payments_made.month}}</td>
+                            <td>{{payments_made.leave_deduction|floatformat:2}}</td>
+                            <td>{{payments_made.tax_deduction|floatformat:2}}</td>
+                            <td>{{payments_made.paid_salary|floatformat:2}}</td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td style="text-align: center" colspan="7">No Recent Payments</td>
+                        </tr>
+                        {% endif %}
+                        
+                    </tbody>
+                </table>
+                
+
+                
+                
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'footer.html' %}
