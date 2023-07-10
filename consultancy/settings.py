@@ -94,8 +94,8 @@ WSGI_APPLICATION = 'consultancy.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'roshandahal_roshandahal',
-        'USER': 'roshandahal_db',
+        'NAME': 'roshandahal_db',
+        'USER': 'roshandahal_roshandahal',
         'PASSWORD': 'LwQVOBBNdf^[',
         'HOST': 'localhost',
         'PORT': '3306',
