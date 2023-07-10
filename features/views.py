@@ -231,3 +231,24 @@ def reassign(request,id):
         messages.info(request, "Status Changed to Resassigned")
         return redirect(todo)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+from django.shortcuts import render
+
+def error_404(request, exception):
+    return render(request, 'error.html', status=404)

@@ -27,3 +27,4 @@ urlpatterns = [
     path('', include('leads.urls')),
     path('', include('studentinquiry.urls')),
 ]
+handler404 = 'features.views.error_404'
