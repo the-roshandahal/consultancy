@@ -11,7 +11,7 @@ from django.core.paginator import Paginator
 from account.context_processors import custom_data_views
 # Create your views here.
 from django.db.models import Count
-from zk import ZK, const
+# from zk import ZK, const
 from datetime import datetime
 from datetime import date
 from django.utils.timezone import make_aware
