@@ -30,12 +30,16 @@ def home(request):
             incomplete_todo_count = ToDo.objects.filter(task_to = company_user, status = 'incomplete').count()
 
 
-
-            random_number = random.randint(0, 1642)
-            response = requests.get("https://type.fit/api/quotes")
-            data = response.json()
-            random_quote = data[random_number]['text']
-            author = data[random_number]['author'] if data[random_number]['author'] else 'Unknown'
+            try:
+                random_number = random.randint(0, 1642)
+                response = requests.get("https://type.fit/api/quotes")
+                data = response.json()
+                random_quote = data[random_number]['text']
+                author = data[random_number]['author'] if data[random_number]['author'] else 'Unknown'
+            except:
+                random_quote = "No quotes for today"
+                author= "Unknown"
+                
             today = date.today()
             last_7_days = today - timedelta(days=6)
             day_format = '%B %d'
