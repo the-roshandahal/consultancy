@@ -162,11 +162,11 @@ def edit_role(request, id):
             permission.delete_account = request.POST.get('delete_account', 0)
             permission.manage_account = request.POST.get('manage_account', 0)
             
-            permission.create_leads = request.POST.get('create_leads', 0)
-            permission.read_leads = request.POST.get('read_leads', 0)
-            permission.update_leads = request.POST.get('update_leads', 0)
-            permission.delete_leads = request.POST.get('delete_leads', 0)
-            permission.manage_leads = request.POST.get('manage_leads', 0)
+            permission.create_course = request.POST.get('create_course', 0)
+            permission.read_course = request.POST.get('read_course', 0)
+            permission.update_course = request.POST.get('update_course', 0)
+            permission.delete_course = request.POST.get('delete_course', 0)
+            permission.manage_course = request.POST.get('manage_course', 0)
 
             permission.create_hrm = request.POST.get('create_hrm', 0)
             permission.read_hrm = request.POST.get('read_hrm', 0)
