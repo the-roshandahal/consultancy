@@ -192,6 +192,8 @@ def create_receipt(request):
             balance = float(initial_balance) - float(paid_amount)
             Statement.objects.create(student=student, transaction='receipt',
                                     details=details, payment=paid_amount, balance=balance)
+            
+            messages.info(request, "Receipt created successfully.")
             return redirect(single_statement, id=student.id)
         else:
             student = Student.objects.all()
@@ -342,12 +344,12 @@ def create_expense(request):
             expense_type = ExpenseType.objects.get(id=type)
             Expense.objects.create(expense_title = expense_title, expense_amount = expense_amount, 
                                    expense_type = expense_type,remarks = remarks)
+            messages.info(request, "Expense added successfully.")
             return redirect('expenses')
         else:
             
             return render(request, 'finance/expenses.html')
     else:
-        messages.info(request, "Unauthorized access.")
         return redirect('home')
     
 def edit_expense(request,id):
@@ -365,6 +367,7 @@ def edit_expense(request,id):
             expense_obj.expense_amount = expense_amount
             expense_obj.remarks = expense_remarks
             expense_obj.save()
+            messages.info(request, "Expense edited successfully.")
 
             return redirect('expenses')
         else:
@@ -384,6 +387,7 @@ def delete_expense(request,id):
     if 'update_finance' in custom_data_views(request):
         expense = Expense.objects.get(id=id)
         expense.delete()
+        messages.info(request, "Expense deleted.")
         return redirect('expenses')
     else:
         messages.info(request, "Unauthorized access.")
@@ -406,6 +410,7 @@ def create_expense_type(request):
         if request.method =="POST":
             expense_type = request.POST['expense_type']
             ExpenseType.objects.create(expense_type =expense_type)
+            messages.info(request, "Expense type created successfully.")
             return redirect('finance_setup')
     else:
         messages.info(request, "Unauthorized access.")
@@ -416,6 +421,8 @@ def delete_expense_type(request,id):
     if 'create_finance' in custom_data_views(request):
         expense_type = ExpenseType.objects.get(id=id)
         expense_type.delete()
+        messages.info(request, "Expense type deleted successfully.")
+
         return redirect('finance_setup')
     else:
         messages.info(request, "Unauthorized access.")
@@ -430,6 +437,8 @@ def edit_expense_type(request,id):
             expense_obj = ExpenseType.objects.get(id=id)
             expense_obj.expense_type = expense_type
             expense_obj.save()
+            messages.info(request, "Expense type edited successfully.")
+
             return redirect('finance_setup')
         else:
             expense_type = ExpenseType.objects.get(id=id)

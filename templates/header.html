@@ -254,8 +254,6 @@
                 </nav>
             </div>
 
-
-
             <div class="modal fade" id="exampleModalCenterAddYear" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterAddYear" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
@@ -275,3 +273,52 @@
                     </div>
                 </div>
             </div>
+
+            {% if messages %}
+                <div id="messages-popup" class="popup">
+                    {% for message in messages %}
+                        <div class="message {{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <style>
+                .popup {
+                    position: fixed;
+                    top: 10%;
+                    right: 0%;
+                    transform: translate(-50%, -50%);
+                    z-index: 9999;
+                    background-color: #fff;
+                    padding: 10px;
+                    border-radius: 5px;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+                    display: none;
+                }
+                
+                .message {
+                    margin-bottom: 10px;
+                    padding: 10px;
+                    border-radius: 5px;
+                }
+                
+                .message.success {
+                    background-color: green;
+                    color: white;
+                }
+                
+                /* Add styles for other message tags like 'info', 'warning', 'error', etc. */
+                
+            </style>
+            <script>
+                window.addEventListener('DOMContentLoaded', function() {
+                    var messagesPopup = document.getElementById('messages-popup');
+                    if (messagesPopup) {
+                        messagesPopup.style.display = 'block';
+                        setTimeout(function() {
+                            messagesPopup.style.display = 'none';
+                        }, 3000);
+                    }
+                });    
+            </script>

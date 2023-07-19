@@ -155,6 +155,7 @@ def add_inquiry(request):
             inquiry.source=source_string
             inquiry.test=test_string
             inquiry.save()
+            messages.info(request, "Inquiry created successfully")
             user = User.objects.get(username=request.user)
             changed_by = user.username
             activity = 'created inquiry'
@@ -180,8 +181,8 @@ def add_inquiry(request):
         messages.info(request, "Unauthorized access.")
         return redirect('home')
 
+from account.context_processors import custom_data_views
 def edit_inquiry(request,id):
-    from account.context_processors import custom_data_views
     if 'update_inquiry' in custom_data_views(request):
         if request.method == "POST":
             first_name = request.POST["first_name"]
@@ -260,7 +261,7 @@ def edit_inquiry(request,id):
             inquiry.applied_date = applied_date 
             inquiry.other=other
             inquiry.save()
-
+            messages.info(request, "Inquiry updated successfully")
             user = User.objects.get(username=request.user)
             changed_by = user.username
             activity = 'edited inquiry'
@@ -289,6 +290,7 @@ def add_inquiry_note(request,id):
             note = request.POST['note']
             inquiry = StudentInquiry.objects.get(id=id)
             InquiryNote.objects.create(inquiry=inquiry,note=note,note_title=note_title)
+            messages.info(request, "Note Added Successfully.")
 
             user = User.objects.get(username=request.user)
             changed_by = user.username
@@ -308,6 +310,7 @@ def add_consultation_date(request,id):
             inquiry = StudentInquiry.objects.get(id=id)
             inquiry.consultation_date=consultation_date
             inquiry.save()
+            messages.info(request, "Assigned consultation date.")
             user = User.objects.get(username=request.user)
             changed_by = user.username
             activity = 'Updated consultation date'
@@ -328,7 +331,7 @@ def assign_employee(request,id):
             inquiry = StudentInquiry.objects.get(id=id)
             inquiry.assigned=assigned
             inquiry.save()
-            
+            messages.info(request, "Employee assigned")
             user = User.objects.get(username=request.user)
             changed_by = user.username
             activity = 'Employee Assigned.'
@@ -354,7 +357,7 @@ def update_inquiry_stage(request,id):
             inquiry = StudentInquiry.objects.get(id=id)
             inquiry.stage=stage
             inquiry.save()
-
+            messages.info(request, "Stage updated successfully")
             user = User.objects.get(username=request.user)
             changed_by = user.username
             activity = 'updated stage to '+ str(stage)
@@ -372,6 +375,7 @@ def delete_inquiry(request,id):
     if 'delete_inquiry' in custom_data_views(request):
         inquiry = StudentInquiry.objects.get(id=id)
         inquiry.delete()
+        messages.info(request, "Inquiry deleted successfully")
         return redirect('inquiry')
     else:
         messages.info(request, "Unauthorized access.")

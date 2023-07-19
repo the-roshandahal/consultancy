@@ -108,6 +108,8 @@ def add_company_setup(request):
                 Company.objects.create(company_name = company_name,company_address = company_address,
                                     company_email = company_email,company_contact_number = company_contact_number,company_logo = company_logo,
                                     payment_terms = payment_terms)
+                messages.info(request, "Company details added successfully.")
+                
                 return redirect('company_setup')
             else:
                 return render(request,'features/add_company_setup.html')
@@ -130,6 +132,8 @@ def edit_company_setup(request,id):
             if request.FILES and request.FILES['company_logo']:
                 setup.company_logo = request.FILES['company_logo']
             setup.save()
+            messages.info(request, "Company details edited successfully.")
+
             return redirect('company_setup')
         else:
             setup = Company.objects.get(id=id)
@@ -196,9 +200,11 @@ def add_todo(request):
                 task_from = Employee.objects.get(user=logged_in_user)
                 for assign_to in assign_to:
                     assign_to = Employee.objects.get(id=assign_to)
-                    print(assign_to)
                     todo_obj = ToDo.objects.create(task_title=task_title,task=task,deadline=deadline,priority=priority,task_to=assign_to,task_from=task_from)
-                    print(todo_obj)
+                    todo_obj.save()
+    
+                messages.info(request, "Task added successfully.")
+
                 return redirect('todo')
             return redirect ('todo')
 

@@ -36,6 +36,7 @@ def add_course(request):
             
             Course.objects.create(course_title=course_title, course_description=course_description, 
                                 course_price=course_price, course_category=course_category)
+            messages.info(request, "Course created successfully.")
             return redirect('courses')
         else:
             courses = Course.objects.all()
@@ -77,6 +78,8 @@ def edit_course(request,id):
                 'category':category,
                
             }
+            messages.info(request, "Course edited successfully.")
+
             return render (request,'courses/edit_course.html',context)
     else:
         messages.info(request, "Unauthorized access.")
@@ -133,7 +136,7 @@ def edit_course_category(request,id):
             course_category_obj = CourseCategory.objects.get(id=id)
             course_category_obj.course_category=course_category
             course_category_obj.save()
-            messages.info(request, "Category updated successfully")
+            messages.info(request, "Category edited successfully")
             return redirect('course_setup')
         else:
             course_category = CourseCategory.objects.get(id=id)
@@ -189,6 +192,8 @@ def add_service(request):
             
             Service.objects.create(service_title=service_title, service_description=service_description, 
                                 service_price=service_price, service_category=service_category)
+            messages.info(request, "Service created successfully.")
+            
             return redirect('services')
         else:
             category = CourseCategory.objects.all()
@@ -219,6 +224,8 @@ def edit_service(request,id):
            
             service_obj.service_category=service_category
             service_obj.save()
+            messages.info(request, "Service edited successfully.")
+
             return redirect('services')
         else:
             service = Service.objects.get(id=id)
@@ -238,7 +245,7 @@ def delete_service(request,id):
     if 'delete_course' in custom_data_views(request):
         service = Service.objects.get(id=id)
         service.delete()
-        messages.info(request, "Course Deleted Successfully")
+        messages.info(request, "Service Deleted Successfully")
         return redirect('services')
     else:
         messages.info(request, "Unauthorized access.")

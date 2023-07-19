@@ -53,6 +53,7 @@ def login(request):
 
 def logout(request):
     auth.logout(request)
+    messages.info(request, "Logged out successfully.")
     return redirect(login)
 
 
@@ -135,6 +136,7 @@ def create_role(request):
                                         create_student =create_student, read_student =read_student, update_student =update_student, delete_student =delete_student,manage_student=manage_student,
                                         create_inquiry =create_inquiry, read_inquiry =read_inquiry, update_inquiry =update_inquiry, delete_inquiry =delete_inquiry,manage_inquiry=manage_inquiry,
                                         )
+                messages.info(request, "Role created successfully.")
                 return redirect('role')
 
             except Exception:
@@ -198,6 +200,7 @@ def edit_role(request, id):
             except Exception:
                 print('something went wrong')
                 return redirect('role')
+            messages.info(request, "Role edited successfully.")
             return redirect('role')
         else:
             role_data = Permission.objects.get(id=id)
@@ -258,8 +261,9 @@ def company_user(request):
         return redirect('home')
 
 
-def page_not_found_view(request, exception):
-    return render(request, "error404.html")
+
+
+
 
 
 def forgot_password(request):

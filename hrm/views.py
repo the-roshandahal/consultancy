@@ -301,6 +301,7 @@ def apply_leave(request):
             date_list= [date.strip() for date in dates.split(",")]
             for date in date_list:
                 LeaveDate.objects.create(leave=leave,date=date)
+            messages.info(request, "Leave applied successfully. Wait for admin's approval.")
 
             return redirect('leave')
         else:
@@ -356,6 +357,8 @@ def add_emp_leave(request):
             leave.save()
             for date in date_list:
                 LeaveDate.objects.create(leave=leave,date=date)
+            messages.info(request, "Leave Added Successfully")
+
             return redirect('emp_leaves')
         else:
             employees =Employee.objects.all()
@@ -376,6 +379,8 @@ def accept_leave(request,id):
         leave = Leave.objects.get(id=id)
         leave.status = 'accepted'
         leave.save()
+        messages.info(request, "Leave accepted.")
+
         return redirect('emp_leaves')
     else:
         messages.info(request, "Unauthorized access.")
@@ -386,6 +391,7 @@ def deny_leave(request,id):
         leave = Leave.objects.get(id=id)
         leave.status = 'denied'
         leave.save()
+        messages.info(request, "Leave denied.")
         return redirect('emp_leaves')
     else:
         messages.info(request, "Unauthorized access.")
@@ -583,6 +589,8 @@ def pay_salary(request):
                     type='salary',
                 )
                 salary.save()
+            messages.info(request, "Salary added.")
+            
             return redirect('payroll')      
     else:
         messages.info(request, "Unauthorized access.")
@@ -818,7 +826,7 @@ def attendance_history(request):
                     date__range=[from_date, to_date],
                     employee__id__in=employee_ids
                 )
-
+            messages.info(request, f"Displaying attendance from {from_date} to {to_date}.")
             employees = Employee.objects.all()
             context={
                 'attendance':attendance,

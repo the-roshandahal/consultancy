@@ -291,6 +291,8 @@ def add_student(request):
                 student.assigned_to.set(assigned_to)
                 student.course.set(course)
                 student.save()
+                messages.info(request, "Student Added Successfully")
+
                 return redirect('student')
             
         else:
@@ -423,6 +425,7 @@ def assign_employee_student(request,id):
             student = Student.objects.get(id=id)
             student.assigned_to.set(employees)
             student.save()
+            messages.info(request, "Employee assigned successfully")
 
             
             user = User.objects.get(username=request.user)
@@ -491,6 +494,8 @@ def add_student_note(request,id):
 
             student_notes = StudentNotes.objects.create(student=student, note_title=note_title,note=note)
             student_notes.save()
+            messages.info(request, "Student note added successfully")
+
             activity = 'added note'
             user = User.objects.get(username=request.user)
             changed_by = user.username
