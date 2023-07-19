@@ -166,7 +166,7 @@ def add_inquiry(request):
             inquiry=StudentInquiry.objects.all()
             user = Employee.objects.all()
             purpose=InquiryPurpose.objects.all()
-            employees_with_inquiries = Employee.objects.annotate(num_inquiries=Count('inquiries'))
+            employees_with_inquiries = Employee.objects.annotate(num_inquiries=Count('studentinquiry', filter=Q(studentinquiry__is_active=True)))
 
             context = {
                 'inquiry':inquiry,
