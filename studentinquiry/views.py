@@ -1,4 +1,5 @@
 from django.utils import timezone
+from django.db.models import Count
 
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
@@ -165,10 +166,13 @@ def add_inquiry(request):
             inquiry=StudentInquiry.objects.all()
             user = Employee.objects.all()
             purpose=InquiryPurpose.objects.all()
+            employees_with_inquiries = Employee.objects.annotate(num_inquiries=Count('inquiries'))
+
             context = {
                 'inquiry':inquiry,
                 'user':user,
                 'purpose':purpose,
+                'employees_with_inquiries':employees_with_inquiries,
         
             }
             return render(request,'inquiry/add_inquiry.html',context)

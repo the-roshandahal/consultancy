@@ -8,7 +8,16 @@
                         <h1>Add Student</h1>
                     </div>
                 </div>
-                
+                <ul>
+                    <h1>Queue:</h1>
+                    {% for employee in employees_with_inquiries %}
+                      <li>
+                        <strong>Employee: {{ employee.first_name }} {{ employee.last_name }}</strong><br>
+                        Number of inquiries assigned: {{ employee.num_inquiries }}
+                      </li>
+                    {% endfor %}
+                  </ul>
+                  
                 <!-- add other contents  -->
                 {% if purpose and user %}
                 <form action="{% url 'add_inquiry' %}" method="POST">
