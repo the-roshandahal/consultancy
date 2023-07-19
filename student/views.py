@@ -79,7 +79,7 @@ def student_setup(request):
             'student_stage':student_stage,
             'enrollment_type':enrollment_type,
         }
-        return render (request,'Student/student_setup.html',context)
+        return render (request,'student/student_setup.html',context)
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')
