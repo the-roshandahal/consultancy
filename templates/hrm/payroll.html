@@ -68,7 +68,7 @@
             <form action="{% url 'salary_payment' %}" method="POST">
                 {% csrf_token %}
                 <div class="modal-body">                                                                        
-                    {% if month %}
+                    {% if months %}
                     <div class="row">
                         <div class="col-xxl-12 mb-xxl-0 mb-4">
                             <h6>Select Month</h6>
@@ -92,7 +92,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    {% if month %}
+                    {% if months %}
                     <a href="#" ><button class="btn btn-primary ms-2 d-sm-inline-block d-none">Save</button></a>
                     {% endif %}
                 </div>
@@ -114,7 +114,7 @@
             <form action="{% url 'advance_salary' %}" method="POST">
                 {% csrf_token %}
                 <div class="modal-body">                                                                        
-                    {% if month and all_employees %}
+                    {% if months and all_employees %}
                     <div class="row mt-4">
                         <h6>Select Month</h6>
                         <div class="col-6">
@@ -161,7 +161,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    {% if month and all_employees %}
+                    {% if months and all_employees %}
                     <a href="#" ><button class="btn btn-primary ms-2 d-sm-inline-block d-none">Save</button></a>
                     {% endif %}
                 </div>

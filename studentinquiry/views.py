@@ -1,3 +1,4 @@
+from features.models import *
 from django.utils import timezone
 from django.db.models import Count
 
@@ -100,7 +101,7 @@ def view_inquiry(request,id):
     else:
         messages.info(request, "Unauthorized access.")
         return redirect('home')
-    
+   
 def add_inquiry(request):
     if 'create_inquiry' in custom_data_views(request):
         if request.method == "POST":
@@ -151,7 +152,7 @@ def add_inquiry(request):
             assigned = Employee.objects.get(id=assigned_user)
             
             inquiry = StudentInquiry.objects.create(first_name=first_name,last_name=last_name, dob=dob, temporary_address=temporary_address,permanent_address=permanent_address,contact=contact,email=email,guardian_name=guardian_name,marital_status=marital_status,purpose=purpose,date=date,remarks=remarks,course=course,college=college,country=country,city=city,intake=intake,applied_date=applied_date,applied_country=applied_country,assigned=assigned,
-                                             other=other, institution1=institution1, passed_year1=passed_year1,percentage1=percentage1, institution2=institution2, passed_year2=passed_year2,percentage2=percentage2, institution3=institution3, passed_year3=passed_year3,percentage3=percentage3)
+                                             other=other, institution1=institution1, passed_year1=passed_year1,percentage1=percentage1, institution2=institution2, passed_year2=passed_year2,percentage2=percentage2, institution3=institution3, passed_year3=passed_year3,percentage3=percentage3,is_verified =True)
             inquiry.source=source_string
             inquiry.test=test_string
             inquiry.save()
@@ -160,6 +161,11 @@ def add_inquiry(request):
             changed_by = user.username
             activity = 'created inquiry'
             InquiryLogs.objects.create(inquiry=inquiry,changed_by=changed_by,activity=activity)
+
+
+            notification_obj = f"You have a new inquiry - {first_name} {last_name}."
+            notification = EmployeeNotification.objects.create(employee = assigned, notification=notification_obj)
+            notification.save()
             return redirect('inquiry')
           
             
@@ -181,7 +187,6 @@ def add_inquiry(request):
         messages.info(request, "Unauthorized access.")
         return redirect('home')
 
-from account.context_processors import custom_data_views
 def edit_inquiry(request,id):
     if 'update_inquiry' in custom_data_views(request):
         if request.method == "POST":
@@ -337,6 +342,10 @@ def assign_employee(request,id):
             activity = 'Employee Assigned.'
             InquiryLogs.objects.create(inquiry=inquiry,changed_by=changed_by,activity=activity)
 
+
+            notification_obj = f"You have been assigned to an inquiry - {inquiry.first_name} {inquiry.last_name}."
+            notification = EmployeeNotification.objects.create(employee = assigned, notification=notification_obj)
+            notification.save()
             return redirect('view_inquiry',id)
         else:
             employee = Employee.objects.all()
@@ -354,6 +363,7 @@ def update_inquiry_stage(request,id):
     if 'manage_inquiry' in custom_data_views(request):
         if request.method == "POST":
             stage = request.POST['stage']
+            stage = InquiryStage.objects.get(stage=stage)
             inquiry = StudentInquiry.objects.get(id=id)
             inquiry.stage=stage
             inquiry.save()

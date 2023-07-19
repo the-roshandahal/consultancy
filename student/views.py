@@ -5,7 +5,7 @@ from account.views import *
 from account.models import *
 from finance.models import *
 from account.context_processors import custom_data_views
-
+from features.models import *
 from django.http import HttpResponse
 from django.contrib.auth.hashers import make_password
 
@@ -292,7 +292,11 @@ def add_student(request):
                 student.course.set(course)
                 student.save()
                 messages.info(request, "Student Added Successfully")
-
+                for assign in assigned_to:
+                    employee = Employee.objects.get(id=assign)
+                    notification_obj = f"You have been assigned a new student: {first_name} {last_name}"
+                    notification = EmployeeNotification.objects.create(employee=employee, notification=notification_obj)
+                    notification.save()
                 return redirect('student')
             
         else:
@@ -426,7 +430,13 @@ def assign_employee_student(request,id):
             student.assigned_to.set(employees)
             student.save()
             messages.info(request, "Employee assigned successfully")
+            
 
+            for assign in assigned_user:
+                employee = Employee.objects.get(id=assign)
+                notification_obj = f"You have been assigned an existing student: {student.user.first_name} {student.user.last_name}"
+                notification = EmployeeNotification.objects.create(employee=employee, notification=notification_obj)
+                notification.save()
             
             user = User.objects.get(username=request.user)
             changed_by = user.username

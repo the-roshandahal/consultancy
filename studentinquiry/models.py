@@ -28,7 +28,8 @@ class StudentInquiry(models.Model):
     permanent_address = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
     contact = models.CharField(max_length=255)
-    purpose = models.ForeignKey(InquiryPurpose,on_delete=models.CASCADE,null=True,blank=True)
+    purpose = models.ForeignKey(InquiryPurpose,on_delete=models.SET_NULL,null=True,blank=True)
+    stage = models.ForeignKey(InquiryStage,on_delete=models.SET_NULL,null=True,blank=True)
     guardian_name = models.CharField(max_length=255)
     marital_status=models.CharField(max_length=255,default="Single")
     

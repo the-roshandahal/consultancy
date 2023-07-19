@@ -31,9 +31,9 @@
                                                 {% if inquiry_data.is_verified == False %}
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#verifyStudent">Verify Inquiry</a></li>
                                                 {% endif %}
-                                                {% if  inquiry_data.assigned is None %}
+
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#assignStudent">Assign Employee</a></li>
-                                                {% endif %}
+
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#updateStage">Update Stage</a></li>
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#closeStudent">Close Inquiry</a></li>
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#assignConsultationDate">Update Consultation Date</a></li>
@@ -519,6 +519,7 @@
 		</div>
 	</div>
 </div>
+
 <div class="modal fade" id="assignStudent" tabindex="-1" role="dialog" aria-labelledby="assignStudent" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -526,13 +527,14 @@
 				{% csrf_token %}
 				<div class="modal-header">
 					<h5 class="modal-title" id="assignStudent">Assign Employee</h5>
+                    <p>{{inquiry_data.assigned}}</p>
                 </div>
             <div class="modal-body">
                 <div class="col-md-12 mb-3">
                     <p>Assigned Users</p>
                     {% for employee in employee %}
                     <div>
-                        <input type="checkbox" id="user_{{ employee.id }}" name="assigned_user" value="{{ employee.id }}">
+                        <input type="radio" id="user_{{ employee.id }}" name="assigned_user" value="{{ employee.id }}" {% if employee.id == inquiry_data.assigned.id %}checked{% endif %}>
                         <label for="{{ employee.id }}">{{ employee.user.first_name }}</label>
                     </div>
                     {% endfor %}
@@ -581,7 +583,6 @@
 				{% csrf_token %}
 				<div class="modal-header">
 					<h5 class="modal-title" id="updateStage">Update Stage</h5>
-                    
 				</div>
 				<div class="modal-body">
                     {% if stage %}
@@ -592,7 +593,7 @@
                             {% for stage in stage %}
                             <div class="col-4 mt-2">
                                 <label for="">{{stage.stage}}</label>
-                                <input type="radio" class="form-check-input lead" id="customCheck1" name="stage" value='{{stage.stage}}' {% if stage.stage == student.stage %}checked{% endif %}>
+                                <input type="radio" class="form-check-input lead" id="customCheck1" name="stage" value='{{stage.stage}}' {% if inquiry_data.stage.stage == stage.stage %}checked{% endif %}>
                             </div>
                             {% endfor %}
                             

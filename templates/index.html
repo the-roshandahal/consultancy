@@ -1,5 +1,10 @@
 {% include 'header.html' %}
-            
+<style>
+    .scrollable-content {
+        height: 50vh;
+        overflow-y: scroll; /* Enable vertical scrolling */
+      }
+</style>
 <div class="app-content">
     <div class="content-wrapper">
         <div class="card container">
@@ -68,103 +73,122 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col-4">
+                    <div class="card widget widget-list">
+                        <div class="card-header">
+                            <h5 class="card-title">Notifications<span class="badge badge-success badge-style-light">{{notification_count}} total</span></h5>
+                        </div>
+                        <div class="card-body">
+                            {% if notifications %}
+                            <ul class="widget-list-content list-unstyled scrollable-content">
+                                {% for notification in notifications %}
+                                <li class="widget-list-item widget-list-item-green">
+                                    <span class="widget-list-item-icon"><i class="material-icons-outlined">article</i></span>
+                                    <span class="widget-list-item-description">
+                                        <a href="#" class="widget-list-item-description-title">
+                                            {{notification.notification}}
+                                        </a>
+                                        <span class="badge badge-style-light rounded-pill badge-info">{{notification.created}}</span>
+                                    </span>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            {% else %}
+                            <h5>No notifications.</h5>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="card widget widget-list">
+                        <div class="card-header">
+                            <h5 class="card-title">Active Tasks<span class="badge badge-success badge-style-light">{{incomplete_todo_count}} total</span></h5>
+                        </div>
+                        <div class="card-body">
+                            {% if incomplete_todo %}
+                            <ul class="widget-list-content list-unstyled">
+                                {% for incomplete_todo in incomplete_todo %}
+                                <li class="widget-list-item widget-list-item-green">
+                                    <span class="widget-list-item-icon"><i class="material-icons-outlined">article</i></span>
+                                    <span class="widget-list-item-description">
+                                        <a href="{% url 'todo' %}" class="widget-list-item-description-title">
+                                            {{incomplete_todo.task_title}}
+                                        </a>
+                                        <span class="badge badge-style-light rounded-pill badge-info">{{incomplete_todo.priority}}</span>
+                                    </span>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            {% else %}
+                            <h5>No active tasks at this moment.</h5>
+                            <p>You can always add one.</p>
+                            <a href="{% url 'todo' %}" class="btn btn-primary"><i class="material-icons">add</i>Add</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-xl-12">
-                    <div class="card widget widget-stats-large">
-                        <div class="row">
-                            <div class="col-xl-8">
-                                <div class="widget-stats-large-chart-container">
-                                    <div class="card-header">
-                                        <h5 class="card-title">Finance Chart<span class="badge badge-light badge-style-light">Yearly</span></h5>
-                                    </div>
-                                    <div class="card-body">
-                                        <canvas id="myChart"></canvas>
-                                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <div class="widget-stats-large-chart-container">
+                        <div class="card-header">
+                            <h5 class="card-title">Finance Chart<span class="badge badge-light badge-style-light">Yearly</span></h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="myChart"></canvas>
+                            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-                                        <script>
-                                            // Define the data for Invoice, expense, and receipt
-                                            const invoiceData = [{% for totals in totals_by_day %}{{ totals.invoice_total|default_if_none:0 }}{% if not forloop.last %}, {% endif %}{% endfor %}];
-                                            const expenseData = [{% for totals in totals_by_day %}{{ totals.expense_total|default_if_none:0 }}{% if not forloop.last %}, {% endif %}{% endfor %}];
-                                            const receiptData = [{% for totals in totals_by_day %}{{ totals.receipt_total|default_if_none:0 }}{% if not forloop.last %}, {% endif %}{% endfor %}];
-                                          
-                                            // Define the labels for the last 7 days
-                                            const labels = [{% for totals in totals_by_day %}"{{ totals.date }}"{% if not forloop.last %}, {% endif %}{% endfor %}];
-                                          
-                                            // Create the chart
-                                            const ctx = document.getElementById('myChart').getContext('2d');
-                                            const chart = new Chart(ctx, {
-                                              type: 'bar',
-                                              data: {
-                                                labels: labels,
-                                                datasets: [{
-                                                  label: 'Invoice',
-                                                  data: invoiceData,
-                                                  backgroundColor: '#585858',
-                                                }, {
-                                                  label: 'Expense',
-                                                  data: expenseData,
-                                                  backgroundColor: '#007D88',
-                                                }, {
-                                                  label: 'Receipt',
-                                                  data: receiptData,
-                                                  backgroundColor: '#25cba1',
-                                                }]
-                                              },
-                                              options: {
-                                                responsive: true,
-                                                scales: {
-                                                  xAxes: [{
-                                                    display: true,
-                                                    scaleLabel: {
-                                                      display: true,
-                                                      labelString: 'Date'
-                                                    }
-                                                  }],
-                                                  yAxes: [{
-                                                    display: true,
-                                                    scaleLabel: {
-                                                      display: true,
-                                                      labelString: 'Amount'
-                                                    },
-                                                    ticks: {
-                                                      beginAtZero: true
-                                                    }
-                                                  }]
-                                                }
-                                              }
-                                            });
-                                          </script>
-                                          
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-4">
-                                <div class="card widget widget-list">
-                                    <div class="card-header">
-                                        <h5 class="card-title">Active Tasks<span class="badge badge-success badge-style-light">{{incomplete_todo_count}} total</span></h5>
-                                    </div>
-                                    <div class="card-body">
-                                        {% if incomplete_todo %}
-                                        <ul class="widget-list-content list-unstyled">
-                                            {% for incomplete_todo in incomplete_todo %}
-                                            <li class="widget-list-item widget-list-item-green">
-                                                <span class="widget-list-item-icon"><i class="material-icons-outlined">article</i></span>
-                                                <span class="widget-list-item-description">
-                                                    <a href="{% url 'todo' %}" class="widget-list-item-description-title">
-                                                        {{incomplete_todo.task_title}}
-                                                    </a>
-                                                    <span class="badge badge-style-light rounded-pill badge-info">{{incomplete_todo.priority}}</span>
-                                                </span>
-                                            </li>
-                                            {% endfor %}
-                                        </ul>
-                                        {% else %}
-                                        <h5>No active tasks at this moment.</h5>
-                                        <p>You can always add one.</p>
-                                        <a href="{% url 'todo' %}" class="btn btn-primary"><i class="material-icons">add</i>Add</a>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </div>
+                            <script>
+                                const invoiceData = [{% for totals in totals_by_day %}{{ totals.invoice_total|default_if_none:0 }}{% if not forloop.last %}, {% endif %}{% endfor %}];
+                                const expenseData = [{% for totals in totals_by_day %}{{ totals.expense_total|default_if_none:0 }}{% if not forloop.last %}, {% endif %}{% endfor %}];
+                                const receiptData = [{% for totals in totals_by_day %}{{ totals.receipt_total|default_if_none:0 }}{% if not forloop.last %}, {% endif %}{% endfor %}];
+                              
+                                const labels = [{% for totals in totals_by_day %}"{{ totals.date }}"{% if not forloop.last %}, {% endif %}{% endfor %}];
+                              
+                                const ctx = document.getElementById('myChart').getContext('2d');
+                                const chart = new Chart(ctx, {
+                                  type: 'bar',
+                                  data: {
+                                    labels: labels,
+                                    datasets: [{
+                                      label: 'Invoice',
+                                      data: invoiceData,
+                                      backgroundColor: '#585858',
+                                    }, {
+                                      label: 'Expense',
+                                      data: expenseData,
+                                      backgroundColor: '#007D88',
+                                    }, {
+                                      label: 'Receipt',
+                                      data: receiptData,
+                                      backgroundColor: '#25cba1',
+                                    }]
+                                  },
+                                  options: {
+                                    responsive: true,
+                                    scales: {
+                                      xAxes: [{
+                                        display: true,
+                                        scaleLabel: {
+                                          display: true,
+                                          labelString: 'Date'
+                                        }
+                                      }],
+                                      yAxes: [{
+                                        display: true,
+                                        scaleLabel: {
+                                          display: true,
+                                          labelString: 'Amount'
+                                        },
+                                        ticks: {
+                                          beginAtZero: true
+                                        }
+                                      }]
+                                    }
+                                  }
+                                });
+                              </script>
+                              
                         </div>
                     </div>
                 </div>

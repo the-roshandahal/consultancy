@@ -5,6 +5,7 @@ from django.shortcuts import render
 from .models import *
 from account.models import *
 from finance.models import *
+from features.models import *
 from student.models import *
 from account.context_processors import *
 from datetime import datetime,date,timedelta
@@ -20,7 +21,6 @@ def home(request):
             receipt_count = Receipt.objects.all().count()
             invoice_amount = Invoice.objects.aggregate(sum_amount=models.Sum('invoice_amount'))['sum_amount']
             receipt_amount = Receipt.objects.aggregate(sum_amount=models.Sum('paid_amount'))['sum_amount']
-
             logged_in_user = User.objects.get(username=request.user)
             try:
                 company_user = Employee.objects.get(user=logged_in_user)
@@ -28,6 +28,8 @@ def home(request):
                 company_user=None
             incomplete_todo = ToDo.objects.filter(task_to = company_user, status = 'incomplete')[:5]
             incomplete_todo_count = ToDo.objects.filter(task_to = company_user, status = 'incomplete').count()
+            
+            notifications = EmployeeNotification.objects.filter(employee = company_user)
 
 
             try:
@@ -63,6 +65,7 @@ def home(request):
                 "incomplete_todo_count":incomplete_todo_count,
                 'random_quote':random_quote,
                 'author':author,
+                'notifications':notifications,
             }
         else:
             return redirect('student_dashboard')
@@ -188,7 +191,6 @@ def add_todo(request):
             return redirect(todo)
         else:
             if request.method == "POST":
-                print('here')
                 task_title = request.POST["task_title"]
                 task = request.POST["task"]
                 deadline = request.POST["deadline"]
@@ -200,8 +202,13 @@ def add_todo(request):
                 task_from = Employee.objects.get(user=logged_in_user)
                 for assign_to in assign_to:
                     assign_to = Employee.objects.get(id=assign_to)
-                    todo_obj = ToDo.objects.create(task_title=task_title,task=task,deadline=deadline,priority=priority,task_to=assign_to,task_from=task_from)
+                    
+                    todo_obj = ToDo.objects.create(task_title=task_title,task=task,deadline=deadline,priority=priority,task_to=assign_to,task_from=str(task_from))
                     todo_obj.save()
+                    
+                    notification_obj = f"{task_from} assigned you a task - {task_title}."
+                    notification = EmployeeNotification.objects.create(employee = assign_to,notification=notification_obj)
+                    notification.save()
     
                 messages.info(request, "Task added successfully.")
 
