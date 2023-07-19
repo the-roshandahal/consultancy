@@ -322,7 +322,9 @@ def edit_student(request,id):
             address = request.POST["address"]
             email = request.POST["email"]
             contact = request.POST["contact"]
-
+            log = request.POST.get('log', False)
+            if log=="on":
+                log=True
             enrollment_type = request.POST["enrollment_type"]
             enrollmenttype = EnrollmentType.objects.get(id=enrollment_type)
             
@@ -344,6 +346,7 @@ def edit_student(request,id):
             student_data.address = address
             student_data.contact = contact
             student_data.source=student_source
+            student_data.log=log
             
             
 

@@ -28,3 +28,4 @@ urlpatterns = [
     path('', include('studentinquiry.urls')),
 ]
 handler404 = 'features.views.error_404'
+handler500 = 'features.views.error_500'

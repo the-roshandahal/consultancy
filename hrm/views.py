@@ -304,7 +304,19 @@ def apply_leave(request):
 
             return redirect('leave')
         else:
-            return render (request,'hrm/apply_leave.html')
+            user = User.objects.get(username = request.user)
+            try:
+                employee = Employee.objects.get(user=user)
+                is_emp = True
+            except:
+                is_emp = False
+            context = {
+                'is_emp':is_emp
+            }
+            return render (request,'hrm/apply_leave.html',context)
+        
+
+
 def emp_leaves(request):
     if 'read_hrm' in custom_data_views(request):
         pending_leaves = Leave.objects.filter(status='pending')

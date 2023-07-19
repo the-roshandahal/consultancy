@@ -36,9 +36,13 @@ def login(request):
 
                 
                 if Student.objects.filter(user=user).exists():
-                    auth.login(request, user)
-                    messages.info(request, "Logged in as student successfully.")
-                    return redirect('student_dashboard')
+                    if Student.objects.filter(log=True):
+                        auth.login(request, user)
+                        messages.info(request, "Logged in as student successfully.")
+                        return redirect('student_dashboard')
+                    else:
+                        messages.info(request, "Cant login to the system.")
+                        return redirect('login')
 
             if user is not None:
                 auth.login(request, user)

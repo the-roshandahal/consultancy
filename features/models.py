@@ -35,3 +35,16 @@ class ToDo(models.Model):
 
     class Meta:
         verbose_name_plural = "02. To Do"
+
+
+
+
+class EmployeeNotification(models.Model):
+    notification = models.CharField(max_length=255)
+    employee = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.notification
+
+    class Meta:
+        verbose_name_plural = "Employee Notification"

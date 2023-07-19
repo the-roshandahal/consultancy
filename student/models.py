@@ -42,6 +42,7 @@ class Student(models.Model):
     active = models.BooleanField(default=True)
     date_modified = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
+    log = models.BooleanField(default=True)
     
     def __str__(self):
         return self.user.first_name

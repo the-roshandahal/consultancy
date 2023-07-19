@@ -5,21 +5,13 @@
             <div class="example-content bg-light">
                 <div class="page-description d-flex align-items-center">
                     <div class="page-description-content flex-grow-1">
-                        <h1>Company Details</h1>
-                        <span>These details are visible in invoice and receipts.</span>
-                    </div>
-                    <div class="page-description-actions">
-                        
-                        <a href="" class="btn btn-primary"><i class="material-icons">edit</i>Edit</a>
-                        
-                        <a href="" class="btn btn-dark"><i class="material-icons">add</i>Add</a>
-                        
+                        <h1>Apply Leave</h1>
                     </div>
                 </div>
                 
                 <!-- add other contents  -->
                 
-
+                {% if is_emp %}
                 <form action="{% url 'apply_leave' %} " method="POST">
                     {% csrf_token %}
                     <div class="col-12 mb-4">
@@ -36,6 +28,10 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Save </button>
                 </form>
+                {% else %}
+                <p>You are not an employee.</p>
+                {% endif %}
+
             </div>
         </div>
     </div>

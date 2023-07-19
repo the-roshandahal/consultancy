@@ -155,10 +155,10 @@
                         <ul class="sub-menu">
                             {% if 'read_student' in permissions %}
                             <li>
-                                <a href="{% url 'my_student' %}">My Students</a>
+                                <a href="{% url 'student' %}">Active Students</a>
                             </li>
                             <li>
-                                <a href="{% url 'student' %}">Active Students</a>
+                                <a href="{% url 'my_student' %}">My Students</a>
                             </li>
                             <li>
                                 <a href="{% url 'inactive_student' %}">Closed Students</a>

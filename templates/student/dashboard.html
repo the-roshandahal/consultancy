@@ -96,6 +96,22 @@
                                                 
                                             </ul>
                                         </div>
+                                        
+                                        <div class="col-12 col-sm-12 col-md-4">
+                                            <ul class="widget-list-content list-unstyled">
+                                                <li class="widget-list-item widget-list-item-green">
+                                                    <span class="widget-list-item-icon"><i class="material-icons-outlined">create</i></span>
+                                                    <span class="widget-list-item-description">
+                                                        <a href="#" class="widget-list-item-description-title">
+                                                            Enrolled For
+                                                        </a>
+                                                        <span class="widget-list-item-description-subtitle">
+                                                            {{student.enrollment_type}}
+                                                        </span>
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -156,6 +172,7 @@
                             </div>
                         </div>
                         {% endif %}
+                        {% if files %}
                         <div class="col-xl-4">
                             <div class="card widget widget-list">
                                 <div class="card-header">
@@ -182,6 +199,7 @@
                                 </div>
                             </div>
                         </div>
+                        {% endif %}
 
 
                         
