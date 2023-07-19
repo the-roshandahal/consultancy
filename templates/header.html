@@ -1,5 +1,35 @@
 {% load static %}
 <body>
+    <style>
+        #notificationButton {
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+          }
+          
+          #notificationDrawer {
+            display: none;
+            position: fixed;
+            top: 50px;
+            right: 20px;
+            width: 300px;
+            background-color: #ffffff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            overflow-y: auto;
+          }
+          
+          .header {
+            padding: 10px;
+            background-color: #f2f2f2;
+            font-weight: bold;
+          }
+          
+          #notificationList {
+            padding: 10px;
+          }
+          
+    </style>
     {% include 'nav_links.html' %}
     <div class="app align-content-stretch d-flex flex-wrap">
         <div class="app-sidebar">
@@ -189,6 +219,7 @@
                         </ul>
                         {% endif %}
                     </li>
+                    
 
 
                     <li>
@@ -244,76 +275,35 @@
                                     </a>
                                 </li>
                                 {% endif %}
-                                <li class="nav-item hidden-on-mobile">
-                                    <a class="nav-link nav-notifications-toggle" id="notificationsDropDown" href="#" data-bs-toggle="dropdown">4</a>
-                                    <div class="dropdown-menu dropdown-menu-end notifications-dropdown" aria-labelledby="notificationsDropDown">
-                                        <h6 class="dropdown-header">Notifications</h6>
-                                        <div class="notifications-dropdown-list">
-                                            <a href="#">
-                                                <div class="notifications-dropdown-item">
-                                                    <div class="notifications-dropdown-item-image">
-                                                        <span class="notifications-badge bg-info text-white">
-                                                            <i class="material-icons-outlined">campaign</i>
+                                <li>
+                                    <button type="button" class="btn btn-dark" id="notificationButton">
+                                        <i class="material-icons">notifications</i> 
+                                    </button>
+                                    <div id="notificationDrawer">
+                                        <div class="header">Notifications</div>
+                                        <div id="notificationList" class="card widget widget-list">
+                                            <div class="card-header">
+                                                <h5 class="card-title">Notifications<span class="badge badge-success badge-style-light">{{notification_count}} total</span></h5>
+                                            </div>
+                                            <div class="card-body">
+                                                {% if notifications %}
+                                                <ul class="widget-list-content list-unstyled scrollable-content">
+                                                    {% for notification in notifications %}
+                                                    <li class="widget-list-item widget-list-item-green">
+                                                        <span class="widget-list-item-icon"><i class="material-icons-outlined">article</i></span>
+                                                        <span class="widget-list-item-description">
+                                                            <a href="#" class="widget-list-item-description-title">
+                                                                {{notification.notification}}
+                                                            </a>
+                                                            <span class="badge badge-style-light rounded-pill badge-info">{{notification.created}}</span>
                                                         </span>
-                                                    </div>
-                                                    <div class="notifications-dropdown-item-text">
-                                                        <p class="bold-notifications-text">Donec tempus nisi sed erat vestibulum, eu suscipit ex laoreet</p>
-                                                        <small>19:00</small>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            <a href="#">
-                                                <div class="notifications-dropdown-item">
-                                                    <div class="notifications-dropdown-item-image">
-                                                        <span class="notifications-badge bg-danger text-white">
-                                                            <i class="material-icons-outlined">bolt</i>
-                                                        </span>
-                                                    </div>
-                                                    <div class="notifications-dropdown-item-text">
-                                                        <p class="bold-notifications-text">Quisque ligula dui, tincidunt nec pharetra eu, fringilla quis mauris</p>
-                                                        <small>18:00</small>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            <a href="#">
-                                                <div class="notifications-dropdown-item">
-                                                    <div class="notifications-dropdown-item-image">
-                                                        <span class="notifications-badge bg-success text-white">
-                                                            <i class="material-icons-outlined">alternate_email</i>
-                                                        </span>
-                                                    </div>
-                                                    <div class="notifications-dropdown-item-text">
-                                                        <p>Nulla id libero mattis justo euismod congue in et metus</p>
-                                                        <small>yesterday</small>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            <a href="#">
-                                                <div class="notifications-dropdown-item">
-                                                    <div class="notifications-dropdown-item-image">
-                                                        <span class="notifications-badge">
-                                                            <img src="../../assets/images/avatars/avatar.png" alt="">
-                                                        </span>
-                                                    </div>
-                                                    <div class="notifications-dropdown-item-text">
-                                                        <p>Praesent sodales lobortis velit ac pellentesque</p>
-                                                        <small>yesterday</small>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            <a href="#">
-                                                <div class="notifications-dropdown-item">
-                                                    <div class="notifications-dropdown-item-image">
-                                                        <span class="notifications-badge">
-                                                            <img src="../../assets/images/avatars/avatar.png" alt="">
-                                                        </span>
-                                                    </div>
-                                                    <div class="notifications-dropdown-item-text">
-                                                        <p>Praesent lacinia ante eget tristique mattis. Nam sollicitudin velit sit amet auctor porta</p>
-                                                        <small>yesterday</small>
-                                                    </div>
-                                                </div>
-                                            </a>
+                                                    </li>
+                                                    {% endfor %}
+                                                </ul>
+                                                {% else %}
+                                                <h5>No notifications.</h5>
+                                                {% endif %}
+                                            </div>
                                         </div>
                                     </div>
                                 </li>
@@ -392,5 +382,26 @@
                             messagesPopup.style.display = 'none';
                         }, 3000);
                     }
-                });    
+                });   
+                
+                
+                const notificationButton = document.getElementById('notificationButton');
+                const notificationIcon = document.querySelector('#notificationButton i');
+                const notificationDrawer = document.getElementById('notificationDrawer');
+
+                const toggleNotificationDrawer = function() {
+                notificationDrawer.style.display = notificationDrawer.style.display === 'block' ? 'none' : 'block';
+                };
+
+                notificationButton.addEventListener('click', toggleNotificationDrawer);
+                notificationIcon.addEventListener('click', toggleNotificationDrawer);
+
+                document.addEventListener('click', function(event) {
+                const target = event.target;
+                if (!notificationDrawer.contains(target) && target !== notificationButton && target !== notificationIcon) {
+                    notificationDrawer.style.display = 'none';
+                }
+                });
+
+
             </script>
