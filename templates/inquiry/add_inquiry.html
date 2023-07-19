@@ -8,15 +8,17 @@
                         <h1>Add Student</h1>
                     </div>
                 </div>
+                {% if employees_with_inquiries %}
                 <ul>
                     <h1>Queue:</h1>
                     {% for employee in employees_with_inquiries %}
-                      <li>
+                    <li>
                         <strong>Employee: {{ employee.first_name }} {{ employee.last_name }}</strong><br>
                         Number of inquiries assigned: {{ employee.num_inquiries }}
-                      </li>
+                    </li>
                     {% endfor %}
-                  </ul>
+                </ul>
+                {% endif %}
                   
                 <!-- add other contents  -->
                 {% if purpose and user %}
