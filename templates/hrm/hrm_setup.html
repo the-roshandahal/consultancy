@@ -33,33 +33,35 @@
                                     <thead>
                                         <tr>
                                             <th>Year</th>
-                                            <th>Action</th>
+                                            <th class="text-right">Action</th>
                                         </tr>
                                     </thead>
+                                    {% if year %}
                                     <tbody>
                                         {% for year in year %}
                                         <tr>
                                             <td>{{year.year}}</td>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="d-flex">
-                                                        {% if 'manage_hrm' in permissions %}
-                                                        <a href="{% url 'edit_year' id=year.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
-                                                        {% endif %}
-                                                        {% if 'delete_hrm' in permissions %}
-                                                        <a href="#" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenterYearDelete{{year.id}}"><i class="material-icons">delete</i></a>
-                                                        {% endif %}
-                                                    </div>
-                                                </div>
+                                            <td class="text-right">
+                                                {% if 'manage_hrm' in permissions %}
+                                                <a href="{% url 'edit_year' id=year.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
+                                                {% endif %}
+                                                {% if 'delete_hrm' in permissions %}
+                                                <a href="#" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenterYearDelete{{year.id}}"><i class="material-icons">delete</i></a>
+                                                {% endif %}
                                             </td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
+                                    {% else %}
+                                    <p>no years added</p>
+                                    {% endif %}
                                 </table>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <hr style="border: 1px solid black; margin-top: 20px;">
+
+                    <div class="row mt-5">
                         <div class="page-description d-flex align-items-center">
                             <div class="page-description-content flex-grow-1">
                                 <h2>Month</h2>
@@ -113,7 +115,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <hr style="border: 1px solid black; margin-top: 20px;">
+
+                    <div class="row mt-5">
                         <div class="page-description d-flex align-items-center">
                             <div class="page-description-content flex-grow-1">
                                 <h2>Department</h2>
@@ -130,23 +134,21 @@
                                     <thead>
                                         <tr>
                                             <th>Department</th>
-                                            <th>Action</th>
+                                            <th class="text-right">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {% for department  in department  %}
                                         <tr>
                                             <td>{{department.department}}</td>
-                                            <td>
-                                                <div class="d-flex">
-                                                    {% if 'manage_hrm' in permissions %}
-                                                        <a href="{% url 'edit_department' id=department.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
-                                                    {% endif %}
+                                            <td class="text-right">
+                                                {% if 'manage_hrm' in permissions %}
+                                                    <a href="{% url 'edit_department' id=department.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
+                                                {% endif %}
 
-                                                    {% if 'delete_hrm' in permissions %}
-                                                        <a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{{department.id}}"><i class="material-icons">delete</i></a>
-                                                    {% endif %}
-                                                </div>
+                                                {% if 'delete_hrm' in permissions %}
+                                                    <a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{{department.id}}"><i class="material-icons">delete</i></a>
+                                                {% endif %}
                                             </td>
                                         </tr>
                                         {% endfor %}
@@ -156,8 +158,9 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="row mt-3">
+                    <hr style="border: 1px solid black; margin-top: 20px;">
+
+                    <div class="row mt-5">
                         <div class="page-description d-flex align-items-center">
                             <div class="page-description-content flex-grow-1">
                                 <h2>Designation</h2>
@@ -174,7 +177,7 @@
                                     <tr>
                                         <th>Designation</th>
                                         <th>Department</th>
-                                        <th>Action</th>
+                                        <th class="text-right">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -182,20 +185,14 @@
                                     <tr>
                                         <td>{{designation.designation}}</td>
                                         <td>{{designation.department}}</td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="d-flex">
-                                                    <div class="d-flex">
-                                                        {% if 'manage_hrm' in permissions %}
-                                                            <a href="{% url 'edit_designation' id=designation.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
-                                                        {% endif %}
+                                        <td class="text-right">
+                                            {% if 'manage_hrm' in permissions %}
+                                                <a href="{% url 'edit_designation' id=designation.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
+                                            {% endif %}
 
-                                                        {% if 'delete_hrm' in permissions %}
-                                                            <a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenterDesignation{{designation.id}}"><i class="material-icons">delete</i></a>
-                                                        {% endif %}
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            {% if 'delete_hrm' in permissions %}
+                                                <a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenterDesignation{{designation.id}}"><i class="material-icons">delete</i></a>
+                                            {% endif %}
                                         </td>
                                     </tr>
                                     {% endfor %}
@@ -205,7 +202,12 @@
                     </div>
                 </div>
 
-
+                
+                <style>
+                    .text-right {
+                      text-align: right;
+                    }
+                  </style>
 
 
 

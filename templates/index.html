@@ -27,7 +27,7 @@
                                 </div>
                                 <div class="widget-stats-content flex-fill">
                                     <span class="widget-stats-title">Total Invoice Amount</span>
-                                    <span class="widget-stats-amount">Rs. {{invoice_amount}}</span>
+                                    <span class="widget-stats-amount">Rs. {% if invoice_amount == None %}0 {% else %}{{invoice_amount}}{% endif %}</span>
                                     <span class="widget-stats-info">{{invoice_count}} Invoices Total</span>
                                 </div>
                             </div>
@@ -43,7 +43,7 @@
                                 </div>
                                 <div class="widget-stats-content flex-fill">
                                     <span class="widget-stats-title">Total receipt Amount</span>
-                                    <span class="widget-stats-amount">Rs. {{receipt_amount}}</span>
+                                    <span class="widget-stats-amount">Rs. {% if receipt_amount == None %}0 {% else %}{{receipt_amount}}{% endif %}</span>
                                     <span class="widget-stats-info">{{receipt_count}} Receipts Total</span>
                                 </div>
                             </div>

@@ -16,7 +16,7 @@
                <!-- add other contents  -->
 
                <div class="container mt-4">
-                    <div class="row">
+                    <div class="row mt-4">
                         <div class="page-description d-flex align-items-center">
                             <div class="page-description-content flex-grow-1">
                                 <h2>Stage</h2>
@@ -33,24 +33,20 @@
                                     <thead>
                                         <tr>
                                             <th>Stage</th>
-                                            <th>Action</th>
+                                            <th class="text-right">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 										{% for student_stage in student_stage %}
                                         <tr>
                                             <td>{{student_stage.stage}}</td>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="d-flex">
-                                                        {% if 'manage_student' in permissions %}
-                                                        <a href="{% url 'edit_stage' id=student_stage.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
-                                                        {% endif %}
-                                                        {% if 'delete_student' in permissions %}
-                                                        <a href="#" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{{student_stage.id}}"><i class="material-icons">delete</i></a>
-                                                        {% endif %}
-                                                    </div>
-                                                </div>
+                                            <td class="text-right">
+                                                {% if 'manage_student' in permissions %}
+                                                <a href="{% url 'edit_stage' id=student_stage.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
+                                                {% endif %}
+                                                {% if 'delete_student' in permissions %}
+                                                <a href="#" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{{student_stage.id}}"><i class="material-icons">delete</i></a>
+                                                {% endif %}
                                             </td>
                                         </tr>
                                         {% endfor %}
@@ -59,7 +55,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <hr style="border: 1px solid black; margin-top: 20px;">
+
+                    <div class="row mt-4">
                         <div class="page-description d-flex align-items-center">
                             <div class="page-description-content flex-grow-1">
                                 <h2>Source</h2>
@@ -76,7 +74,7 @@
                                     <thead>
                                         <tr>
                                             <th>Source</th>
-                                            <th>Action</th>
+                                            <th class="text-right">Action</th>
                                            
                                         </tr>
                                     </thead>
@@ -85,18 +83,14 @@
                                         <tr>
 											
                                             <td>{{student_source.source}}</td>
-                                            <td>
-                                                <div class="d-flex">
-                                                    {% if 'manage_student' in permissions %}
-                                                        <a href="{% url 'edit_source' id=student_source.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
-                                                    {% endif %}
-                                                   
-                                                    {% if 'delete_student' in permissions %}
-													<a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{{student_stage.id}}"><i class="material-icons">delete</i></a>
-                                                    {% endif %}
-                                                    
-                                                
-                                                </div>
+                                            <td class="text-right">
+                                                {% if 'manage_student' in permissions %}
+                                                    <a href="{% url 'edit_source' id=student_source.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
+                                                {% endif %}
+                                               
+                                                {% if 'delete_student' in permissions %}
+                                                <a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{{student_stage.id}}"><i class="material-icons">delete</i></a>
+                                                {% endif %}
                                             </td>
                                         </tr>
                                         {% endfor %}
@@ -105,7 +99,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <hr style="border: 1px solid black; margin-top: 20px;">
+
+                    <div class="row mt-4">
                         <div class="page-description d-flex align-items-center">
                             <div class="page-description-content flex-grow-1">
                                 <h2>Enrollment</h2>
@@ -122,23 +118,21 @@
                                     <thead>
                                         <tr>
                                             <th>Enrollment</th>
-                                            <th>Action</th>
+                                            <th class="text-right">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 										{% for enrollment_type in enrollment_type %}
                                         <tr>
                                             <td>{{enrollment_type.enrollment_type}}</td>
-                                            <td>
-                                                <div class="d-flex">
-                                                    {% if 'manage_student' in permissions %}
-                                                        <a href="{% url  'edit_enrollment' id=enrollment_type.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
-                                                    {% endif %}
+                                            <td class="text-right">
+                                                {% if 'manage_student' in permissions %}
+                                                    <a href="{% url  'edit_enrollment' id=enrollment_type.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
+                                                {% endif %}
 
-                                                    {% if 'delete_student' in permissions %}
-                                                        <a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{{enrollment_type.id }}"><i class="material-icons">delete</i></a>
-                                                    {% endif %}
-                                                </div>
+                                                {% if 'delete_student' in permissions %}
+                                                    <a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{{enrollment_type.id }}"><i class="material-icons">delete</i></a>
+                                                {% endif %}
                                             </td>
                                         </tr>
                                         {% endfor %}
@@ -148,15 +142,12 @@
                             </div>
                         </div>
                     </div>
-                    
-                   
                 </div>
-
-
-
-
-
-
+                <style>
+                    .text-right {
+                      text-align: right;
+                    }
+                  </style>
             </div>
         </div>
     </div>

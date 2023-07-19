@@ -26,26 +26,22 @@
                         <thead>
                             <tr>
                                 <th>Stage</th>
-                                <th>Action</th>
+                                <th class="text-right">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for stage in stage %}
                             <tr>
                                 <td>{{stage.stage}}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="d-flex">
-                                            <div class="d-flex">
-                                                {% if 'manage_inquiry' in permissions %}
-                                                    <a href="{% url 'edit_stages' id=stage.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
-                                                {% endif %}
+                                <td class="text-right">
+                                    <div>
+                                        {% if 'manage_inquiry' in permissions %}
+                                            <a href="{% url 'edit_stages' id=stage.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
+                                        {% endif %}
 
-                                                {% if 'delete_inquiry' in permissions %}
-                                                    <a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenterStage{{stage.id}}"><i class="material-icons">delete</i></a>
-                                                {% endif %}
-                                            </div>
-                                        </div>
+                                        {% if 'delete_inquiry' in permissions %}
+                                            <a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenterStage{{stage.id}}"><i class="material-icons">delete</i></a>
+                                        {% endif %}
                                     </div>
                                 </td>
                             </tr>
@@ -53,6 +49,8 @@
                         </tbody>
                     </table>
                 </div>
+                <hr style="border: 1px solid #0d6efd; margin-top: 20px;">
+
                 <div class="row mt-3">
                     <div class="page-description d-flex align-items-center">
                         <div class="page-description-content flex-grow-1">
@@ -69,27 +67,21 @@
                         <thead>
                             <tr>
                                 <th>Purpose</th>
-                                <th>Action</th>
+                                <th class="text-right">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for purpose in purpose %}
                             <tr>
                                 <td>{{purpose.purpose}}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="d-flex">
-                                            <div class="d-flex">
-                                                {% if 'manage_inquiry' in permissions %}
-                                                    <a href="{% url 'edit_purpose' id=purpose.id  %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
-                                                {% endif %}
+                                <td class="text-right">
+                                    {% if 'manage_inquiry' in permissions %}
+                                        <a href="{% url 'edit_purpose' id=purpose.id  %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
+                                    {% endif %}
 
-                                                {% if 'delete_inquiry' in permissions %}
-                                                    <a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenterPurpose{{purpose.id}}"><i class="material-icons">delete</i></a>
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                    </div>
+                                    {% if 'delete_inquiry' in permissions %}
+                                        <a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenterPurpose{{purpose.id}}"><i class="material-icons">delete</i></a>
+                                    {% endif %}
                                 </td>
                             </tr>
                             {% endfor %}
@@ -98,7 +90,11 @@
                 </div>
 
                 
-                
+                <style>
+                    .text-right {
+                      text-align: right;
+                    }
+                  </style>
 
 
 
