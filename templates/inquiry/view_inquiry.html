@@ -267,7 +267,7 @@
                                                             </thead>
                                                             <tbody>
                                                                 <tr>
-                                                                    <td>+2</td>
+                                                                    <td>SLC/SEE</td>
                                                                     <td>{{inquiry_data.institution1}}</td>
                                                                     <td>{{inquiry_data.passed_year1}}</td>
                                                                     <td>{{inquiry_data.percentage1}}</td>
@@ -278,12 +278,22 @@
                                                                     <td>{{inquiry_data.passed_year2}}</td>
                                                                     <td>{{inquiry_data.percentage2}}</td>
                                                                 </tr>
+                                                                {% if inquiry_data.institution4 %}
                                                                 <tr>
-                                                                    <td>+2</td>
+                                                                    <td>Bachelor</td>
                                                                     <td>{{inquiry_data.institution3}}</td>
                                                                     <td>{{inquiry_data.passed_year3}}</td>
                                                                     <td>{{inquiry_data.percentage3}}</td>
                                                                 </tr>
+                                                                {% endif %}
+                                                                {% if inquiry_data.institution4 %}
+                                                                <tr>
+                                                                    <td>Master</td>
+                                                                    <td>{{inquiry_data.institution4}}</td>
+                                                                    <td>{{inquiry_data.passed_year4}}</td>
+                                                                    <td>{{inquiry_data.percentage4}}</td>
+                                                                </tr>
+                                                                {% endif %}
                                                             </tbody>
                                                         </table>
                                                     </div>
