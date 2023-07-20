@@ -42,6 +42,7 @@
                                                 </li>
                                                 <li><a class="dropdown-item" href="{% url 'edit_inquiry' id=inquiry_data.id %}">Edit Inquiry</a></li>
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteStudent">Delete Inquiry</a></li>
+                                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#convertToStudent">Move to Student</a></li>
                                             </ul>
                                         </div>
                                         {% endif %}
@@ -410,7 +411,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="row widget widget-list mt-5">
-                                                        <h5>Taken Info</h5>
+                                                        <h5>Test Info</h5>
                                                         <div class="col-4">
                                                             <ul class="widget-list-content list-unstyled">
                                                                 <li class="widget-list-item widget-list-item-green">
@@ -428,7 +429,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
                                                 
                                             </div>
                                             <div class="tab-pane fade" id="pills-notes" role="tabpanel" aria-labelledby="pills-notes-tab">
@@ -483,6 +483,24 @@
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 				<a href="{% url 'delete_inquiry' id=inquiry_data.id %}"><button type="button" class="btn btn-primary">Delete</button></a>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="convertToStudent" tabindex="-1" role="dialog" aria-labelledby="convertToStudent" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="convertToStudent">Move to Student</h5>
+			</div>
+			<div class="modal-body">
+				<p>Are you sure you want to register this student as a stydent?</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				<a href="{% url 'convert_to_student' id=inquiry_data.id %}"><button type="button" class="btn btn-primary">Move</button></a>
 			</div>
 		</div>
 	</div>

@@ -8,6 +8,7 @@ from django.shortcuts import render,redirect
 from .models import *
 from hrm.models import *
 from account.models import*
+from student.models import*
 from account.context_processors import custom_data_views
 from django.db.models import Q
 
@@ -606,3 +607,66 @@ def external_inquiry(request):
             'purpose':purpose
         }
         return render(request,'inquiry/external_inquiry.html',context)
+    
+
+
+
+
+def convert_to_student(request,id):
+    if 'manage_inquiry' in custom_data_views(request):
+        inquiry_data=StudentInquiry.objects.get(id=id)
+        user=User.objects.create_user(first_name=inquiry_data.first_name,last_name=inquiry_data.last_name,username=inquiry_data.contact,email=inquiry_data.email)
+        user.save()
+        student_obj = Student.objects.create(user=user,address=inquiry_data.temporary_address,contact=inquiry_data.contact)
+        student_obj.save()
+
+        if inquiry_data.institution1 and inquiry_data.passed_year1 and inquiry_data.percentage1:
+            note1 = f"Institution:{inquiry_data.institution1}, Passed Year:{inquiry_data.passed_year1}, Percentage: {inquiry_data.percentage1}"
+            note1_obj=StudentNotes.objects.create(student=student_obj,note_title='SEE/SLC Details',note=note1)
+            note1_obj.save()
+        
+        
+        if inquiry_data.institution2 and inquiry_data.passed_year2 and inquiry_data.percentage2:
+            note2 = f"Institution:{inquiry_data.institution2}, Passed Year:{inquiry_data.passed_year2}, Percentage: {inquiry_data.percentage2}"
+            note2_obj=StudentNotes.objects.create(student=student_obj,note_title='+2 Education Details',note=note2)
+            note2_obj.save()
+        
+        if inquiry_data.institution3 and inquiry_data.passed_year3 and inquiry_data.percentage3:
+            note3 = f"Institution:{inquiry_data.institution3}, Passed Year:{inquiry_data.passed_year3}, Percentage: {inquiry_data.percentage3}"
+            note3_obj=StudentNotes.objects.create(student=student_obj,note_title='Bachelor Education Details',note=note3)
+            note3_obj.save()
+        
+        if inquiry_data.institution4 and inquiry_data.passed_year4 and inquiry_data.percentage4:
+            note4 = f"Institution:{inquiry_data.institution4}, Passed Year:{inquiry_data.passed_year4}, Percentage: {inquiry_data.percentage4}"
+            note4_obj=StudentNotes.objects.create(student=student_obj,note_title='Master Education Details',note=note4)
+            note4_obj.save()
+
+        if inquiry_data.course and inquiry_data.college and inquiry_data.country and inquiry_data.city and inquiry_data.intake:
+            note = f"Desired Country: {inquiry_data.country}, City:{inquiry_data.city}, College: {inquiry_data.college}, Intake: {inquiry_data.intake}, Course: {inquiry_data.course}"
+            note_obj=StudentNotes.objects.create(student=student_obj,note_title='Desired Country and Course',note=note)
+            note_obj.save()
+        
+        if inquiry_data.test:
+            note = f"Test Taken: {inquiry_data.test}"
+            note_obj=StudentNotes.objects.create(student=student_obj,note_title='Test Taken',note=note)
+            note_obj.save()
+        
+        
+        if inquiry_data.applied_date and inquiry_data.applied_country:
+            note = f"Country: {inquiry_data.applied_country}, Date:{inquiry_data.applied_date}"
+            note_obj=StudentNotes.objects.create(student=student_obj,note_title='Previously Application Details',note=note)
+            note_obj.save()
+
+
+        if  InquiryNote.objects.filter(inquiry=id).exists():
+            inquiry_notes = InquiryNote.objects.filter(inquiry=id)
+            for notes in inquiry_notes:
+                StudentNotes.objects.create(student=student_obj,note_title=notes.note_title,note=notes.note)
+            
+        inquiry_data.delete()
+        StudentLog.objects.create(student=student_obj,changed_by=str(request.user),activity="Moved to inquiry.")
+        messages.info(request, "Added as Student Successfully")
+        return redirect('student')
+    else:
+        messages.info(request, "Unauthorized access.")
+        return redirect('home')

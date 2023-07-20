@@ -60,10 +60,12 @@ class StudentInquiry(models.Model):
 
     applied_country = models.CharField(max_length=100, blank=True, null=True)
     applied_date = models.CharField(max_length=100,blank=True, null=True)
-    other=models.CharField(max_length=255,blank=True, null=True)
+    
     remarks= models.CharField(max_length=255,null=True,blank=True)
     source=models.CharField(max_length=255,blank=True, null=True)
+
     test= models.CharField(max_length=255,null=True,blank=True)
+    other=models.CharField(max_length=255,blank=True, null=True)
     
     date = models.DateTimeField(blank=True, null=True)
 

@@ -33,4 +33,5 @@ urlpatterns = [
     path("reopen_inquiry/<int:id>", views.reopen_inquiry, name="reopen_inquiry"),
     path("external_inquiry", views.external_inquiry, name="external_inquiry"),
     path("assign_employee/<int:id>", views.assign_employee, name="assign_employee"),
+    path("convert_to_student/<int:id>", views.convert_to_student, name="convert_to_student"),
 ]
