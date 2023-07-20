@@ -2,7 +2,7 @@ from hrm.models import *
 from django.template.context_processors import request
 from features.models import Company
 from .models import *
-
+from features.models import EmployeeNotification
 def custom_data(request):
     permissions = []
     company = Company.objects.all().order_by('-created').first()
@@ -28,7 +28,7 @@ def custom_data(request):
                 user = Employee.objects.get(user=logged_in_user)
                 role=Role.objects.get(role=user.permission)
                 permission=Permission.objects.get(role=role)
-                
+
 
                 if permission.create_account or permission.read_account or permission.update_account or permission.delete_account or permission.manage_account:
                     permissions.append('account')
@@ -132,10 +132,23 @@ def custom_data(request):
                     permissions.append('manage_company')
 
             except:
-                pass
-    
+                permissions= None
 
-    return {'permissions': permissions, 'company': company}
+    
+        default_notification = "No notifications at the moment."
+        created=" "
+        notifications = [EmployeeNotification(notification=default_notification, created=created)]
+        try:
+            userr = User.objects.get(username=request.user)
+            employee = Employee.objects.get(user=userr)
+
+            notifications = EmployeeNotification.objects.filter(employee=employee)
+            
+        except Employee.DoesNotExist:
+            print("Employee not found for the logged-in user.")
+        except Exception as e:
+            print("Error occurred:", str(e))
+    return {'permissions': permissions, 'company': company,'notifications':notifications}
 
 
 def custom_data_views(request):

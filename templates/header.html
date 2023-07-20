@@ -10,23 +10,11 @@
           #notificationDrawer {
             display: none;
             position: fixed;
-            top: 50px;
-            right: 20px;
-            width: 300px;
-            background-color: #ffffff;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            top: 110px;
+            right: 25px;
+            width: 350px;
             z-index: 9999;
             overflow-y: auto;
-          }
-          
-          .header {
-            padding: 10px;
-            background-color: #f2f2f2;
-            font-weight: bold;
-          }
-          
-          #notificationList {
-            padding: 10px;
           }
           
     </style>
@@ -279,32 +267,23 @@
                                     <button type="button" class="btn btn-dark" id="notificationButton">
                                         <i class="material-icons">notifications</i> 
                                     </button>
-                                    <div id="notificationDrawer">
-                                        <div class="header">Notifications</div>
-                                        <div id="notificationList" class="card widget widget-list">
-                                            <div class="card-header">
-                                                <h5 class="card-title">Notifications<span class="badge badge-success badge-style-light">{{notification_count}} total</span></h5>
-                                            </div>
-                                            <div class="card-body">
-                                                {% if notifications %}
-                                                <ul class="widget-list-content list-unstyled scrollable-content">
-                                                    {% for notification in notifications %}
-                                                    <li class="widget-list-item widget-list-item-green">
-                                                        <span class="widget-list-item-icon"><i class="material-icons-outlined">article</i></span>
-                                                        <span class="widget-list-item-description">
-                                                            <a href="#" class="widget-list-item-description-title">
-                                                                {{notification.notification}}
-                                                            </a>
-                                                            <span class="badge badge-style-light rounded-pill badge-info">{{notification.created}}</span>
-                                                        </span>
-                                                    </li>
-                                                    {% endfor %}
-                                                </ul>
-                                                {% else %}
-                                                <h5>No notifications.</h5>
-                                                {% endif %}
-                                            </div>
-                                        </div>
+                                    <div class="list-group" id="notificationDrawer">
+                                        <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+                                            <h5>Notifications</h5>
+                                            
+                                        </a>
+                                        {% if notifications %}
+                                        {% for notification in notifications %}
+                                        <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+                                            <p class="mb-1">{{notification.notification}}</p>
+                                            <small>{{notification.created}}</small>
+                                        </a>
+                                        {% endfor %}
+                                        {% else %}
+                                        <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+                                            <p class="mb-1">No Notifications.</p>
+                                        </a>
+                                        {% endif %}
                                     </div>
                                 </li>
                                 <li class="nav-item">

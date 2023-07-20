@@ -82,7 +82,7 @@
                                             <th>Start Date</th>
                                             <th>End Date</th>
                                             <th>Is Active</th>
-                                            <th>Action</th>
+                                            <th class="text-right">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -93,20 +93,18 @@
                                             <td>{{month_dict.month.start_date}}</td>
                                             <td>{{month_dict.month.end_date}}</td>
                                             <td>{{ month_dict.month.is_active }}</td>
-                                            <td>
-                                                <div class="d-flex">
-                                                    {% if 'manage_hrm' in permissions %}
-                                                        <a href="{% url 'edit_month' id=month_dict.month.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
-                                                    {% endif %}
+                                            <td class="text-right">
+                                                {% if 'manage_hrm' in permissions %}
+                                                    <a href="{% url 'edit_month' id=month_dict.month.id %}" class="btn btn-dark"><i class="material-icons">edit</i></a>
+                                                {% endif %}
 
-                                                    {% if 'delete_hrm' in permissions %}
-                                                        <a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenterViewMonth{{month_dict.month.month.id}}"><i class="material-icons">visibility</i></a>
-                                                    {% endif %}
-                                                    
-                                                    {% if 'read_hrm' in permissions %}
-                                                        <a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCentermonthDelete{{month_dict.month.id}}"><i class="material-icons">delete</i></a>
-                                                    {% endif %}
-                                                </div>
+                                                {% if 'delete_hrm' in permissions %}
+                                                    <a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCenterViewMonth{{month_dict.month.month.id}}"><i class="material-icons">visibility</i></a>
+                                                {% endif %}
+                                                
+                                                {% if 'read_hrm' in permissions %}
+                                                    <a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModalCentermonthDelete{{month_dict.month.id}}"><i class="material-icons">delete</i></a>
+                                                {% endif %}
                                             </td>
                                         </tr>
                                         {% endfor %}

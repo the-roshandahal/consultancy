@@ -29,7 +29,6 @@ def home(request):
             incomplete_todo = ToDo.objects.filter(task_to = company_user, status = 'incomplete')[:5]
             incomplete_todo_count = ToDo.objects.filter(task_to = company_user, status = 'incomplete').count()
             
-            notifications = EmployeeNotification.objects.filter(employee = company_user)
 
 
             try:
@@ -65,7 +64,6 @@ def home(request):
                 "incomplete_todo_count":incomplete_todo_count,
                 'random_quote':random_quote,
                 'author':author,
-                'notifications':notifications,
             }
         else:
             return redirect('student_dashboard')
