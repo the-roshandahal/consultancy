@@ -5,6 +5,9 @@ from .models import *
 from features.models import EmployeeNotification
 def custom_data(request):
     permissions = []
+    default_notification = "No notifications at the moment."
+    created=" "
+    notifications = [EmployeeNotification(notification=default_notification, created=created)]
     company = Company.objects.all().order_by('-created').first()
     if request.user.is_authenticated:
         logged_in_user = User.objects.get(username=request.user)
@@ -135,9 +138,7 @@ def custom_data(request):
                 permissions= None
 
     
-        default_notification = "No notifications at the moment."
-        created=" "
-        notifications = [EmployeeNotification(notification=default_notification, created=created)]
+        
         try:
             userr = User.objects.get(username=request.user)
             employee = Employee.objects.get(user=userr)
