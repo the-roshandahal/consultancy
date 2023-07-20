@@ -454,7 +454,7 @@ def advance_salary(request):
 
 
          
-            notification_obj = f"Your have received a payment of Rs.{amount}."
+            notification_obj = f"Your have received advance salary of Rs.{amount}."
             notification = EmployeeNotification.objects.create(employee = employee, notification=notification_obj)
             notification.save()
             return redirect('payroll')
@@ -464,34 +464,6 @@ def advance_salary(request):
         messages.info(request, "Unauthorized access.")
         return redirect('home')
 
-# def salary_payment(request):
-#     if 'create_hrm' in custom_data_views(request):
-#         if request.method == "POST":
-#             month = request.POST['month']
-#             employee = request.POST['employee']
-#             type = 'salary'
-#             leave_deduction = 0
-#             tax_deduction = 0
-#             employee = Employee.objects.get(id=employee)
-#             sel_month = MonthSetup.objects.get(month=month)
-#             salary_obj = Salary.objects.filter(employee=employee, month=sel_month, type='salary')
-#             if salary_obj:
-#                 messages.info(request, "You have already paid the salary of this employee for this month. Please select another month.")
-#             else:
-#                 Salary.objects.create(employee=employee, month=sel_month, type=type, leave_deduction=leave_deduction, tax_deduction=tax_deduction)
-#                 messages.info(request, "Salary paid successfully.")
-#             return redirect('payroll')
-#         else:
-#             all_employees = Employee.objects.all()
-#             months = MonthSetup.objects.all()
-#             context = {
-#                         'months':months,
-#                         'all_employees':all_employees,
-#                     }
-#             return render(request,'hrm/payroll.html',context)
-#     else:
-#         messages.info(request, "Unauthorized access.")
-#         return redirect('home')
 
 def salary_payment(request):
     if 'read_hrm' in custom_data_views(request):
@@ -602,7 +574,7 @@ def pay_salary(request):
                     type='salary',
                 )
                 salary.save()
-                notification_obj = f"Your have received a payment of Rs.{final_salary[i]}."
+                notification_obj = f"Your have received salary of Rs.{final_salary[i]}."
                 notification = EmployeeNotification.objects.create(employee = employee, notification=notification_obj)
                 notification.save()
             messages.info(request, "Salary added.")

@@ -143,7 +143,7 @@ def custom_data(request):
             userr = User.objects.get(username=request.user)
             employee = Employee.objects.get(user=userr)
 
-            notifications = EmployeeNotification.objects.filter(employee=employee)
+            notifications = EmployeeNotification.objects.filter(employee=employee).order_by('-created')
             
         except Employee.DoesNotExist:
             print("Employee not found for the logged-in user.")

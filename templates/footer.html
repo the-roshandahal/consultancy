@@ -1,4 +1,51 @@
  <!-- Javascripts -->
+ <script>
+    window.addEventListener('DOMContentLoaded', function() {
+        var messagesPopup = document.getElementById('messages-popup');
+        if (messagesPopup) {
+            messagesPopup.style.display = 'block';
+            setTimeout(function() {
+                messagesPopup.style.display = 'none';
+            }, 3000);
+        }
+    });   
+    
+    
+    const notificationButton = document.getElementById('notificationButton');
+    const notificationIcon = document.querySelector('notificationIcon');
+    const notificationDrawer = document.getElementById('notificationDrawer');
+
+    const toggleNotificationDrawer = function() {
+    notificationDrawer.style.display = notificationDrawer.style.display === 'block' ? 'none' : 'block';
+    };
+
+    notificationButton.addEventListener('click', toggleNotificationDrawer);
+    notificationIcon.addEventListener('click', toggleNotificationDrawer);
+
+    document.addEventListener('click', function(event) {
+    const target = event.target;
+    if (!notificationDrawer.contains(target) && target !== notificationButton && target !== notificationIcon) {
+        notificationDrawer.style.display = 'none';
+    }
+    });
+
+
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+document.getElementById('viewProfile').addEventListener('click', function() {
+// Code to handle view profile option
+console.log('View Profile clicked!');
+});
+
+document.getElementById('logout').addEventListener('click', function() {
+// Code to handle logout option
+console.log('Logout clicked!');
+});
+</script>
 </div>
 </div>
  {% load static %}

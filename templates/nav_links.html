@@ -37,5 +37,74 @@
     
 
 
+    <style>
+        .popup {
+            position: fixed;
+            top: 10%;
+            right: 0%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            display: none;
+        }
+        
+        .message {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        .message.success {
+            background-color: green;
+            color: white;
+        }
 
+
+
+
+
+        #notificationButton {
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+          }
+          
+          #notificationDrawer {
+            display: none;
+            position: fixed;
+            top: 110px;
+            right: 25px;
+            width: 350px;
+            z-index: 9989;
+            overflow-y: auto;
+          }
+          .scrollable-content {
+            height: 70vh;
+            overflow-y: scroll; /* Enable vertical scrolling */
+         
+          -ms-overflow-style: none; /* For Internet Explorer 10+ */
+        }
+        
+        .scrollable-content::-webkit-scrollbar {
+          display: none;
+        }
+        
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+    </style>
+    {% if messages %}
+    <div id="messages-popup" class="popup">
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
 </head>

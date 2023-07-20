@@ -1,55 +1,6 @@
 {% load static %}
 <body>
-    <style>
-        .popup {
-            position: fixed;
-            top: 10%;
-            right: 0%;
-            transform: translate(-50%, -50%);
-            z-index: 9999;
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-            display: none;
-        }
-        
-        .message {
-            margin-bottom: 10px;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        
-        .message.success {
-            background-color: green;
-            color: white;
-        }
-
-
-
-
-
-        #notificationButton {
-            padding: 10px;
-            border: none;
-            cursor: pointer;
-          }
-          
-          #notificationDrawer {
-            display: none;
-            position: fixed;
-            top: 110px;
-            right: 25px;
-            width: 350px;
-            z-index: 9989;
-            overflow-y: auto;
-          }
-          .scrollable-content {
-            height: 70vh;
-            overflow-y: scroll; /* Enable vertical scrolling */
-          }
-        
-    </style>
+    
     {% include 'nav_links.html' %}
     <div class="app align-content-stretch d-flex flex-wrap">
         <div class="app-sidebar">
@@ -276,7 +227,7 @@
                         </div>
                         <div class="d-flex">
                             <ul class="navbar-nav">
-                                <li class="nav-item hidden-on-mobile">
+                                {% comment %} <li class="nav-item hidden-on-mobile">
                                     <a class="nav-link" href="{% url 'todo' %}">
                                         <button type="button" class="btn btn-secondary btn-sm">Todo</button>
                                     </a>
@@ -294,7 +245,19 @@
                                         <button type="button" class="btn btn-secondary btn-sm">Inquiry</button>
                                     </a>
                                 </li>
-                                {% endif %}
+                                {% endif %} {% endcomment %}
+                                <li class="nav-item" style="margin-right:10px;">
+                                    <div class="btn-group" style="padding:4px;">
+                                        
+                                        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
+                                            <i class="material-icons" >account_circle</i> 
+                                        </button>
+                                        <div class="dropdown-menu" style="padding-right:10px;">
+                                          <a class="dropdown-item" href="#" id="viewProfile">View Profile</a>
+                                          <a class="dropdown-item" href="#" id="logout" data-bs-toggle="modal" data-bs-target="#exampleModalCenterAddYearLogout">Logout</a>
+                                        </div>
+                                      </div>
+                                </li>
                                 <li>
                                     <button type="button" class="btn btn-dark" id="notificationButton">
                                         <i class="material-icons" id="notificationIcon">notifications</i> 
@@ -302,27 +265,16 @@
                                     <div class="list-group" id="notificationDrawer">
 
 
-                                        <a href="#" class="list-group-item list-group-item-action" aria-current="true" style="z-index: 9999;">
+                                        <div href="#" class="list-group-item list-group-item-action" aria-current="true" style="z-index: 9999;">
 
-                                            <style>
-                                                .notification-header {
-                                                    display: flex;
-                                                    justify-content: space-between;
-                                                    align-items: center;
-                                                  }
-                                            </style>
+                                          
                                             <div class="notification-header">
                                                 <h5>Notifications</h5>
                                                 <a href="{% url 'mark_all_as_read' %}" class="mark-all-read">
                                                 <i class="material-icons" data-bs-toggle="tooltip" data-bs-placement="left" title="Mark all as read.">done_all</i>
                                                 </a> 
                                             </div>
-
-
-                                        </a>
-
-
-
+                                        </div>
                                         <div class="scrollable-content" style="margin-top:-10px;">
                                             {% if notifications %}
                                             {% for notification in notifications %}
@@ -339,22 +291,18 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModalCenterAddYear"><i class="material-icons">logout</i></a>
-                                </li>
                             </ul>
                         </div>
                     </div>
                 </nav>
             </div>
 
-            <div class="modal fade" id="exampleModalCenterAddYear" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterAddYear" aria-hidden="true">
+            <div class="modal fade" id="exampleModalCenterAddYearLogout" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterAddYearLogout" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Hold on!</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
@@ -368,44 +316,5 @@
                 </div>
             </div>
 
-            {% if messages %}
-                <div id="messages-popup" class="popup">
-                    {% for message in messages %}
-                        <div class="message {{ message.tags }}">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-            <script>
-                window.addEventListener('DOMContentLoaded', function() {
-                    var messagesPopup = document.getElementById('messages-popup');
-                    if (messagesPopup) {
-                        messagesPopup.style.display = 'block';
-                        setTimeout(function() {
-                            messagesPopup.style.display = 'none';
-                        }, 3000);
-                    }
-                });   
-                
-                
-                const notificationButton = document.getElementById('notificationButton');
-                const notificationIcon = document.querySelector('notificationIcon');
-                const notificationDrawer = document.getElementById('notificationDrawer');
-
-                const toggleNotificationDrawer = function() {
-                notificationDrawer.style.display = notificationDrawer.style.display === 'block' ? 'none' : 'block';
-                };
-
-                notificationButton.addEventListener('click', toggleNotificationDrawer);
-                notificationIcon.addEventListener('click', toggleNotificationDrawer);
-
-                document.addEventListener('click', function(event) {
-                const target = event.target;
-                if (!notificationDrawer.contains(target) && target !== notificationButton && target !== notificationIcon) {
-                    notificationDrawer.style.display = 'none';
-                }
-                });
-
-
-            </script>
+           
+            
