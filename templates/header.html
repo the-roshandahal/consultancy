@@ -12,7 +12,9 @@
                     <div class="col-2"></div>
                     <div class="col-8">
                         <div class="sidebar-user-switcher user-activity-online">
-                            <h6>{{company.company_name}}</h6>
+                            <h5>{{company.company_name}}</h5>
+                            <h6>{{request.user.first_name}} {{request.user.last_name}}</h6>
+                            <p>@{{request.user.username}}</p>
                         </div>
                     </div>
                 </div>
@@ -246,18 +248,6 @@
                                     </a>
                                 </li>
                                 {% endif %} {% endcomment %}
-                                <li class="nav-item" style="margin-right:10px;">
-                                    <div class="btn-group">
-                                        
-                                        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
-                                            <i class="material-icons" >account_circle</i> 
-                                        </button>
-                                        <div class="dropdown-menu" style="padding-right:10px;">
-                                          <a class="dropdown-item" href="#" id="viewProfile">View Profile</a>
-                                          <a class="dropdown-item" href="#" id="logout" data-bs-toggle="modal" data-bs-target="#exampleModalCenterAddYearLogout">Logout</a>
-                                        </div>
-                                      </div>
-                                </li>
                                 <li>
                                     <button type="button" class="btn btn-dark" id="notificationButton">
                                         <i class="material-icons" id="notificationButton">notifications</i> 
@@ -290,6 +280,11 @@
                                             {% endif %}
                                         </div>
                                     </div>
+                                </li>
+                                <li class="nav-item" style="margin-left:10px;">
+                                    <button type="button" class="btn btn-primary" id="notificationButton">
+                                        <i class="material-icons" id="notificationButton" data-bs-toggle="modal" data-bs-target="#exampleModalCenterAddYearLogout">logout</i> 
+                                    </button>
                                 </li>
                             </ul>
                         </div>

@@ -568,13 +568,17 @@ def external_inquiry(request):
         passed_year1 = request.POST["passed_year1"]
         percentage1 = request.POST["percentage1"]
 
-        institution2 = request.POST["institution2"]
-        passed_year2 = request.POST["passed_year2"]
-        percentage2 = request.POST["percentage2"]
+        institution2 = request.POST.get("institution2","")
+        passed_year2 = request.POST.get("passed_year2","")
+        percentage2 = request.POST.get("percentage2","")
 
-        institution3 = request.POST["institution3"]
-        passed_year3 = request.POST["passed_year3"]
-        percentage3 = request.POST["percentage3"]
+        institution3 = request.POST.get("institution3","")
+        passed_year3 = request.POST.get("passed_year3","")
+        percentage3 = request.POST.get("percentage3","")
+
+        institution4 = request.POST.get("institution4","")
+        passed_year4 = request.POST.get("passed_year4","")
+        percentage4 = request.POST.get("percentage4","")
 
         other = request.POST["other"]
 
@@ -589,14 +593,13 @@ def external_inquiry(request):
 
         
         inquiry = StudentInquiry.objects.create(first_name=first_name,last_name=last_name, dob=dob, temporary_address=temporary_address,permanent_address=permanent_address,contact=contact,email=email,guardian_name=guardian_name,marital_status=marital_status,purpose=purpose,date=date,remarks=remarks,course=course,college=college,country=country,city=city,intake=intake,applied_date=applied_date,applied_country=applied_country,
-                                            other=other, institution1=institution1, passed_year1=passed_year1,percentage1=percentage1, institution2=institution2, passed_year2=passed_year2,percentage2=percentage2, institution3=institution3, passed_year3=passed_year3,percentage3=percentage3)
+                                            other=other, institution1=institution1, passed_year1=passed_year1,percentage1=percentage1, institution2=institution2, passed_year2=passed_year2,percentage2=percentage2, institution3=institution3, passed_year3=passed_year3,percentage3=percentage3,
+                                            institution4=institution4, passed_year4=passed_year4,percentage4=percentage4)
         
         inquiry.save()
-        user = User.objects.get(username=request.user)
-        changed_by = user.username
-        activity = 'created inquiry'
-        InquiryLogs.objects.create(inquiry=inquiry,changed_by=changed_by,activity=activity)
-        return redirect('inquiry')
+        messages.info(request, "Inquiry submitted successfully, wait for admin's approval.")
+
+        return redirect('home')
     else:
         purpose = InquiryPurpose.objects.all()
         context = {

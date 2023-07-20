@@ -45,6 +45,10 @@ class StudentInquiry(models.Model):
     institution3 = models.CharField(max_length=100,null=True,blank=True)
     passed_year3 = models.PositiveIntegerField(null=True,blank=True)
     percentage3 = models.DecimalField(max_digits=5, decimal_places=2,null=True,blank=True)
+    
+    institution4 = models.CharField(max_length=100,null=True,blank=True)
+    passed_year4 = models.PositiveIntegerField(null=True,blank=True)
+    percentage4 = models.DecimalField(max_digits=5, decimal_places=2,null=True,blank=True)
  
     assigned = models.ForeignKey(Employee,on_delete=models.SET_NULL,null=True,blank=True)
     

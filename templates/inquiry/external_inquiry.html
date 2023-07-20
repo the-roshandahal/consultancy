@@ -26,7 +26,7 @@
         <form action="{% url 'external_inquiry' %}" method="POST">
             {% csrf_token %}
             <div class="row mt-3">
-                <h2>Personal Details</h2>
+                <h2>Personal Details*</h2>
                 <div class="col-12 col-md-6">
                     <p>First Name</p>
                     <div class="input-group">
@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div class="col-12 col-md-6">
-                    <p>Last Name</p>
+                    <p>Last Name*</p>
                     <div class="input-group">
                         <input name="last_name" type="text" class="form-control" placeholder="Last Name" aria-label="Last Name" aria-describedby="basic-addon1" required>
                     </div>
@@ -42,22 +42,22 @@
             </div>
             <div class="row mt-3">
                 <div class="col-12 col-md-6">
-                    <p>Guardian Name</p>
+                    <p>Guardian Name*</p>
                     <div class="input-group">
                         <input name="guardian_name" type="text" class="form-control" placeholder="Guardian Name" aria-label="Guardian Name" aria-describedby="basic-addon1" required>
                     </div>
                 </div>
                 <div class="col-12 col-md-6">
-                    <p>Date of Birth</p>
+                    <p>Date of Birth*</p>
                     <div class="input-group">
-                        <input name="dob" type="text" class="form-control" placeholder="Date of Birth" aria-label="Date of Birth" aria-describedby="basic-addon1" required>
+                        <input name="dob" type="date" class="form-control" placeholder="Date of Birth" aria-label="Date of Birth" aria-describedby="basic-addon1" required>
                     </div>
                 </div>
             </div>
             <div class="row mt-3">
                 <div class="col-12 col-md-6">
-                    <p>Gender</p>
-                    <select class="js-states form-control" tabindex="-1" style="display: none; width: 100%" name="gender">
+                    <p>Gender*</p>
+                    <select class="js-states form-control" tabindex="-1" style="display: none; width: 100%" name="gender" required >
                         <optgroup label="Purpose">
                             <option value="male">male</option>
                             <option value="female">female</option>
@@ -66,24 +66,25 @@
                     </select>
                 </div>
                 <div class="col-12 col-md-6">
-                    <p>Marital Status</p>
-                    <select class="js-states form-control" tabindex="-1" style="display: none; width: 100%" name="marital_status">
+                    <p>Marital Status*</p>
+                    <select class="js-states form-control" tabindex="-1" style="display: none; width: 100%" name="marital_status" required >
                         <optgroup label="Marital Status">
                             <option value="married">married</option>
                             <option value="unmarried">unmarried</option>
+                            <option value="divorced">divorced</option>
                         </optgroup>
                     </select>
                 </div>
             </div>
             <div class="row mt-3">
                 <div class="col-12 col-md-6">
-                    <p>Parmanent Address</p>
+                    <p>Parmanent Address*</p>
                     <div class="input-group">
                         <input name="permanent_address" type="text" class="form-control" placeholder="Parmanent Address" aria-label="Parmanent Address" aria-describedby="basic-addon1" required>
                     </div>
                 </div>
                 <div class="col-12 col-md-6">
-                    <p>Temporary Address</p>
+                    <p>Temporary Address*</p>
                     <div class="input-group">
                         <input name="temporary_address" type="text" class="form-control" placeholder="Temporary Address" aria-label="Temporary Address" aria-describedby="basic-addon1" required>
                     </div>
@@ -91,13 +92,13 @@
             </div>
             <div class="row mt-3">
                 <div class="col-12 col-md-6">
-                    <p>Contact Number</p>
+                    <p>Contact Number*</p>
                     <div class="input-group">
                         <input name="contact" type="text" class="form-control" placeholder="Contact Number" aria-label="Contact Number" aria-describedby="basic-addon1" required>
                     </div>
                 </div>
                 <div class="col-12 col-md-6">
-                    <p>Email</p>
+                    <p>Email*</p>
                     <div class="input-group">
                         <input name="email" type="text" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1" required>
                     </div>
@@ -110,91 +111,92 @@
             <div class="row mt-5">
                 <h2>Education Details</h2>
                 <h5>SEE/SLC</h5>
-                <div class="col-6">
+                <div class="col-12 col-6">
                     <p>Institution</p>
                     <div class="input-group">
                         <input name="institution1" type="text" class="form-control" placeholder="Institution" aria-label="Institution" aria-describedby="basic-addon1" required>
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-6 col-3">
                     <p>Percentage</p>
                     <div class="input-group">
                         <input name="percentage1" type="number" class="form-control" placeholder="Percentage" aria-label="Percentage" aria-describedby="basic-addon1" required>
                     </div>
                 </div>
-                <div class="col-3">
+                <div class=" col-6 col-3">
                     <p>Passed Year</p>
                     <div class="input-group">
-                        <input name="passed_year1" type="text" class="form-control" placeholder="Passed Year" aria-label="Passed Year" aria-describedby="basic-addon1" required>
+                        <input name="passed_year1" type="number" class="form-control" placeholder="Passed Year" aria-label="Passed Year" aria-describedby="basic-addon1" required>
                     </div>
                 </div>
             </div>
             <div class="row mt-3">
                 <h5>High School</h5>
-                <div class="col-6">
+                <div class="col-12 col-6">
                     <p>Institution</p>
                     <div class="input-group">
                         <input name="institution2" type="text" class="form-control" placeholder="Institution" aria-label="Institution" aria-describedby="basic-addon1" required>
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-6 col-3">
                     <p>Percentage</p>
                     <div class="input-group">
                         <input name="percentage2" type="number" class="form-control" placeholder="Percentage" aria-label="Percentage" aria-describedby="basic-addon1" required>
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-6 col-3">
                     <p>Passed Year</p>
                     <div class="input-group">
-                        <input name="passed_year2" type="text" class="form-control" placeholder="Passed Year" aria-label="Passed Year" aria-describedby="basic-addon1" required>
+                        <input name="passed_year2" type="number" class="form-control" placeholder="Passed Year" aria-label="Passed Year" aria-describedby="basic-addon1" required>
                     </div>
                 </div>
             </div>
             <div class="row mt-3">
                 <h5>Bachelor</h5>
-                <div class="col-6">
+                <div class="col-12 col-6">
                     <p>Institution</p>
                     <div class="input-group">
-                        <input name="institution3" type="text" class="form-control" placeholder="Institution" aria-label="Institution" aria-describedby="basic-addon1" required>
+                        <input name="institution3" type="text" class="form-control" placeholder="Institution" aria-label="Institution" aria-describedby="basic-addon1">
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-6 col-3">
                     <p>Percentage</p>
                     <div class="input-group">
-                        <input name="percentage3" type="number" class="form-control" placeholder="Percentage" aria-label="Percentage" aria-describedby="basic-addon1" required>
+                        <input name="percentage3" type="number" class="form-control" placeholder="Percentage" aria-label="Percentage" aria-describedby="basic-addon1">
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-6 col-3">
                     <p>Passed Year</p>
                     <div class="input-group">
-                        <input name="passed_year3" type="text" class="form-control" placeholder="Passed Year" aria-label="Passed Year" aria-describedby="basic-addon1" required>
+                        <input name="passed_year3" type="number" class="form-control" placeholder="Passed Year" aria-label="Passed Year" aria-describedby="basic-addon1">
                     </div>
                 </div>
             </div>
             
             <div class="row mt-3">
                 <h5>Master</h5>
-                <div class="col-6">
+                <div class="col-12 col-6">
                     <p>Institution</p>
                     <div class="input-group">
-                        <input name="institution4" type="text" class="form-control" placeholder="Institution" aria-label="Institution" aria-describedby="basic-addon1" required>
+                        <input name="institution4" type="text" class="form-control" placeholder="Institution" aria-label="Institution" aria-describedby="basic-addon1">
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-6 col-3">
                     <p>Percentage</p>
                     <div class="input-group">
-                        <input name="percentage4" type="text" class="form-control" placeholder="Percentage" aria-label="Percentage" aria-describedby="basic-addon1" required>
+                        <input name="percentage4" type="number" class="form-control" placeholder="Percentage" aria-label="Percentage" aria-describedby="basic-addon1">
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-6 col-3">
                     <p>Passed Year</p>
                     <div class="input-group">
-                        <input name="passed_year4" type="text" class="form-control" placeholder="Passed Year" aria-label="Passed Year" aria-describedby="basic-addon1" required>
+                        <input name="passed_year4" type="number" class="form-control" placeholder="Passed Year" aria-label="Passed Year" aria-describedby="basic-addon1">
                     </div>
                 </div>
             </div>
             
             <div class="row mt-3">
+                <h5>Test Details</h5>
                 <div class="col-6">
                     <p>Have you taken?</p>
                     <div class="form-check form-check-inline">
@@ -219,9 +221,9 @@
                     </div>
                 </div>
                 <div class="col-6">
-                    <p>Others</p>
+                    <p>Others (If any)</p>
                     <div class="input-group">
-                        <input name="other" type="text" class="form-control" placeholder="Others" aria-label="Others" aria-describedby="basic-addon1" required>
+                        <input name="other" type="text" class="form-control" placeholder="Others" aria-label="Others" aria-describedby="basic-addon1">
                     </div>
                 </div>
             </div>
@@ -229,31 +231,31 @@
             <div class="row mt-5">
                 <h2>Course Details</h2>
                 <h5>I wish to apply for</h5>
-                <div class="col-2">
+                <div class="col-6 col-2">
                     <p>Country</p>
                     <div class="input-group">
                         <input name="country" type="text" class="form-control" placeholder="Country" aria-label="Country" aria-describedby="basic-addon1" required>
                     </div>
                 </div>
-                <div class="col-2">
+                <div class="col-6 col-2">
                     <p>City</p>
                     <div class="input-group">
                         <input name="city" type="text" class="form-control" placeholder="City" aria-label="City" aria-describedby="basic-addon1" required>
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-6 col-3">
                     <p>Course</p>
                     <div class="input-group">
                         <input name="course" type="text" class="form-control" placeholder="Course" aria-label="Course" aria-describedby="basic-addon1" required>
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-6 col-3">
                     <p>College/University</p>
                     <div class="input-group">
                         <input name="college" type="text" class="form-control" placeholder="College/University" aria-label="College/University" aria-describedby="basic-addon1" required>
                     </div>
                 </div>
-                <div class="col-2">
+                <div class="col-6 col-2">
                     <p>Intake</p>
                     <div class="input-group">
                         <input name="intake" type="text" class="form-control" placeholder="Intake" aria-label="Intake" aria-describedby="basic-addon1" required>
@@ -265,30 +267,40 @@
             
             <div class="row mt-5">
                 <h5>Have you ever applied for abroad study?</h5>
-                <div class="col-4">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="applied_before" value="yes" id="flexRadioDefault1">
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            Yes
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="applied_before" value="no" id="flexRadioDefault2" checked>
-                        <label class="form-check-label" for="flexRadioDefault2">
-                            No
-                        </label>
+                <div class="col-xm-12 col-4">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="applied_before" value="yes" id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Yes
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-6">
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="applied_before" value="no" id="flexRadioDefault2" checked>
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    No
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-4">
-                    <p>Country</p>
+            </div>
+            <div class="row mt-4">
+                <h6>If Yes</h6>
+                <div class="col-6 col-4">
+                    <p> Country</p>
                     <div class="input-group">
-                        <input name="country" type="text" class="form-control" placeholder="Country" aria-label="Country" aria-describedby="basic-addon1" required>
+                        <input name="country" type="text" class="form-control" placeholder="Country" aria-label="Country" aria-describedby="basic-addon1">
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-6 col-4">
                     <p>Date</p>
                     <div class="input-group">
-                        <input name="date" type="text" class="form-control" placeholder="Date" aria-label="Date" aria-describedby="basic-addon1" required>
+                        <input name="date" type="date" class="form-control" placeholder="Date" aria-label="Date" aria-describedby="basic-addon1">
                     </div>
                 </div>
             </div>
@@ -339,7 +351,7 @@
                 </div>
                 <div class="col-12 col-md-6">
                     <p>Inquiry Purpose</p>
-                    <select class="js-states form-control" tabindex="-1" style="display: none; width: 100%" name="purpose">
+                    <select class="js-states form-control" tabindex="-1" style="display: none; width: 100%" name="purpose" required>
                         <optgroup label="Purpose">
                             {% for purpose in purpose %}
                             <option value="{{purpose.id}}">{{purpose.purpose}}</option>
