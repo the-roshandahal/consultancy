@@ -12,22 +12,21 @@
     
     
     const notificationButton = document.getElementById('notificationButton');
-    const notificationIcon = document.querySelector('notificationIcon');
     const notificationDrawer = document.getElementById('notificationDrawer');
-
+  
     const toggleNotificationDrawer = function() {
-    notificationDrawer.style.display = notificationDrawer.style.display === 'block' ? 'none' : 'block';
+      notificationDrawer.style.display = notificationDrawer.style.display === 'block' ? 'none' : 'block';
     };
-
-    notificationButton.addEventListener('click', toggleNotificationDrawer);
-    notificationIcon.addEventListener('click', toggleNotificationDrawer);
+  
+    notificationButton.addEventListener('click', toggleNotificationDrawer);  
 
     document.addEventListener('click', function(event) {
-    const target = event.target;
-    if (!notificationDrawer.contains(target) && target !== notificationButton && target !== notificationIcon) {
+      const target = event.target;
+      if (!notificationDrawer.contains(target) && target !== notificationButton) {
         notificationDrawer.style.display = 'none';
-    }
+      }
     });
+  
 
 
 </script>
