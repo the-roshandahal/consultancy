@@ -1,6 +1,34 @@
 {% load static %}
 <body>
     <style>
+        .popup {
+            position: fixed;
+            top: 10%;
+            right: 0%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            display: none;
+        }
+        
+        .message {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        .message.success {
+            background-color: green;
+            color: white;
+        }
+
+
+
+
+
         #notificationButton {
             padding: 10px;
             border: none;
@@ -13,10 +41,14 @@
             top: 110px;
             right: 25px;
             width: 350px;
-            z-index: 9999;
+            z-index: 9989;
             overflow-y: auto;
           }
-          
+          .scrollable-content {
+            height: 70vh;
+            overflow-y: scroll; /* Enable vertical scrolling */
+          }
+        
     </style>
     {% include 'nav_links.html' %}
     <div class="app align-content-stretch d-flex flex-wrap">
@@ -265,25 +297,46 @@
                                 {% endif %}
                                 <li>
                                     <button type="button" class="btn btn-dark" id="notificationButton">
-                                        <i class="material-icons">notifications</i> 
+                                        <i class="material-icons" id="notificationIcon">notifications</i> 
                                     </button>
                                     <div class="list-group" id="notificationDrawer">
-                                        <a href="#" class="list-group-item list-group-item-action" aria-current="true">
-                                            <h5>Notifications</h5>
-                                            
+
+
+                                        <a href="#" class="list-group-item list-group-item-action" aria-current="true" style="z-index: 9999;">
+
+                                            <style>
+                                                .notification-header {
+                                                    display: flex;
+                                                    justify-content: space-between;
+                                                    align-items: center;
+                                                  }
+                                            </style>
+                                            <div class="notification-header">
+                                                <h5>Notifications</h5>
+                                                <a href="{% url 'mark_all_as_read' %}" class="mark-all-read">
+                                                <i class="material-icons" data-bs-toggle="tooltip" data-bs-placement="left" title="Mark all as read.">done_all</i>
+                                                </a> 
+                                            </div>
+
+
                                         </a>
-                                        {% if notifications %}
-                                        {% for notification in notifications %}
-                                        <a href="#" class="list-group-item list-group-item-action" aria-current="true">
-                                            <p class="mb-1">{{notification.notification}}</p>
-                                            <small>{{notification.created}}</small>
-                                        </a>
-                                        {% endfor %}
-                                        {% else %}
-                                        <a href="#" class="list-group-item list-group-item-action" aria-current="true">
-                                            <p class="mb-1">No Notifications.</p>
-                                        </a>
-                                        {% endif %}
+
+
+
+                                        <div class="scrollable-content" style="margin-top:-10px;">
+                                            {% if notifications %}
+                                            {% for notification in notifications %}
+                                            <a href="#" class="list-group-item list-group-item-action {% if notification.status == "unread" %}active{% endif %}" aria-current="true">
+                                                <p class="mb-1">{{notification.notification}}</p>
+                                                <small>{{notification.created}}</small>
+                                            </a>
+                                            {% endfor %}
+                                            {% else %}
+                                            <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+                                                <p class="mb-1">No Notifications.</p>
+                                            </a>
+                                            {% endif %}
+                                        </div>
                                     </div>
                                 </li>
                                 <li class="nav-item">
@@ -324,34 +377,6 @@
                     {% endfor %}
                 </div>
             {% endif %}
-            <style>
-                .popup {
-                    position: fixed;
-                    top: 10%;
-                    right: 0%;
-                    transform: translate(-50%, -50%);
-                    z-index: 9999;
-                    background-color: #fff;
-                    padding: 10px;
-                    border-radius: 5px;
-                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-                    display: none;
-                }
-                
-                .message {
-                    margin-bottom: 10px;
-                    padding: 10px;
-                    border-radius: 5px;
-                }
-                
-                .message.success {
-                    background-color: green;
-                    color: white;
-                }
-                
-                /* Add styles for other message tags like 'info', 'warning', 'error', etc. */
-                
-            </style>
             <script>
                 window.addEventListener('DOMContentLoaded', function() {
                     var messagesPopup = document.getElementById('messages-popup');
@@ -365,7 +390,7 @@
                 
                 
                 const notificationButton = document.getElementById('notificationButton');
-                const notificationIcon = document.querySelector('#notificationButton i');
+                const notificationIcon = document.querySelector('notificationIcon');
                 const notificationDrawer = document.getElementById('notificationDrawer');
 
                 const toggleNotificationDrawer = function() {

@@ -249,19 +249,19 @@ def reassign(request,id):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+def mark_all_as_read(request):
+    if request.user.is_authenticated:
+        logged_in_user = User.objects.get(username=request.user)
+        employee = Employee.objects.get(user=logged_in_user)
+        unread_notifications = EmployeeNotification.objects.filter(employee=employee,status="unread")
+        for notification in unread_notifications:
+            notification.status = "read"
+            notification.save()
+        return redirect('home')
+    else:
+        messages.info(request,"Unauthorized access.")
+        return redirect('home')
+    
 
 from django.shortcuts import render
 

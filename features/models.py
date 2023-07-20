@@ -43,6 +43,7 @@ class EmployeeNotification(models.Model):
     notification = models.CharField(max_length=255)
     employee = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True)
     created = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=244, default="unread")
     def __str__(self):
         return self.notification
 

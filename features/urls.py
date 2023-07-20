@@ -14,6 +14,7 @@ urlpatterns = [
     
     path("todo/", views.todo, name="todo"),
     path("add_todo/", views.add_todo, name="add_todo"),
+    path("mark_all_as_read/", views.mark_all_as_read, name="mark_all_as_read"),
     path("change_status/<int:id>", views.change_status, name="change_status"),
     path("reassign/<int:id>", views.reassign, name="reassign"),
 
