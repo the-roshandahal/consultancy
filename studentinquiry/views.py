@@ -403,6 +403,29 @@ def verify_inquiry(request,id):
             inquiry.save()
             messages.info(request, "inquiry verified.")
 
+            subject = 'Thank You for Your Inquiry'
+            body = (
+            f"Dear  {inquiry.first_name} {inquiry.last_name},\n\n"
+            "Thank you for applying to Imperio Education.\n"
+            f" Your inquiry has been verified and your consultation date is {inquiry.date}.\n\n"
+            "Best regards,\nImperio Education\nChabhil Kathmandu"
+            )   
+            from_email = 'roshan@spellinnovation.com'
+            password = 's%aclHIZsCvB'
+            recipient_list = [inquiry.email]
+            try:
+                email_backend = EmailBackend(
+                host="mail.spellinnovation.com",
+                port=587,
+                username=from_email,
+                password=password,
+                use_tls=True,
+                )
+                email = EmailMessage(subject, body, from_email, recipient_list, connection=email_backend)
+                email.send()
+                messages.info(request, "Email Sent.")
+            except:
+                messages.info(request, "Mail Server error.")
             user = User.objects.get(username=request.user)
             changed_by = user.username
             activity = 'inquiry is verified'
@@ -593,20 +616,12 @@ def external_inquiry(request):
         intake = request.POST["intake"]
         applied_country = request.POST["country"]
         applied_date = request.POST["date"]
-        
-
-        
+                
         inquiry = StudentInquiry.objects.create(first_name=first_name,last_name=last_name, dob=dob, temporary_address=temporary_address,permanent_address=permanent_address,contact=contact,email=email,guardian_name=guardian_name,marital_status=marital_status,purpose=purpose,date=date,remarks=remarks,course=course,college=college,country=country,city=city,intake=intake,applied_date=applied_date,applied_country=applied_country,
                                             other=other, institution1=institution1, passed_year1=passed_year1,percentage1=percentage1, institution2=institution2, passed_year2=passed_year2,percentage2=percentage2, institution3=institution3, passed_year3=passed_year3,percentage3=percentage3,
                                             institution4=institution4, passed_year4=passed_year4,percentage4=percentage4)
         
         inquiry.save()
-
-
-
-                
-
-        
         subject = 'Thank You for Your Inquiry'
         body = (
         f"Dear  {first_name} {last_name},\n\n"
@@ -630,6 +645,7 @@ def external_inquiry(request):
             )
             email = EmailMessage(subject, body, from_email, recipient_list, connection=email_backend)
             email.send()
+            messages.info(request, "Email Sent.")
         except:
             messages.info(request, "Mail Server error.")
 
