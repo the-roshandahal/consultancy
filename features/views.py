@@ -251,13 +251,18 @@ def reassign(request,id):
 
 def mark_all_as_read(request):
     if request.user.is_authenticated:
-        logged_in_user = User.objects.get(username=request.user)
-        employee = Employee.objects.get(user=logged_in_user)
-        unread_notifications = EmployeeNotification.objects.filter(employee=employee,status="unread")
-        for notification in unread_notifications:
-            notification.status = "read"
-            notification.save()
-        return redirect('home')
+        try:
+            logged_in_user = User.objects.get(username=request.user)
+            employee = Employee.objects.get(user=logged_in_user)
+            unread_notifications = EmployeeNotification.objects.filter(employee=employee,status="unread")
+            for notification in unread_notifications:
+                notification.status = "read"
+                notification.save()
+            messages.info(request,"Marked successfully.")
+            return redirect('home')
+        except:
+            messages.info(request,"Error encountered.")
+            return redirect('home')
     else:
         messages.info(request,"Unauthorized access.")
         return redirect('home')
