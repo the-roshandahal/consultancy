@@ -106,7 +106,7 @@
                         <div class="col-3">
                             <p>Percentage</p>
                             <div class="input-group">
-                                <input name="percentage1" type="number" value={{inquiry.percentage1}}class="form-control" placeholder="Percentage" aria-label="Percentage" aria-describedby="basic-addon1" required>
+                                <input name="percentage1" type="number" value={{inquiry.percentage1}} class="form-control" placeholder="Percentage" aria-label="Percentage" aria-describedby="basic-addon1" required>
                             </div>
                         </div>
                         <div class="col-3">
@@ -183,26 +183,9 @@
                     
                     <div class="row mt-3">
                         <div class="col-6">
-                            <p>Have you taken?</p>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="IELTS">
-                                <label class="form-check-label" for="inlineCheckbox1">IELTS</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="PTE">
-                                <label class="form-check-label" for="inlineCheckbox2">PTE</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="TOFEL">
-                                <label class="form-check-label" for="inlineCheckbox2">TOFEL</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="SAT">
-                                <label class="form-check-label" for="inlineCheckbox2">SAT</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="NAT">
-                                <label class="form-check-label" for="inlineCheckbox2">NAT</label>
+                            <p>Tests Taken.</p>
+                            <div class="input-group">
+                                <input name="test" type="text"  value={{inquiry.test}} class="form-control" placeholder="Passed Year" aria-label="Passed Year" aria-describedby="basic-addon1" required>
                             </div>
                         </div>
                         <div class="col-6">
@@ -219,31 +202,31 @@
                         <div class="col-2">
                             <p>Country</p>
                             <div class="input-group">
-                                <input name="country" type="text" class="form-control" placeholder="Country" aria-label="Country" aria-describedby="basic-addon1" required>
+                                <input name="country" value="{{inquiry.country}}" type="text" class="form-control" placeholder="Country" aria-label="Country" aria-describedby="basic-addon1" required>
                             </div>
                         </div>
                         <div class="col-2">
                             <p>City</p>
                             <div class="input-group">
-                                <input name="city" type="text" class="form-control" placeholder="City" aria-label="City" aria-describedby="basic-addon1" required>
+                                <input name="city" value="{{inquiry.city}}" type="text" class="form-control" placeholder="City" aria-label="City" aria-describedby="basic-addon1" required>
                             </div>
                         </div>
                         <div class="col-3">
                             <p>Course</p>
                             <div class="input-group">
-                                <input name="course" type="text" class="form-control" placeholder="Course" aria-label="Course" aria-describedby="basic-addon1" required>
+                                <input name="course" value="{{inquiry.course}}" type="text" class="form-control" placeholder="Course" aria-label="Course" aria-describedby="basic-addon1" required>
                             </div>
                         </div>
                         <div class="col-3">
                             <p>College/University</p>
                             <div class="input-group">
-                                <input name="college" type="text" class="form-control" placeholder="College/University" aria-label="College/University" aria-describedby="basic-addon1" required>
+                                <input name="college" value="{{inquiry.college}}" type="text" class="form-control" placeholder="College/University" aria-label="College/University" aria-describedby="basic-addon1" required>
                             </div>
                         </div>
                         <div class="col-2">
                             <p>Intake</p>
                             <div class="input-group">
-                                <input name="intake" type="text" class="form-control" placeholder="Intake" aria-label="Intake" aria-describedby="basic-addon1" required>
+                                <input name="intake" value="{{inquiry.intake}}" type="text" class="form-control" placeholder="Intake" aria-label="Intake" aria-describedby="basic-addon1" required>
                             </div>
                         </div>
                     </div>
@@ -269,13 +252,13 @@
                         <div class="col-4">
                             <p>Country</p>
                             <div class="input-group">
-                                <input name="country" type="text" class="form-control" placeholder="Country" aria-label="Country" aria-describedby="basic-addon1" required>
+                                <input name="country" type="text" class="form-control" placeholder="Country" aria-label="Country" aria-describedby="basic-addon1">
                             </div>
                         </div>
                         <div class="col-4">
                             <p>Date</p>
                             <div class="input-group">
-                                <input name="date" type="text" class="form-control" placeholder="Date" aria-label="Date" aria-describedby="basic-addon1" required>
+                                <input name="date" type="text" class="form-control" placeholder="Date" aria-label="Date" aria-describedby="basic-addon1">
                             </div>
                         </div>
                     </div>

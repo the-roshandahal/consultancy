@@ -31,12 +31,14 @@
                                                 {% if inquiry_data.is_verified == False %}
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#verifyStudent">Verify Inquiry</a></li>
                                                 {% endif %}
-
+                                                
+                                                {% if inquiry_data.is_verified == True %}
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#assignStudent">Assign Employee</a></li>
-
+                                                
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#updateStage">Update Stage</a></li>
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#closeStudent">Close Inquiry</a></li>
                                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#assignConsultationDate">Update Consultation Date</a></li>
+                                                {% endif %}
                                                 <li>
                                                     <hr class="dropdown-divider">
                                                 </li>
@@ -435,6 +437,8 @@
                                                 <div class="row mt-5">
                                                     <h5 class="mt-2">Notes</h5>
                                                     <div class="row">
+                                                        {% if notes %}
+                                                          
                                                         {% for note in notes %}
                                                         <div class="col-6">
                                                             <div class="card">
@@ -446,6 +450,15 @@
                                                             </div>
                                                         </div>
                                                         {% endfor %}
+                                                        {% else %}
+                                                        <div class="col-6">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">No notes added</h5>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        {% endif %}
                                                     </div>
                                                 </div>
                                             </div>
